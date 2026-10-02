@@ -11,6 +11,14 @@ on:
         required: false
         default: ""
         type: string
+      android_signing:
+        description: "Android signing: 'auto' = use secrets if present, 'debug' = always debug-sign"
+        required: false
+        default: "auto"
+        type: choice
+        options:
+          - auto
+          - debug
 env:
   IS_STABLE: ${{ !contains(github.ref, '-') }}
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -114,24 +122,43 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          FORCE_DEBUG: ${{ inputs.android_signing == 'debug' }}
         run: |
           set -euo pipefail
+
+          # Release signing is optional. android/app/build.gradle.kts falls back to
+          # signingConfigs "debug" when android/app/keystore.jks is absent, and AGP
+          # generates that debug keystore itself, so a fork with no signing secrets
+          # still produces installable release APKs. The important part is to never
+          # create a *partial* keystore: a present-but-broken one flips isRelease to
+          # true and Gradle then dies ~7min later with an opaque ASN.1 error
+          # ("Tag number over 30 is not supported") inside :app:packageRelease.
+          if [ "$FORCE_DEBUG" = "true" ]; then
+            echo "::notice::android_signing=debug - release signing skipped, APKs will be debug-signed"
+            exit 0
+          fi
+
+          missing=()
+          for v in KEYSTORE KEY_ALIAS STORE_PASSWORD KEY_PASSWORD; do
+            if [ -z "${!v}" ]; then missing+=("$v"); fi
+          done
+
+          if [ ${#missing[@]} -eq 4 ]; then
+            echo "::notice::No Android signing secrets configured - building debug-signed APKs."
+            echo "::notice::They install fine, but cannot be published to Google Play and cannot update an already-installed build."
+            exit 0
+          fi
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "::error::Android signing secrets partially configured, missing: ${missing[*]}."
+            echo "::error::Set all four (KEYSTORE, KEY_ALIAS, STORE_PASSWORD, KEY_PASSWORD) or remove all four. To build debug-signed instead, re-run with android_signing=debug."
+            exit 1
+          fi
 
           # ---- diagnostics ------------------------------------------------
           echo "KEYSTORE       : ${#KEYSTORE} chars"
           echo "KEY_ALIAS      : '$KEY_ALIAS' (${#KEY_ALIAS} chars)"
           echo "STORE_PASSWORD : ${#STORE_PASSWORD} chars"
           echo "KEY_PASSWORD   : ${#KEY_PASSWORD} chars"
-
-          missing=()
-          [ -n "$KEYSTORE" ] || missing+=(KEYSTORE)
-          [ -n "$KEY_ALIAS" ] || missing+=(KEY_ALIAS)
-          [ -n "$STORE_PASSWORD" ] || missing+=(STORE_PASSWORD)
-          [ -n "$KEY_PASSWORD" ] || missing+=(KEY_PASSWORD)
-          if [ ${#missing[@]} -gt 0 ]; then
-            echo "::error::Android signing secrets missing or empty: ${missing[*]}. Set them in Settings -> Secrets and variables -> Actions."
-            exit 1
-          fi
 
           # tr -d strips CR/LF so a paste that picked up Windows line breaks still decodes.
           printf '%s' "$KEYSTORE" | tr -d '\r\n' | base64 --decode > android/app/keystore.jks
@@ -141,7 +168,8 @@ jobs:
           echo "decoded sha256 : $sum"
 
           if [ "$size" -lt 500 ]; then
-            echo "::error::Decoded keystore is only $size bytes. The KEYSTORE secret is not a usable base64 keystore (expected ~2.2KB / 2976 base64 chars)."
+            echo "::error::Decoded keystore is only $size bytes. KEYSTORE is not a usable base64 keystore (expected ~2.2KB / 2976 base64 chars)."
+            echo "::error::To build debug-signed instead, re-run with android_signing=debug."
             exit 1
           fi
 
@@ -150,6 +178,7 @@ jobs:
           if ! out=$(keytool -list -keystore android/app/keystore.jks -storepass "$STORE_PASSWORD" 2>&1); then
             echo "::error::Keystore decoded fine ($size bytes, sha256 $sum) but STORE_PASSWORD cannot open it."
             echo "$out" | head -4 | sed 's/^/  /'
+            echo "::error::To build debug-signed instead, re-run with android_signing=debug."
             exit 1
           fi
           echo "store password : OK"
@@ -157,6 +186,7 @@ jobs:
 
           if ! echo "$out" | grep -q "$KEY_ALIAS"; then
             echo "::error::Alias '$KEY_ALIAS' is not present in the keystore. Entries listed above."
+            echo "::error::To build debug-signed instead, re-run with android_signing=debug."
             exit 1
           fi
 
