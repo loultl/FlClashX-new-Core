@@ -4,41 +4,92 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch:
+    inputs:
+      platforms:
+        description: "Platforms to build (comma-separated: android,windows,linux). Empty = all"
+        required: false
+        default: ""
+        type: string
 env:
   IS_STABLE: ${{ !contains(github.ref, '-') }}
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+    steps:
+      - name: Resolve build matrix
+        id: plan
+        env:
+          REQUESTED: ${{ github.event.inputs.platforms }}
+        run: |
+          set -euo pipefail
+
+          # macOS is intentionally absent: signing + notarization require Apple
+          # Developer secrets (APPLE_CERTIFICATE, APPLE_API_KEY_*) that are not
+          # configured for this fork. Re-add the macos entries here once set.
+          # Format: platform|os|arch   (arch may be empty)
+          entries=(
+            'android|ubuntu-latest|'
+            'windows|windows-latest|amd64'
+            'linux|ubuntu-24.04|amd64'
+            'windows|windows-11-arm|arm64'
+            'linux|ubuntu-24.04-arm|arm64'
+          )
+
+          req=()
+          if [ -n "${REQUESTED//[[:space:]]/}" ]; then
+            IFS=',' read -ra parts <<< "$REQUESTED"
+            for p in "${parts[@]}"; do
+              p="${p//[[:space:]]/}"
+              if [ -n "$p" ]; then req+=("$p"); fi
+            done
+          fi
+
+          out='['
+          count=0
+          for e in "${entries[@]}"; do
+            IFS='|' read -r platform os arch <<< "$e"
+
+            if [ ${#req[@]} -gt 0 ]; then
+              match=0
+              for r in "${req[@]}"; do
+                if [ "$r" = "$platform" ]; then match=1; break; fi
+              done
+              if [ "$match" -ne 1 ]; then continue; fi
+            fi
+
+            if [ "$count" -gt 0 ]; then out="$out,"; fi
+            item="{\"platform\":\"$platform\",\"os\":\"$os\""
+            if [ -n "$arch" ]; then item="$item,\"arch\":\"$arch\""; fi
+            out="$out$item}"
+            count=$((count + 1))
+            echo "  - $platform${arch:+ $arch} on $os"
+          done
+          out="$out]"
+
+          if [ "$count" -eq 0 ]; then
+            echo "::error::No known platform matched '$REQUESTED'. Known: android,windows,linux"
+            exit 1
+          fi
+
+          if [ ${#req[@]} -eq 0 ]; then
+            echo "Requested platforms: (none) -> building all"
+          else
+            echo "Requested platforms: $REQUESTED"
+          fi
+          echo "matrix=$out" >> "$GITHUB_OUTPUT"
+
   build:
+    needs: [plan]
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - platform: android
-            os: ubuntu-latest
-          - platform: windows
-            os: windows-latest
-            arch: amd64
-          - platform: linux
-            os: ubuntu-24.04
-            arch: amd64
-          # macOS is intentionally disabled: signing + notarization require
-          # Apple Developer secrets (APPLE_CERTIFICATE, APPLE_API_KEY_*), which
-          # are not configured for this fork. Re-add these entries once the
-          # secrets are set:
-          # - platform: macos
-          #   os: macos-latest
-          #   arch: amd64
-          # - platform: macos
-          #   os: macos-latest
-          #   arch: arm64
-          - platform: windows
-            os: windows-11-arm
-            arch: arm64
-          - platform: linux
-            os: ubuntu-24.04-arm
-            arch: arm64
+        include: ${{ fromJSON(needs.plan.outputs.matrix) }}
 
     steps:
       - name: Setup Rust for Windows ARM64
@@ -58,11 +109,37 @@ jobs:
 
       - name: Setup Android Signing
         if: startsWith(matrix.platform,'android')
+        env:
+          KEYSTORE: ${{ secrets.KEYSTORE }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          echo "${{ secrets.KEYSTORE }}" | base64 --decode > android/app/keystore.jks
-          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/local.properties
-          echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> android/local.properties
-          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/local.properties
+          set -euo pipefail
+          missing=()
+          [ -n "$KEYSTORE" ] || missing+=(KEYSTORE)
+          [ -n "$KEY_ALIAS" ] || missing+=(KEY_ALIAS)
+          [ -n "$STORE_PASSWORD" ] || missing+=(STORE_PASSWORD)
+          [ -n "$KEY_PASSWORD" ] || missing+=(KEY_PASSWORD)
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "::error::Android signing secrets missing or empty: ${missing[*]}. Set them in Settings -> Secrets and variables -> Actions."
+            exit 1
+          fi
+
+          printf '%s' "$KEYSTORE" | base64 --decode > android/app/keystore.jks
+
+          # Fail here instead of ~7min later inside Gradle with an opaque
+          # "Tag number over 30 is not supported" from the ASN.1 parser.
+          if ! keytool -list -keystore android/app/keystore.jks \
+                -storepass "$STORE_PASSWORD" -alias "$KEY_ALIAS" > /dev/null 2>&1; then
+            echo "::error::android/app/keystore.jks is not a valid keystore for alias '$KEY_ALIAS'. KEYSTORE must be base64 of the binary keystore (base64 -w0 keystore.jks)."
+            exit 1
+          fi
+
+          echo "keyAlias=$KEY_ALIAS" >> android/local.properties
+          echo "storePassword=$STORE_PASSWORD" >> android/local.properties
+          echo "keyPassword=$KEY_PASSWORD" >> android/local.properties
+          echo "✅ Android keystore validated for alias '$KEY_ALIAS'"
 
       - name: Setup Firebase Config
         if: startsWith(matrix.platform,'android')
@@ -118,6 +195,8 @@ jobs:
   changelog:
     runs-on: ubuntu-latest
     needs: [build]
+    # Only tag runs may rewrite CHANGELOG.md and push back to main.
+    if: startsWith(github.ref, 'refs/tags/')
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -181,7 +260,7 @@ jobs:
   upload:
     permissions: write-all
     needs: [build]
-    if: always() && (needs.build.result == 'success')
+    if: always() && (needs.build.result == 'success') && startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
