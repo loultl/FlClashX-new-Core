@@ -116,6 +116,13 @@ jobs:
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
           set -euo pipefail
+
+          # ---- diagnostics ------------------------------------------------
+          echo "KEYSTORE       : ${#KEYSTORE} chars"
+          echo "KEY_ALIAS      : '$KEY_ALIAS' (${#KEY_ALIAS} chars)"
+          echo "STORE_PASSWORD : ${#STORE_PASSWORD} chars"
+          echo "KEY_PASSWORD   : ${#KEY_PASSWORD} chars"
+
           missing=()
           [ -n "$KEYSTORE" ] || missing+=(KEYSTORE)
           [ -n "$KEY_ALIAS" ] || missing+=(KEY_ALIAS)
@@ -126,20 +133,41 @@ jobs:
             exit 1
           fi
 
-          printf '%s' "$KEYSTORE" | base64 --decode > android/app/keystore.jks
+          # tr -d strips CR/LF so a paste that picked up Windows line breaks still decodes.
+          printf '%s' "$KEYSTORE" | tr -d '\r\n' | base64 --decode > android/app/keystore.jks
+          size=$(stat -c%s android/app/keystore.jks)
+          sum=$(sha256sum android/app/keystore.jks | cut -d' ' -f1)
+          echo "decoded        : $size bytes"
+          echo "decoded sha256 : $sum"
 
-          # Fail here instead of ~7min later inside Gradle with an opaque
-          # "Tag number over 30 is not supported" from the ASN.1 parser.
-          if ! keytool -list -keystore android/app/keystore.jks \
-                -storepass "$STORE_PASSWORD" -alias "$KEY_ALIAS" > /dev/null 2>&1; then
-            echo "::error::android/app/keystore.jks is not a valid keystore for alias '$KEY_ALIAS'. KEYSTORE must be base64 of the binary keystore (base64 -w0 keystore.jks)."
+          if [ "$size" -lt 500 ]; then
+            echo "::error::Decoded keystore is only $size bytes. The KEYSTORE secret is not a usable base64 keystore (expected ~2.2KB / 2976 base64 chars)."
             exit 1
+          fi
+
+          # List without -alias so this step separates "wrong password"
+          # (fails here) from "alias not found" (fails at the grep below).
+          if ! out=$(keytool -list -keystore android/app/keystore.jks -storepass "$STORE_PASSWORD" 2>&1); then
+            echo "::error::Keystore decoded fine ($size bytes, sha256 $sum) but STORE_PASSWORD cannot open it."
+            echo "$out" | head -4 | sed 's/^/  /'
+            exit 1
+          fi
+          echo "store password : OK"
+          echo "$out" | grep -iE 'PrivateKeyEntry|trustedCertEntry' | sed 's/^/  /' || true
+
+          if ! echo "$out" | grep -q "$KEY_ALIAS"; then
+            echo "::error::Alias '$KEY_ALIAS' is not present in the keystore. Entries listed above."
+            exit 1
+          fi
+
+          if [ "$STORE_PASSWORD" != "$KEY_PASSWORD" ]; then
+            echo "::warning::STORE_PASSWORD != KEY_PASSWORD; Gradle uses keyPassword for the key itself"
           fi
 
           echo "keyAlias=$KEY_ALIAS" >> android/local.properties
           echo "storePassword=$STORE_PASSWORD" >> android/local.properties
           echo "keyPassword=$KEY_PASSWORD" >> android/local.properties
-          echo "✅ Android keystore validated for alias '$KEY_ALIAS'"
+          echo "Android keystore validated: alias '$KEY_ALIAS', $size bytes, sha256 $sum"
 
       - name: Setup Firebase Config
         if: startsWith(matrix.platform,'android')
