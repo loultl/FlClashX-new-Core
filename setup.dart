@@ -175,42 +175,41 @@ class Build {
   /// shipping 0.4.3 and 0.4.4 with the same pubspec build number made the new
   /// APK un-installable on top of an existing one.
   ///
-  /// Layout, so that ordering is correct within a release line:
-  ///   0.4.3          -> 4*10000 + 3*100 + 99 = 40399
-  ///   0.4.4-pre.1    -> 4*10000 + 4*100 +  1 = 40401
-  ///   0.4.4-pre.2    -> 40402
-  ///   0.4.4          -> 40499
-  /// A pre-release therefore always sorts below its own final release, and
-  /// successive finals keep increasing.
+  /// Layout: YYYYMMDDNN, the same shape as the historical pubspec build
+  /// numbers (the released v0.4.4 shipped versionCode 2026071801, i.e.
+  /// 2026-07-18-01).
+  ///
+  /// The shape has to be kept rather than encoding major/minor/patch, because
+  /// Android only installs a package whose versionCode exceeds the one already
+  /// installed. An encoded version like 0.4.5 -> 40499 is *smaller* than
+  /// 2026071801, so users who installed v0.4.4 would never be offered v0.4.5.
+  /// Stamping with the build date keeps every new release above every old one.
+  ///
+  /// NN carries the pre-release ordering: pre.N -> N (1..98), final -> 99, so a
+  /// pre-release always sorts below its own final release built the same day.
+  /// Two final releases on one day would collide; tag one of them as a
+  /// pre-release or bump the pubspec build number.
   static String get versionNumber {
     final pubspec = File(join(current, "pubspec.yaml")).readAsStringSync();
     final tag = appVersion;
 
-    int? encode(int major, int minor, int patch, int pre) {
-      final code = major * 1000000 + minor * 10000 + patch * 100 + pre;
+    int? encode(int nn) {
+      final now = DateTime.now();
+      final code = (now.year * 10000 + now.month * 100 + now.day) * 100 + nn;
       if (code < 1 || code > 2100000000) return null;
       return code;
     }
 
     if (tag.isNotEmpty) {
       final v = tag.substring(1);
-      final pre = RegExp(r'^(\d+)\.(\d+)\.(\d+)-pre\.(\d+)$').firstMatch(v);
-      final fin = RegExp(r'^(\d+)\.(\d+)\.(\d+)$').firstMatch(v);
+      final pre = RegExp(r'^\d+\.\d+\.\d+-pre\.(\d+)$').firstMatch(v);
+      final fin = RegExp(r'^\d+\.\d+\.\d+$').firstMatch(v);
       if (pre != null) {
-        final code = encode(
-          int.parse(pre.group(1)!),
-          int.parse(pre.group(2)!),
-          int.parse(pre.group(3)!),
-          int.parse(pre.group(4)!),
-        );
+        final n = int.parse(pre.group(1)!);
+        final code = (n >= 1 && n <= 98) ? encode(n) : null;
         if (code != null) return "$code";
       } else if (fin != null) {
-        final code = encode(
-          int.parse(fin.group(1)!),
-          int.parse(fin.group(2)!),
-          int.parse(fin.group(3)!),
-          99,
-        );
+        final code = encode(99);
         if (code != null) return "$code";
       }
     }
