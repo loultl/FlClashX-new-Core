@@ -19,14 +19,6 @@ on:
         options:
           - auto
           - debug
-      macos_signing:
-        description: "macOS signing: 'unsigned' = build without Apple Developer ID, 'sign' = requires secrets"
-        required: false
-        default: "unsigned"
-        type: choice
-        options:
-          - unsigned
-          - sign
 env:
   IS_STABLE: ${{ !contains(github.ref, '-') }}
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -44,19 +36,16 @@ jobs:
         run: |
           set -euo pipefail
 
-          # macOS builds UNSIGNED: signing + notarization need Apple Developer
-          # secrets (APPLE_CERTIFICATE, APPLE_API_KEY_*) that this fork does not
-          # have. setup.dart maps MACOS_CODESIGN=0 to `flutter build macos
-          # --no-codesign`. Set macos_signing=sign once those secrets exist and
-          # re-enable the sign-macos job. Users of the unsigned build have to
-          # allow it once in System Settings > Privacy & Security.
+          # macOS is disabled: `flutter build macos --no-codesign` (setup.dart,
+          # MACOS_CODESIGN=0) still fails on the runner without a signing
+          # identity, and a signed build needs Apple Developer secrets that this
+          # fork does not have. setup.dart keeps the --no-codesign plumbing, so
+          # re-enabling macOS is just uncommenting these two entries.
           # Format: platform|os|arch   (arch may be empty)
           entries=(
             'android|ubuntu-latest|'
             'windows|windows-latest|amd64'
             'linux|ubuntu-24.04|amd64'
-            'macos|macos-latest|amd64'
-            'macos|macos-latest|arm64'
             'windows|windows-11-arm|arm64'
             'linux|ubuntu-24.04-arm|arm64'
           )
@@ -72,6 +61,7 @@ jobs:
 
           out='['
           count=0
+          matched=" "
           for e in "${entries[@]}"; do
             IFS='|' read -r platform os arch <<< "$e"
 
@@ -83,6 +73,7 @@ jobs:
               if [ "$match" -ne 1 ]; then continue; fi
             fi
 
+            matched="$matched$platform "
             if [ "$count" -gt 0 ]; then out="$out,"; fi
             item="{\"platform\":\"$platform\",\"os\":\"$os\""
             if [ -n "$arch" ]; then item="$item,\"arch\":\"$arch\""; fi
@@ -97,6 +88,19 @@ jobs:
             exit 1
           fi
 
+          # Dropping a typo silently would mean shipping fewer platforms than
+          # asked for, so say so out loud.
+          unknown=""
+          for r in "${req[@]}"; do
+            case "$matched" in
+              *" $r "*) ;;
+              *) unknown="$unknown $r" ;;
+            esac
+          done
+          if [ -n "$unknown" ]; then
+            echo "::warning::Ignored unknown platform(s):$unknown. Known: android,windows,linux"
+          fi
+
           if [ ${#req[@]} -eq 0 ]; then
             echo "Requested platforms: (none) -> building all"
           else
@@ -107,9 +111,6 @@ jobs:
   build:
     needs: [plan]
     runs-on: ${{ matrix.os }}
-    env:
-      # '0' -> setup.dart passes `flutter build macos --no-codesign`.
-      MACOS_CODESIGN: ${{ inputs.macos_signing == 'sign' && '1' || '0' }}
     strategy:
       fail-fast: false
       matrix:
@@ -271,6 +272,12 @@ jobs:
     needs: [build]
     # Only tag runs may rewrite CHANGELOG.md and push back to main.
     if: startsWith(github.ref, 'refs/tags/')
+    # Required: the job's Commit step runs `git push`, and without this the
+    # workflow inherits the repository default (read-only on this fork), so the
+    # push fails with "refusing to allow a GitHub App to create or update
+    # workflow" / 403. Only contents is needed.
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -435,147 +442,3 @@ jobs:
           path: release.md
           retention-days: 1
 
-  aur-publish:
-    needs: [upload]
-    if: always() && needs.upload.result == 'success'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup SSH for AUR
-        env:
-          AUR_SSH_PRIVATE_KEY: ${{ secrets.AUR_SSH_PRIVATE_KEY }}
-        run: |
-          mkdir -p ~/.ssh
-          printf '%s\n' "$AUR_SSH_PRIVATE_KEY" > ~/.ssh/aur
-          chmod 600 ~/.ssh/aur
-          ssh-keyscan aur.archlinux.org >> ~/.ssh/known_hosts 2>/dev/null
-          cat >> ~/.ssh/config << 'SSHEOF'
-          Host aur.archlinux.org
-            IdentityFile ~/.ssh/aur
-            User aur
-          SSHEOF
-
-      - name: Parse release tag
-        id: release
-        run: |
-          VERSION="${GITHUB_REF_NAME#v}"
-          if [[ "$VERSION" =~ ^([0-9.]+)-pre\.([0-9]+)$ ]]; then
-            echo "pkgver=${BASH_REMATCH[1]}" >> "$GITHUB_OUTPUT"
-            echo "pkgrel=${BASH_REMATCH[2]}" >> "$GITHUB_OUTPUT"
-            echo "aur_pkg=flclashx-git" >> "$GITHUB_OUTPUT"
-          else
-            echo "pkgver=$VERSION" >> "$GITHUB_OUTPUT"
-            echo "pkgrel=1" >> "$GITHUB_OUTPUT"
-            echo "aur_pkg=flclashx-bin" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Clone AUR repository
-        run: git clone ssh://aur@aur.archlinux.org/${{ steps.release.outputs.aur_pkg }}.git /tmp/aur-pkg
-
-      - name: Download release assets and compute checksums
-        id: checksums
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          mkdir -p /tmp/aur-assets
-
-          gh release download "$GITHUB_REF_NAME" \
-            -p "FlClashX-linux-amd64.deb" \
-            -D /tmp/aur-assets \
-            -R "$GITHUB_REPOSITORY"
-          echo "sha_x86=$(sha256sum /tmp/aur-assets/FlClashX-linux-amd64.deb | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
-
-          if gh release download "$GITHUB_REF_NAME" \
-            -p "FlClashX-linux-arm64.deb" \
-            -D /tmp/aur-assets \
-            -R "$GITHUB_REPOSITORY" 2>/dev/null; then
-            echo "sha_arm=$(sha256sum /tmp/aur-assets/FlClashX-linux-arm64.deb | cut -d' ' -f1)" >> "$GITHUB_OUTPUT"
-            echo "has_arm=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "has_arm=false" >> "$GITHUB_OUTPUT"
-          fi
-
-          rm -rf /tmp/aur-assets
-
-      - name: Update PKGBUILD
-        working-directory: /tmp/aur-pkg
-        env:
-          PKGVER: ${{ steps.release.outputs.pkgver }}
-          PKGREL: ${{ steps.release.outputs.pkgrel }}
-          SHA_X86: ${{ steps.checksums.outputs.sha_x86 }}
-          SHA_ARM: ${{ steps.checksums.outputs.sha_arm }}
-          HAS_ARM: ${{ steps.checksums.outputs.has_arm }}
-        run: |
-          sed -i "s/^pkgver=.*/pkgver=${PKGVER}/" PKGBUILD
-          sed -i "s/^pkgrel=.*/pkgrel=${PKGREL}/" PKGBUILD
-          sed -i "s/^sha256sums_x86_64=.*/sha256sums_x86_64=('${SHA_X86}')/" PKGBUILD
-
-          if [ "$HAS_ARM" == "true" ]; then
-            sed -i "s/^sha256sums_aarch64=.*/sha256sums_aarch64=('${SHA_ARM}')/" PKGBUILD
-          else
-            sed -i "/^[[:space:]]*'aarch64'/d" PKGBUILD
-            sed -i "/^source_aarch64=/d" PKGBUILD
-            sed -i "/^sha256sums_aarch64=/d" PKGBUILD
-          fi
-
-      - name: Generate .SRCINFO
-        working-directory: /tmp/aur-pkg
-        run: |
-          docker run --rm -v "$(pwd):/pkg" archlinux:base-devel bash -c \
-            "useradd -m -u $(id -u) builder && chown -R builder:builder /pkg && su builder -c 'cd /pkg && makepkg --printsrcinfo > .SRCINFO'"
-
-      - name: Push to AUR
-        working-directory: /tmp/aur-pkg
-        run: |
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git config user.name "Github Actions (pluralplay)"
-          git add PKGBUILD .SRCINFO
-          if ! git diff --cached --quiet; then
-            git commit -m "Update to $GITHUB_REF_NAME"
-            git push
-          fi
-
-  notify:
-    needs: [upload, aur-publish]
-    # Runs after AUR publish; posts as long as the GitHub release succeeded,
-    # regardless of the AUR result.
-    if: always() && needs.upload.result == 'success'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
-
-      - name: Download release notes
-        uses: actions/download-artifact@v6
-        with:
-          name: release-notes
-
-      - name: Prepare commit list for notification
-        id: prepare_commits
-        run: |
-          main_commit=$(git log -1 --pretty=format:"%s" ${{ github.ref_name }})
-          other_commits=$(head -n 20 release.md | grep "^- " | grep -v "^- ${main_commit}$" | head -n 9)
-          commits="• ${main_commit}"
-          if [ -n "$other_commits" ]; then
-            commits="${commits}"$'\n'"${other_commits}"
-          fi
-          commits_escaped=$(echo "$commits" | jq -Rs .)
-          echo "commits=$commits_escaped" >> $GITHUB_OUTPUT
-
-      - name: Send Telegram notifications
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHANNEL_ID_1: ${{ secrets.TELEGRAM_CHANNEL_ID_1 }}
-          TELEGRAM_CHANNEL_ID_2: ${{ secrets.TELEGRAM_CHANNEL_ID_2 }}
-          TELEGRAM_CHANNEL_ID_3: ${{ secrets.TELEGRAM_CHANNEL_ID_3 }}
-          VERSION: ${{ github.ref_name }}
-          COMMITS: ${{ fromJSON(steps.prepare_commits.outputs.commits) }}
-          RELEASE_URL: https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}
-          IS_STABLE: ${{ env.IS_STABLE }}
-        run: |
-          python3 -m pip install requests --quiet
-          python3 .github/scripts/notify_telegram.py
