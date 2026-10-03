@@ -592,6 +592,16 @@ class BuildCommand extends Command {
     required String env,
     required String coreVersion,
   }) async {
+    // macOS code signing needs an Apple Developer ID plus a notarization API
+    // key, neither of which is available in this fork, and `flutter build
+    // macos` fails outright without a signing identity. Signing is therefore
+    // opt-in: MACOS_CODESIGN=0 produces an unsigned .app, which runs after the
+    // user allows it once in System Settings > Privacy & Security (or after
+    // `xattr -dr com.apple.quarantine <app>`). Being unsigned also means no
+    // notarization, so the "unidentified developer" prompt is not suppressed.
+    final skipCodesign =
+        Platform.environment["MACOS_CODESIGN"]?.trim() == "0";
+
     await Build.exec(
       name: "flutter build macos",
       [
@@ -599,6 +609,7 @@ class BuildCommand extends Command {
         "build",
         "macos",
         "--release",
+        if (skipCodesign) "--no-codesign",
         "--dart-define=APP_ENV=$env",
         "--dart-define=CORE_VERSION=$coreVersion",
         "--dart-define=APP_VERSION=${Build.appVersion}",
@@ -606,10 +617,7 @@ class BuildCommand extends Command {
       ],
     );
 
-    final pubspecFile = File(join(current, "pubspec.yaml"));
-    final pubspecContent = pubspecFile.readAsStringSync();
-    final versionMatch = RegExp(r'version:\s*(.+)').firstMatch(pubspecContent);
-    final version = versionMatch?.group(1)?.split('+').first ?? "0.0.0";
+    final version = Build.versionName;
 
     final appName = Build.appName;
     final appPath = join(current, "build", "macos", "Build", "Products",
@@ -675,7 +683,7 @@ class BuildCommand extends Command {
     final winArch = arch == Arch.arm64 ? "arm64" : "x64";
     final buildDir = join(current, "build", "windows", winArch, "runner", "Release");
 
-    final version = Build.readVersion();
+    final version = Build.versionName;
     final distDir = Directory(Build.distPath);
     if (!distDir.existsSync()) distDir.createSync(recursive: true);
 
@@ -771,7 +779,7 @@ class BuildCommand extends Command {
       ],
     );
 
-    final version = Build.readVersion();
+    final version = Build.versionName;
     final appName = Build.appName;
     final archName = arch.name;
     final bundleDir = join(current, "build", "linux", targetMap[arch]!.replaceAll("linux-", ""), "release", "bundle");

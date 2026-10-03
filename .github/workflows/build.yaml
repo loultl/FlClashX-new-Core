@@ -19,6 +19,14 @@ on:
         options:
           - auto
           - debug
+      macos_signing:
+        description: "macOS signing: 'unsigned' = build without Apple Developer ID, 'sign' = requires secrets"
+        required: false
+        default: "unsigned"
+        type: choice
+        options:
+          - unsigned
+          - sign
 env:
   IS_STABLE: ${{ !contains(github.ref, '-') }}
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -36,14 +44,19 @@ jobs:
         run: |
           set -euo pipefail
 
-          # macOS is intentionally absent: signing + notarization require Apple
-          # Developer secrets (APPLE_CERTIFICATE, APPLE_API_KEY_*) that are not
-          # configured for this fork. Re-add the macos entries here once set.
+          # macOS builds UNSIGNED: signing + notarization need Apple Developer
+          # secrets (APPLE_CERTIFICATE, APPLE_API_KEY_*) that this fork does not
+          # have. setup.dart maps MACOS_CODESIGN=0 to `flutter build macos
+          # --no-codesign`. Set macos_signing=sign once those secrets exist and
+          # re-enable the sign-macos job. Users of the unsigned build have to
+          # allow it once in System Settings > Privacy & Security.
           # Format: platform|os|arch   (arch may be empty)
           entries=(
             'android|ubuntu-latest|'
             'windows|windows-latest|amd64'
             'linux|ubuntu-24.04|amd64'
+            'macos|macos-latest|amd64'
+            'macos|macos-latest|arm64'
             'windows|windows-11-arm|arm64'
             'linux|ubuntu-24.04-arm|arm64'
           )
@@ -94,6 +107,9 @@ jobs:
   build:
     needs: [plan]
     runs-on: ${{ matrix.os }}
+    env:
+      # '0' -> setup.dart passes `flutter build macos --no-codesign`.
+      MACOS_CODESIGN: ${{ inputs.macos_signing == 'sign' && '1' || '0' }}
     strategy:
       fail-fast: false
       matrix:

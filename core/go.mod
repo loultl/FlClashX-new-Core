@@ -7,11 +7,21 @@ require (
 	golang.org/x/sync v0.11.0
 )
 
-// Newer browser fingerprints (Firefox 148, Safari 26.3) live on the upstream
-// `v1.9.0-mod-meta` branch, which is a branch (not a tag) -> pseudo-version
-// v0.0.0-..., lower than mihomo's pinned v1.8.7. Force it via replace so
-// `client-fingerprint: firefox` / `safari` resolve to the new specs.
-replace github.com/metacubex/utls => github.com/metacubex/utls v0.0.0-20260715025833-a77524af3a17
+// Core is legiz-ru/Prizrak-Core, a fork that keeps the upstream module path
+// `github.com/metacubex/mihomo`, so no import rewrites are needed in *.go.
+// Its release line tracks mihomo tags: v1.19.32-r1 == mihomo 1.19.32.
+// Source of truth for these pins: src-go/go.mod on legiz-ru/Prizrak-Box@dev_21.
+//
+// NOTE: replace directives of a dependency are ignored by Go - only the main
+// module's replaces apply. Prizrak-Core's own replaces must therefore be
+// mirrored here, or the build breaks on missing symbols.
+replace github.com/metacubex/mihomo => github.com/legiz-ru/Prizrak-Core v1.19.32-r1
+
+replace github.com/metacubex/utls => github.com/legiz-ru/prizrak-utls v0.0.0-20260910220934-80ad70380fe8
+
+replace github.com/metacubex/http => github.com/legiz-ru/prizrak-http v0.0.0-20260930180911-da5b4c1e0882
+
+replace google.golang.org/protobuf => github.com/metacubex/protobuf-go v0.0.0-20260306035419-7ceee0674686
 
 require (
 	github.com/RyuaNerin/go-krypto v1.3.0 // indirect
@@ -126,6 +136,7 @@ require (
 	github.com/tailscale/peercred v0.0.0-20250107143737-35a0c7bd7edc // indirect
 	github.com/u-root/uio v0.0.0-20230220225925-ffce2a382923 // indirect
 	github.com/ulikunitz/xz v0.5.15 // indirect
+	github.com/vernesong/leaves v0.0.0-20260629081247-2a1c022f37d0 // indirect
 	github.com/vishvananda/netns v0.0.5 // indirect
 	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
@@ -146,4 +157,5 @@ require (
 	golang.org/x/time v0.10.0 // indirect
 	golang.org/x/tools v0.24.0 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
