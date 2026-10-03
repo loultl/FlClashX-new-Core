@@ -154,6 +154,79 @@ class Build {
     return RegExp(r'^v\d').hasMatch(ref) ? ref : "";
   }
 
+  /// versionName baked into the binary (User-Agent, About screen, Windows and
+  /// macOS bundle metadata).
+  ///
+  /// Derived from the CI tag, NOT from pubspec.yaml: nothing in the pipeline
+  /// ever rewrote pubspec, so versionName stayed frozen at whatever the last
+  /// manual edit was (0.4.2+2026071801) and every release since then shipped
+  /// as "0.4.2". Non-tag builds (local, branch) keep the pubspec value.
+  static String get versionName {
+    final tag = appVersion;
+    if (tag.isNotEmpty) return tag.substring(1);
+    return readVersion();
+  }
+
+  /// versionCode / build number.
+  ///
+  /// Also derived from the tag, because a frozen versionCode is what silently
+  /// blocked Android updates: Play and the package installer only accept an
+  /// update when versionCode is strictly greater than the installed one, so
+  /// shipping 0.4.3 and 0.4.4 with the same pubspec build number made the new
+  /// APK un-installable on top of an existing one.
+  ///
+  /// Layout, so that ordering is correct within a release line:
+  ///   0.4.3          -> 4*10000 + 3*100 + 99 = 40399
+  ///   0.4.4-pre.1    -> 4*10000 + 4*100 +  1 = 40401
+  ///   0.4.4-pre.2    -> 40402
+  ///   0.4.4          -> 40499
+  /// A pre-release therefore always sorts below its own final release, and
+  /// successive finals keep increasing.
+  static String get versionNumber {
+    final pubspec = File(join(current, "pubspec.yaml")).readAsStringSync();
+    final tag = appVersion;
+
+    int? encode(int major, int minor, int patch, int pre) {
+      final code = major * 1000000 + minor * 10000 + patch * 100 + pre;
+      if (code < 1 || code > 2100000000) return null;
+      return code;
+    }
+
+    if (tag.isNotEmpty) {
+      final v = tag.substring(1);
+      final pre = RegExp(r'^(\d+)\.(\d+)\.(\d+)-pre\.(\d+)$').firstMatch(v);
+      final fin = RegExp(r'^(\d+)\.(\d+)\.(\d+)$').firstMatch(v);
+      if (pre != null) {
+        final code = encode(
+          int.parse(pre.group(1)!),
+          int.parse(pre.group(2)!),
+          int.parse(pre.group(3)!),
+          int.parse(pre.group(4)!),
+        );
+        if (code != null) return "$code";
+      } else if (fin != null) {
+        final code = encode(
+          int.parse(fin.group(1)!),
+          int.parse(fin.group(2)!),
+          int.parse(fin.group(3)!),
+          99,
+        );
+        if (code != null) return "$code";
+      }
+    }
+
+    // No usable tag: fall back to the pubspec build number so local and
+    // branch builds keep working.
+    final m = RegExp(r'^version:\s*[^+\s]+\+(\S+)').firstMatch(pubspec);
+    return m?.group(1)?.trim() ?? "1";
+  }
+
+  /// Flags appended to every `flutter build` invocation.
+  static List<String> get versionFlags => [
+    '--build-name=$versionName',
+    '--build-number=$versionNumber',
+  ];
+
   static String _getCc(BuildItem buildItem) {
     final environment = Platform.environment;
     if (buildItem.target == Target.android) {
@@ -529,6 +602,7 @@ class BuildCommand extends Command {
         "--dart-define=APP_ENV=$env",
         "--dart-define=CORE_VERSION=$coreVersion",
         "--dart-define=APP_VERSION=${Build.appVersion}",
+        ...Build.versionFlags,
       ],
     );
 
@@ -594,6 +668,7 @@ class BuildCommand extends Command {
         "--dart-define=CORE_SHA256=$token",
         "--dart-define=CORE_VERSION=$coreVersion",
         "--dart-define=APP_VERSION=${Build.appVersion}",
+        ...Build.versionFlags,
       ],
     );
 
@@ -692,6 +767,7 @@ class BuildCommand extends Command {
         "--dart-define=APP_ENV=$env",
         "--dart-define=CORE_VERSION=$coreVersion",
         "--dart-define=APP_VERSION=${Build.appVersion}",
+        ...Build.versionFlags,
       ],
     );
 
@@ -921,6 +997,7 @@ class BuildCommand extends Command {
         "--dart-define=APP_ENV=$env",
         "--dart-define=CORE_VERSION=$coreVersion",
         "--dart-define=APP_VERSION=${Build.appVersion}",
+        ...Build.versionFlags,
       ],
     );
 
@@ -944,6 +1021,7 @@ class BuildCommand extends Command {
         "--dart-define=APP_ENV=$env",
         "--dart-define=CORE_VERSION=$coreVersion",
         "--dart-define=APP_VERSION=${Build.appVersion}",
+        ...Build.versionFlags,
       ],
     );
     Build.copyFile(
