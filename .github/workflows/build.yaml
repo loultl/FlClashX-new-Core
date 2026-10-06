@@ -289,7 +289,14 @@ jobs:
         if: ${{ env.IS_STABLE == 'true' }}
         run: |
           tags=($(git tag --merged $(git rev-parse HEAD) --sort=-creatordate))
-          preTag=$(grep -oP '^## \K.*' CHANGELOG.md | head -n 1)
+          # The newest heading already in the file is the stop marker. If the
+          # file has been trimmed and has no heading, fall back to the second
+          # tag: with an empty preTag the loop below never matches and appends
+          # the entire history again.
+          preTag=$(grep -oP '^## \K.*' CHANGELOG.md 2>/dev/null | head -n 1)
+          if [ -z "$preTag" ] && [ ${#tags[@]} -ge 2 ]; then
+            preTag="${tags[1]}"
+          fi
           currentTag=""
           for ((i = 0; i <= ${#tags[@]}; i++)); do
             if (( i < ${#tags[@]} )); then
@@ -360,10 +367,22 @@ jobs:
         run: |
           tags=($(git tag --merged $(git rev-parse HEAD) --sort=-creatordate))
           
-          # Determine previous tag based on release type
+          # Previous tag of THIS repository. It used to ask the upstream
+          # pluralplay/FlClashX for its latest release, which on a fork never
+          # matches any local tag - so the loop below never found its stop
+          # marker and walked every tag back to the upstream initial commit,
+          # dumping 519 lines into the notes. github.repository is the fork
+          # itself, and the second entry of the local tag list is a fallback so
+          # an empty API answer can never turn into a full-history dump again.
+          latestHere() {
+            curl --silent "https://api.github.com/repos/${{ github.repository }}/releases/latest" \
+              | grep -Po '"tag_name": "\K.*?(?=")' || echo ""
+          }
           if [ "${{ env.IS_STABLE }}" == "true" ]; then
-            # For stable: get latest stable release from API
-            preTag=$(curl --silent "https://api.github.com/repos/pluralplay/FlClashX/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")' || echo "")
+            preTag=$(latestHere)
+            if [ -z "$preTag" ] && [ ${#tags[@]} -ge 2 ]; then
+              preTag="${tags[1]}"
+            fi
           else
             # For pre-release: get the latest pre-release tag (last tag with '-' in name before current)
             preTag=""
@@ -375,7 +394,10 @@ jobs:
             done
             # If no previous pre-release found, use latest stable
             if [ -z "$preTag" ]; then
-              preTag=$(curl --silent "https://api.github.com/repos/pluralplay/FlClashX/releases/latest" | grep -Po '"tag_name": "\K.*?(?=")' || echo "")
+              preTag=$(latestHere)
+            fi
+            if [ -z "$preTag" ] && [ ${#tags[@]} -ge 2 ]; then
+              preTag="${tags[1]}"
             fi
           fi
           
