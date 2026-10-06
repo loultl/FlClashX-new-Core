@@ -1,3 +1,7 @@
+## v0.4.7.8
+
+- feat(proxies): psychology icon, real scores instead of fake percents, Russian strings
+- ci: changelog and release notes take commit subjects only
 ## v0.4.7.7
 
 - fix(proxies): put the Smart weights button on the proxy card, where Smart is visible
