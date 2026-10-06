@@ -1,3 +1,7 @@
+## v0.4.7.9
+
+- feat: Prizrak-Core User-Agent option, and stop the grid card clipping the ping
+- ci: stop the release notes walking the entire history
 ## v0.4.7.8
 
 - feat(proxies): psychology icon, real scores instead of fake percents, Russian strings
