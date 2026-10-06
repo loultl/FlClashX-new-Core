@@ -779,6 +779,24 @@ class MessageLookup extends MessageLookupByLibrary {
       "Запускать в свернутом виде",
     ),
     "size": MessageLookupByLibrary.simpleMessage("Размер"),
+      "smartMostUsed": MessageLookupByLibrary.simpleMessage(
+        'Чаще всего используется',
+      ),
+      "smartOccasionallyUsed": MessageLookupByLibrary.simpleMessage(
+        'Используется иногда',
+      ),
+      "smartRarelyUsed": MessageLookupByLibrary.simpleMessage(
+        'Используется редко',
+      ),
+      "smartWeightsEmpty": MessageLookupByLibrary.simpleMessage(
+        'Данных показателей пока. Smart-группа составляет рейтинг, только после передачи трафика.',
+      ),
+      "smartWeightsNeedController": MessageLookupByLibrary.simpleMessage(
+        'Веса использования требует external-controller, который выключён.',
+      ),
+      "smartWeightsTitle": MessageLookupByLibrary.simpleMessage(
+        'Веса использования',
+      ),
     "socksPort": MessageLookupByLibrary.simpleMessage("Socks-порт"),
     "sort": MessageLookupByLibrary.simpleMessage("Сортировка"),
     "source": MessageLookupByLibrary.simpleMessage("Источник"),

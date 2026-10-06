@@ -75,6 +75,67 @@ class AppLocalizations {
   }
 
   /// `Only the selected apps are routed through the VPN; all others connect directly.`
+  /// Most used
+  String get smartMostUsed {
+    return Intl.message(
+      'Most used',
+      name: 'smartMostUsed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// Occasionally used
+  String get smartOccasionallyUsed {
+    return Intl.message(
+      'Occasionally used',
+      name: 'smartOccasionallyUsed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// Rarely used
+  String get smartRarelyUsed {
+    return Intl.message(
+      'Rarely used',
+      name: 'smartRarelyUsed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// Usage weights
+  /// Usage weights need the external-controller, which is off.
+  /// No usage data yet. A Smart group records its ranking only after it has
+  /// actually routed traffic.
+  String get smartWeightsEmpty {
+    return Intl.message(
+      'No usage data yet. A Smart group records its ranking only after it has actually routed traffic.',
+      name: 'smartWeightsEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get smartWeightsNeedController {
+    return Intl.message(
+      'Usage weights need the external-controller, which is off.',
+      name: 'smartWeightsNeedController',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get smartWeightsTitle {
+    return Intl.message(
+      'Usage weights',
+      name: 'smartWeightsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
   String get whitelistModeDesc {
     return Intl.message(
       'Only the selected apps are routed through the VPN; all others connect directly.',

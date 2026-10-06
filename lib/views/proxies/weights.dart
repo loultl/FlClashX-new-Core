@@ -81,7 +81,7 @@ class _SmartWeightsViewState extends ConsumerState<SmartWeightsView> {
             // it on rather than showing a dead end - same trade the in-app
             // Zashboard makes when it enables the controller for a session.
             return _EmptyState(
-              message: 'Usage weights need the external-controller, which is off.',
+              message: appLocalizations.smartWeightsNeedController,
               action: TextButton(
                 onPressed: () async {
                   await globalState.appController
@@ -100,9 +100,7 @@ class _SmartWeightsViewState extends ConsumerState<SmartWeightsView> {
           if (result.weights.isEmpty) {
             // Whatever the core said about why, in its own words.
             return _EmptyState(
-              message: result.error ??
-                  'No usage data yet. A Smart group records its ranking only '
-                      'after it has actually routed traffic.',
+              message: result.error ?? appLocalizations.smartWeightsEmpty,
             );
           }
           final sorted = [...result.weights]
@@ -131,17 +129,21 @@ class _WeightRow extends ConsumerWidget {
   final SmartWeight weight;
   final String? testUrl;
 
-  static const _rankLabels = {
-    'MostUsed': 'Most used',
-    'OccasionalUsed': 'Occasionally used',
-    'RarelyUsed': 'Rarely used',
-  };
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colorScheme = context.colorScheme;
-    final percent = (weight.weight * 100).round();
-    final label = _rankLabels[weight.rank];
+    // The core builds this value as `round(score/maxScore*100*100)/100`, i.e.
+    // already a 0..100 score where the best node lands on exactly 100. It is
+    // NOT a share of anything, so it is shown as a bare number: multiplying by
+    // 100 again produced things like "10000%", and every progress bar clamped to
+    // full width because 100 > 1.
+    final score = weight.weight;
+    final label = switch (weight.rank) {
+      'MostUsed' => appLocalizations.smartMostUsed,
+      'OccasionalUsed' => appLocalizations.smartOccasionallyUsed,
+      'RarelyUsed' => appLocalizations.smartRarelyUsed,
+      _ => null,
+    };
     final color = weight.isMostUsed
         ? colorScheme.primary
         : weight.isOccasionalUsed
@@ -197,7 +199,11 @@ class _WeightRow extends ConsumerWidget {
               ),
               const SizedBox(width: 10),
               Text(
-                '$percent%',
+                // Trim a trailing ".0" so the best node reads "100" rather
+                // than "100.0", and one decimal is enough below that.
+                score.roundToDouble() == score
+                    ? score.round().toString()
+                    : score.toStringAsFixed(1),
                 style: context.textTheme.labelLarge?.copyWith(
                   color: color,
                   fontWeight: FontWeight.w700,
@@ -212,9 +218,9 @@ class _WeightRow extends ConsumerWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(4),
                   child: LinearProgressIndicator(
-                    // weight is a 0..1 share; guard the 0 and 1 ends so the
-                    // bar never asserts or renders full-width on rounding.
-                    value: weight.weight.clamp(0.0, 1.0),
+                    // 0..100 score, so scale to the 0..1 a progress bar wants. The
+                    // clamp is what keeps a rounding artefact from asserting.
+                    value: (score / 100).clamp(0.0, 1.0),
                     minHeight: 5,
                     backgroundColor: colorScheme.surfaceContainerHighest,
                     valueColor: AlwaysStoppedAnimation(color),
@@ -259,13 +265,13 @@ class _EmptyState extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              Icons.balance_outlined,
+              Icons.psychology_outlined,
               size: 42,
               color: context.colorScheme.outline,
             ),
             const SizedBox(height: 12),
             Text(
-              message ?? 'No usage data yet',
+              message ?? appLocalizations.smartWeightsEmpty,
               textAlign: TextAlign.center,
               style: context.textTheme.bodyMedium,
             ),
@@ -274,8 +280,7 @@ class _EmptyState extends StatelessWidget {
             if (action == null) ...[
               const SizedBox(height: 6),
               Text(
-                'A Smart group records its ranking only after it has actually '
-                'routed traffic.',
+                appLocalizations.smartWeightsEmpty,
                 textAlign: TextAlign.center,
                 style: context.textTheme.bodySmall?.toLight,
               ),

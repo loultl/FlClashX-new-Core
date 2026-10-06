@@ -59,10 +59,11 @@ class ProxyCard extends StatelessWidget {
             showSmartWeights(context, proxy.name, testUrl: testUrl),
         padding: EdgeInsets.zero,
         constraints: const BoxConstraints.tightFor(width: 28, height: 28),
-        // monitor_weight is Material's scales glyph - reads as "weight" rather
-        // than "balance", which is what the ranking actually is.
+        // psychology reads as "how the group thinks" - the Smart group's own
+        // choice - rather than a literal scale, which is what the ranking is
+        // not: the number is a relative score, not a share of anything.
         icon: Icon(
-          Icons.monitor_weight_outlined,
+          Icons.psychology_outlined,
           size: globalState.measure.bodySmallHeight,
         ),
       ),

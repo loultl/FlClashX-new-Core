@@ -501,5 +501,11 @@
   "zashboardInApp": "Открывать zashboard в приложении",
   "zashboardInAppDesc": "Показывать панель во встроенном браузере, не переключаясь на внешний",
   "openPanel": "Открыть панель",
-  "downloadingZashboard": "Качаю Zashboard…"
+  "downloadingZashboard": "Качаю Zashboard…",
+  "smartMostUsed": "Чаще всего используется",
+  "smartOccasionallyUsed": "Используется иногда",
+  "smartRarelyUsed": "Используется редко",
+  "smartWeightsTitle": "Веса использования",
+  "smartWeightsNeedController": "Веса использования требует external-controller, который выключён.",
+  "smartWeightsEmpty": "Данных показателей пока. Smart-группа составляет рейтинг, только после передачи трафика."
 }
