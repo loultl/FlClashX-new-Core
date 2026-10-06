@@ -245,12 +245,24 @@ class ProxyCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Flexible(
-                            flex: 1,
-                            child: _ProxyDesc(proxy: proxy),
-                          ),
+                          // Expanded, not Flexible: a loose fit lets the
+                          // description keep its intrinsic width, and once the
+                          // button and the ping no longer fit, the ping is what
+                          // got clipped - "Timeout" came out as "Timeou" in the
+                          // narrow grid card. Expanded forces the description to
+                          // absorb the shortfall, which is the text that already
+                          // has an ellipsis.
+                          Expanded(child: _ProxyDesc(proxy: proxy)),
                           _buildWeightsButton(context),
-                          delayText,
+                          // The ping stays whole: it is short and it is the only
+                          // indication that the node answers at all.
+                          Flexible(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerRight,
+                              child: delayText,
+                            ),
+                          ),
                         ],
                       ),
                     ),

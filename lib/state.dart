@@ -163,9 +163,21 @@ class GlobalState {
       ? appVersionTag
       : (isPre ? "${packageInfo.version}-pre" : packageInfo.version);
 
-  String get ua =>
-      config.patchClashConfig.globalUa ??
-      packageInfo.ua(appVersion: _uaVersion, coreVersion: coreVersion);
+  String get ua {
+    final configured = config.patchClashConfig.globalUa;
+    if (configured == null) {
+      return packageInfo.ua(appVersion: _uaVersion, coreVersion: coreVersion);
+    }
+    // The marker is an option, not a User-Agent. Anything else in globalUa is a
+    // literal set by the profile or picked from the list, and is sent verbatim.
+    if (configured == uaPrizrakMarker) {
+      return packageInfo.prizrakUa(
+        appVersion: _uaVersion,
+        coreVersion: coreVersion,
+      );
+    }
+    return configured;
+  }
 
   int _tasksEpoch = 0;
 

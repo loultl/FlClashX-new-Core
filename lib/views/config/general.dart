@@ -119,6 +119,12 @@ class LogLevelItem extends ConsumerWidget {
 class UaItem extends ConsumerWidget {
   const UaItem({super.key});
 
+  /// Shows what will actually be sent. The two dynamic options carry live
+  /// versions, so listing a frozen string next to the picker would misinform
+  /// the moment either the app or the core is updated.
+  static String _uaLabel(String value) =>
+      value == uaPrizrakMarker ? globalState.ua : value;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final globalUa =
@@ -126,11 +132,14 @@ class UaItem extends ConsumerWidget {
     return ListItem<String?>.options(
       leading: const Icon(Icons.computer_outlined),
       title: const Text("UA"),
-      subtitle: Text(globalUa ?? appLocalizations.defaultText),
+      subtitle: Text(globalUa == null
+            ? appLocalizations.defaultText
+            : _uaLabel(globalUa)),
       delegate: OptionsDelegate<String?>(
         title: "UA",
         options: [
           null,
+          uaPrizrakMarker,
           "clashx-verge/v1.6.6",
           "ClashforWindows/0.19.23",
         ],
@@ -142,7 +151,8 @@ class UaItem extends ConsumerWidget {
                 ),
               );
         },
-        textBuilder: (ua) => ua ?? appLocalizations.defaultText,
+        textBuilder: (ua) =>
+            ua == null ? appLocalizations.defaultText : _uaLabel(ua),
       ),
     );
   }
