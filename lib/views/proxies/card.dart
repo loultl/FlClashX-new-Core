@@ -4,6 +4,7 @@ import 'package:flclashx/models/models.dart';
 import 'package:flclashx/providers/providers.dart';
 import 'package:flclashx/state.dart';
 import 'package:flclashx/views/proxies/common.dart';
+import 'package:flclashx/views/proxies/weights.dart';
 import 'package:flclashx/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,6 +31,41 @@ class ProxyCard extends StatelessWidget {
     proxyDelayTest(
       proxy,
       testUrl,
+    );
+  }
+
+  /// A Smart group keeps a ranking of which nodes it actually uses, which is not
+  /// in /proxies, so it needs its own button.
+  ///
+  /// Matched on the raw `type` string rather than on GroupType: a Smart group is
+  /// not a GroupType at all. GroupType covers Selector / URLTest / Fallback /
+  /// LoadBalance / Relay, and getProxiesGroups drops anything outside that list,
+  /// so a Smart group never becomes a group card - it arrives as a nested
+  /// Proxy, whose `type` is a plain String and does read "Smart". That is also
+  /// why this button lives on the proxy card and not in the group header.
+  bool get isSmart => proxy.type == 'Smart';
+
+  /// Mini button that opens the usage ranking of a Smart group.
+  ///
+  /// Sits inline just before the ping rather than in a corner of the card's
+  /// Stack: the ping lives at the right edge of every layout, so an absolutely
+  /// positioned button would overlap it in the one-line card style.
+  Widget _buildWeightsButton(BuildContext context) {
+    if (!isSmart) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(right: 4),
+      child: IconButton(
+        onPressed: () =>
+            showSmartWeights(context, proxy.name, testUrl: testUrl),
+        padding: EdgeInsets.zero,
+        constraints: const BoxConstraints.tightFor(width: 28, height: 28),
+        // monitor_weight is Material's scales glyph - reads as "weight" rather
+        // than "balance", which is what the ranking actually is.
+        icon: Icon(
+          Icons.monitor_weight_outlined,
+          size: globalState.measure.bodySmallHeight,
+        ),
+      ),
     );
   }
 
@@ -100,6 +136,7 @@ class ProxyCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
+              _buildWeightsButton(context),
               _buildDelayText(),
             ],
           ),
@@ -192,7 +229,14 @@ class ProxyCard extends StatelessWidget {
                     const SizedBox(
                       height: 6,
                     ),
-                    delayText,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Flexible(child: delayText),
+                        _buildWeightsButton(context),
+                      ],
+                    ),
                   ] else
                     SizedBox(
                       height: measure.bodySmallHeight,
@@ -204,6 +248,7 @@ class ProxyCard extends StatelessWidget {
                             flex: 1,
                             child: _ProxyDesc(proxy: proxy),
                           ),
+                          _buildWeightsButton(context),
                           delayText,
                         ],
                       ),
@@ -222,7 +267,7 @@ class ProxyCard extends StatelessWidget {
               proxy: proxy,
               cardType: type,
             ),
-          )
+          ),
       ],
     );
   }

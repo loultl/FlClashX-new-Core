@@ -22,6 +22,26 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// rather than an error.
 ///
 /// Stateful so the request is made once per sheet rather than on every rebuild.
+/// Opens the [SmartWeightsView] sheet for [groupName].
+///
+/// Lives here so the sheet plumbing stays in one place and the proxy card only
+/// has to call one function.
+void showSmartWeights(
+  BuildContext context,
+  String groupName, {
+  String? testUrl,
+}) {
+  showSheet(
+    context: context,
+    props: const SheetProps(isScrollControlled: true),
+    builder: (_, type) => AdaptiveSheetScaffold(
+      type: type,
+      title: groupName,
+      body: SmartWeightsView(groupName: groupName, testUrl: testUrl),
+    ),
+  );
+}
+
 class SmartWeightsView extends ConsumerStatefulWidget {
   const SmartWeightsView({
     super.key,

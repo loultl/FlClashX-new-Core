@@ -137,15 +137,6 @@ class ClashCore {
           .toList();
       return group;
     }).toList();
-    // Keep the raw type string before Group.fromJson folds it into the enum.
-    globalState.groupRawTypes.clear();
-    for (final e in groupsRaw) {
-      final name = e["name"];
-      final type = e["type"];
-      if (name is String && type is String) {
-        globalState.groupRawTypes[name] = type;
-      }
-    }
     return groupsRaw
         .map(
           (e) => Group.fromJson(Map<String, dynamic>.from(e)),
