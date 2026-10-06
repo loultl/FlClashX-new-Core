@@ -306,9 +306,9 @@ jobs:
               echo "## $currentTag" >> NEW_CHANGELOG.md
               echo "" >> NEW_CHANGELOG.md
               if [ -n "$tag" ]; then
-                git log --pretty=format:"%B" "$tag..$currentTag" | awk 'NF {print "- " $0} !NF {print ""}' >> NEW_CHANGELOG.md
+                git log --invert-grep --grep '^Update changelog$' --pretty=format:"- %s" "$tag..$currentTag" >> NEW_CHANGELOG.md
               else
-                git log --pretty=format:"%B" "$currentTag" | awk 'NF {print "- " $0} !NF {print ""}' >> NEW_CHANGELOG.md
+                git log --invert-grep --grep '^Update changelog$' --pretty=format:"- %s" "$currentTag" >> NEW_CHANGELOG.md
               fi
               echo "" >> NEW_CHANGELOG.md
             fi
@@ -393,9 +393,9 @@ jobs:
             fi
             if [ -n "$currentTag" ]; then
               if [ -n "$tag" ]; then
-                git log --pretty=format:"%B" "$tag..$currentTag" | awk 'NF {print "- " $0} !NF {print ""}' >> release.md
+                git log --invert-grep --grep '^Update changelog$' --pretty=format:"- %s" "$tag..$currentTag" >> release.md
               else
-                git log --pretty=format:"%B" "$currentTag" | awk 'NF {print "- " $0} !NF {print ""}' >> release.md
+                git log --invert-grep --grep '^Update changelog$' --pretty=format:"- %s" "$currentTag" >> release.md
               fi
               echo "" >> release.md
             fi
