@@ -49,6 +49,15 @@ class GlobalState {
   // (the CI git tag, e.g. "0.4.1-pre.18", leading `v` stripped). Empty on local
   // builds, where [_uaVersion] falls back to the pubspec version + a `-pre` mark.
   String appVersionTag = "";
+  // Raw `type` string per group, exactly as /proxies reports it ("Selector",
+  // "URLTest", "Smart", ...), keyed by group name.
+  //
+  // Group.fromJson folds that into the GroupType enum, which has no Smart
+  // value, and the enum's generated map in models/generated/common.g.dart
+  // cannot gain one without re-running build_runner. Keeping the string is the
+  // cheap way to tell a Smart group apart. Nested Smart groups always displayed
+  // as "Smart" regardless: those arrive as Proxy, whose `type` is a String.
+  final Map<String, String> groupRawTypes = {};
   late PackageInfo packageInfo;
   Function? updateCurrentDelayDebounce;
   late Measure measure;

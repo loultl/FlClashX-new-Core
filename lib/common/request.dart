@@ -10,6 +10,31 @@ import 'package:flclashx/models/models.dart';
 import 'package:flclashx/state.dart';
 import 'package:flutter/cupertino.dart';
 
+/// Outcome of a Smart-group ranking lookup.
+///
+/// The controller answers with `{"weights": [...]}` rather than a bare array,
+/// and reports its refusals inside that same envelope - 400 "Not a Smart
+/// group", 503 "Smart cache not available", 500 "Failed to get weight
+/// ranking: ..." - so [error] carries the server's own wording through to the
+/// UI instead of collapsing every failure into "no data".
+class SmartWeightsResult {
+  const SmartWeightsResult({
+    required this.weights,
+    this.error,
+    this.unauthorized = false,
+  });
+
+  final List<SmartWeight> weights;
+
+  /// The controller's explanation, when it gave one. An empty [weights] with a
+  /// null [error] is the legitimate "profile is fresh" case.
+  final String? error;
+
+  /// True on 401: the profile sets a `secret` that this client did not send
+  /// correctly. Distinct from "controller is off", and shown differently.
+  final bool unauthorized;
+}
+
 class Request {
 
   Request() {
@@ -336,6 +361,82 @@ class Request {
 
       if (response.statusCode != HttpStatus.ok) return null;
       return response.data;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Base URL of the core's REST controller, or null when it is disabled.
+  ///
+  /// A `0.0.0.0` / `::` bind address is not connectable as a destination on
+  /// every platform, so it is folded back to loopback - same reasoning as
+  /// buildZashboardUrl, which has to make the same substitution.
+  String? _controllerBaseUrl() {
+    final address = globalState.effectiveExternalController.value.trim();
+    if (address.isEmpty) return null;
+    final index = address.lastIndexOf(':');
+    var host = index > 0 ? address.substring(0, index).trim() : '';
+    final port = index >= 0 ? address.substring(index + 1).trim() : address.trim();
+    if (host.isEmpty || host == '0.0.0.0' || host == '::') {
+      host = localhost;
+    }
+    return 'http://$host:$port';
+  }
+
+  /// Per-node usage ranking of a Smart group, read over the core's REST
+  /// controller (`GET /group/{name}/weights`).
+  ///
+  /// Over HTTP rather than through the Go bridge on purpose. The ranking lives
+  /// in the profile's bbolt store and that endpoint is the only way out of it,
+  /// so a bridge action would make this client own a blocking cache read for the
+  /// sake of a button press. Going through the controller needs no core changes
+  /// at all - and `_dio` is used rather than `_clashDio` because this is a
+  /// loopback address, which must never be routed through the tunnel.
+  ///
+  /// Returns null when the controller is disabled or the request cannot be made
+  /// at all; the caller offers to switch the controller on. The group name goes
+  /// through [Uri.encodeComponent] because the core runs the path segment back
+  /// through `url.PathUnescape`, so it must be escaped exactly once.
+  Future<SmartWeightsResult?> getSmartWeights(String groupName) async {
+    final baseUrl = _controllerBaseUrl();
+    if (baseUrl == null || groupName.isEmpty) return null;
+    final secret = globalState.effectiveSecret.value.trim();
+    try {
+      final response = await _dio.get<Map<String, dynamic>>(
+        '$baseUrl/group/${Uri.encodeComponent(groupName)}/weights',
+        options: Options(
+          responseType: ResponseType.json,
+          // The core only installs its auth middleware when the profile sets a
+          // secret, so an empty one means the header is not merely unnecessary
+          // - sending "Bearer" with no token would be the malformed case.
+          headers: secret.isEmpty ? null : {'Authorization': 'Bearer $secret'},
+        ),
+      ).timeout(const Duration(seconds: 3));
+      final data = response.data;
+      if (response.statusCode == HttpStatus.unauthorized) {
+        return SmartWeightsResult(
+          weights: const [],
+          unauthorized: true,
+          error: 'external-controller rejected the secret',
+        );
+      }
+      final raw = data?['weights'];
+      final list = raw is List ? raw : const [];
+      final weights = <SmartWeight>[];
+      for (final item in list) {
+        // Tolerant: skip a malformed entry rather than lose the whole list.
+        if (item is Map) {
+          weights.add(
+            SmartWeight(
+              name: item['Name'] as String? ?? '',
+              rank: item['Rank'] as String? ?? '',
+              weight: (item['Weight'] as num?)?.toDouble() ?? 0,
+            ),
+          );
+        }
+      }
+      final error = data?['error'] as String? ?? data?['message'] as String?;
+      return SmartWeightsResult(weights: weights, error: error);
     } catch (_) {
       return null;
     }

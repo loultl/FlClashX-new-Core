@@ -593,3 +593,36 @@ class Script with _$Script {
 
   factory Script.fromJson(Map<String, Object?> json) => _$ScriptFromJson(json);
 }
+
+/// One node's usage ranking inside a Smart group, as reported by the core's
+/// `GET /group/{name}/weights`.
+///
+/// Mirrors mihomo's `smart.NodeRankItem`, which carries no json tags and
+/// therefore serialises with capitalised keys ("Name"/"Rank"/"Weight").
+///
+/// Deliberately a plain class rather than a freezed model: it has no identity,
+/// is built in exactly one place (Request.getSmartWeights) and needs no
+/// copyWith, so pulling build_runner in for it would be all cost, no benefit.
+///
+/// [weight] is a 0..1 share, not a percentage. [rank] is one of MostUsed,
+/// OccasionalUsed or RarelyUsed.
+class SmartWeight {
+  const SmartWeight({
+    required this.name,
+    required this.rank,
+    required this.weight,
+  });
+
+  final String name;
+  final String rank;
+  final double weight;
+
+  bool get isMostUsed => rank == 'MostUsed';
+
+  bool get isOccasionalUsed => rank == 'OccasionalUsed';
+
+  bool get isRarelyUsed => rank == 'RarelyUsed';
+
+  /// True when the core recognised the node and recorded usage for it.
+  bool get hasData => isMostUsed || isOccasionalUsed || isRarelyUsed;
+}

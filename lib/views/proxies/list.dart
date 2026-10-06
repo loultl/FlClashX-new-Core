@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'card.dart';
 import 'common.dart';
+import 'weights.dart';
 
 typedef GroupNameProxiesMap = Map<String, List<Proxy>>;
 
@@ -265,6 +266,30 @@ class _ProxyGroupCardState extends State<ProxyGroupCard>
     isLock = false;
   }
 
+  /// Smart groups keep a usage ranking (which nodes actually get picked and how
+  /// often). It is not part of /proxies, so it gets its own button rather than
+  /// another line in the proxy card.
+  ///
+  /// Detected from the raw type string, not from Group.type: GroupType has no
+  /// Smart value, and adding one would require regenerating the enum map in
+  /// models/generated/common.g.dart.
+  bool get isSmart => globalState.groupRawTypes[groupName] == 'Smart';
+
+  void _showWeights() {
+    showSheet(
+      context: context,
+      props: const SheetProps(isScrollControlled: true),
+      builder: (_, type) => AdaptiveSheetScaffold(
+        type: type,
+        title: groupName,
+        body: SmartWeightsView(
+          groupName: groupName,
+          testUrl: widget.group.testUrl,
+        ),
+      ),
+    );
+  }
+
   Widget _buildIcon() => Consumer(
       builder: (_, ref, child) {
         final iconStyle = ref.watch(
@@ -403,6 +428,21 @@ class _ProxyGroupCardState extends State<ProxyGroupCard>
                                 const BoxConstraints.tightFor(width: 40, height: 40),
                             icon: const Icon(Icons.network_ping),
                           ),
+                          // Only Smart groups have a usage ranking, so the
+                          // button only appears there. Same 40x40 box as the
+                          // siblings, which keeps the D-pad geometry consistent.
+                          if (isSmart) ...[
+                            const SizedBox(width: 6),
+                            IconButton(
+                              onPressed: _showWeights,
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints.tightFor(
+                                width: 40,
+                                height: 40,
+                              ),
+                              icon: const Icon(Icons.balance_outlined),
+                            ),
+                          ],
                           const SizedBox(width: 6),
                           IconButton.filledTonal(
                             onPressed: () => _toggleExpansion(unfoldSet),

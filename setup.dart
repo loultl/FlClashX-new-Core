@@ -189,33 +189,71 @@ class Build {
   /// pre-release always sorts below its own final release built the same day.
   /// Two final releases on one day would collide; tag one of them as a
   /// pre-release or bump the pubspec build number.
+  /// NN carries the ordering, and is now derived from the version itself
+  /// rather than from "which kind of release this is":
+  ///
+  ///   ordinal = major*1e6 + minor*1e4 + patch*100 + rev
+  ///   0.4.6           -> patch=6,  rev=50  -> 40650
+  ///   0.4.7-pre.1     -> patch=7,  rev=0   -> 40700
+  ///   0.4.7           -> patch=7,  rev=50  -> 40750
+  ///   0.4.7.1         -> patch=7,  rev=51  -> 40751
+  ///   0.4.7.6         -> patch=7,  rev=56  -> 40756
+  ///   0.4.8           -> patch=8,  rev=50  -> 40850
+  ///
+  /// A pre-release therefore sorts below its own final, a fourth-component
+  /// patch sorts above it, and each next release is strictly greater - the old
+  /// scheme could not say that, since every final built on one day collided at
+  /// NN=99.
+  ///
+  /// Accepts 1-4 numeric components, so tags like v0.4.7.6 work. The previous
+  /// pattern matched exactly MAJOR.MINOR.PATCH, so a four-component tag fell
+  /// through to the pubspec build number - which is BELOW every release ever
+  /// shipped, and Android then refuses the install as a downgrade.
   static String get versionNumber {
-    final pubspec = File(join(current, "pubspec.yaml")).readAsStringSync();
     final tag = appVersion;
-
-    int? encode(int nn) {
-      final now = DateTime.now();
-      final code = (now.year * 10000 + now.month * 100 + now.day) * 100 + nn;
-      if (code < 1 || code > 2100000000) return null;
-      return code;
-    }
+    const finalRev = 50;
 
     if (tag.isNotEmpty) {
       final v = tag.substring(1);
-      final pre = RegExp(r'^\d+\.\d+\.\d+-pre\.(\d+)$').firstMatch(v);
-      final fin = RegExp(r'^\d+\.\d+\.\d+$').firstMatch(v);
-      if (pre != null) {
-        final n = int.parse(pre.group(1)!);
-        final code = (n >= 1 && n <= 98) ? encode(n) : null;
-        if (code != null) return "$code";
-      } else if (fin != null) {
-        final code = encode(99);
-        if (code != null) return "$code";
+      final m = RegExp(
+        r'^(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:\.(\d+))?(?:-pre\.(\d+))?$',
+      ).firstMatch(v);
+      if (m != null) {
+        final major = int.parse(m.group(1)!);
+        final minor = int.parse(m.group(2) ?? '0');
+        final patch = int.parse(m.group(3) ?? '0');
+        final fourth = int.parse(m.group(4) ?? '0');
+        final preN = int.parse(m.group(5) ?? '0');
+
+        final int rev;
+        if (preN > 0) {
+          // rev is a units slot inside patch*100 + rev, so it holds 0..99 and
+          // pre-releases take 0..49. Clamp an out-of-range pre.N to the last
+          // representable one rather than falling through to the pubspec number,
+          // which is below everything ever shipped. Two absurd pre-releases
+          // sharing a code is harmless; an uninstallable one is not.
+          rev = (preN > finalRev ? finalRev : preN) - 1;
+        } else if (m.group(4) != null) {
+          rev = finalRev + fourth;
+        } else {
+          rev = finalRev;
+        }
+
+        final now = DateTime.now();
+        final base = (now.year * 10000 + now.month * 100 + now.day) * 100;
+        final headroom = 2100000000 - base;
+        if (headroom > 0) {
+          // Clamp rather than bail out, for the same reason: the pubspec
+          // fallback here would hand out a versionCode lower than every
+          // release ever shipped, which Android reads as a downgrade.
+          final ordinal = major * 1000000 + minor * 10000 + patch * 100 + rev;
+          return "${base + ordinal.clamp(0, headroom)}";
+        }
       }
     }
 
-    // No usable tag: fall back to the pubspec build number so local and
-    // branch builds keep working.
+    // No tag at all (local / branch build): keep the pubspec number.
+    final pubspec = File(join(current, "pubspec.yaml")).readAsStringSync();
     final m = RegExp(r'^version:\s*[^+\s]+\+(\S+)').firstMatch(pubspec);
     return m?.group(1)?.trim() ?? "1";
   }
