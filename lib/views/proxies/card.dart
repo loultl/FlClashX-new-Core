@@ -47,13 +47,17 @@ class ProxyCard extends StatelessWidget {
 
   /// Mini button that opens the usage ranking of a Smart group.
   ///
-  /// Sits inline just before the ping rather than in a corner of the card's
-  /// Stack: the ping lives at the right edge of every layout, so an absolutely
-  /// positioned button would overlap it in the one-line card style.
-  Widget _buildWeightsButton(BuildContext context) {
+  /// Sits inline in the card rather than in a corner of the card's Stack: the
+  /// ping lives at the right edge of every layout, so an absolutely positioned
+  /// button would overlap it in the one-line card style.
+  ///
+  /// [atStart] puts it on the leading edge, which the narrow grid card needs -
+  /// see the call site for why.
+  Widget _buildWeightsButton(BuildContext context, {bool atStart = false}) {
     if (!isSmart) return const SizedBox.shrink();
     return Padding(
-      padding: const EdgeInsets.only(right: 4),
+      padding:
+          atStart ? const EdgeInsets.only(left: 4) : const EdgeInsets.only(right: 4),
       child: IconButton(
         onPressed: () =>
             showSmartWeights(context, proxy.name, testUrl: testUrl),
@@ -245,24 +249,16 @@ class ProxyCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          // Expanded, not Flexible: a loose fit lets the
-                          // description keep its intrinsic width, and once the
-                          // button and the ping no longer fit, the ping is what
-                          // got clipped - "Timeout" came out as "Timeou" in the
-                          // narrow grid card. Expanded forces the description to
-                          // absorb the shortfall, which is the text that already
-                          // has an ellipsis.
-                          Expanded(child: _ProxyDesc(proxy: proxy)),
-                          _buildWeightsButton(context),
-                          // The ping stays whole: it is short and it is the only
-                          // indication that the node answers at all.
-                          Flexible(
-                            child: FittedBox(
-                              fit: BoxFit.scaleDown,
-                              alignment: Alignment.centerRight,
-                              child: delayText,
-                            ),
-                          ),
+                          // Leading edge in the grid card. On the right it
+                          // competed with the ping for the same few pixels and
+                          // the ping had to be scaled down to fit; from the left
+                          // it takes its space from the description, which has an
+                          // ellipsis and can give it up.
+                          _buildWeightsButton(context, atStart: true),
+                          Flexible(child: _ProxyDesc(proxy: proxy)),
+                          // Natural width, never scaled: the ping is short and it
+                          // is the only sign the node answers at all.
+                          delayText,
                         ],
                       ),
                     ),
