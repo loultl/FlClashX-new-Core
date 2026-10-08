@@ -155,9 +155,29 @@ jobs:
             echo "PR #$existing already open for $BRANCH - refreshing body"
             gh pr edit "$existing" --body "$body"
           else
-            gh pr create \
-              --base main \
-              --head "$BRANCH" \
-              --title "chore(core): update Prizrak-Core $PINNED -> $LATEST" \
-              --body "$body"
+            # The built-in token can only open pull requests when the repository
+            # also allows it. That toggle lives outside this file - Settings >
+            # Actions > General > Workflow permissions > "Allow GitHub Actions
+            # to create and approve pull requests" - and the API's own answer
+            # names no setting, so translate it rather than leaving the raw
+            # GraphQL message. The branch is already pushed either way, so the
+            # work is not lost and a re-run after flipping the toggle will find
+            # it and open the PR.
+            if ! out=$(gh pr create \
+                --base main \
+                --head "$BRANCH" \
+                --title "chore(core): update Prizrak-Core $PINNED -> $LATEST" \
+                --body "$body" 2>&1); then
+              echo "$out" >&2
+              if grep -qi "not permitted to create or approve pull requests" <<<"$out"; then
+                echo "" >&2
+                echo "::error::This repository does not allow GitHub Actions to create" >&2
+                echo "::error::pull requests. The permissions in this workflow are already" >&2
+                echo "::error::correct; enable the repository toggle at" >&2
+                echo "::error::Settings > Actions > General > Workflow permissions >" >&2
+                echo "::error::Allow GitHub Actions to create and approve pull requests," >&2
+                echo "::error::then re-run this workflow. Branch $BRANCH is already pushed." >&2
+              fi
+              exit 1
+            fi
           fi
