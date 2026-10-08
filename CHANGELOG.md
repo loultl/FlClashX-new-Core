@@ -1,3 +1,10 @@
+## v0.4.7.10
+
+- fix(proxies): move the Smart weights button to the leading edge in grid cards
+- Merge pull request #2 from loultl/core-update/v1.19.32-r2
+- chore(core): sync Prizrak-Core pins to v1.19.32-r2 (2 line(s))
+- ci(check-core-update): move all four replace pins with the core
+- ci(check-core-update): explain the pull-request permission failure
 ## v0.4.7.9
 
 - feat: Prizrak-Core User-Agent option, and stop the grid card clipping the ping
