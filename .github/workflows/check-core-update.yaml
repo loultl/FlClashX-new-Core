@@ -1,9 +1,16 @@
 name: check-core-update
 
-# Watches legiz-ru/Prizrak-Core for a newer tag than the one pinned in
-# core/go.mod and opens (or refreshes) a pull request that bumps the pin and
-# refreshes go.sum. Building is still a deliberate step: build.yaml only
-# triggers on a v* tag, so opening a PR never publishes anything.
+# Watches legiz-ru/Prizrak-Core and keeps core/go.mod in step with it. Opens (or
+# refreshes) a pull request that bumps the pin and refreshes go.sum. Building is
+# still a deliberate step: build.yaml only triggers on a v* tag, so opening a PR
+# never publishes anything.
+#
+# All four replace pins move together, taken from the go.mod of the chosen core
+# tag. That is the only correct source for the three auxiliary ones:
+# legiz-ru/prizrak-utls and legiz-ru/prizrak-http publish no tags at all, and
+# their default branches are BEHIND the versions actually in use - utls HEAD is
+# from August while the pin in use is from October. Asking those repos for
+# "latest" would downgrade the pin, not advance it.
 
 on:
   schedule:
@@ -31,6 +38,11 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - uses: actions/setup-go@v6
+        with:
+          go-version: "1.26.0"
+          cache-dependency-path: core/go.sum
+
       - id: pinned
         name: Read pinned core version
         run: |
@@ -54,94 +66,140 @@ jobs:
           if [ -n "$FORCE_TAG" ]; then
             latest="$FORCE_TAG"
           else
-            latest=$(gh api repos/legiz-ru/Prizrak-Core/tags --jq '.[].name' | sort -V | tail -1)
+            latest=$(gh api repos/legiz-ru/Prizrak-Core/tags --jq '.[].name' | grep -E '^v[0-9]' | sort -V | tail -1)
           fi
           if [ -z "$latest" ]; then
             echo "::warning::Could not read tags from legiz-ru/Prizrak-Core"
-            echo "version=" >> "$GITHUB_OUTPUT"
-            exit 0
+            latest=""
           fi
           echo "version=$latest" >> "$GITHUB_OUTPUT"
-          echo "latest upstream:      $latest"
+          echo "latest upstream tag: ${latest:-<none>}"
 
-      - name: Compare
-        id: compare
+      - name: Fetch the target core's go.mod
+        id: target
         env:
           PINNED: ${{ steps.pinned.outputs.version }}
           LATEST: ${{ steps.latest.outputs.version }}
         run: |
           set -euo pipefail
-          echo "pinned=$PINNED"
-          echo "latest=$LATEST"
-          if [ -z "$LATEST" ]; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          elif [ "$LATEST" = "$PINNED" ]; then
-            echo "already up to date"
-            echo "changed=false" >> "$GITHUB_OUTPUT"
+          # An empty latest (API hiccup) must not silently mean "downgrade to
+          # nothing" - fall back to what is already pinned so the run degrades
+          # into a pure drift check instead of proposing a bogus change.
+          target="${LATEST:-$PINNED}"
+          echo "tag=$target" >> "$GITHUB_OUTPUT"
+          if [ "$target" = "$PINNED" ]; then
+            echo "core version unchanged; still checking the other pins for drift"
           else
-            echo "update available: $PINNED -> $LATEST"
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-            echo "branch=core-update/$LATEST" >> "$GITHUB_OUTPUT"
+            echo "core update available: $PINNED -> $target"
           fi
+          curl -sf "https://raw.githubusercontent.com/legiz-ru/Prizrak-Core/${target}/go.mod" \
+            -o upstream-go.mod
+          echo "fetched upstream-go.mod ($(wc -l < upstream-go.mod) lines)"
+          grep -E '^\s*replace' upstream-go.mod || true
 
-      - name: Bump the pin and refresh go.sum
-        if: steps.compare.outputs.changed == 'true'
+      - name: Sync the replace pins
+        id: sync
         env:
-          LATEST: ${{ steps.latest.outputs.version }}
-          PINNED: ${{ steps.pinned.outputs.version }}
+          TARGET: ${{ steps.target.outputs.tag }}
         run: |
           set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -B "${{ steps.compare.outputs.branch }}"
+          python3 - "$TARGET" <<'PY'
+          import os, re, sys
 
-          # Replace only the version on the mihomo replace line.
-          sed -i -E "s#^(replace github\.com/metacubex/mihomo => github\.com/legiz-ru/Prizrak-Core ).*#\1$LATEST#" core/go.mod
+          target, path = sys.argv[1], "core/go.mod"
+
+          with open("upstream-go.mod", encoding="utf-8") as f:
+              upstream = f.read()
+          with open(path, encoding="utf-8") as f:
+              ours = f.read()
+
+          # `replace LHS => MODULE VERSION`: the right-hand side is TWO tokens, so
+          # it must be (.+) rather than \S+. Upstream keeps these at column 0
+          # inside a `replace ( ... )` block.
+          up_re = re.compile(r"^\s*replace\s+(\S+)\s*=>\s*(.+?)\s*$", re.M)
+          pins = {m.group(1): m.group(2) for m in up_re.finditer(upstream)}
+          # The core does not declare a replace for itself - it IS that module -
+          # so its pin is the tag we are moving to.
+          pins["github.com/metacubex/mihomo"] = "github.com/legiz-ru/Prizrak-Core " + target
+
+          changed, lines = [], ours.split("\n")
+          for i, line in enumerate(lines):
+              m = re.match(r"^(\s*)replace\s+(\S+)\s*=>.*$", line)
+              if not m:
+                  continue
+              indent, lhs = m.group(1), m.group(2)
+              if lhs not in pins:
+                  print(f"::warning::upstream does not pin {lhs}; leaving our line alone")
+                  continue
+              new_line = f"{indent}replace {lhs} => {pins[lhs]}"
+              if new_line != line:
+                  changed.append((line.strip(), new_line.strip()))
+                  lines[i] = new_line
+
+          if not changed:
+              print("all four pins already match upstream")
+          for before, after in changed:
+              print(f"  - {before}")
+              print(f"  + {after}")
+          if changed:
+              with open(path, "w", encoding="utf-8", newline="\n") as f:
+                  f.write("\n".join(lines))
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
+              f.write(f"changed={'true' if changed else 'false'}\n")
+              f.write(f"count={len(changed)}\n")
+          PY
+          echo "--- core/go.mod now:"
           grep -E '^\s*replace' core/go.mod
 
-      - name: Resolve dependencies
-        if: steps.compare.outputs.changed == 'true'
-        uses: actions/setup-go@v6
-        with:
-          go-version: "1.26.0"
-          cache-dependency-path: core/go.sum
-
       - name: go mod tidy
-        if: steps.compare.outputs.changed == 'true'
+        if: steps.sync.outputs.changed == 'true'
         working-directory: core
         run: go mod tidy
 
       - name: Commit
-        if: steps.compare.outputs.changed == 'true'
+        if: steps.sync.outputs.changed == 'true'
         env:
-          PINNED: ${{ steps.pinned.outputs.version }}
-          LATEST: ${{ steps.latest.outputs.version }}
+          TARGET: ${{ steps.target.outputs.tag }}
+          COUNT: ${{ steps.sync.outputs.count }}
         run: |
           set -euo pipefail
           if git diff --quiet; then
             echo "no changes produced - nothing to open"
             exit 0
           fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "core-update/$TARGET"
           git add core/go.mod core/go.sum
-          git commit -m "chore(core): update Prizrak-Core $PINNED -> $LATEST"
-          git push -f origin "${{ steps.compare.outputs.branch }}"
+          git commit -m "chore(core): sync Prizrak-Core pins to $TARGET ($COUNT line(s))"
+          git push -f origin "core-update/$TARGET"
 
       - name: Open or refresh the pull request
-        if: steps.compare.outputs.changed == 'true'
+        if: steps.sync.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET: ${{ steps.target.outputs.tag }}
           PINNED: ${{ steps.pinned.outputs.version }}
-          LATEST: ${{ steps.latest.outputs.version }}
-          BRANCH: ${{ steps.compare.outputs.branch }}
+          BRANCH: core-update/${{ steps.target.outputs.tag }}
         run: |
           set -euo pipefail
+          if git diff --quiet; then
+            echo "nothing to open"
+            exit 0
+          fi
           body=$(cat <<EOF
-          Automated core bump detected by \`check-core-update\`.
+          Automated pin sync detected by \`check-core-update\`.
 
           | | version |
           |---|---|
-          | pinned | \`$PINNED\` |
-          | latest | \`$LATEST\` |
+          | was | \`$PINNED\` |
+          | now | \`$TARGET\` |
+
+          All four \`replace\` pins were copied from \`go.mod\` of
+          \`legiz-ru/Prizrak-Core@$TARGET\`, not just the core version: Go ignores
+          a dependency's own \`replace\` directives, so \`prizrak-utls\`,
+          \`prizrak-http\` and \`protobuf-go\` have to be mirrored here or
+          \`go mod tidy\` would keep resolving the old ones.
 
           \`go mod tidy\` was re-run, so \`core/go.sum\` is refreshed.
 
@@ -160,13 +218,11 @@ jobs:
             # Actions > General > Workflow permissions > "Allow GitHub Actions
             # to create and approve pull requests" - and the API's own answer
             # names no setting, so translate it rather than leaving the raw
-            # GraphQL message. The branch is already pushed either way, so the
-            # work is not lost and a re-run after flipping the toggle will find
-            # it and open the PR.
+            # GraphQL message.
             if ! out=$(gh pr create \
                 --base main \
                 --head "$BRANCH" \
-                --title "chore(core): update Prizrak-Core $PINNED -> $LATEST" \
+                --title "chore(core): sync Prizrak-Core pins to $TARGET" \
                 --body "$body" 2>&1); then
               echo "$out" >&2
               if grep -qi "not permitted to create or approve pull requests" <<<"$out"; then
