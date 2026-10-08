@@ -15,7 +15,7 @@ require (
 // NOTE: replace directives of a dependency are ignored by Go - only the main
 // module's replaces apply. Prizrak-Core's own replaces must therefore be
 // mirrored here, or the build breaks on missing symbols.
-replace github.com/metacubex/mihomo => github.com/legiz-ru/Prizrak-Core v1.19.32-r1
+replace github.com/metacubex/mihomo => github.com/legiz-ru/Prizrak-Core v1.19.32-r2
 
 replace github.com/metacubex/utls => github.com/legiz-ru/prizrak-utls v0.0.0-20260910220934-80ad70380fe8
 
