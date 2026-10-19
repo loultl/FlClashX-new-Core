@@ -50,17 +50,14 @@ class ProxyCard extends StatelessWidget {
   /// Sits inline in the card rather than in a corner of the card's Stack: the
   /// ping lives at the right edge of every layout, so an absolutely positioned
   /// button would overlap it in the one-line card style.
-  ///
-  /// [atStart] puts it on the leading edge, which the narrow grid card needs -
-  /// see the call site for why.
-  Widget _buildWeightsButton(BuildContext context, {bool atStart = false}) {
+  Widget _buildWeightsButton(BuildContext context) {
     if (!isSmart) return const SizedBox.shrink();
     return Padding(
-      padding:
-          atStart ? const EdgeInsets.only(left: 4) : const EdgeInsets.only(right: 4),
+      padding: const EdgeInsets.only(right: 4),
       child: IconButton(
         onPressed: () =>
             showSmartWeights(context, proxy.name, testUrl: testUrl),
+        tooltip: 'Smart',
         padding: EdgeInsets.zero,
         constraints: const BoxConstraints.tightFor(width: 28, height: 28),
         // psychology reads as "how the group thinks" - the Smart group's own
@@ -73,6 +70,9 @@ class ProxyCard extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildProxyDesc(BuildContext context) =>
+      isSmart ? _buildWeightsButton(context) : _ProxyDesc(proxy: proxy);
 
   Widget _buildDelayText() => SizedBox(
       height: measure.labelSmallHeight,
@@ -227,21 +227,12 @@ class ProxyCard extends StatelessWidget {
                   if (type == ProxyCardType.expand) ...[
                     SizedBox(
                       height: measure.bodySmallHeight,
-                      child: _ProxyDesc(
-                        proxy: proxy,
-                      ),
+                      child: _buildProxyDesc(context),
                     ),
                     const SizedBox(
                       height: 6,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Flexible(child: delayText),
-                        _buildWeightsButton(context),
-                      ],
-                    ),
+                    delayText,
                   ] else
                     SizedBox(
                       height: measure.bodySmallHeight,
@@ -249,13 +240,7 @@ class ProxyCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          // Leading edge in the grid card. On the right it
-                          // competed with the ping for the same few pixels and
-                          // the ping had to be scaled down to fit; from the left
-                          // it takes its space from the description, which has an
-                          // ellipsis and can give it up.
-                          _buildWeightsButton(context, atStart: true),
-                          Flexible(child: _ProxyDesc(proxy: proxy)),
+                          Flexible(child: _buildProxyDesc(context)),
                           // Natural width, never scaled: the ping is short and it
                           // is the only sign the node answers at all.
                           delayText,
