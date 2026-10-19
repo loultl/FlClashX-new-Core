@@ -29,6 +29,7 @@ class ProxiesTabViewState extends ConsumerState<ProxiesTabView>
   @override
   void dispose() {
     _destroyTabController();
+    _hasMoreButtonNotifier.dispose();
     super.dispose();
   }
 
@@ -96,7 +97,7 @@ class ProxiesTabViewState extends ConsumerState<ProxiesTabView>
 
   void _tabControllerListener([int? index]) {
     var groupIndex = index;
-    if (groupIndex == -1) {
+    if (groupIndex != null && groupIndex < 0) {
       return;
     }
     final appController = globalState.appController;
@@ -110,6 +111,9 @@ class ProxiesTabViewState extends ConsumerState<ProxiesTabView>
     }
     final currentGroup = currentGroups[groupIndex];
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
       globalState.appController.updateCurrentGroupName(
         currentGroup.name,
       );
@@ -189,6 +193,19 @@ class ProxiesTabViewState extends ConsumerState<ProxiesTabView>
                 children: [
                   TabBar(
                     controller: _tabController,
+                    labelColor: context.colorScheme.onSecondaryContainer,
+                    unselectedLabelColor: context.colorScheme.onSurfaceVariant,
+                    labelStyle: context.textTheme.labelLarge,
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    indicatorPadding: const EdgeInsets.symmetric(
+                      horizontal: 4,
+                      vertical: 2,
+                    ),
+                    indicator: BoxDecoration(
+                      color: context.colorScheme.secondaryContainer,
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    labelPadding: const EdgeInsets.symmetric(horizontal: 4),
                     padding: EdgeInsets.only(
                       left: 16,
                       right: 16 + (value ? 16 : 0),
@@ -196,12 +213,14 @@ class ProxiesTabViewState extends ConsumerState<ProxiesTabView>
                     dividerColor: Colors.transparent,
                     isScrollable: true,
                     tabAlignment: TabAlignment.start,
-                    overlayColor:
-                        const WidgetStatePropertyAll(Colors.transparent),
                     tabs: [
                       for (final groupName in groupNames)
                         Tab(
-                          text: groupName,
+                          height: 44,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(groupName),
+                          ),
                         ),
                     ],
                   ),
