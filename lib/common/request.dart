@@ -5,442 +5,191 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
-import 'package:flclashx/common/common.dart';
-import 'package:flclashx/models/models.dart';
-import 'package:flclashx/state.dart';
-import 'package:flutter/cupertino.dart';
-
-/// Outcome of a Smart-group ranking lookup.
-///
-/// The controller answers with `{"weights": [...]}` rather than a bare array,
-/// and reports its refusals inside that same envelope - 400 "Not a Smart
-/// group", 503 "Smart cache not available", 500 "Failed to get weight
-/// ranking: ..." - so [error] carries the server's own wording through to the
-/// UI instead of collapsing every failure into "no data".
-class SmartWeightsResult {
-  const SmartWeightsResult({
-    required this.weights,
-    this.error,
-    this.unauthorized = false,
-  });
-
-  final List<SmartWeight> weights;
-
-  /// The controller's explanation, when it gave one. An empty [weights] with a
-  /// null [error] is the legitimate "profile is fresh" case.
-  final String? error;
-
-  /// True on 401: the profile sets a `secret` that this client did not send
-  /// correctly. Distinct from "controller is off", and shown differently.
-  final bool unauthorized;
-}
+import 'package:fl_clash/common/common.dart';
+import 'package:fl_clash/enum/enum.dart';
+import 'package:fl_clash/state.dart';
+import 'package:flutter/foundation.dart' show visibleForTesting;
 
 class Request {
-
-  Request() {
-    _dio = Dio(
-      BaseOptions(
-        headers: {
-          "User-Agent": browserUa,
-        },
-        // Without these a profile/subscription fetch over a half-dead uplink
-        // (mobile network, doze-restricted background) hangs forever: the card
-        // spins indefinitely and the auto-update chain stalls until app restart.
-        connectTimeout: const Duration(seconds: 15),
-        receiveTimeout: const Duration(seconds: 60),
-      ),
-    );
-    _clashDio = Dio(
-      BaseOptions(
-        // Only cap connection setup globally so a dead/blackholed exit node fails
-        // fast instead of hanging the IP check. Receive time is left unbounded
-        // here (large proxied downloads use this same client) and capped
-        // per-request in checkIp instead.
-        connectTimeout: const Duration(seconds: 5),
-      ),
-    );
-    _clashDio.httpClientAdapter = IOHttpClientAdapter(createHttpClient: () {
-      final client = HttpClient();
-      client.findProxy = (uri) {
-        client.userAgent = globalState.ua;
-        return FlClashHttpOverrides.handleFindProxy(uri);
-      };
-      return client;
-    });
-  }
-  late final Dio _dio;
+  late final Dio dio;
   late final Dio _clashDio;
   String? userAgent;
 
-  Future<Response<Uint8List>> getFileResponseForUrl(
-    String rawUrl, {
-    Map<String, dynamic>? headers,
-  }) async {
-    final url = rawUrl.normalizeUrlCredentials;
-    final requestHeaders = headers ?? {};
-    requestHeaders['User-Agent'] = globalState.ua;
+  ProviderReader? _read;
 
-    final dio = _dio;
+  void attach(ProviderReader read) {
+    _read = read;
+  }
 
-    final firstResponse = await dio.get<Uint8List>(
-      url,
+  Request() {
+    dio = Dio(BaseOptions(headers: {'User-Agent': browserUa}));
+    _clashDio = Dio();
+    _clashDio.httpClientAdapter = IOHttpClientAdapter(
+      createHttpClient: () {
+        final client = HttpClient();
+        client.findProxy = (Uri uri) {
+          client.userAgent = globalState.ua;
+          final read = _read;
+          if (read == null) {
+            return 'DIRECT';
+          }
+          return FlClashHttpOverrides.findProxyForReader(read, uri);
+        };
+        return client;
+      },
+    );
+  }
+
+  Future<Response<T>> _download<T>(String url, ResponseType responseType) {
+    final target = downloadTarget(url);
+    final cancelToken = CancelToken();
+    return _clashDio
+        .getUri<T>(
+          target.uri,
+          options: Options(responseType: responseType, headers: target.headers),
+          cancelToken: cancelToken,
+        )
+        .timeout(
+          downloadTimeoutDuration,
+          onTimeout: () {
+            cancelToken.cancel();
+            throw DioException.receiveTimeout(
+              timeout: downloadTimeoutDuration,
+              requestOptions: RequestOptions(path: url),
+            );
+          },
+        );
+  }
+
+  Future<Response<Uint8List>> getFileResponseForUrl(String url) async {
+    try {
+      return await _download<Uint8List>(url, ResponseType.bytes);
+    } catch (e) {
+      commonPrint.log(
+        'getFileResponseForUrl error ${compactError(e)}',
+        logLevel: LogLevel.warning,
+      );
+      rethrow;
+    }
+  }
+
+  Future<Response<String>> getTextResponseForUrl(String url) async {
+    try {
+      return await _download<String>(url, ResponseType.plain);
+    } catch (e) {
+      commonPrint.log(
+        'getTextResponseForUrl error ${compactError(e)}',
+        logLevel: LogLevel.warning,
+      );
+      rethrow;
+    }
+  }
+
+  /// Null when this build is current; throws when GitHub cannot be asked.
+  Future<Map<String, dynamic>?> checkForUpdate() async {
+    final release = await latestRelease();
+    final remoteVersion = release['tag_name'] as String;
+    final version = globalState.packageInfo.version;
+    final hasUpdate =
+        compareVersions(remoteVersion.replaceAll('v', ''), version) > 0;
+    return hasUpdate ? release : null;
+  }
+
+  /// The release page redirect still answers once the hourly API quota is spent.
+  @visibleForTesting
+  Future<Map<String, dynamic>> latestRelease() async {
+    try {
+      final response = await dio.get<Map<String, dynamic>>(
+        'https://api.github.com/repos/$repository/releases/latest',
+        options: Options(responseType: ResponseType.json),
+      );
+      return response.data!;
+    } on DioException catch (error) {
+      commonPrint.log(
+        'latest release API failed: ${compactError(error)}',
+        logLevel: LogLevel.warning,
+      );
+    }
+    final response = await dio.get<void>(
+      'https://github.com/$repository/releases/latest',
       options: Options(
-        responseType: ResponseType.bytes,
-        headers: requestHeaders,
         followRedirects: false,
         validateStatus: (status) => status != null && status < 400,
       ),
     );
-
-    if (firstResponse.isRedirect == true) {
-      final newUrl = firstResponse.headers.value('location');
-      if (newUrl == null) {
-        throw Exception('Redirect detected, but no location header was found.');
-      }
-
-      print('↪️ Redirecting to: $newUrl');
-      final finalResponse = await dio.get<Uint8List>(
-        newUrl,
-        options: Options(
-          responseType: ResponseType.bytes,
-          headers: requestHeaders,
-          followRedirects: true,
-          maxRedirects: 5,
-          validateStatus: (status) => status != null && status < 500,
-        ),
-      );
-      return finalResponse;
+    final location = response.headers.value(HttpHeaders.locationHeader);
+    final segments = Uri.tryParse(location ?? '')?.pathSegments ?? const [];
+    final tagIndex = segments.indexOf('tag') + 1;
+    if (tagIndex == 0 || tagIndex >= segments.length) {
+      throw FormatException('No release tag in the redirect', location);
     }
-    return firstResponse;
-  }
-
-  Future<Response> getTextResponseForUrl(String url) async {
-    final response = await _clashDio.get(
-      url,
-      options: Options(
-        responseType: ResponseType.plain,
-      ),
-    );
-    return response;
-  }
-
-  Future<MemoryImage?> getImage(String url) async {
-    if (url.isEmpty) return null;
-    final response = await _dio.get<Uint8List>(
-      url,
-      options: Options(
-        responseType: ResponseType.bytes,
-      ),
-    );
-    final data = response.data;
-    if (data == null) return null;
-    return MemoryImage(data);
-  }
-
-  Future<Map<String, dynamic>?> checkForUpdate() async {
-    final response = await _dio.get(
-      "https://api.github.com/repos/$repository/releases/latest",
-      options: Options(
-        responseType: ResponseType.json,
-      ),
-    );
-    if (response.statusCode != 200) return null;
-    final data = response.data as Map<String, dynamic>;
-    final remoteVersion = data['tag_name'];
-    final version = globalState.packageInfo.version;
-    final hasUpdate =
-        utils.compareVersions(remoteVersion.replaceAll('v', ''), version) > 0;
-    if (!hasUpdate) return null;
-    return data;
-  }
-
-  Future<Map<String, dynamic>?> checkForCoreUpdate(String currentCoreVersion) async {
-    final response = await _dio.get(
-      "https://api.github.com/repos/$repository/releases",
-      options: Options(responseType: ResponseType.json),
-      queryParameters: {'per_page': 20},
-    );
-    if (response.statusCode != 200) return null;
-    final current = currentCoreVersion.replaceAll(RegExp(r'^v'), '');
-    final releases = response.data as List<dynamic>;
-    for (final release in releases) {
-      final tag = release['tag_name'] as String? ?? '';
-      if (!tag.startsWith('core-')) continue;
-      final remote = tag.replaceFirst('core-', '').replaceAll(RegExp(r'^v'), '');
-      // Strictly newer only: a locally built core can be ahead of the newest
-      // core-* release, and offering it back would be a silent downgrade.
-      if (utils.compareVersions(remote, current) <= 0) return null;
-      return release as Map<String, dynamic>;
-    }
-    return null;
-  }
-
-  Future<String?> downloadCoreUpdate(
-    String downloadUrl,
-    String targetPath, {
-    void Function(int received, int total)? onProgress,
-  }) async {
-    try {
-      final tmpPath = '$targetPath.tmp';
-      await _dio.download(
-        downloadUrl,
-        tmpPath,
-        onReceiveProgress: onProgress,
-      );
-      final tmpFile = File(tmpPath);
-      if (!await tmpFile.exists()) return 'Download failed';
-      final target = File(targetPath);
-      if (await target.exists()) await target.delete();
-      await tmpFile.rename(targetPath);
-      return null;
-    } catch (e) {
-      return e.toString();
-    }
-  }
-
-  // Tried in order, first success wins. All return a dead-simple JSON with an
-  // IPv4 exit IP + country code:
-  //   ip.sb     — `api-ipv4` host is A-only, so the exit is forced over IPv4
-  //   ip-api.com — IPv4-only on the free tier
-  //   ipinfo.io — plain {ip, country}, used as a last-resort fallback
-  final Map<String, IpInfo Function(Map<String, dynamic>)> _ipInfoSources = {
-    "https://api-ipv4.ip.sb/geoip": IpInfo.fromIpSbJson,
-    "http://ip-api.com/json/?fields=status,countryCode,query":
-        IpInfo.fromIpApiComJson,
-    "https://ipinfo.io/json": IpInfo.fromIpInfoIoJson,
-  };
-
-  /// Resolve the exit IP by trying each source **sequentially**, stopping at the
-  /// first success. A healthy primary therefore means exactly one request — not
-  /// a parallel race that fires every source through the tunnel at once. Each
-  /// source is bounded by a short receive timeout (plus the client-wide connect
-  /// timeout) so a slow/dead node falls through to the next instead of hanging.
-  Future<Result<IpInfo?>> checkIp({CancelToken? cancelToken}) async {
-    for (final source in _ipInfoSources.entries) {
-      if (cancelToken?.isCancelled ?? false) {
-        return Result.error("cancelled");
-      }
-      try {
-        final res = await _clashDio.get<Map<String, dynamic>>(
-          source.key,
-          cancelToken: cancelToken,
-          options: Options(
-            responseType: ResponseType.json,
-            receiveTimeout: const Duration(seconds: 3),
-          ),
-        );
-        if (res.statusCode == HttpStatus.ok && res.data != null) {
-          return Result.success(source.value(res.data!));
-        }
-      } on DioException catch (e) {
-        if (e.type == DioExceptionType.cancel) {
-          return Result.error("cancelled");
-        }
-        // connect/receive timeout or bad status — fall through to the next source
-      } catch (_) {
-        // unexpected shape / parse failure — try the next source
-      }
-    }
-    // Every source failed (offline, all timed out, or unparseable).
-    return Result.success(null);
-  }
-
-  Future<bool> pingHelper() async {
-    try {
-      final response = await _dio
-          .get(
-            "http://$localhost:$helperPort/ping",
-            options: Options(
-              responseType: ResponseType.plain,
-            ),
-          )
-          .timeout(
-            const Duration(
-              milliseconds: 2000,
-            ),
-          );
-      if (response.statusCode != HttpStatus.ok) {
-        return false;
-      }
-      // Compare against the binary actually on disk, not the build-time
-      // constant — a separately updated core is otherwise reported as a
-      // helper mismatch forever.
-      final diskHash = await coreUpdater.calcCoreSha256();
-      return diskHash != null && (response.data as String) == diskHash;
-    } catch (_) {
-      return false;
-    }
-  }
-
-  Future<bool> startCoreByHelper(String arg) async {
-    try {
-      final homeDirPath = await appPath.homeDirPath;
-      final response = await _dio
-          .post(
-            "http://$localhost:$helperPort/start",
-            data: json.encode({
-              "path": appPath.corePath,
-              "arg": arg,
-              "home_dir": homeDirPath,
-            }),
-            options: Options(
-              responseType: ResponseType.plain,
-            ),
-          )
-          .timeout(
-            const Duration(
-              milliseconds: 2000,
-            ),
-          );
-      if (response.statusCode != HttpStatus.ok) {
-        return false;
-      }
-      final data = response.data as String;
-      return data.isEmpty;
-    } catch (_) {
-      return false;
-    }
-  }
-
-  /// Ask the SYSTEM helper to swap in the pending core update. Needed for
-  /// per-machine installs (Program Files) where the unelevated app can't
-  /// overwrite the binary itself. The helper stops the core, moves the file and
-  /// refreshes the allow-list hash. Returns true only if it reports success.
-  Future<bool> replaceCoreByHelper(String pendingPath, String targetPath) async {
-    try {
-      final response = await _dio
-          .post(
-            "http://$localhost:$helperPort/replace_core",
-            data: json.encode({
-              "pending": pendingPath,
-              "target": targetPath,
-            }),
-            options: Options(responseType: ResponseType.plain),
-          )
-          .timeout(const Duration(milliseconds: 10000));
-      if (response.statusCode != HttpStatus.ok) return false;
-      final data = response.data as String;
-      if (data.isNotEmpty) {
-        commonPrint.log("replaceCoreByHelper: $data");
-        return false;
-      }
-      return true;
-    } catch (e) {
-      commonPrint.log("replaceCoreByHelper error: $e");
-      return false;
-    }
-  }
-
-  Future<bool> stopCoreByHelper() async {
-    try {
-      final response = await _dio
-          .post(
-            "http://$localhost:$helperPort/stop",
-            options: Options(responseType: ResponseType.plain),
-          )
-          .timeout(const Duration(milliseconds: 2000));
-
-      if (response.statusCode != HttpStatus.ok) return false;
-      final data = response.data as String;
-      return data.isEmpty;
-    } catch (_) {
-      return false;
-    }
-  }
-
-  Future<Map<String, dynamic>?> getCoreVersion() async {
-    try {
-      final addr = globalState.effectiveExternalController.value;
-      if (addr.isEmpty) return null;
-      final response = await _dio.get<Map<String, dynamic>>(
-        "http://$addr/version",
-        options: Options(
-          responseType: ResponseType.json,
-        ),
-      ).timeout(const Duration(seconds: 2));
-
-      if (response.statusCode != HttpStatus.ok) return null;
-      return response.data;
-    } catch (_) {
-      return null;
-    }
-  }
-
-  /// Base URL of the core's REST controller, or null when it is disabled.
-  ///
-  /// A `0.0.0.0` / `::` bind address is not connectable as a destination on
-  /// every platform, so it is folded back to loopback - same reasoning as
-  /// buildZashboardUrl, which has to make the same substitution.
-  String? _controllerBaseUrl() {
-    final address = globalState.effectiveExternalController.value.trim();
-    if (address.isEmpty) return null;
-    final index = address.lastIndexOf(':');
-    var host = index > 0 ? address.substring(0, index).trim() : '';
-    final port = index >= 0 ? address.substring(index + 1).trim() : address.trim();
-    if (host.isEmpty || host == '0.0.0.0' || host == '::') {
-      host = localhost;
-    }
-    return 'http://$host:$port';
-  }
-
-  /// Per-node usage ranking of a Smart group, read over the core's REST
-  /// controller (`GET /group/{name}/weights`).
-  ///
-  /// Over HTTP rather than through the Go bridge on purpose. The ranking lives
-  /// in the profile's bbolt store and that endpoint is the only way out of it,
-  /// so a bridge action would make this client own a blocking cache read for the
-  /// sake of a button press. Going through the controller needs no core changes
-  /// at all - and `_dio` is used rather than `_clashDio` because this is a
-  /// loopback address, which must never be routed through the tunnel.
-  ///
-  /// Returns null when the controller is disabled or the request cannot be made
-  /// at all; the caller offers to switch the controller on. The group name goes
-  /// through [Uri.encodeComponent] because the core runs the path segment back
-  /// through `url.PathUnescape`, so it must be escaped exactly once.
-  Future<SmartWeightsResult?> getSmartWeights(String groupName) async {
-    final baseUrl = _controllerBaseUrl();
-    if (baseUrl == null || groupName.isEmpty) return null;
-    final secret = globalState.effectiveSecret.value.trim();
-    try {
-      final response = await _dio.get<Map<String, dynamic>>(
-        '$baseUrl/group/${Uri.encodeComponent(groupName)}/weights',
-        options: Options(
-          responseType: ResponseType.json,
-          // The core only installs its auth middleware when the profile sets a
-          // secret, so an empty one means the header is not merely unnecessary
-          // - sending "Bearer" with no token would be the malformed case.
-          headers: secret.isEmpty ? null : {'Authorization': 'Bearer $secret'},
-        ),
-      ).timeout(const Duration(seconds: 3));
-      final data = response.data;
-      if (response.statusCode == HttpStatus.unauthorized) {
-        return SmartWeightsResult(
-          weights: const [],
-          unauthorized: true,
-          error: 'external-controller rejected the secret',
-        );
-      }
-      final raw = data?['weights'];
-      final list = raw is List ? raw : const [];
-      final weights = <SmartWeight>[];
-      for (final item in list) {
-        // Tolerant: skip a malformed entry rather than lose the whole list.
-        if (item is Map) {
-          weights.add(
-            SmartWeight(
-              name: item['Name'] as String? ?? '',
-              rank: item['Rank'] as String? ?? '',
-              weight: (item['Weight'] as num?)?.toDouble() ?? 0,
-            ),
-          );
-        }
-      }
-      final error = data?['error'] as String? ?? data?['message'] as String?;
-      return SmartWeightsResult(weights: weights, error: error);
-    } catch (_) {
-      return null;
-    }
+    return {'tag_name': segments[tagIndex]};
   }
 }
 
 final request = Request();
+
+/// Some subscription servers send a gzip or zlib body without saying so in
+/// Content-Encoding, which is the only signal dart:io decompresses on.
+Uint8List decompressUnlabeled(Uint8List bytes) {
+  final codec = switch (bytes) {
+    [0x1f, 0x8b, ...] => gzip,
+    [0x78, final flags, ...] when (0x78 << 8 | flags) % 31 == 0 => zlib,
+    _ => null,
+  };
+  if (codec == null) {
+    return bytes;
+  }
+  try {
+    return Uint8List.fromList(codec.decode(bytes));
+  } on FormatException {
+    return bytes;
+  }
+}
+
+/// dart:io turns [Uri.userInfo] into Basic credentials still percent-encoded.
+@visibleForTesting
+({Uri uri, Map<String, Object> headers}) downloadTarget(String url) {
+  final uri = url.webUri ?? Uri.parse(url);
+  if (uri.userInfo.isEmpty) {
+    return (uri: uri, headers: const {});
+  }
+  final credentials = uri.userInfo.split(':').map(_decodeUserInfo).join(':');
+  return (
+    uri: uri.replace(userInfo: ''),
+    headers: {
+      HttpHeaders.authorizationHeader:
+          'Basic ${base64.encode(utf8.encode(credentials))}',
+    },
+  );
+}
+
+String _decodeUserInfo(String value) {
+  try {
+    return Uri.decodeComponent(value);
+  } on ArgumentError {
+    return value;
+  }
+}
+
+String? getFileNameForDisposition(String? disposition) {
+  if (disposition == null) return null;
+  final parseValue = HeaderValue.parse(disposition);
+  final parameters = parseValue.parameters;
+  final fileNamePointKey = parameters.keys.firstWhere(
+    (key) => key == 'filename*',
+    orElse: () => '',
+  );
+  if (fileNamePointKey.isNotEmpty) {
+    final res = parameters[fileNamePointKey]?.split("''") ?? [];
+    if (res.length >= 2) {
+      return Uri.decodeComponent(res[1]);
+    }
+  }
+  final fileNameKey = parameters.keys.firstWhere(
+    (key) => key == 'filename',
+    orElse: () => '',
+  );
+  if (fileNameKey.isEmpty) return null;
+  return parameters[fileNameKey];
+}

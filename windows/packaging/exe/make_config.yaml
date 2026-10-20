@@ -1,13 +1,19 @@
 script_template: inno_setup.iss
 app_id: 728B3532-C74B-4870-9068-BE70FE12A3E6
 app_name: FlClashX
-publisher: pluralplay
-publisher_url: https://github.com/pluralplay/FlClashX
+publisher: loultl
+publisher_url: https://github.com/loultl/FlClashX-new-Core
 display_name: FlClashX
 executable_name: FlClashX.exe
 output_base_file_name: FlClashX.exe
-setup_icon_file: ..\windows\runner\resources\app_icon.ico
+# Resolved against the project root: flutter_distributor turns this into an
+# absolute path via Directory.current.
+setup_icon_file: windows\runner\resources\app_icon.ico
 locales:
-  - lang: ru
+  # Written into the .iss verbatim, so this one stays relative to the generated
+  # script in dist/.
+  - lang: zh
+    file: ..\windows\packaging\exe\ChineseSimplified.isl
   - lang: en
+  - lang: ru
 privileges_required: admin
