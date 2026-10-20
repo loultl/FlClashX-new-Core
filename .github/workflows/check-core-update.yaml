@@ -1,28 +1,15 @@
 name: check-core-update
 
-# Watches legiz-ru/Prizrak-Core and keeps core/go.mod in step with it. Opens (or
-# refreshes) a pull request that bumps the pin and refreshes go.sum. Building is
-# still a deliberate step: build.yaml only triggers on a v* tag, so opening a PR
-# never publishes anything.
-#
-# All four replace pins move together, taken from the go.mod of the chosen core
-# tag. That is the only correct source for the three auxiliary ones:
-# legiz-ru/prizrak-utls and legiz-ru/prizrak-http publish no tags at all, and
-# their default branches are BEHIND the versions actually in use - utls HEAD is
-# from August while the pin in use is from October. Asking those repos for
-# "latest" would downgrade the pin, not advance it.
-
 on:
   schedule:
-    # Daily at 06:17 UTC. Deliberately off the hour - the top of the hour is
-    # the most contended slot on GitHub's scheduler.
-    - cron: "17 6 * * *"
+    - cron: '17 6 * * *'
   workflow_dispatch:
     inputs:
       force_tag:
-        description: "Check this specific tag instead of the latest (e.g. v1.19.33-r1)"
+        description: 'Check a specific Prizrak-Core tag (for example v1.19.32-r4)'
+        type: string
         required: false
-        default: ""
+        default: ''
 
 permissions:
   contents: write
@@ -34,206 +21,101 @@ concurrency:
 
 jobs:
   check:
+    if: github.repository == 'loultl/FlClashX-new-Core'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-
-      - uses: actions/setup-go@v6
+      - uses: actions/checkout@v4
         with:
-          go-version: "1.26.0"
+          submodules: recursive
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.1'
           cache-dependency-path: core/go.sum
 
-      - id: pinned
-        name: Read pinned core version
-        run: |
-          set -euo pipefail
-          pinned=$(grep -E '^\s*replace\s+github\.com/metacubex/mihomo\s*=>' core/go.mod \
-                  | grep -oE 'v[0-9][^[:space:]]*' | tail -1)
-          if [ -z "$pinned" ]; then
-            echo "::error::Could not find the Prizrak-Core replace line in core/go.mod"
-            exit 1
-          fi
-          echo "version=$pinned" >> "$GITHUB_OUTPUT"
-          echo "pinned in core/go.mod: $pinned"
-
-      - id: latest
-        name: Query latest upstream tag
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          FORCE_TAG: ${{ inputs.force_tag }}
-        run: |
-          set -euo pipefail
-          if [ -n "$FORCE_TAG" ]; then
-            latest="$FORCE_TAG"
-          else
-            latest=$(gh api repos/legiz-ru/Prizrak-Core/tags --jq '.[].name' | grep -E '^v[0-9]' | sort -V | tail -1)
-          fi
-          if [ -z "$latest" ]; then
-            echo "::warning::Could not read tags from legiz-ru/Prizrak-Core"
-            latest=""
-          fi
-          echo "version=$latest" >> "$GITHUB_OUTPUT"
-          echo "latest upstream tag: ${latest:-<none>}"
-
-      - name: Fetch the target core's go.mod
+      - name: Select Prizrak-Core version
         id: target
         env:
-          PINNED: ${{ steps.pinned.outputs.version }}
-          LATEST: ${{ steps.latest.outputs.version }}
+          GH_TOKEN: ${{ github.token }}
+          FORCE_TAG: ${{ inputs.force_tag }}
+        shell: bash
         run: |
           set -euo pipefail
-          # An empty latest (API hiccup) must not silently mean "downgrade to
-          # nothing" - fall back to what is already pinned so the run degrades
-          # into a pure drift check instead of proposing a bogus change.
-          target="${LATEST:-$PINNED}"
+          pinned=$(sed -n 's|^replace github.com/metacubex/mihomo => github.com/legiz-ru/Prizrak-Core \([^ ]*\)$|\1|p' core/go.mod)
+          test -n "$pinned" || { echo '::error::Missing Prizrak-Core module pin.'; exit 1; }
+          if [[ -n "$FORCE_TAG" ]]; then
+            target="$FORCE_TAG"
+          else
+            target=$(gh api --paginate repos/legiz-ru/Prizrak-Core/tags --jq '.[].name' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+(-[A-Za-z0-9.]+)?$' | sort -V | tail -1)
+            target="${target:-$pinned}"
+          fi
+          [[ "$target" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[A-Za-z0-9.]+)?$ ]] || { echo '::error::Invalid Prizrak-Core version.'; exit 1; }
           echo "tag=$target" >> "$GITHUB_OUTPUT"
-          if [ "$target" = "$PINNED" ]; then
-            echo "core version unchanged; still checking the other pins for drift"
-          else
-            echo "core update available: $PINNED -> $target"
-          fi
-          curl -sf "https://raw.githubusercontent.com/legiz-ru/Prizrak-Core/${target}/go.mod" \
-            -o upstream-go.mod
-          echo "fetched upstream-go.mod ($(wc -l < upstream-go.mod) lines)"
-          grep -E '^\s*replace' upstream-go.mod || true
+          curl --fail --silent --show-error --retry 3 "https://raw.githubusercontent.com/legiz-ru/Prizrak-Core/$target/go.mod" -o "$RUNNER_TEMP/prizrak-go.mod"
 
-      - name: Sync the replace pins
-        id: sync
+      - name: Sync engine and companion module pins
         env:
           TARGET: ${{ steps.target.outputs.tag }}
         run: |
-          set -euo pipefail
-          python3 - "$TARGET" <<'PY'
-          import os, re, sys
-
-          target, path = sys.argv[1], "core/go.mod"
-
-          with open("upstream-go.mod", encoding="utf-8") as f:
-              upstream = f.read()
-          with open(path, encoding="utf-8") as f:
-              ours = f.read()
-
-          # `replace LHS => MODULE VERSION`: the right-hand side is TWO tokens, so
-          # it must be (.+) rather than \S+. Upstream keeps these at column 0
-          # inside a `replace ( ... )` block.
-          up_re = re.compile(r"^\s*replace\s+(\S+)\s*=>\s*(.+?)\s*$", re.M)
-          pins = {m.group(1): m.group(2) for m in up_re.finditer(upstream)}
-          # The core does not declare a replace for itself - it IS that module -
-          # so its pin is the tag we are moving to.
-          pins["github.com/metacubex/mihomo"] = "github.com/legiz-ru/Prizrak-Core " + target
-
-          changed, lines = [], ours.split("\n")
-          for i, line in enumerate(lines):
-              m = re.match(r"^(\s*)replace\s+(\S+)\s*=>.*$", line)
-              if not m:
+          python3 - <<'PYTHON'
+          import os, re, subprocess
+          from pathlib import Path
+          upstream = Path(os.environ['RUNNER_TEMP'], 'prizrak-go.mod').read_text()
+          replacements = {}
+          in_block = False
+          for source in upstream.splitlines():
+              line = source.split('//', 1)[0].strip()
+              if line == 'replace (':
+                  in_block = True
                   continue
-              indent, lhs = m.group(1), m.group(2)
-              if lhs not in pins:
-                  print(f"::warning::upstream does not pin {lhs}; leaving our line alone")
+              if in_block and line == ')':
+                  in_block = False
                   continue
-              new_line = f"{indent}replace {lhs} => {pins[lhs]}"
-              if new_line != line:
-                  changed.append((line.strip(), new_line.strip()))
-                  lines[i] = new_line
+              if line.startswith('replace '):
+                  line = line[len('replace '):]
+              elif not in_block:
+                  continue
+              if '=>' in line:
+                  old, new = line.split('=>', 1)
+                  replacements[old.strip().split()[0]] = new.strip().split()
+          companions = ['github.com/metacubex/utls', 'github.com/metacubex/http', 'google.golang.org/protobuf']
+          pins = {'github.com/metacubex/mihomo': ['github.com/legiz-ru/Prizrak-Core', os.environ['TARGET']]}
+          for module in companions:
+              subprocess.run(['go', 'mod', 'edit', '-dropreplace=' + module], cwd='core', check=True)
+              if module in replacements:
+                  pins[module] = replacements[module]
+          for module, target in pins.items():
+              if len(target) != 2:
+                  raise SystemExit('Expected a versioned module replacement for ' + module)
+              subprocess.run(['go', 'mod', 'edit', '-replace=' + module + '=' + '@'.join(target)], cwd='core', check=True)
+          config = Path('build_config.yaml')
+          config.write_text(re.sub(r'(?m)^core_version: .*$', 'core_version: ' + os.environ['TARGET'], config.read_text()))
+          PYTHON
+          git -C core/Clash.Meta fetch --depth=1 origin "$TARGET"
+          git -C core/Clash.Meta checkout --detach FETCH_HEAD
 
-          if not changed:
-              print("all four pins already match upstream")
-          for before, after in changed:
-              print(f"  - {before}")
-              print(f"  + {after}")
-          if changed:
-              with open(path, "w", encoding="utf-8", newline="\n") as f:
-                  f.write("\n".join(lines))
-          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
-              f.write(f"changed={'true' if changed else 'false'}\n")
-              f.write(f"count={len(changed)}\n")
-          PY
-          echo "--- core/go.mod now:"
-          grep -E '^\s*replace' core/go.mod
-
-      - name: go mod tidy
-        if: steps.sync.outputs.changed == 'true'
+      - name: Refresh module checksums and verify the wrapper
         working-directory: core
-        run: go mod tidy
-
-      - name: Commit
-        if: steps.sync.outputs.changed == 'true'
         env:
-          TARGET: ${{ steps.target.outputs.tag }}
-          COUNT: ${{ steps.sync.outputs.count }}
+          CGO_ENABLED: 0
         run: |
-          set -euo pipefail
-          if git diff --quiet; then
-            echo "no changes produced - nothing to open"
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -B "core-update/$TARGET"
-          git add core/go.mod core/go.sum
-          git commit -m "chore(core): sync Prizrak-Core pins to $TARGET ($COUNT line(s))"
-          git push -f origin "core-update/$TARGET"
+          go mod tidy
+          go test .
+          go vet . ./cmd/...
 
-      - name: Open or refresh the pull request
-        if: steps.sync.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TARGET: ${{ steps.target.outputs.tag }}
-          PINNED: ${{ steps.pinned.outputs.version }}
-          BRANCH: core-update/${{ steps.target.outputs.tag }}
-        run: |
-          set -euo pipefail
-          if git diff --quiet; then
-            echo "nothing to open"
-            exit 0
-          fi
-          body=$(cat <<EOF
-          Automated pin sync detected by \`check-core-update\`.
+      - name: Open or refresh the update pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: core-update/prizrak
+          base: ${{ github.event.repository.default_branch }}
+          commit-message: 'chore(core): sync Prizrak-Core to ${{ steps.target.outputs.tag }}'
+          title: 'chore(core): sync Prizrak-Core to ${{ steps.target.outputs.tag }}'
+          body: |
+            Updates Prizrak-Core to `${{ steps.target.outputs.tag }}` and mirrors the companion replacements from that tag's `go.mod`.
 
-          | | version |
-          |---|---|
-          | was | \`$PINNED\` |
-          | now | \`$TARGET\` |
-
-          All four \`replace\` pins were copied from \`go.mod\` of
-          \`legiz-ru/Prizrak-Core@$TARGET\`, not just the core version: Go ignores
-          a dependency's own \`replace\` directives, so \`prizrak-utls\`,
-          \`prizrak-http\` and \`protobuf-go\` have to be mirrored here or
-          \`go mod tidy\` would keep resolving the old ones.
-
-          \`go mod tidy\` was re-run, so \`core/go.sum\` is refreshed.
-
-          Merging this does **not** publish anything - \`build.yaml\` only
-          triggers on a \`v*\` tag. Review the go.mod diff, then tag a release
-          when you are happy with it.
-          EOF
-          )
-          existing=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
-          if [ -n "$existing" ]; then
-            echo "PR #$existing already open for $BRANCH - refreshing body"
-            gh pr edit "$existing" --body "$body"
-          else
-            # The built-in token can only open pull requests when the repository
-            # also allows it. That toggle lives outside this file - Settings >
-            # Actions > General > Workflow permissions > "Allow GitHub Actions
-            # to create and approve pull requests" - and the API's own answer
-            # names no setting, so translate it rather than leaving the raw
-            # GraphQL message.
-            if ! out=$(gh pr create \
-                --base main \
-                --head "$BRANCH" \
-                --title "chore(core): sync Prizrak-Core pins to $TARGET" \
-                --body "$body" 2>&1); then
-              echo "$out" >&2
-              if grep -qi "not permitted to create or approve pull requests" <<<"$out"; then
-                echo "" >&2
-                echo "::error::This repository does not allow GitHub Actions to create" >&2
-                echo "::error::pull requests. The permissions in this workflow are already" >&2
-                echo "::error::correct; enable the repository toggle at" >&2
-                echo "::error::Settings > Actions > General > Workflow permissions >" >&2
-                echo "::error::Allow GitHub Actions to create and approve pull requests," >&2
-                echo "::error::then re-run this workflow. Branch $BRANCH is already pushed." >&2
-              fi
-              exit 1
-            fi
-          fi
+            Includes the engine gitlink, `build_config.yaml`, and refreshed `core/go.mod` / `core/go.sum`. The Go wrapper tests and vet run before this pull request is created. Review and merge before tagging a release; this workflow does not publish builds.
+          add-paths: |
+            core/go.mod
+            core/go.sum
+            core/Clash.Meta
+            build_config.yaml
