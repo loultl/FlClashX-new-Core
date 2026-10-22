@@ -173,6 +173,7 @@ class TunStackItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     return ConfigOptionsItem<TunStack>(
+      managedKey: 'clash.tun.stack',
       title: (l) => l.stackMode,
       options: TunStack.values,
       textBuilder: (stack) => stack.name,
@@ -189,6 +190,7 @@ class InterfaceNameModeItem extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     final appLocalizations = context.appLocalizations;
     return ConfigOptionsItem<InterfaceNameMode>(
+      managedKey: 'clash.interface-name',
       title: (l) => l.interfaceNameMode,
       options: InterfaceNameMode.values,
       textBuilder: (mode) => switch (mode) {
@@ -212,6 +214,7 @@ class InterfaceNameItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     return ConfigTextItem(
+      managedKey: 'clash.interface-name',
       title: (l) => l.interfaceName,
       maxLength: TextInputLimits.name,
       selector: patchClashConfigProvider.select((state) => state.interfaceName),
@@ -256,15 +259,18 @@ class RouteAddressItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    return ConfigListEditItem(
-      title: (l) => l.routeAddress,
-      itemMaxLength: TextInputLimits.cidr,
-      itemValidator: validateCidr,
-      selector: patchClashConfigProvider.select(
-        (state) => state.tun.routeAddress,
-      ),
-      onChanged: _tunWriter(
-        (state, value) => state.copyWith.tun(routeAddress: value),
+    return ManagedSetting(
+      settingKey: 'clash.tun.route-address',
+      child: ConfigListEditItem(
+        title: (l) => l.routeAddress,
+        itemMaxLength: TextInputLimits.cidr,
+        itemValidator: validateCidr,
+        selector: patchClashConfigProvider.select(
+          (state) => state.tun.routeAddress,
+        ),
+        onChanged: _tunWriter(
+          (state, value) => state.copyWith.tun(routeAddress: value),
+        ),
       ),
     );
   }
@@ -297,9 +303,11 @@ class _NumberItem extends ConsumerWidget {
     this.isSeconds = false,
     this.min = 0,
     this.max = _maxUint32,
+    this.managedKey,
   });
 
   final ConfigLabel title;
+  final String? managedKey;
   final int Function(PatchClashConfig state) select;
   final _TunUpdate<int> update;
   final bool isSeconds;
@@ -311,7 +319,7 @@ class _NumberItem extends ConsumerWidget {
     final appLocalizations = context.appLocalizations;
     final label = title(appLocalizations);
     final value = ref.watch(patchClashConfigProvider.select(select));
-    return ListItem.input(
+    final item = ListItem.input(
       title: Text(label),
       subtitle: Text(
         isSeconds ? appLocalizations.secondsCount(value) : '$value',
@@ -340,6 +348,10 @@ class _NumberItem extends ConsumerWidget {
             .update((state) => update(state, int.parse(value.trim())));
       },
     );
+    final managedKey = this.managedKey;
+    return managedKey == null
+        ? item
+        : ManagedSetting(settingKey: managedKey, child: item);
   }
 }
 
@@ -368,15 +380,18 @@ List<Widget> tunItems({required bool isMipsStack}) {
       ),
     const BypassPrivateRouteItem(),
     const RouteAddressItem(),
-    ConfigListEditItem(
-      title: (l) => l.routeExcludeAddress,
-      itemMaxLength: TextInputLimits.cidr,
-      itemValidator: validateCidr,
-      selector: patchClashConfigProvider.select(
-        (state) => state.tun.routeExcludeAddress,
-      ),
-      onChanged: _tunWriter(
-        (state, value) => state.copyWith.tun(routeExcludeAddress: value),
+    ManagedSetting(
+      settingKey: 'clash.tun.route-exclude-address',
+      child: ConfigListEditItem(
+        title: (l) => l.routeExcludeAddress,
+        itemMaxLength: TextInputLimits.cidr,
+        itemValidator: validateCidr,
+        selector: patchClashConfigProvider.select(
+          (state) => state.tun.routeExcludeAddress,
+        ),
+        onChanged: _tunWriter(
+          (state, value) => state.copyWith.tun(routeExcludeAddress: value),
+        ),
       ),
     ),
   ];
@@ -449,6 +464,7 @@ List<Widget> outboundItems({required bool isDesktop, required bool isLinux}) {
     if (isDesktop) ...[
       ConfigToggleItem(
         title: (l) => l.disableKeepAlive,
+        managedKey: 'clash.disable-keep-alive',
         selector: patchClashConfigProvider.select(
           (state) => state.disableKeepAlive,
         ),
@@ -458,12 +474,14 @@ List<Widget> outboundItems({required bool isDesktop, required bool isLinux}) {
       ),
       _NumberItem(
         title: (l) => l.keepAliveIdle,
+        managedKey: 'clash.keep-alive-idle',
         isSeconds: true,
         select: (state) => state.keepAliveIdle,
         update: (state, value) => state.copyWith(keepAliveIdle: value),
       ),
       _NumberItem(
         title: (l) => l.keepAliveIntervalDesc,
+        managedKey: 'clash.keep-alive-interval',
         isSeconds: true,
         select: (state) => state.keepAliveInterval,
         update: (state, value) => state.copyWith(keepAliveInterval: value),
@@ -472,6 +490,7 @@ List<Widget> outboundItems({required bool isDesktop, required bool isLinux}) {
     if (isLinux)
       _NumberItem(
         title: (l) => l.routingMark,
+        managedKey: 'clash.routing-mark',
         select: (state) => state.routingMark,
         update: (state, value) => state.copyWith(routingMark: value),
       ),
@@ -590,6 +609,7 @@ class NetworkListView extends StatelessWidget {
         horizontal: 16,
       ).copyWith(top: context.contentTopPadding, bottom: 16),
       children: [
+        const ManagedSettingsHint(keys: networkPageKeys),
         if (system.isAndroid) const VpnSections(),
         if (system.isDesktop) const SystemProxySection(),
         const NetworkOptionsSection(),

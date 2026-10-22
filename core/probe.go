@@ -77,7 +77,7 @@ func (d *probeDialer) dial(ctx context.Context, _ string, address string) (net.C
 	local, remote := N.Pipe()
 	routed := &routedConn{Conn: local, metadata: metadata}
 	pendingProbeRoutes.Store(metadata, routed)
-	go tunnel.Tunnel.HandleTCPConn(remote, metadata)
+	go trafficTunnel.HandleTCPConn(remote, metadata)
 	d.remember(routed)
 	return routed, nil
 }
@@ -123,11 +123,25 @@ type routedConn struct {
 }
 
 func (c *routedConn) Close() error {
+	c.resolve()
 	pendingProbeRoutes.CompareAndDelete(c.metadata, c)
 	return c.Conn.Close()
 }
 
+// A probe that got its answer before the accounting tunnel looked its
+// tracker up still finds it here, as long as the connection is open.
 func (c *routedConn) resolve() *probeRoute {
+	c.mu.Lock()
+	route := c.route
+	c.mu.Unlock()
+	if route != nil || c.metadata == nil {
+		return route
+	}
+	if tracker := findTracker(func(info *statistic.TrackerInfo) bool {
+		return info.Metadata == c.metadata
+	}); tracker != nil {
+		notifyProbeRoute(tracker)
+	}
 	c.mu.Lock()
 	defer c.mu.Unlock()
 	return c.route
@@ -172,6 +186,10 @@ type probeRequest struct {
 	// A followed redirect loses the Location that Netflix names its region in.
 	noRedirect bool
 
+	// Russian state and bank sites chain to a root the system stores lack;
+	// a check that only asks whether they answer trusts their certificate.
+	insecure bool
+
 	// until sees the latest chunk and probeScanOverlap bytes before it.
 	until func(tail string) bool
 }
@@ -208,6 +226,7 @@ func runProbe(parent context.Context, req probeRequest) *ProbeResult {
 	if err != nil {
 		return fail(err)
 	}
+	tlsConfig.InsecureSkipVerify = req.insecure
 
 	timeout := req.timeout
 	if timeout <= 0 {

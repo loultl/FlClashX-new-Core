@@ -54,8 +54,11 @@ TrayState trayState(Ref ref) {
   );
   final appSetting = ref.watch(
     appSettingProvider.select(
-      (state) =>
-          (autoLaunch: state.autoLaunch, showTrayTitle: state.showTrayTitle),
+      (state) => (
+        autoLaunch: state.autoLaunch,
+        showTrayTitle: state.showTrayTitle,
+        menuBarMode: state.menuBarMode,
+      ),
     ),
   );
   final groups = ref.watch(currentGroupsStateProvider).value;
@@ -75,8 +78,10 @@ TrayState trayState(Ref ref) {
     groups: groups,
     selectedMap: selectedMap,
     showTrayTitle: appSetting.showTrayTitle,
+    menuBarMode: appSetting.menuBarMode,
     safeMode: safeMode,
     hotKeys: hotKeys,
+    globalModeAllowed: ref.watch(globalModeAllowedProvider),
   );
 }
 
@@ -107,8 +112,11 @@ Map<String, Map<String, int>> trayDelays(Ref ref) {
   final delays = <String, Map<String, int>>{};
   for (final group in groups) {
     final testUrl = group.testUrl.takeFirstValid([defaultTestUrl]);
+    final selected = allGroups
+        .getGroup(group.name)
+        ?.getCurrentSelectedName(selectedMap[group.name] ?? '');
     final groupDelays = <String, int>{};
-    for (final proxy in group.all) {
+    for (final proxy in group.trayProxies(selected)) {
       final delay = computeProxyDelayState(
         proxyName: proxy.name,
         testUrl: testUrl,
@@ -171,8 +179,10 @@ SharedState sharedState(Ref ref) {
   ref.watch(loadedLocaleProvider);
   final currentProfile = ref.watch(
     currentProfileProvider.select(
+      // A panel's profile label is often the user's name; the VPN
+      // notification is titled with the service, as the expiry notice is.
       (state) => CurrentProfileSelectorState(
-        label: state?.label ?? '',
+        label: state?.headers.serviceName ?? state?.label ?? '',
         selectedMap: state?.selectedMap ?? {},
       ),
     ),
@@ -195,6 +205,7 @@ SharedState sharedState(Ref ref) {
     currentProfileName: currentProfileName,
     onlyStatisticsProxy: onlyStatisticsProxy,
     showStopAction: appSetting.showStopAction,
+    appVisible: ref.watch(appVisibleProvider),
     stopText: currentAppLocalizations.stop,
     stopTip: currentAppLocalizations.stopVpn,
     startTip: currentAppLocalizations.startVpn,
@@ -249,11 +260,17 @@ Future<VpnOptions> vpnOptions(Ref ref) async {
     // VpnService.setHttpProxy cannot carry credentials, so an authenticated
     // mixed port is left to TUN instead of declared as the system proxy.
     systemProxy:
-        vpnSetting.systemProxy && !networkSetting.authenticated && !safeMode,
+        vpnSetting.systemProxy &&
+        !networkSetting.authenticated &&
+        !safeMode &&
+        !ref.watch(androidSecureProvider),
     port: clashConfig.mixedPort,
     ipv6: vpnSetting.ipv6,
     dnsHijacking: vpnSetting.dnsHijacking,
-    accessControlProps: vpnSetting.accessControlProps,
+    accessControlProps: vpnSetting.accessControlProps.withPackages(
+      include: tun.includePackage,
+      exclude: tun.excludePackage,
+    ),
     allowBypass: vpnSetting.allowBypass,
     bypassDomain: networkSetting.bypassDomain,
     routeAddress: await routeAddress,

@@ -22,7 +22,11 @@ enum ServiceTarget {
   spotify('spotify', 'Spotify', 'spotify'),
   tiktok('tiktok', 'TikTok', 'tiktok'),
   discord('discord', 'Discord', 'discord'),
-  bilibili('bilibili', 'bilibili', 'bilibili');
+  gosuslugi('gosuslugi', 'Госуслуги', 'gosuslugi'),
+  sberbank('sberbank', 'Сбербанк', 'sberbank'),
+  vk('vk', 'VK', 'vk'),
+  yandex('yandex', 'Яндекс', 'yandex'),
+  kinopoisk('kinopoisk', 'Кинопоиск', 'kinopoisk');
 
   const ServiceTarget(this.id, this.label, this.icon);
 

@@ -505,6 +505,13 @@ class _GroupSliverState extends ConsumerState<_GroupSliver>
     );
   }
 
+  /// Over a panel backdrop the cover takes the app bar's scrim, so it blends
+  /// with the picture instead of cutting a solid band through it.
+  Color _coverColorOf(BuildContext context) {
+    final page = context.surfaceLevel.colorOf(context.colorScheme);
+    return PageBackdropScope.of(context)?.scrimOf(page) ?? page;
+  }
+
   /// Rounds the header and lifts it as its own rows scroll under it, and lets
   /// the shadow go before the end of the group pushes it out. The page color
   /// behind its upper half hides the rows that went under it, which would
@@ -541,7 +548,7 @@ class _GroupSliverState extends ConsumerState<_GroupSliver>
                   1.0,
                 ),
                 isExpand ? constraints.overlap : 0.0,
-                context.surfaceLevel.colorOf(context.colorScheme),
+                _coverColorOf(context),
               );
         if (header != null && state == headerState) {
           return header!;
@@ -558,13 +565,16 @@ class _GroupSliverState extends ConsumerState<_GroupSliver>
             child: Stack(
               clipBehavior: Clip.none,
               children: [
-                Positioned(
-                  top: -cover,
-                  left: 0,
-                  right: 0,
-                  height: cover + listHeaderHeight / 2,
-                  child: ColoredBox(color: pageColor),
-                ),
+                // At rest nothing lies under it, and a cover would show square
+                // behind its corners over a translucent page.
+                if (floating > 0)
+                  Positioned(
+                    top: -cover,
+                    left: 0,
+                    right: 0,
+                    height: cover + listHeaderHeight / 2,
+                    child: ColoredBox(color: pageColor),
+                  ),
                 buildHeader(floating: floating, lift: lift),
               ],
             ),
@@ -638,7 +648,7 @@ class ListHeader extends ConsumerWidget {
             _GroupActions(
               isExpand: isExpand,
               isDelayTesting: isDelayTesting,
-              groupType: group.type.name,
+              description: group.serverDescription,
               onScrollToSelected: () {
                 onScrollToSelected(groupName);
               },
@@ -811,7 +821,7 @@ class _GroupActions extends StatelessWidget {
   const _GroupActions({
     required this.isExpand,
     required this.isDelayTesting,
-    required this.groupType,
+    required this.description,
     required this.onScrollToSelected,
     required this.onDelayTest,
     required this.onToggle,
@@ -819,7 +829,7 @@ class _GroupActions extends StatelessWidget {
 
   final bool isExpand;
   final bool isDelayTesting;
-  final String groupType;
+  final String? description;
   final VoidCallback onScrollToSelected;
   final VoidCallback onDelayTest;
   final VoidCallback onToggle;
@@ -849,12 +859,17 @@ class _GroupActions extends StatelessWidget {
                 ),
               ],
             )
-          else
-            Text(
-              groupType,
-              style: AppTextStyle.caption1
-                  .of(context, emphasized: true)
-                  .toLight,
+          else if (description case final description?)
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 160),
+              child: Text(
+                description,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyle.caption1
+                    .of(context, emphasized: true)
+                    .toLight,
+              ),
             ),
           const SizedBox(width: 6),
           ElasticPress(

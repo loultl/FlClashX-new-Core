@@ -37,13 +37,13 @@ final _rowCases = <_RowCase>[
     const NetworkTakeoverCard(),
     'System proxy',
     (container) => container.read(networkSettingProvider).systemProxy,
-    initial: true,
   ),
   _RowCase(
     'TUN',
     const NetworkTakeoverCard(),
     'TUN',
     (container) => container.read(patchClashConfigProvider).tun.enable,
+    initial: true,
   ),
   _RowCase(
     'VPN',
@@ -132,7 +132,15 @@ void main() {
     );
     final tun = switchOf(_rowCases[1]);
 
-    expect(find.byType(LiquidGlass), findsNothing);
+    // Only the card's own frost is glass, not the controls on it.
+    expect(
+      find.descendant(
+        of: find.byType(LiquidGlass),
+        matching: find.byType(LiquidGlass),
+      ),
+      findsNothing,
+    );
+    expect(find.byType(LiquidGlass), findsOneWidget);
 
     final press = find.ancestor(of: tun, matching: find.byType(ElasticPress));
     final gesture = await tester.startGesture(tester.getCenter(tun));
@@ -145,19 +153,19 @@ void main() {
     await gesture.up();
     await tester.pumpAndSettle();
 
-    expect(container.read(patchClashConfigProvider).tun.enable, isTrue);
+    expect(container.read(patchClashConfigProvider).tun.enable, isFalse);
   });
 
   testWidgets('a row says what it is set to', (tester) async {
     await pumpCard(tester, const NetworkTakeoverCard());
 
-    expect(find.text('Port 7890'), findsOneWidget);
     expect(find.text(currentAppLocalizations.disabled), findsOneWidget);
+    expect(find.text(currentAppLocalizations.enabled), findsOneWidget);
 
-    await tester.tap(switchOf(_rowCases[1]));
+    await tester.tap(switchOf(_rowCases[0]));
     await tester.pumpAndSettle();
 
-    expect(find.text(currentAppLocalizations.enabled), findsOneWidget);
+    expect(find.text('Port 7890'), findsOneWidget);
   });
 
   testWidgets('narrow tiles drop their icons together before a title is cut '

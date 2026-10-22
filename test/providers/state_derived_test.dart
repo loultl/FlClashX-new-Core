@@ -569,6 +569,35 @@ void main() {
     expect(container.read(proxyStateProvider).isStart, isFalse);
   });
 
+  test('the VPN notification is titled with the service, not the profile '
+      'label', () async {
+    await AppLocalizations.load(const Locale('en'));
+    Profile profile(Map<String, String> headers) => Profile(
+      id: 7,
+      label: 'user-42',
+      type: ProfileType.url,
+      url: 'https://sub.example.com/link',
+      autoUpdateDuration: Duration.zero,
+      providerHeaders: headers,
+    );
+    for (final (headers, title) in [
+      (const {'flclashx-servicename': 'Example VPN'}, 'Example VPN'),
+      (const <String, String>{}, 'user-42'),
+    ]) {
+      final scoped = ProviderContainer(
+        overrides: [
+          profilesProvider.overrideWith(() => TestProfiles([profile(headers)])),
+        ],
+      );
+      addTearDown(scoped.dispose);
+      scoped.listen(currentProfileIdProvider, (_, _) {});
+      scoped.read(currentProfileIdProvider.notifier).value = 7;
+      scoped.listen(sharedStateProvider, (_, _) {});
+
+      expect(scoped.read(sharedStateProvider).currentProfileName, title);
+    }
+  });
+
   test('safe mode keeps every host integration off', () async {
     await AppLocalizations.load(const Locale('en'));
     final scoped = ProviderContainer(
@@ -917,6 +946,9 @@ void main() {
   test('local authentication withholds the VPN system proxy', () async {
     await AppLocalizations.load(const Locale('en'));
     container.listen(sharedStateProvider, (_, _) {});
+    container
+        .read(vpnSettingProvider.notifier)
+        .update((state) => state.copyWith(systemProxy: true));
     await container.read(vpnOptionsProvider.future);
     expect(container.read(sharedStateProvider).vpnOptions?.systemProxy, true);
 
@@ -945,6 +977,24 @@ void main() {
     await container.read(vpnOptionsProvider.future);
     expect(container.read(sharedStateProvider).vpnOptions?.systemProxy, true);
     expect(container.read(updateParamsProvider).authentication, isEmpty);
+  });
+
+  test('androidsecure withholds the VPN system proxy', () async {
+    final scoped = ProviderContainer(
+      overrides: [
+        profilesProvider.overrideWith(TestProfiles.new),
+        androidSecureProvider.overrideWithValue(true),
+      ],
+    );
+    addTearDown(scoped.dispose);
+    scoped.listen(sharedStateProvider, (_, _) {});
+    scoped
+        .read(vpnSettingProvider.notifier)
+        .update((state) => state.copyWith(systemProxy: true));
+
+    await scoped.read(vpnOptionsProvider.future);
+
+    expect(scoped.read(sharedStateProvider).vpnOptions?.systemProxy, false);
   });
 
   test('the setup patch changes only with what a re-apply carries', () {
