@@ -117,6 +117,14 @@ class _SmartDetailsViewState extends ConsumerState<SmartDetailsView>
     required double bottomInset,
   }) {
     final weights = state.value;
+    final smartLogs = ref
+        .watch(logsProvider)
+        .list
+        .where((log) => log.payload.toLowerCase().contains('[smart'))
+        .toList(growable: false)
+        .reversed
+        .take(30)
+        .toList(growable: false);
     if (state.hasError && weights == null) {
       return NullStatus(
         label: 'Failed to load',
@@ -199,6 +207,42 @@ class _SmartDetailsViewState extends ConsumerState<SmartDetailsView>
                     weight: rows[index].$2,
                     position: rows[index].$1 + 1,
                   ),
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: ExpansionTile(
+                  tilePadding: EdgeInsets.zero,
+                  title: Text('Smart logs (${smartLogs.length})'),
+                  children: smartLogs.isEmpty
+                      ? [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: Text(
+                              'No Smart logs yet. Set the core log level to debug to see detailed Smart activity.',
+                              style: AppTextStyle.footnote.of(context).toLight,
+                            ),
+                          ),
+                        ]
+                      : [
+                          for (final log in smartLogs)
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 8),
+                                child: Text(
+                                  '${log.dateTime}  ${log.payload}',
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTextStyle.caption1
+                                      .of(context)
+                                      .toLight,
+                                ),
+                              ),
+                            ),
+                        ],
                 ),
               ),
             ),

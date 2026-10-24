@@ -36,7 +36,6 @@ const managedClashKeys = {
   'geo-auto-update',
   'geo-update-interval',
   'geox-url',
-  'global-ua',
   'tun.device',
   'tun.stack',
   'tun.route-address',

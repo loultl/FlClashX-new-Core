@@ -289,7 +289,7 @@ Future<RealProfile> _makeRealProfileTask(MakeRealProfileState data) async {
   rawConfig['geox-url'] = realPatchConfig.geoXUrl.raw;
   rawConfig['global-ua'] = realPatchConfig.globalUa == prizrakUserAgentMarker
       ? defaultUA.replaceFirst('$appName/', '$prizrakAppName/')
-      : realPatchConfig.globalUa ?? defaultUA;
+      : defaultUA;
   if (rawConfig['hosts'] == null) {
     rawConfig['hosts'] = {};
   }

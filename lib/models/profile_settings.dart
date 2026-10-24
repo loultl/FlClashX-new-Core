@@ -6,7 +6,8 @@ import 'clash_config.dart';
 
 /// [current] with the keys below taken from [config], the decoded profile,
 /// where [present] names them, and reset to the app default where it does
-/// not; `mode` and `tun.enable` are only ever set, never reset.
+/// not. The selected [globalUa] is an app preference and is never owned by a
+/// profile; `mode` and `tun.enable` are only ever set, never reset.
 /// The tun's app and route lists feed Android's VPN, not the core.
 PatchClashConfig syncProfileSettings(
   PatchClashConfig current,
@@ -40,7 +41,7 @@ PatchClashConfig syncProfileSettings(
     geoAutoUpdate: defaults.geoAutoUpdate,
     geoUpdateInterval: defaults.geoUpdateInterval,
     geoXUrl: defaults.geoXUrl,
-    globalUa: defaults.globalUa,
+    globalUa: current.globalUa,
     tun: current.tun.copyWith(
       device: defaults.tun.device,
       stack: defaults.tun.stack,
@@ -122,10 +123,6 @@ PatchClashConfig syncProfileSettings(
   if (secret != null) {
     next = next.copyWith(secret: secret);
   }
-  final globalUa = read<String>('global-ua');
-  if (globalUa != null) {
-    next = next.copyWith(globalUa: globalUa.isEmpty ? null : globalUa);
-  }
   final geoXUrl = read<Map>('geox-url');
   if (geoXUrl != null) {
     next = next.copyWith(
@@ -138,9 +135,12 @@ PatchClashConfig syncProfileSettings(
       },
     );
   }
-  List<String>? strings(String key, bool Function(String) valid) => read<List>(
-    key,
-  )?.whereType<String>().map((item) => item.trim()).where(valid).toList();
+  List<String>? strings(String key, bool Function(String) valid) =>
+      read<List>(key)
+          ?.whereType<String>()
+          .map((item) => item.trim())
+          .where(valid)
+          .toList();
 
   final tunDevice = read<String>('tun.device');
   next = next.copyWith(

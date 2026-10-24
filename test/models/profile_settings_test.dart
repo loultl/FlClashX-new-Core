@@ -41,7 +41,11 @@ void main() {
       expect(synced.tun.enable, isTrue);
       expect(synced.secret, isEmpty);
       expect(synced.externalController, isEmpty);
-      expect(synced.copyWith(mode: Mode.rule), const PatchClashConfig());
+      expect(synced.globalUa, 'mine');
+      expect(
+        synced.copyWith(mode: Mode.rule),
+        const PatchClashConfig(globalUa: 'mine'),
+      );
     },
   );
 
@@ -123,10 +127,21 @@ void main() {
     expect(synced.geoUpdateInterval, 48);
     expect(synced.geoXUrl[GeoResource.GEOIP], 'https://geo.example/geoip.dat');
     expect(synced.geoXUrl[GeoResource.MMDB], defaultGeoXUrl[GeoResource.MMDB]);
-    expect(synced.globalUa, 'clash.meta');
+    expect(synced.globalUa, isNull);
     expect(synced.tun.enable, isTrue);
     expect(synced.tun.device, 'utun5');
     expect(synced.tun.stack, TunStack.gvisor);
+  });
+
+  test('the selected user agent remains an app preference across profiles', () {
+    final selected = _tuned.copyWith(globalUa: 'FlClashXprizrak');
+    final synced = syncProfileSettings(
+      selected,
+      const {'global-ua': 'profile-agent'},
+      const ['global-ua'],
+    );
+
+    expect(synced.globalUa, 'FlClashXprizrak');
   });
 
   test('a key named with a value nothing answers to counts as absent', () {

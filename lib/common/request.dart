@@ -122,13 +122,15 @@ class Request {
     final config = read(patchClashConfigProvider);
     final controller = config.externalController.trim();
     if (controller.isEmpty) return const [];
-    final uri = Uri.parse(
-      controller.contains('://') ? controller : 'http://$controller',
-    ).replace(
-      pathSegments: ['proxies', groupName, 'weights'],
-      query: null,
-      fragment: null,
-    );
+    // Prizrak-Core serves Smart weights from /group/{name}/weights.
+    final uri =
+        Uri.parse(
+          controller.contains('://') ? controller : 'http://$controller',
+        ).replace(
+          pathSegments: ['group', groupName, 'weights'],
+          query: null,
+          fragment: null,
+        );
     final response = await dio.getUri<dynamic>(
       uri,
       options: Options(

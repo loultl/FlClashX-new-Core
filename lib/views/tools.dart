@@ -10,7 +10,6 @@ import 'package:fl_clash/views/about.dart';
 import 'package:fl_clash/views/access.dart';
 import 'package:fl_clash/views/backup_and_restore.dart';
 import 'package:fl_clash/views/config/general.dart';
-import 'package:fl_clash/views/config/user_agents.dart';
 import 'package:fl_clash/views/hotkey.dart';
 import 'package:fl_clash/widgets/widgets.dart';
 import 'package:material_ui/material_ui.dart';
@@ -64,7 +63,6 @@ class _ToolViewState extends ConsumerState<ToolsView> {
         const _AdvancedConfigItem(),
         const _CustomResourcesItem(),
         const _GeneralItem(),
-        const _UserAgentsItem(),
       ],
       footer: [
         if (system.isAndroid) appLocalizations.accessControlDesc,
@@ -236,19 +234,6 @@ class _GeneralItem extends StatelessWidget {
       leading: const GlyphIcon(AppGlyphs.settings),
       title: Text(context.appLocalizations.general),
       widget: const GeneralView(),
-    );
-  }
-}
-
-class _UserAgentsItem extends StatelessWidget {
-  const _UserAgentsItem();
-
-  @override
-  Widget build(BuildContext context) {
-    return ListItem.open(
-      leading: const GlyphIcon(AppGlyphs.globe),
-      title: const Text('User agent'),
-      widget: const UserAgentsView(),
     );
   }
 }
