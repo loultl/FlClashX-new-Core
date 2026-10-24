@@ -359,7 +359,7 @@ jobs:
 
   build:
     # Releases publish where the release links point: the public repository.
-    if: github.repository == 'loultl/FlClashX-new-Core' && github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    if: github.repository == 'loultl/FlClashX-new-Core' && (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')))
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
