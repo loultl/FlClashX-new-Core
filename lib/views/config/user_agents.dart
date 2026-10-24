@@ -41,7 +41,7 @@ class _UserAgentsViewState extends ConsumerState<UserAgentsView> {
       child: InputDialog(
         title: userAgent == null ? appLocalizations.add : appLocalizations.edit,
         value: userAgent ?? '',
-        labelText: appLocalizations.userAgent,
+        labelText: 'User agent',
         inputFormatters: [
           FilteringTextInputFormatter.singleLineFormatter,
           ...TextInputLimits.limit(TextInputLimits.userAgent),
@@ -49,10 +49,10 @@ class _UserAgentsViewState extends ConsumerState<UserAgentsView> {
         validator: (value) {
           final next = value?.trim() ?? '';
           if (next.isEmpty) {
-            return appLocalizations.emptyTip(appLocalizations.userAgent);
+            return appLocalizations.emptyTip('User agent');
           }
           if (next != userAgent && entries.contains(next)) {
-            return appLocalizations.existsTip(appLocalizations.userAgent);
+            return appLocalizations.existsTip('User agent');
           }
           return null;
         },
@@ -84,9 +84,7 @@ class _UserAgentsViewState extends ConsumerState<UserAgentsView> {
     final appLocalizations = context.appLocalizations;
     final res = await dialogs.showMessage(
       title: appLocalizations.tip,
-      message: TextSpan(
-        text: appLocalizations.deleteTip(appLocalizations.userAgent),
-      ),
+      message: TextSpan(text: appLocalizations.deleteTip('User agent')),
       destructive: true,
       confirmText: appLocalizations.delete,
     );
@@ -161,7 +159,7 @@ class _UserAgentsViewState extends ConsumerState<UserAgentsView> {
     final entries = _visibleUserAgents(userAgents, selected);
     return CommonScaffold(
       canSort: entries.length > 1,
-      title: appLocalizations.userAgent,
+      title: 'User agent',
       actions: [
         IconButton(
           tooltip: appLocalizations.add,

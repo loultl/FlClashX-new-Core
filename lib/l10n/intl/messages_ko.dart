@@ -20,544 +20,444 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ko';
 
-  static String m0(count, skipped) =>
-      "ь╢Фъ░А ${count}ъ░Ь, ьЭ┤ып╕ ьЮИьЦ┤ьДЬ ъ▒┤ыДИыЬА ${skipped}ъ░Ь";
+  static String m0(count, skipped) => "추가 ${count}개, 이미 있어서 건너뜀 ${skipped}개";
 
-  static String m1(detail) =>
-      "ыН░ьЭ┤эД░ые╝ ьзАьЪ░ьзА ык╗эЦИьК╡ыЛИыЛд: ${detail}";
+  static String m1(detail) => "데이터를 지우지 못했습니다: ${detail}";
 
   static String m2(code) =>
-      "WindowsьЧРьДЬ FlClashCore.exe ьЛдэЦЙьЭД ъ▒░ы╢АэЦИьК╡ыЛИыЛд(ьШдыеШ ${code}). Smart App ControlьЭ┤ыВШ AppLockerьЩА ъ░ЩьЭА ьХ▒ ьаЬьЦ┤ ьаХь▒ЕьЭ┤ ьДЬыкЕыРШьзА ьХКьЭА эФДыбЬъ╖╕ыЮиьЭД ь░иыЛиэХйыЛИыЛд. эХ┤ыЛ╣ ьаХь▒ЕьЧРьДЬ FlClashые╝ эЧИьЪйэХШъ▒░ыВШ ьаХь▒ЕьЭД ыБИ эЫД ыЛдьЛЬ ьЛЬыПДэХШьД╕ьЪФ.";
+      "Windows에서 FlClashCore.exe 실행을 거부했습니다(오류 ${code}). Smart App Control이나 AppLocker와 같은 앱 제어 정책이 서명되지 않은 프로그램을 차단합니다. 해당 정책에서 FlClashX를 허용하거나 정책을 끈 후 다시 시도하세요.";
 
   static String m3(name) =>
-      "ьХ▒ьЭ┤ ыСР ы▓И ьЧ░ьЖН ьЛЬьЮСьЭД ьЩДыгМэХШьзА ык╗эЦИьК╡ыЛИыЛд. ы░Шы│╡ьЭД ыБКъ╕░ ьЬДэХ┤ эФДыбЬэХД ${name}ьЭШ ьДаэГЭьЭД эХ┤ьаЬэХШъ│а ьЮРыПЩ ьДдьаХьЭД ъ▒┤ыДИыЫ░ьЧИьК╡ыЛИыЛд. ьЦ╕ьаЬыУаьзА ыЛдьЛЬ ьДаэГЭэХа ьИШ ьЮИьК╡ыЛИыЛд.";
+      "앱이 두 번 연속 시작을 완료하지 못했습니다. 반복을 끊기 위해 프로필 ${name}의 선택을 해제하고 자동 설정을 건너뛰었습니다. 언제든지 다시 선택할 수 있습니다.";
 
-  static String m4(url) => "${url}ьЧРьДЬ эФДыбЬэХДьЭД ызМыУЬьЛЬъ▓аьК╡ыЛИъ╣М?";
+  static String m4(url) => "${url}에서 프로필을 만드시겠습니까?";
 
   static String m5(count, label) =>
-      "${Intl.plural(count, other: 'ьВмьЪйьЮР ьзАьаХ эФДыбЬэХДьЭА эХШьЬД ъ╖Ьь╣ЩьЭД ьзАьЫРэХШьзА ьХКьХД SUB-RULE ъ╖Ьь╣Щ ${label}ъ░Ьые╝ ьаЬьЩ╕эЦИьК╡ыЛИыЛд')}";
+      "${Intl.plural(count, other: '사용자 지정 프로필은 하위 규칙을 지원하지 않아 SUB-RULE 규칙 ${label}개를 제외했습니다')}";
 
-  static String m6(message) =>
-      "ь╜ФьЦ┤ъ░А ьЭ┤ эФДыбЭьЛЬые╝ эХ┤ьДЭэХа ьИШ ьЧЖьК╡ыЛИыЛд: ${message}";
+  static String m6(message) => "코어가 이 프록시를 해석할 수 없습니다: ${message}";
 
   static String m7(proxy, target) =>
-      "${proxy}ьЭ┤(ъ░А) ${target}ьЭД(ые╝) ъ▒░ь│Р ыЛдьЛЬ ${proxy}(ьЬ╝)ыбЬ ыПМьХДьШдыпАыбЬ ыЛдьЭ┤ьЦ╝ьЭ┤ ьИЬэЩШэХйыЛИыЛд";
+      "${proxy}이(가) ${target}을(를) 거쳐 다시 ${proxy}(으)로 돌아오므로 다이얼이 순환합니다";
 
-  static String m8(name) =>
-      "ыЛдые╕ эФДыбЭьЛЬ ыШРыКФ эФДыбЭьЛЬ ъ╖╕ыг╣ьЭ┤ ьЭ┤ып╕ ьВмьЪй ьдСьЭ╕ ьЭ┤ыжДьЮЕыЛИыЛд: ${name}";
+  static String m8(name) => "다른 프록시 또는 프록시 그룹이 이미 사용 중인 이름입니다: ${name}";
 
-  static String m9(path) =>
-      "эФДыбЭьЛЬ ъ╖╕ыг╣ьЭ┤ ьДЬыбЬые╝ ьИЬэЩШ ь░╕ьб░эХйыЛИыЛд: ${path}";
+  static String m9(path) => "프록시 그룹이 서로를 순환 참조합니다: ${path}";
 
-  static String m10(name) =>
-      "ы╣И эП┤ы░▒ьЭА эФДыбЭьЛЬьЧмьХ╝ эХШьзАызМ ьб┤ьЮмэХШьзА ьХКъ▒░ыВШ эФДыбЭьЛЬ ъ╖╕ыг╣ьЮЕыЛИыЛд: ${name}";
+  static String m10(name) => "빈 폴백은 프록시여야 하지만 존재하지 않거나 프록시 그룹입니다: ${name}";
 
-  static String m11(name, message) =>
-      "ьШмы░Фые╕ ьаХъ╖ЬьЛЭьЭ┤ ьХДыЛЩыЛИыЛд(${name}): ${message}";
+  static String m11(name, message) => "올바른 정규식이 아닙니다(${name}): ${message}";
 
-  static String m12(name) =>
-      "ьб┤ьЮмэХШьзА ьХКыКФ ыЛдьЭ┤ьЦ╝ыЯм эФДыбЭьЛЬ: ${name}";
+  static String m12(name) => "존재하지 않는 다이얼러 프록시: ${name}";
 
-  static String m13(names) =>
-      "ьб┤ьЮмэХШьзА ьХКыКФ эФДыбЭьЛЬ ъ│╡ъ╕ЙьЮР: ${names}";
+  static String m13(names) => "존재하지 않는 프록시 공급자: ${names}";
 
-  static String m14(names) =>
-      "ьб┤ьЮмэХШьзА ьХКыКФ эФДыбЭьЛЬ ыШРыКФ ьаХь▒Е: ${names}";
+  static String m14(names) => "존재하지 않는 프록시 또는 정책: ${names}";
 
-  static String m15(name) =>
-      "ыВ┤ьЮе ьаХь▒Е ьЭ┤ыжДьЭ┤ыЭ╝ ьЧмъ╕░ьЧРьДЬ ьВмьЪйэХа ьИШ ьЧЖьК╡ыЛИыЛд: ${name}";
+  static String m15(name) => "내장 정책 이름이라 여기에서 사용할 수 없습니다: ${name}";
 
-  static String m16(count) =>
-      "ым╕ьаЬъ░А ьЮИыКФ эХныкй ${count}ъ░Ь, ьЭ┤ эФДыбЬэХДьЭД ьаБьЪйэХШый┤ ьЛдэМиэХа ьИШ ьЮИьК╡ыЛИыЛд";
+  static String m16(count) => "문제가 있는 항목 ${count}개, 이 프로필을 적용하면 실패할 수 있습니다";
 
-  static String m17(count) => "${Intl.plural(count, other: '${count}ьЭ╝ ьаД')}";
+  static String m17(count) => "${Intl.plural(count, other: '${count}일 전')}";
 
-  static String m18(count) => "${Intl.plural(count, other: '${count}ьЭ╝ ьаД')}";
+  static String m18(count) => "${Intl.plural(count, other: '${count}일 전')}";
 
-  static String m19(label) =>
-      "ьДаэГЭэХЬ ${label}ьЭД(ые╝) ьВньаЬэХШьЛЬъ▓аьК╡ыЛИъ╣М?";
+  static String m19(label) => "선택한 ${label}을(를) 삭제하시겠습니까?";
 
-  static String m20(label) => "ьЭ┤ ${label}ьЭД(ые╝) ьВньаЬэХШьЛЬъ▓аьК╡ыЛИъ╣М?";
+  static String m20(label) => "이 ${label}을(를) 삭제하시겠습니까?";
 
-  static String m21(label) => "${label} ьГБьД╕ ьаХы│┤";
+  static String m21(label) => "${label} 상세 정보";
 
   static String m22(name) =>
-      "${name}ьЭД(ые╝) ъ▒░ь╣ШыКФ ыЛдьЭ┤ьЦ╝ьЭ┤ ьЭ┤ые╝ ьВмьЪйэХШыКФ эФДыбЭьЛЬыбЬ ыРШыПМьХДьЩА ьЧ░ъ▓░ьЭД ьдСыЛиэЦИьК╡ыЛИыЛд";
+      "${name}을(를) 거치는 다이얼이 이를 사용하는 프록시로 되돌아와 연결을 중단했습니다";
 
-  static String m23(label) => "${label}ьЭД(ые╝) ьЮЕыаеэХШьД╕ьЪФ";
+  static String m23(label) => "${label}을(를) 입력하세요";
 
-  static String m24(label) => "${label}ьЭ┤(ъ░А) ьЭ┤ып╕ ьЮИьК╡ыЛИыЛд";
+  static String m24(label) => "${label}이(가) 이미 있습니다";
 
-  static String m25(count) => "${count}ъ░Ь эХныкй ьЛдэМи";
+  static String m25(address) => "외부 컨트롤러를 사용하면 ${address} 주소로 코어를 제어할 수 있습니다.";
 
-  static String m26(label, message) => "${label}: ${message}";
+  static String m26(count) => "${count}개 항목 실패";
 
-  static String m27(name) => "${name}: ьЭ┤ып╕ ь╡ЬьЛа ьГБэГЬьЮЕыЛИыЛд";
+  static String m27(label, message) => "${label}: ${message}";
 
-  static String m28(name) => "${name}: ьЧЕыН░ьЭ┤эК╕ыРи";
+  static String m28(name) => "${name}: 이미 최신 상태입니다";
 
-  static String m29(count) =>
-      "${Intl.plural(count, other: 'ъ╖╕ыг╣ ${count}ъ░Ь')}";
+  static String m29(name) => "${name}: 업데이트됨";
 
-  static String m30(count) => "${count}ъ░Ь ьЛЬъ░Д ь┤Иъ│╝";
+  static String m30(count) => "${Intl.plural(count, other: '그룹 ${count}개')}";
 
-  static String m31(action) =>
-      "ьЭ┤ып╕ тАЬ${action}тАЭьЧРьДЬ ьВмьЪй ьдСьЮЕыЛИыЛд. ьаАьЮеэХШый┤ ьЭ┤ьк╜ьЬ╝ыбЬ ьШоъ▓иьзСыЛИыЛд.";
+  static String m31(count) => "${count}개 시간 초과";
 
-  static String m32(modifiers) =>
-      "${modifiers} ьдС эХШыВШ ьЭ┤ьГБьЭД эПмэХиэХШьД╕ьЪФ";
+  static String m32(action) => "이미 “${action}”에서 사용 중입니다. 저장하면 이쪽으로 옮겨집니다.";
 
-  static String m33(count) =>
-      "${Intl.plural(count, other: '${count}ьЛЬъ░Д ьаД')}";
+  static String m33(modifiers) => "${modifiers} 중 하나 이상을 포함하세요";
 
-  static String m34(count) =>
-      "${Intl.plural(count, other: '${count}ьЛЬъ░Д ьаД')}";
+  static String m34(count) => "${Intl.plural(count, other: '${count}시간 전')}";
 
-  static String m35(target) => "ьШмы░Фые┤ьзА ьХКьЭА ьаХь▒Е: ${target}";
+  static String m35(count) => "${Intl.plural(count, other: '${count}시간 전')}";
 
-  static String m36(proxyName) => "ьШмы░Фые┤ьзА ьХКьЭА эФДыбЭьЛЬ: ${proxyName}";
+  static String m36(target) => "올바르지 않은 정책: ${target}";
 
-  static String m37(providerName) =>
-      "ьШмы░Фые┤ьзА ьХКьЭА эФДыбЭьЛЬ ъ│╡ъ╕ЙьЮР: ${providerName}";
+  static String m37(proxyName) => "올바르지 않은 프록시: ${proxyName}";
 
-  static String m38(ruleSet) => "ьШмы░Фые┤ьзА ьХКьЭА ъ╖Ьь╣Щ ьД╕эК╕: ${ruleSet}";
+  static String m38(providerName) => "올바르지 않은 프록시 공급자: ${providerName}";
 
-  static String m39(subRule) => "ьШмы░Фые┤ьзА ьХКьЭА SUB_RULE: ${subRule}";
+  static String m39(ruleSet) => "올바르지 않은 규칙 세트: ${ruleSet}";
 
-  static String m40(count) =>
-      "${Intl.plural(count, other: 'эХныкй ${count}ъ░Ь')}";
+  static String m40(subRule) => "올바르지 않은 SUB_RULE: ${subRule}";
 
-  static String m41(line, message) => "${line}эЦЙ: ${message}";
+  static String m41(count) => "${Intl.plural(count, other: '항목 ${count}개')}";
 
-  static String m42(appName) =>
-      "1. ьЛЬьКдэЕЬ ьДдьаХ > ъ░ЬьЭ╕ьаХы│┤ ы│┤эШ╕ ы░П ы│┤ьХИьЭД ьЧ╜ыЛИыЛд\n2. ьЬДь╣Ш ьДЬы╣ДьКдые╝ ьДаэГЭэХйыЛИыЛд\n3. ыкйыбЭьЧРьДЬ ${appName}ьЭД(ые╝) ь░╛ьХД ь▓┤эБмэХйыЛИыЛд\n\nьЩДыгМыРШый┤ ьХ▒ьЬ╝ыбЬ ыПМьХДьЩА ъ│ДьЖНэХШьД╕ьЪФ. эШСьб░эХ┤ ьг╝ьЕФьДЬ ъ░РьВмэХйыЛИыЛд.";
+  static String m42(line, message) => "${line}행: ${message}";
 
-  static String m43(label, max) =>
-      "${label}ьЭА(ыКФ) ь╡ЬыМА ${max}ьЮРъ╣МьзА ьЮЕыаеэХа ьИШ ьЮИьК╡ыЛИыЛд";
+  static String m43(appName) =>
+      "1. 시스템 설정 > 개인정보 보호 및 보안을 엽니다\n2. 위치 서비스를 선택합니다\n3. 목록에서 ${appName}을(를) 찾아 체크합니다\n\n완료되면 앱으로 돌아와 계속하세요. 협조해 주셔서 감사합니다.";
 
-  static String m44(size) => "${size} эХ┤ьаЬыРи";
+  static String m44(label, max) => "${label}은(는) 최대 ${max}자까지 입력할 수 있습니다";
 
-  static String m45(count) => "${Intl.plural(count, other: '${count}ы╢Д ьаД')}";
+  static String m45(size) => "${size} 해제됨";
 
-  static String m46(count) => "${Intl.plural(count, other: '${count}ы╢Д ьаД')}";
+  static String m46(count) => "${Intl.plural(count, other: '${count}분 전')}";
 
-  static String m47(count) =>
-      "${Intl.plural(count, other: '${count}ъ░ЬьЫФ ьаД')}";
+  static String m47(count) => "${Intl.plural(count, other: '${count}분 전')}";
 
-  static String m48(count) =>
-      "${Intl.plural(count, other: '${count}ъ░ЬьЫФ ьаД')}";
+  static String m48(count) => "${Intl.plural(count, other: '${count}개월 전')}";
 
-  static String m49(code) =>
-      "ьДЬы▓Дъ░А ьаСъ╖╝ьЭД ъ▒░ы╢АэЦИьК╡ыЛИыЛд(HTTP ${code}). ызБэБмъ░А ызМыгМыРШьЧИъ▒░ыВШ ьЮРъ▓й ьжЭыкЕьЭ┤ ьЮШык╗ыРШьЧИьЭД ьИШ ьЮИьК╡ыЛИыЛд";
+  static String m49(count) => "${Intl.plural(count, other: '${count}개월 전')}";
 
   static String m50(code) =>
-      "ьДЬы▓Дъ░А ьЪФь▓ньЭД ъ▒░ы╢АэЦИьК╡ыЛИыЛд(HTTP ${code})";
+      "서버가 접근을 거부했습니다(HTTP ${code}). 링크가 만료되었거나 자격 증명이 잘못되었을 수 있습니다";
 
-  static String m51(code) =>
-      "ьЭ┤ ьг╝ьЖМьЧРьДЬ ьХДым┤ъ▓ГыПД ь░╛ьзА ык╗эЦИьК╡ыЛИыЛд(HTTP ${code}). URLьЭ┤ ьШмы░Фые╕ьзА эЩХьЭ╕эХШьД╕ьЪФ";
+  static String m51(code) => "서버가 요청을 거부했습니다(HTTP ${code})";
 
-  static String m52(detail) => "ыДдэК╕ьЫМэБм ьЪФь▓н ьЛдэМи: ${detail}";
+  static String m52(code) =>
+      "이 주소에서 아무것도 찾지 못했습니다(HTTP ${code}). URL이 올바른지 확인하세요";
 
-  static String m53(code) =>
-      "ьДЬы▓ДьЧР ым╕ьаЬъ░А ы░ЬьГЭэЦИьК╡ыЛИыЛд(HTTP ${code}). ыВШьдСьЧР ыЛдьЛЬ ьЛЬыПДэХШьД╕ьЪФ";
+  static String m53(detail) => "네트워크 요청 실패: ${detail}";
 
-  static String m54(label) => "${label}ьЭ┤(ъ░А) ьХДьзБ ьЧЖьК╡ыЛИыЛд";
+  static String m54(code) => "서버에 문제가 발생했습니다(HTTP ${code}). 나중에 다시 시도하세요";
 
-  static String m55(label, min, max) =>
-      "${label}ьЭА(ыКФ) ${min}ьЧРьДЬ ${max} ьВмьЭ┤ьЧмьХ╝ эХйыЛИыЛд";
+  static String m55(label) => "${label}이(가) 아직 없습니다";
 
-  static String m56(label) => "${label}ьЭА(ыКФ) ьИльЮРьЧмьХ╝ эХйыЛИыЛд";
+  static String m56(label, min, max) => "${label}은(는) ${min}에서 ${max} 사이여야 합니다";
 
-  static String m57(label) =>
-      "${label}ьЭА(ыКФ) 1024ьЧРьДЬ 49151 ьВмьЭ┤ьЧмьХ╝ эХйыЛИыЛд";
+  static String m57(label) => "${label}은(는) 숫자여야 합니다";
 
-  static String m58(port) => "эПмэК╕ ${port}";
+  static String m58(label) => "${label}은(는) 1024에서 49151 사이여야 합니다";
 
-  static String m59(days) => "${Intl.plural(days, other: '${days}ьЭ╝ ыВиьЭМ')}";
+  static String m59(port) => "포트 ${port}";
 
-  static String m60(date, days) =>
-      "${date} ызМыгМ, ${Intl.plural(days, other: '${days}ьЭ╝')} ыВиьЭМ";
+  static String m60(days) => "${days}일";
 
-  static String m61(time) => "${time} ьЧЕыН░ьЭ┤эК╕";
+  static String m61(days) => "${Intl.plural(days, other: '${days}일 남음')}";
 
-  static String m62(label, profiles) =>
-      "${label}ьЭА(ыКФ) ьХДьзБ ${profiles}ьЧРьДЬ ьВмьЪй ьдСьЭ┤ый░, ьВньаЬэХШый┤ эХ┤ыЛ╣ эФДыбЬэХДьЭ┤ ьаЬыМАыбЬ ьЮСыПЩэХШьзА ьХКьК╡ыЛИыЛд. ьВньаЬэХШьЛЬъ▓аьК╡ыЛИъ╣М?";
+  static String m62(date, days) =>
+      "${date} 만료, ${Intl.plural(days, other: '${days}일')} 남음";
 
-  static String m63(count, label) =>
-      "${Intl.plural(count, other: 'эФДыбЭьЛЬ ${label}ъ░Ь')}";
+  static String m63(hours) => "${hours}시간";
 
-  static String m64(name, count) => "${name} ьЩ╕ (эФДыбЭьЛЬ ${count}ъ░Ь)";
+  static String m64(total) => "남음 / ${total}";
 
-  static String m65(removed) =>
-      "ыЛдьЭМ эФДыбЭьЛЬъ░А ьВньаЬыРйыЛИыЛд: ${removed}. ьЭ┤ыжДьЭ┤ ы░ФыАР ьдДьЭА ьГИ эФДыбЭьЛЬыбЬ ъ░Дьг╝ыРШый░, ьВньаЬыРЬ эФДыбЭьЛЬые╝ ьзАьаХэХЬ ьВмьЪйьЮР ьзАьаХ эФДыбЬэХДьЧРыКФ ыИДыЭ╜ьЬ╝ыбЬ эСЬьЛЬыРйыЛИыЛд. ъ╖╕ыЮШыПД ьаБьЪйэХШьЛЬъ▓аьК╡ыЛИъ╣М?";
+  static String m65(minutes) => "${minutes}분";
 
-  static String m66(removed, added) =>
-      "ыЛдьЭМ эФДыбЭьЛЬъ░А ьВньаЬыРйыЛИыЛд: ${removed}. ыЛдьЭМ эФДыбЭьЛЬъ░А ь╢Фъ░АыРйыЛИыЛд: ${added}. ьЭ┤ыжДьЭ┤ ы░ФыАР ьдДьЭА ьГИ эФДыбЭьЛЬыбЬ ъ░Дьг╝ыРШый░, ьВньаЬыРЬ эФДыбЭьЛЬые╝ ьзАьаХэХЬ ьВмьЪйьЮР ьзАьаХ эФДыбЬэХДьЧРыКФ ыИДыЭ╜ьЬ╝ыбЬ эСЬьЛЬыРйыЛИыЛд. ъ╖╕ыЮШыПД ьаБьЪйэХШьЛЬъ▓аьК╡ыЛИъ╣М?";
+  static String m66(date) => "${date}까지";
 
-  static String m67(label) =>
-      "${label}ьЭА(ыКФ) ьЭ┤ эФДыбЬэХДьЭШ ъ╖Ьь╣Щ, эФДыбЭьЛЬ ъ╖╕ыг╣, ыЛдьЭ┤ьЦ╝ыЯм эФДыбЭьЛЬ, DNS ыШРыКФ NTPьЧРьДЬ ьХДьзБ ь░╕ьб░ ьдСьЭ┤ый░, ьВньаЬэХШый┤ ьЮСыПЩэХШьзА ьХКъ▓М ыРйыЛИыЛд. ьВньаЬэХШьЛЬъ▓аьК╡ыЛИъ╣М?";
+  static String m67(time) => "${time} 업데이트";
 
-  static String m68(count, label) =>
-      "${Intl.plural(count, other: 'эФДыбЭьЛЬ ъ╖╕ыг╣ ${label}ъ░Ь')}";
+  static String m68(label, profiles) =>
+      "${label}은(는) 아직 ${profiles}에서 사용 중이며, 삭제하면 해당 프로필이 제대로 작동하지 않습니다. 삭제하시겠습니까?";
 
   static String m69(count, label) =>
-      "${Intl.plural(count, other: 'ъ╖Ьь╣Щ ${label}ъ░Ь')}";
+      "${Intl.plural(count, other: '프록시 ${label}개')}";
 
-  static String m70(appName) => "${appName} (ьХИьаД ыкиыУЬ)";
+  static String m70(name, count) => "${name} 외 (프록시 ${count}개)";
 
-  static String m71(count) => "${Intl.plural(count, other: '${count}ь┤И')}";
+  static String m71(removed) =>
+      "다음 프록시가 삭제됩니다: ${removed}. 이름이 바뀐 줄은 새 프록시로 간주되며, 삭제된 프록시를 지정한 사용자 지정 프로필에는 누락으로 표시됩니다. 그래도 적용하시겠습니까?";
 
-  static String m72(count) => "${count}ъ░Ь ьаБьЪй ьдС";
+  static String m72(removed, added) =>
+      "다음 프록시가 삭제됩니다: ${removed}. 다음 프록시가 추가됩니다: ${added}. 이름이 바뀐 줄은 새 프록시로 간주되며, 삭제된 프록시를 지정한 사용자 지정 프로필에는 누락으로 표시됩니다. 그래도 적용하시겠습니까?";
 
-  static String m73(count) =>
-      "${Intl.plural(count, other: 'ым╕ьаЬ ${count}ъ▒┤')}";
+  static String m73(label) =>
+      "${label}은(는) 이 프로필의 규칙, 프록시 그룹, 다이얼러 프록시, DNS 또는 NTP에서 아직 참조 중이며, 삭제하면 작동하지 않게 됩니다. 삭제하시겠습니까?";
 
-  static String m74(time) => "эЩХьЭ╕ ьЛЬъ░Б: ${time}";
+  static String m74(count, label) =>
+      "${Intl.plural(count, other: '프록시 그룹 ${label}개')}";
 
-  static String m75(count) =>
-      "${Intl.plural(count, other: 'ьДдьаХ ${count}ъ░Ь')}";
+  static String m75(count, label) =>
+      "${Intl.plural(count, other: '규칙 ${label}개')}";
 
-  static String m76(link) =>
-      "ьЭ╜ьЭД ьИШ ьЮИыКФ эФДыбЭьЛЬъ░А ьЧЖьК╡ыЛИыЛд: ${link}";
+  static String m76(appName) => "${appName} (안전 모드)";
 
-  static String m77(label) =>
-      "${label}ьЭА(ыКФ) эХШыВШызМ ьЮЕыаеэХ┤ьХ╝ эХйыЛИыЛд";
+  static String m77(count) => "${Intl.plural(count, other: '${count}초')}";
 
-  static String m78(value) => "ь╡Ьъ│а ${value}";
+  static String m78(count) => "${count}개 적용 중";
 
-  static String m79(value) => "эХйъ│Д ${value}";
+  static String m79(count) => "${Intl.plural(count, other: '문제 ${count}건')}";
 
-  static String m80(label) => "${label}ьЭА(ыКФ) URLьЭ┤ьЦ┤ьХ╝ эХйыЛИыЛд";
+  static String m80(time) => "확인 시각: ${time}";
 
-  static String m81(count) => "${Intl.plural(count, other: '${count}ыЕД ьаД')}";
+  static String m81(count) => "${Intl.plural(count, other: '설정 ${count}개')}";
 
-  static String m82(count) => "${Intl.plural(count, other: '${count}ыЕД ьаД')}";
+  static String m82(link) => "읽을 수 있는 프록시가 없습니다: ${link}";
+
+  static String m83(label) => "${label}은(는) 하나만 입력해야 합니다";
+
+  static String m84(days) => "구독이 ${days}일 후에 만료됩니다";
+
+  static String m85(value) => "최고 ${value}";
+
+  static String m86(value) => "합계 ${value}";
+
+  static String m87(label) => "${label}은(는) URL이어야 합니다";
+
+  static String m88(count) => "${Intl.plural(count, other: '${count}년 전')}";
+
+  static String m89(count) => "${Intl.plural(count, other: '${count}년 전')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-    "about": MessageLookupByLibrary.simpleMessage("ьаХы│┤"),
-    "accessControl": MessageLookupByLibrary.simpleMessage("ьаСъ╖╝ ьаЬьЦ┤"),
+    "about": MessageLookupByLibrary.simpleMessage("정보"),
+    "accessControl": MessageLookupByLibrary.simpleMessage("접근 제어"),
     "accessControlAllowDesc": MessageLookupByLibrary.simpleMessage(
-      "ьДаэГЭэХЬ ьХ▒ызМ VPNьЭД ъ▒░ь╣йыЛИыЛд",
+      "선택한 앱만 VPN을 거칩니다",
     ),
     "accessControlDesc": MessageLookupByLibrary.simpleMessage(
-      "ьаСъ╖╝ ьаЬьЦ┤ыКФ эФДыбЭьЛЬые╝ ьВмьЪйэХа ьХ▒ьЭД ьДаэГЭэХйыЛИыЛд.",
+      "접근 제어는 프록시를 사용할 앱을 선택합니다.",
     ),
     "accessControlDisabledDesc": MessageLookupByLibrary.simpleMessage(
-      "ьХ▒ ьаСъ╖╝ ьаЬьЦ┤ъ░А ъ║╝ьа╕ ьЮИьК╡ыЛИыЛд",
+      "앱 접근 제어가 꺼져 있습니다",
     ),
     "accessControlNotAllowDesc": MessageLookupByLibrary.simpleMessage(
-      "ьДаэГЭэХЬ ьХ▒ьЭА VPNьЧРьДЬ ьаЬьЩ╕ыРйыЛИыЛд",
+      "선택한 앱은 VPN에서 제외됩니다",
     ),
-    "accessControlSettings": MessageLookupByLibrary.simpleMessage(
-      "ьаСъ╖╝ ьаЬьЦ┤ ьДдьаХ",
-    ),
-    "account": MessageLookupByLibrary.simpleMessage("ъ│ДьаХ"),
-    "action": MessageLookupByLibrary.simpleMessage("ыПЩьЮС"),
-    "actionDelayTest": MessageLookupByLibrary.simpleMessage(
-      "ыкиыУа ьзАьЧ░ эЕМьКдэК╕",
-    ),
-    "actionDirectMode": MessageLookupByLibrary.simpleMessage("ьзБьаС ыкиыУЬ"),
-    "actionGlobalMode": MessageLookupByLibrary.simpleMessage("ьаДьЧн ыкиыУЬ"),
-    "actionMode": MessageLookupByLibrary.simpleMessage("ыкиыУЬ ьаДэЩШ"),
-    "actionProxy": MessageLookupByLibrary.simpleMessage("ьЛЬьКдэЕЬ эФДыбЭьЛЬ"),
-    "actionRuleMode": MessageLookupByLibrary.simpleMessage("ъ╖Ьь╣Щ ыкиыУЬ"),
-    "actionStart": MessageLookupByLibrary.simpleMessage("ьЛЬьЮС/ьдСьзА"),
+    "accessControlSettings": MessageLookupByLibrary.simpleMessage("접근 제어 설정"),
+    "account": MessageLookupByLibrary.simpleMessage("계정"),
+    "action": MessageLookupByLibrary.simpleMessage("동작"),
+    "actionDelayTest": MessageLookupByLibrary.simpleMessage("모든 지연 테스트"),
+    "actionDirectMode": MessageLookupByLibrary.simpleMessage("직접 모드"),
+    "actionGlobalMode": MessageLookupByLibrary.simpleMessage("전역 모드"),
+    "actionMode": MessageLookupByLibrary.simpleMessage("모드 전환"),
+    "actionProxy": MessageLookupByLibrary.simpleMessage("시스템 프록시"),
+    "actionRuleMode": MessageLookupByLibrary.simpleMessage("규칙 모드"),
+    "actionStart": MessageLookupByLibrary.simpleMessage("시작/중지"),
     "actionTun": MessageLookupByLibrary.simpleMessage("TUN"),
-    "actionUpdateProfiles": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЬэХД ьЧЕыН░ьЭ┤эК╕",
+    "actionUpdateProfiles": MessageLookupByLibrary.simpleMessage("프로필 업데이트"),
+    "actionView": MessageLookupByLibrary.simpleMessage("표시/숨기기"),
+    "add": MessageLookupByLibrary.simpleMessage("추가"),
+    "addCustomProxy": MessageLookupByLibrary.simpleMessage("프록시 추가"),
+    "addFilters": MessageLookupByLibrary.simpleMessage("필터 추가"),
+    "addNodes": MessageLookupByLibrary.simpleMessage("노드 추가"),
+    "addOverrideEntry": MessageLookupByLibrary.simpleMessage("덮어쓰기 항목 추가"),
+    "addProfile": MessageLookupByLibrary.simpleMessage("프로필 추가"),
+    "addProfileFromClipboard": MessageLookupByLibrary.simpleMessage(
+      "클립보드에서 프로필 추가",
     ),
-    "actionView": MessageLookupByLibrary.simpleMessage("эСЬьЛЬ/ьИиъ╕░ъ╕░"),
-    "add": MessageLookupByLibrary.simpleMessage("ь╢Фъ░А"),
-    "addCustomProxy": MessageLookupByLibrary.simpleMessage("эФДыбЭьЛЬ ь╢Фъ░А"),
-    "addFilters": MessageLookupByLibrary.simpleMessage("эХДэД░ ь╢Фъ░А"),
-    "addNodes": MessageLookupByLibrary.simpleMessage("ыЕ╕ыУЬ ь╢Фъ░А"),
-    "addOverrideEntry": MessageLookupByLibrary.simpleMessage(
-      "ыНоьЦ┤ьУ░ъ╕░ эХныкй ь╢Фъ░А",
-    ),
-    "addProfile": MessageLookupByLibrary.simpleMessage("эФДыбЬэХД ь╢Фъ░А"),
-    "addProxyGroup": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЭьЛЬ ъ╖╕ыг╣ ь╢Фъ░А",
-    ),
-    "addRule": MessageLookupByLibrary.simpleMessage("ъ╖Ьь╣Щ ь╢Фъ░А"),
-    "addSettingEntry": MessageLookupByLibrary.simpleMessage("ьДдьаХ ь╢Фъ░А"),
-    "addSsid": MessageLookupByLibrary.simpleMessage("SSID ь╢Фъ░А"),
-    "addedRules": MessageLookupByLibrary.simpleMessage("ь╢Фъ░АэХЬ ъ╖Ьь╣Щ"),
-    "additionalParameters": MessageLookupByLibrary.simpleMessage(
-      "ь╢Фъ░А ыздъ░Ьы│АьИШ",
-    ),
-    "additionalPrefix": MessageLookupByLibrary.simpleMessage(
-      "ьЭ┤ыжД ьаСыСРьВм",
-    ),
-    "additionalSuffix": MessageLookupByLibrary.simpleMessage(
-      "ьЭ┤ыжД ьаСып╕ьВм",
-    ),
-    "address": MessageLookupByLibrary.simpleMessage("ьг╝ьЖМ"),
-    "addressHelp": MessageLookupByLibrary.simpleMessage("WebDAV ьДЬы▓Д ьг╝ьЖМ"),
-    "addressTip": MessageLookupByLibrary.simpleMessage(
-      "ьШмы░Фые╕ WebDAV ьг╝ьЖМые╝ ьЮЕыаеэХШьД╕ьЪФ",
-    ),
-    "advancedConfig": MessageLookupByLibrary.simpleMessage("ъ│аъ╕Й ъ╡мьД▒"),
+    "addProxyGroup": MessageLookupByLibrary.simpleMessage("프록시 그룹 추가"),
+    "addRule": MessageLookupByLibrary.simpleMessage("규칙 추가"),
+    "addSettingEntry": MessageLookupByLibrary.simpleMessage("설정 추가"),
+    "addSsid": MessageLookupByLibrary.simpleMessage("SSID 추가"),
+    "addedRules": MessageLookupByLibrary.simpleMessage("추가한 규칙"),
+    "additionalParameters": MessageLookupByLibrary.simpleMessage("추가 매개변수"),
+    "additionalPrefix": MessageLookupByLibrary.simpleMessage("이름 접두사"),
+    "additionalSuffix": MessageLookupByLibrary.simpleMessage("이름 접미사"),
+    "address": MessageLookupByLibrary.simpleMessage("주소"),
+    "addressHelp": MessageLookupByLibrary.simpleMessage("WebDAV 서버 주소"),
+    "addressTip": MessageLookupByLibrary.simpleMessage("올바른 WebDAV 주소를 입력하세요"),
+    "advancedConfig": MessageLookupByLibrary.simpleMessage("고급 구성"),
     "advancedConfigDesc": MessageLookupByLibrary.simpleMessage(
-      "ъ│аъ╕Й ъ╡мьД▒ьЧРыКФ ыДдэК╕ьЫМэБм, DNS, ь╢Фъ░АэХЬ ъ╖Ьь╣Щ, ьКдэБмыж╜эК╕ъ░А эПмэХиыРйыЛИыЛд.",
+      "고급 구성에는 네트워크, DNS, 추가한 규칙, 스크립트가 포함됩니다.",
     ),
-    "ageEncryptedProfile": MessageLookupByLibrary.simpleMessage(
-      "ьХФэШ╕эЩФыРЬ эФДыбЬэХД",
-    ),
-    "ageSecretKey": MessageLookupByLibrary.simpleMessage("age ы╣Ды░А эВд"),
+    "ageEncryptedProfile": MessageLookupByLibrary.simpleMessage("암호화된 프로필"),
+    "ageSecretKey": MessageLookupByLibrary.simpleMessage("age 비밀 키"),
     "ageSecretKeyRequiredTip": MessageLookupByLibrary.simpleMessage(
-      "ьЭ┤ эФДыбЬэХДьЭА ageыбЬ ьХФэШ╕эЩФыРШьЦ┤ ьЮИьЦ┤ ы│╡эШ╕эЩФэХШыадый┤ age ы╣Ды░А эВдъ░А эХДьЪФэХйыЛИыЛд",
+      "이 프로필은 age로 암호화되어 있어 복호화하려면 age 비밀 키가 필요합니다",
     ),
-    "agree": MessageLookupByLibrary.simpleMessage("ыПЩьЭШ"),
-    "allReferencedProxies": MessageLookupByLibrary.simpleMessage(
-      "ь░╕ьб░ыРЬ ыкиыУа эФДыбЭьЛЬ",
-    ),
+    "agree": MessageLookupByLibrary.simpleMessage("동의합니다"),
+    "allReferencedProxies": MessageLookupByLibrary.simpleMessage("참조된 모든 프록시"),
     "allReferencedProxyProviders": MessageLookupByLibrary.simpleMessage(
-      "ь░╕ьб░ыРЬ ыкиыУа эФДыбЭьЛЬ ъ│╡ъ╕ЙьЮР",
+      "참조된 모든 프록시 공급자",
     ),
-    "allowBypass": MessageLookupByLibrary.simpleMessage(
-      "ьХ▒ьЭШ VPN ьЪ░эЪМ эЧИьЪй",
-    ),
-    "allowLan": MessageLookupByLibrary.simpleMessage("LAN эЧИьЪй"),
-    "allowedIps": MessageLookupByLibrary.simpleMessage("эЧИьЪй IP"),
-    "answers": MessageLookupByLibrary.simpleMessage("ьЭСыЛ╡"),
-    "app": MessageLookupByLibrary.simpleMessage("ьХ▒"),
-    "appAccessControl": MessageLookupByLibrary.simpleMessage(
-      "ьХ▒ ьаСъ╖╝ ьаЬьЦ┤",
-    ),
-    "appIconDesign": MessageLookupByLibrary.simpleMessage(
-      "ьХ▒ ьХДьЭ┤ь╜Ш ыФФьЮРьЭ╕",
-    ),
-    "appProxiesEmpty": MessageLookupByLibrary.simpleMessage(
-      "ыбЬь╗м эФДыбЭьЛЬ ьЧЖьЭМ",
-    ),
-    "appendSystemDns": MessageLookupByLibrary.simpleMessage(
-      "ьЛЬьКдэЕЬ DNS ь╢Фъ░А",
-    ),
-    "authentication": MessageLookupByLibrary.simpleMessage("ьЭ╕ьжЭ"),
+    "allowBypass": MessageLookupByLibrary.simpleMessage("앱의 VPN 우회 허용"),
+    "allowLan": MessageLookupByLibrary.simpleMessage("LAN 허용"),
+    "allowedIps": MessageLookupByLibrary.simpleMessage("허용 IP"),
+    "announcement": MessageLookupByLibrary.simpleMessage("공지"),
+    "answers": MessageLookupByLibrary.simpleMessage("응답"),
+    "app": MessageLookupByLibrary.simpleMessage("앱"),
+    "appAccessControl": MessageLookupByLibrary.simpleMessage("앱 접근 제어"),
+    "appIconDesign": MessageLookupByLibrary.simpleMessage("앱 아이콘 디자인"),
+    "appProxiesEmpty": MessageLookupByLibrary.simpleMessage("로컬 프록시 없음"),
+    "appendSystemDns": MessageLookupByLibrary.simpleMessage("시스템 DNS 추가"),
+    "authentication": MessageLookupByLibrary.simpleMessage("인증"),
     "authenticationDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЭ╕ьжЭьЭД ь╝Ьый┤ ыбЬь╗м эФДыбЭьЛЬ эПмэК╕ьЧРьДЬ ьВмьЪйьЮР ьЭ┤ыжДъ│╝ ы╣Ды░Аы▓ИэШ╕ые╝ ьЪФъ╡мэХйыЛИыЛд.",
+      "인증을 켜면 로컬 프록시 포트에서 사용자 이름과 비밀번호를 요구합니다.",
     ),
     "authenticationSystemProxyDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЭ╕ьжЭьЭ┤ ь╝Ььа╕ ьЮИыКФ ыПЩьХИьЧРыКФ ьЛЬьКдэЕЬ эФДыбЭьЛЬъ░А ьаБьЪйыРШьзА ьХКьК╡ыЛИыЛд.",
+      "인증이 켜져 있는 동안에는 시스템 프록시가 적용되지 않습니다.",
     ),
-    "authorize": MessageLookupByLibrary.simpleMessage("эЧИьЪй"),
-    "authorized": MessageLookupByLibrary.simpleMessage("эЧИьЪйыРи"),
-    "auto": MessageLookupByLibrary.simpleMessage("ьЮРыПЩ"),
-    "autoCheckUpdate": MessageLookupByLibrary.simpleMessage(
-      "ьЧЕыН░ьЭ┤эК╕ ьЮРыПЩ эЩХьЭ╕",
-    ),
-    "autoCloseConnections": MessageLookupByLibrary.simpleMessage(
-      "ьЧ░ъ▓░ ьЮРыПЩ ьвЕыгМ",
-    ),
+    "authorize": MessageLookupByLibrary.simpleMessage("허용"),
+    "authorized": MessageLookupByLibrary.simpleMessage("허용됨"),
+    "auto": MessageLookupByLibrary.simpleMessage("자동"),
+    "autoCheckUpdate": MessageLookupByLibrary.simpleMessage("업데이트 자동 확인"),
+    "autoCloseConnections": MessageLookupByLibrary.simpleMessage("연결 자동 종료"),
     "autoCloseConnectionsDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЧ░ъ▓░ ьЮРыПЩ ьвЕыгМыКФ эФДыбЭьЛЬые╝ ьаДэЩШэХа ыХМ ьЧ┤ыад ьЮИыКФ ьЧ░ъ▓░ьЭД ыБКьК╡ыЛИыЛд.",
+      "연결 자동 종료는 프록시를 전환할 때 열려 있는 연결을 끊습니다.",
     ),
-    "autoInclude": MessageLookupByLibrary.simpleMessage("ьЮРыПЩ эПмэХи"),
-    "autoLaunch": MessageLookupByLibrary.simpleMessage("ьЮРыПЩ ьЛдэЦЙ"),
-    "autoRun": MessageLookupByLibrary.simpleMessage("ьЮРыПЩ ьЛЬьЮС"),
+    "autoInclude": MessageLookupByLibrary.simpleMessage("자동 포함"),
+    "autoLaunch": MessageLookupByLibrary.simpleMessage("자동 실행"),
+    "autoRun": MessageLookupByLibrary.simpleMessage("자동 시작"),
     "autoRunDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЮРыПЩ ьЛЬьЮСьЭА ьХ▒ьЭД ьЧ┤ ыХМ эФДыбЭьЛЬые╝ ьЛЬьЮСэХйыЛИыЛд.",
+      "자동 시작은 앱을 열 때 프록시를 시작합니다.",
     ),
-    "autoSetSystemDns": MessageLookupByLibrary.simpleMessage(
-      "ьЛЬьКдэЕЬ DNS ьЮРыПЩ ьДдьаХ",
-    ),
-    "autoUpdate": MessageLookupByLibrary.simpleMessage("ьЮРыПЩ ьЧЕыН░ьЭ┤эК╕"),
-    "autoUpdateInterval": MessageLookupByLibrary.simpleMessage(
-      "ьЮРыПЩ ьЧЕыН░ьЭ┤эК╕ ъ░Дъ▓й",
-    ),
-    "back": MessageLookupByLibrary.simpleMessage("ыТдыбЬ"),
-    "backup": MessageLookupByLibrary.simpleMessage("ы░▒ьЧЕ"),
-    "backupAndRestore": MessageLookupByLibrary.simpleMessage(
-      "ы░▒ьЧЕ ы░П ы│╡ьЫР",
-    ),
+    "autoSetSystemDns": MessageLookupByLibrary.simpleMessage("시스템 DNS 자동 설정"),
+    "autoUpdate": MessageLookupByLibrary.simpleMessage("자동 업데이트"),
+    "autoUpdateInterval": MessageLookupByLibrary.simpleMessage("자동 업데이트 간격"),
+    "back": MessageLookupByLibrary.simpleMessage("뒤로"),
+    "backup": MessageLookupByLibrary.simpleMessage("백업"),
+    "backupAndRestore": MessageLookupByLibrary.simpleMessage("백업 및 복원"),
     "backupFromNewerVersion": MessageLookupByLibrary.simpleMessage(
-      "ьЭ┤ ы░▒ьЧЕьЭА ыНФ ь╡ЬьЛа ы▓ДьаДьЭШ ьХ▒ьЧРьДЬ ызМыУдьЦ┤ьбМьК╡ыЛИыЛд. ы│╡ьЫРэХШъ╕░ ьаДьЧР ьХ▒ьЭД ьЧЕыН░ьЭ┤эК╕эХШьД╕ьЪФ",
+      "이 백업은 더 최신 버전의 앱에서 만들어졌습니다. 복원하기 전에 앱을 업데이트하세요",
     ),
-    "backupSuccess": MessageLookupByLibrary.simpleMessage("ы░▒ьЧЕ ьЩДыгМ"),
-    "basicInfo": MessageLookupByLibrary.simpleMessage("ъ╕░ы│╕ ьаХы│┤"),
-    "basicStrategy": MessageLookupByLibrary.simpleMessage("ъ╕░ы│╕ ьаДыЮ╡"),
-    "batchAdd": MessageLookupByLibrary.simpleMessage("ьЭ╝ъ┤Д ь╢Фъ░А"),
-    "batchImport": MessageLookupByLibrary.simpleMessage("ьЭ╝ъ┤Д ъ░Аьа╕ьШдъ╕░"),
-    "batchLinkInputTip": MessageLookupByLibrary.simpleMessage(
-      "эХЬ ьдДьЧР ызБэБм эХШыВШьФй",
-    ),
+    "backupSuccess": MessageLookupByLibrary.simpleMessage("백업 완료"),
+    "basicInfo": MessageLookupByLibrary.simpleMessage("기본 정보"),
+    "basicStrategy": MessageLookupByLibrary.simpleMessage("기본 전략"),
+    "batchAdd": MessageLookupByLibrary.simpleMessage("일괄 추가"),
+    "batchImport": MessageLookupByLibrary.simpleMessage("일괄 가져오기"),
+    "batchLinkInputTip": MessageLookupByLibrary.simpleMessage("한 줄에 링크 하나씩"),
     "batchListInputTip": MessageLookupByLibrary.simpleMessage(
-      "эХЬ ьдДьЧР эХШыВШьФй ыШРыКФ ьЙ╝эСЬыбЬ ъ╡мы╢ДэХШьЧм ьЮЕыаеэХШьД╕ьЪФ",
+      "한 줄에 하나씩 또는 쉼표로 구분하여 입력하세요",
     ),
     "batchMapInputTip": MessageLookupByLibrary.simpleMessage(
-      "эХЬ ьдДьЧР эХШыВШьФй, эВд, ъ│╡ы░▒, ъ░Т ьИЬьДЬыбЬ ьЮЕыаеэХШьД╕ьЪФ",
+      "한 줄에 하나씩, 키, 공백, 값 순서로 입력하세요",
     ),
     "batchPreviewTip": m0,
-    "batchUrlInputTip": MessageLookupByLibrary.simpleMessage(
-      "эХЬ ьдДьЧР URL эХШыВШьФй",
-    ),
+    "batchUrlInputTip": MessageLookupByLibrary.simpleMessage("한 줄에 URL 하나씩"),
     "batteryOptimizationDesc": MessageLookupByLibrary.simpleMessage(
-      "ы░░эД░ыжм ь╡ЬьаБэЩФые╝ ым┤ьЛЬэХШый┤ ьХ▒ьЭ┤ ы░▒ъ╖╕ыЭ╝ьЪ┤ыУЬьЧРьДЬ ъ│ДьЖН ьЛдэЦЙыРйыЛИыЛд.",
+      "배터리 최적화를 무시하면 앱이 백그라운드에서 계속 실행됩니다.",
     ),
-    "bind": MessageLookupByLibrary.simpleMessage("ьЧ░ъ▓░"),
-    "blacklistMode": MessageLookupByLibrary.simpleMessage(
-      "ы╕ФыЮЩыжмьКдэК╕ ыкиыУЬ",
-    ),
-    "blockConnection": MessageLookupByLibrary.simpleMessage("ьЧ░ъ▓░ ь░иыЛи"),
-    "brightness": MessageLookupByLibrary.simpleMessage("ы░Эъ╕░"),
-    "bypassDomain": MessageLookupByLibrary.simpleMessage("ьЪ░эЪМ ыПДыйФьЭ╕"),
+    "bind": MessageLookupByLibrary.simpleMessage("연결"),
+    "blacklistMode": MessageLookupByLibrary.simpleMessage("블랙리스트 모드"),
+    "blockConnection": MessageLookupByLibrary.simpleMessage("연결 차단"),
+    "brightness": MessageLookupByLibrary.simpleMessage("밝기"),
+    "buyPlan": MessageLookupByLibrary.simpleMessage("구독 갱신"),
+    "buyTraffic": MessageLookupByLibrary.simpleMessage("트래픽 구매"),
+    "bypassDomain": MessageLookupByLibrary.simpleMessage("우회 도메인"),
     "bypassDomainDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЪ░эЪМ ыПДыйФьЭ╕ьЭА ьЛЬьКдэЕЬ эФДыбЭьЛЬъ░А ь╝Ььа╕ ьЮИьЭД ыХМызМ ьаБьЪйыРйыЛИыЛд.",
+      "우회 도메인은 시스템 프록시가 켜져 있을 때만 적용됩니다.",
     ),
-    "bypassPrivateRoute": MessageLookupByLibrary.simpleMessage(
-      "ьВмьДд ьг╝ьЖМ ьЪ░эЪМ",
-    ),
+    "bypassPrivateRoute": MessageLookupByLibrary.simpleMessage("사설 주소 우회"),
     "bypassPrivateRouteDesc": MessageLookupByLibrary.simpleMessage(
-      "ьВмьДд ьг╝ьЖМ ьЪ░эЪМые╝ ь╝Ьый┤ LAN, ыгиэФДы░▒, ыйАэЛ░ь║РьКдэК╕ ьг╝ьЖМыКФ TUNьЭД ъ▒░ь╣ШьзА ьХКьК╡ыЛИыЛд.",
+      "사설 주소 우회를 켜면 LAN, 루프백, 멀티캐스트 주소는 TUN을 거치지 않습니다.",
     ),
-    "cache": MessageLookupByLibrary.simpleMessage("ь║РьЛЬ"),
-    "cacheAlgorithm": MessageLookupByLibrary.simpleMessage(
-      "ь║РьЛЬ ьХМъ│аыжмьжШ",
-    ),
+    "cache": MessageLookupByLibrary.simpleMessage("캐시"),
+    "cacheAlgorithm": MessageLookupByLibrary.simpleMessage("캐시 알고리즘"),
     "cacheCorrupt": MessageLookupByLibrary.simpleMessage(
-      "ь║РьЛЬъ░А ьЖРьГБыРШьЧИьК╡ыЛИыЛд. ьзАьЪ░ьЛЬъ▓аьК╡ыЛИъ╣М?",
+      "캐시가 손상되었습니다. 지우시겠습니까?",
     ),
-    "cacheMaxSize": MessageLookupByLibrary.simpleMessage("ь║РьЛЬ эБмъ╕░"),
+    "cacheMaxSize": MessageLookupByLibrary.simpleMessage("캐시 크기"),
     "cameraPermissionDesc": MessageLookupByLibrary.simpleMessage(
-      "QR ь╜ФыУЬые╝ ьКдь║ФэХШыадый┤ ьЛЬьКдэЕЬ ьДдьаХьЧРьДЬ ь╣┤ыйФыЭ╝ ьаСъ╖╝ьЭД эЧИьЪйэХШъ▒░ыВШ, ьХиы▓ФьЧРьДЬ QR ь╜ФыУЬ ьЭ┤ып╕ьзАые╝ ьДаэГЭэХШьД╕ьЪФ.",
+      "QR 코드를 스캔하려면 시스템 설정에서 카메라 접근을 허용하거나, 앨범에서 QR 코드 이미지를 선택하세요.",
     ),
     "cameraPermissionRequired": MessageLookupByLibrary.simpleMessage(
-      "ь╣┤ыйФыЭ╝ ъ╢МэХЬ эХДьЪФ",
+      "카메라 권한 필요",
     ),
-    "cameraUnavailable": MessageLookupByLibrary.simpleMessage(
-      "ь╣┤ыйФыЭ╝ые╝ ьВмьЪйэХа ьИШ ьЧЖьЭМ",
-    ),
-    "cancel": MessageLookupByLibrary.simpleMessage("ь╖иьЖМ"),
-    "cancelSelectAll": MessageLookupByLibrary.simpleMessage(
-      "ыкиыСР ьДаэГЭ эХ┤ьаЬ",
-    ),
-    "cannotSave": MessageLookupByLibrary.simpleMessage("ьаАьЮеэХа ьИШ ьЧЖьЭМ"),
+    "cameraUnavailable": MessageLookupByLibrary.simpleMessage("카메라를 사용할 수 없음"),
+    "cancel": MessageLookupByLibrary.simpleMessage("취소"),
+    "cancelSelectAll": MessageLookupByLibrary.simpleMessage("모두 선택 해제"),
+    "cannotSave": MessageLookupByLibrary.simpleMessage("저장할 수 없음"),
     "changeProxyFailedTip": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЭьЛЬые╝ ьаДэЩШэХШьзА ык╗эХ┤ ьЭ┤ьаД ьДаэГЭьЭД ы│╡ьЫРэЦИьК╡ыЛИыЛд",
+      "프록시를 전환하지 못해 이전 선택을 복원했습니다",
     ),
-    "changelogBreaking": MessageLookupByLibrary.simpleMessage(
-      "эШ╕эЩШьД▒ ы│Аъ▓╜",
-    ),
-    "changelogFeatures": MessageLookupByLibrary.simpleMessage(
-      "ьГИыбЬьЪ┤ ъ╕░ыКе",
-    ),
-    "changelogFixes": MessageLookupByLibrary.simpleMessage("ы▓Дъ╖╕ ьИШьаХ"),
-    "changelogPerformance": MessageLookupByLibrary.simpleMessage("ьД▒ыКе"),
-    "changelogReverts": MessageLookupByLibrary.simpleMessage("ыРШыПМыж╝"),
-    "checkCertificate": MessageLookupByLibrary.simpleMessage(
-      "TLS ьЭ╕ьжЭьДЬ ъ▓АьжЭ",
-    ),
+    "changeServer": MessageLookupByLibrary.simpleMessage("서버 변경"),
+    "changelogBreaking": MessageLookupByLibrary.simpleMessage("호환성 변경"),
+    "changelogFeatures": MessageLookupByLibrary.simpleMessage("새로운 기능"),
+    "changelogFixes": MessageLookupByLibrary.simpleMessage("버그 수정"),
+    "changelogPerformance": MessageLookupByLibrary.simpleMessage("성능"),
+    "changelogReverts": MessageLookupByLibrary.simpleMessage("되돌림"),
+    "checkCertificate": MessageLookupByLibrary.simpleMessage("TLS 인증서 검증"),
     "checkCertificateDesc": MessageLookupByLibrary.simpleMessage(
-      "TLS ъ▓АьжЭьЭД ыБДый┤ ъ╡мыПЕъ│╝ ы░▒ьЧЕьЭ┤ ьдСъ░ДьЮР ъ│╡ъ▓йьЧР ыЕ╕ь╢ЬыРйыЛИыЛд.",
+      "TLS 검증을 끄면 구독과 백업이 중간자 공격에 노출됩니다.",
     ),
-    "checkUpdate": MessageLookupByLibrary.simpleMessage("ьЧЕыН░ьЭ┤эК╕ эЩХьЭ╕"),
-    "checkUpdateError": MessageLookupByLibrary.simpleMessage(
-      "ьЭ┤ып╕ ь╡ЬьЛа ы▓ДьаДьЮЕыЛИыЛд",
-    ),
-    "cipher": MessageLookupByLibrary.simpleMessage("ьХФэШ╕эЩФ ы░йьЛЭ"),
-    "clearData": MessageLookupByLibrary.simpleMessage("ыН░ьЭ┤эД░ ьзАьЪ░ъ╕░"),
+    "checkUpdate": MessageLookupByLibrary.simpleMessage("업데이트 확인"),
+    "checkUpdateError": MessageLookupByLibrary.simpleMessage("이미 최신 버전입니다"),
+    "cipher": MessageLookupByLibrary.simpleMessage("암호화 방식"),
+    "clearData": MessageLookupByLibrary.simpleMessage("데이터 지우기"),
     "clearDataAndExitTip": MessageLookupByLibrary.simpleMessage(
-      "ыкиыУа эФДыбЬэХД, ьДдьаХ, ыбЬь╗м ыН░ьЭ┤эД░ые╝ ьВньаЬэХЬ эЫД ьХ▒ьЭД ьвЕыгМэХйыЛИыЛд. ьХ▒ьЭД ыЛдьЛЬ ьЧ┤ый┤ ь▓ШьЭМы╢АэД░ ьЛЬьЮСэХйыЛИыЛд.",
+      "모든 프로필, 설정, 로컬 데이터를 삭제한 후 앱을 종료합니다. 앱을 다시 열면 처음부터 시작합니다.",
     ),
     "clearDataFailed": m1,
-    "clearSearch": MessageLookupByLibrary.simpleMessage("ъ▓АьГЙ ьзАьЪ░ъ╕░"),
-    "clientFingerprint": MessageLookupByLibrary.simpleMessage(
-      "эБ┤ыЭ╝ьЭ┤ьЦ╕эК╕ эХСъ▒░эФДыж░эК╕",
-    ),
-    "clipboardExport": MessageLookupByLibrary.simpleMessage(
-      "эБ┤ыж╜ы│┤ыУЬыбЬ ыВ┤ы│┤ыВ┤ъ╕░",
-    ),
-    "clipboardImport": MessageLookupByLibrary.simpleMessage(
-      "эБ┤ыж╜ы│┤ыУЬьЧРьДЬ ъ░Аьа╕ьШдъ╕░",
-    ),
+    "clearSearch": MessageLookupByLibrary.simpleMessage("검색 지우기"),
+    "clientFingerprint": MessageLookupByLibrary.simpleMessage("클라이언트 핑거프린트"),
+    "clipboardExport": MessageLookupByLibrary.simpleMessage("클립보드로 내보내기"),
+    "clipboardImport": MessageLookupByLibrary.simpleMessage("클립보드에서 가져오기"),
     "clipboardWriteFailed": MessageLookupByLibrary.simpleMessage(
-      "эБ┤ыж╜ы│┤ыУЬьЧР ы│╡ьВмэХШьзА ык╗эЦИьК╡ыЛИыЛд. ьДаэГЭ ьШБьЧньЭ┤ ыДИым┤ эБ┤ ьИШ ьЮИьК╡ыЛИыЛд",
+      "클립보드에 복사하지 못했습니다. 선택 영역이 너무 클 수 있습니다",
     ),
-    "close": MessageLookupByLibrary.simpleMessage("ыЛлъ╕░"),
-    "closeConnections": MessageLookupByLibrary.simpleMessage("ьЧ░ъ▓░ ьвЕыгМ"),
-    "color": MessageLookupByLibrary.simpleMessage("ьГЙьГБ"),
-    "colorStyle": MessageLookupByLibrary.simpleMessage("ьГЙьГБ ьКдэГАьЭ╝"),
-    "columns": MessageLookupByLibrary.simpleMessage("ьЧ┤"),
-    "compact": MessageLookupByLibrary.simpleMessage("ъ░Дъ▓░эХШъ▓М"),
-    "compatible": MessageLookupByLibrary.simpleMessage("эШ╕эЩШ ыкиыУЬ"),
-    "confirm": MessageLookupByLibrary.simpleMessage("эЩХьЭ╕"),
+    "close": MessageLookupByLibrary.simpleMessage("닫기"),
+    "closeConnections": MessageLookupByLibrary.simpleMessage("연결 종료"),
+    "color": MessageLookupByLibrary.simpleMessage("색상"),
+    "colorStyle": MessageLookupByLibrary.simpleMessage("색상 스타일"),
+    "columns": MessageLookupByLibrary.simpleMessage("열"),
+    "compact": MessageLookupByLibrary.simpleMessage("간결하게"),
+    "compatible": MessageLookupByLibrary.simpleMessage("호환 모드"),
+    "confirm": MessageLookupByLibrary.simpleMessage("확인"),
     "confirmClearAllData": MessageLookupByLibrary.simpleMessage(
-      "ыкиыУа ыН░ьЭ┤эД░ые╝ ьзАьЪ░ьЛЬъ▓аьК╡ыЛИъ╣М?",
+      "모든 데이터를 지우시겠습니까?",
     ),
     "confirmDeleteProxyGroup": MessageLookupByLibrary.simpleMessage(
-      "ьЭ┤ эФДыбЭьЛЬ ъ╖╕ыг╣ьЭД ьВньаЬэХШьЛЬъ▓аьК╡ыЛИъ╣М?",
+      "이 프록시 그룹을 삭제하시겠습니까?",
     ),
-    "confirmExitWindow": MessageLookupByLibrary.simpleMessage(
-      "эШДьЮм ь░╜ьЭД ыЛльЬ╝ьЛЬъ▓аьК╡ыЛИъ╣М?",
-    ),
+    "confirmExitWindow": MessageLookupByLibrary.simpleMessage("현재 창을 닫으시겠습니까?"),
     "confirmForceCrashCore": MessageLookupByLibrary.simpleMessage(
-      "ь╜ФьЦ┤ые╝ ъ░ХьаЬыбЬ ы╣ДьаХьГБ ьвЕыгМьЛЬэВдьЛЬъ▓аьК╡ыЛИъ╣М?",
+      "코어를 강제로 비정상 종료시키시겠습니까?",
     ),
-    "congestionControl": MessageLookupByLibrary.simpleMessage("эШ╝ьЮб ьаЬьЦ┤"),
-    "congestionController": MessageLookupByLibrary.simpleMessage(
-      "TCP эШ╝ьЮб ьаЬьЦ┤",
-    ),
+    "congestionControl": MessageLookupByLibrary.simpleMessage("혼잡 제어"),
+    "congestionController": MessageLookupByLibrary.simpleMessage("TCP 혼잡 제어"),
     "congestionControllerDesc": MessageLookupByLibrary.simpleMessage(
-      "TCP эШ╝ьЮб ьаЬьЦ┤ыКФ mips ьКдэГЭьЧРьДЬызМ ьЮСыПЩэХйыЛИыЛд.",
+      "TCP 혼잡 제어는 mips 스택에서만 작동합니다.",
     ),
-    "connected": MessageLookupByLibrary.simpleMessage("ьЧ░ъ▓░ыРи"),
-    "connecting": MessageLookupByLibrary.simpleMessage("ьЧ░ъ▓░ ьдСтАж"),
-    "connection": MessageLookupByLibrary.simpleMessage("ьЧ░ъ▓░"),
-    "connectionStats": MessageLookupByLibrary.simpleMessage("ьЧ░ъ▓░ эЖ╡ъ│Д"),
+    "connected": MessageLookupByLibrary.simpleMessage("연결됨"),
+    "connecting": MessageLookupByLibrary.simpleMessage("연결 중…"),
+    "connection": MessageLookupByLibrary.simpleMessage("연결"),
+    "connectionStats": MessageLookupByLibrary.simpleMessage("연결 통계"),
     "connectionStatsDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЛдьЛЬъ░Д ьЧ░ъ▓░, ь╡Ьъ╖╝ ьЪФь▓н, DNS ь┐╝ыжм",
+      "실시간 연결, 최근 요청, DNS 쿼리",
     ),
-    "connections": MessageLookupByLibrary.simpleMessage("ьЧ░ъ▓░"),
-    "connectivity": MessageLookupByLibrary.simpleMessage("ьЧ░ъ▓░ ьГБэГЬ: "),
-    "content": MessageLookupByLibrary.simpleMessage("ыВ┤ьЪй"),
-    "contentNotEmpty": MessageLookupByLibrary.simpleMessage(
-      "ыВ┤ьЪйьЭД ьЮЕыаеэХШьД╕ьЪФ",
-    ),
+    "connections": MessageLookupByLibrary.simpleMessage("연결"),
+    "connectivity": MessageLookupByLibrary.simpleMessage("연결 상태: "),
+    "content": MessageLookupByLibrary.simpleMessage("내용"),
+    "contentNotEmpty": MessageLookupByLibrary.simpleMessage("내용을 입력하세요"),
     "controlGlobalAddedRules": MessageLookupByLibrary.simpleMessage(
-      "ьаДьЧн ь╢Фъ░А ъ╖Ьь╣Щ ъ┤Аыжм",
+      "전역 추가 규칙 관리",
     ),
-    "copy": MessageLookupByLibrary.simpleMessage("ы│╡ьВм"),
-    "copyEnvVar": MessageLookupByLibrary.simpleMessage("эЩШъ▓╜ ы│АьИШ ы│╡ьВм"),
-    "copyLink": MessageLookupByLibrary.simpleMessage("ызБэБм ы│╡ьВм"),
-    "copySuccess": MessageLookupByLibrary.simpleMessage("ы│╡ьВмэЦИьК╡ыЛИыЛд"),
-    "core": MessageLookupByLibrary.simpleMessage("ь╜ФьЦ┤"),
+    "copy": MessageLookupByLibrary.simpleMessage("복사"),
+    "copyEnvVar": MessageLookupByLibrary.simpleMessage("환경 변수 복사"),
+    "copyLink": MessageLookupByLibrary.simpleMessage("링크 복사"),
+    "copySuccess": MessageLookupByLibrary.simpleMessage("복사했습니다"),
+    "core": MessageLookupByLibrary.simpleMessage("코어"),
     "coreBlockedByPolicyTip": m2,
     "coreBlockedBySmartAppControlTip": MessageLookupByLibrary.simpleMessage(
-      "ьДЬыкЕыРШьзА ьХКьХД Windows Smart App ControlьЭ┤ FlClashCore.exeые╝ ь░иыЛиэЦИьК╡ыЛИыЛд. Windows ы│┤ьХИ тЖТ ьХ▒ ы░П ы╕МыЭ╝ьЪ░ьаА ь╗иэК╕ыбд тЖТ Smart App Control ьДдьаХьЧРьДЬ ыБФьЭД ьДаэГЭэХЬ эЫД FlClashые╝ ыЛдьЛЬ ьЛЬьЮСэХШьД╕ьЪФ. Smart App ControlьЭА Windowsые╝ ыЛдьЛЬ ьДдь╣ШэХШьзА ьХКьЬ╝ый┤ ыЛдьЛЬ ь╝д ьИШ ьЧЖьК╡ыЛИыЛд.",
+      "서명되지 않아 Windows Smart App Control이 FlClashCore.exe를 차단했습니다. Windows 보안 → 앱 및 브라우저 컨트롤 → Smart App Control 설정에서 끔을 선택한 후 FlClashX를 다시 시작하세요. Smart App Control은 Windows를 다시 설치하지 않으면 다시 켤 수 없습니다.",
     ),
-    "coreCertificateChecksAlwaysEnabled": MessageLookupByLibrary.simpleMessage(
-      "ь╜ФьЦ┤ ыЛдьЪ┤ыбЬыУЬыКФ эХньГБ ьЭ╕ьжЭьДЬые╝ эЩХьЭ╕эХйыЛИыЛд. ьЭ┤ ьДдьаХьЭА ьХ▒ ыЛдьЪ┤ыбЬыУЬьЧР ьаБьЪйыРйыЛИыЛд.",
-    ),
-    "coreFeatureUnavailable": MessageLookupByLibrary.simpleMessage(
-      "эШДьЮм ь╜ФьЦ┤ыКФ ьЭ┤ ъ╕░ыКеьЭД ьзАьЫРэХШьзА ьХКьК╡ыЛИыЛд.",
-    ),
-    "coreStatus": MessageLookupByLibrary.simpleMessage("ь╜ФьЦ┤ ьГБэГЬ"),
-    "country": MessageLookupByLibrary.simpleMessage("ьзАьЧн"),
-    "crashDetected": MessageLookupByLibrary.simpleMessage(
-      "ы╣ДьаХьГБ ьвЕыгМ ъ░РьзАыРи",
-    ),
+    "coreStatus": MessageLookupByLibrary.simpleMessage("코어 상태"),
+    "country": MessageLookupByLibrary.simpleMessage("지역"),
+    "crashDetected": MessageLookupByLibrary.simpleMessage("비정상 종료 감지됨"),
     "crashDetectedTip": m3,
-    "crashTest": MessageLookupByLibrary.simpleMessage(
-      "ы╣ДьаХьГБ ьвЕыгМ эЕМьКдэК╕",
-    ),
-    "create": MessageLookupByLibrary.simpleMessage("ызМыУдъ╕░"),
+    "crashTest": MessageLookupByLibrary.simpleMessage("비정상 종료 테스트"),
+    "create": MessageLookupByLibrary.simpleMessage("만들기"),
     "createProfileFromUrlTip": m4,
-    "creationTime": MessageLookupByLibrary.simpleMessage("ьГЭьД▒ ьЛЬъ░Д"),
+    "creationTime": MessageLookupByLibrary.simpleMessage("생성 시간"),
     "currentOutboundDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЛЬьЮС ы▓ДэК╝ьЭ┤ ьЮИьЦ┤ ьаЬъ▒░эХа ьИШ ьЧЖьК╡ыЛИыЛд",
+      "시작 버튼이 있어 제거할 수 없습니다",
     ),
-    "custom": MessageLookupByLibrary.simpleMessage("ьВмьЪйьЮР ьзАьаХ"),
-    "customColor": MessageLookupByLibrary.simpleMessage(
-      "ьВмьЪйьЮР ьзАьаХ ьГЙьГБ",
-    ),
+    "custom": MessageLookupByLibrary.simpleMessage("사용자 지정"),
+    "customColor": MessageLookupByLibrary.simpleMessage("사용자 지정 색상"),
     "customImportDroppedSubRules": m5,
     "customIssueCoreRejected": m6,
     "customIssueDialerLoop": m7,
     "customIssueDuplicateName": m8,
-    "customIssueEmptyName": MessageLookupByLibrary.simpleMessage(
-      "ьЭ┤ыжДьЭ┤ ы╣ДьЦ┤ ьЮИьК╡ыЛИыЛд",
-    ),
+    "customIssueEmptyName": MessageLookupByLibrary.simpleMessage("이름이 비어 있습니다"),
     "customIssueGroupLoop": m9,
     "customIssueInvalidEmptyFallback": m10,
     "customIssueInvalidFilter": m11,
@@ -565,1469 +465,1138 @@ class MessageLookup extends MessageLookupByLibrary {
     "customIssueMissingProviders": m13,
     "customIssueMissingProxies": m14,
     "customIssueNoProxySource": MessageLookupByLibrary.simpleMessage(
-      "ьДаэГЭэХЬ эФДыбЭьЛЬыВШ эФДыбЭьЛЬ ъ│╡ъ╕ЙьЮРъ░А ьЧЖьЦ┤ ь╜ФьЦ┤ъ░А ьЭ┤ ъ╖╕ыг╣ьЭД ъ▒░ы╢АэХйыЛИыЛд",
+      "선택한 프록시나 프록시 공급자가 없어 코어가 이 그룹을 거부합니다",
     ),
     "customIssueReservedName": m15,
     "customIssuesSummary": m16,
-    "customProfile": MessageLookupByLibrary.simpleMessage("ьВмьЪйьЮР ьзАьаХ"),
+    "customProfile": MessageLookupByLibrary.simpleMessage("사용자 지정"),
     "customProfileDesc": MessageLookupByLibrary.simpleMessage(
-      "ьХ▒ эФДыбЭьЛЬьЩА ыЛдые╕ эФДыбЬэХДыбЬ эФДыбЭьЛЬ ъ╖╕ыг╣ъ│╝ ъ╖Ьь╣ЩьЭД ьб░эХйэХйыЛИыЛд",
+      "앱 프록시와 다른 프로필로 프록시 그룹과 규칙을 조합합니다",
     ),
     "customProfileResources": MessageLookupByLibrary.simpleMessage(
-      "ьВмьЪйьЮР ьзАьаХ эФДыбЬэХД ыжмьЖМьКд",
+      "사용자 지정 프로필 리소스",
     ),
     "customProfileResourcesDesc": MessageLookupByLibrary.simpleMessage(
-      "ьВмьЪйьЮР ьзАьаХ эФДыбЬэХД ыжмьЖМьКдьЧРыКФ эФДыбЭьЛЬ, ъ╖Ьь╣Щ ъ│╡ъ╕ЙьЮР, эХДэД░, ьХДьЭ┤ь╜Ш ьД╕эК╕ъ░А эПмэХиыРйыЛИыЛд.",
+      "사용자 지정 프로필 리소스에는 프록시, 규칙 공급자, 필터, 아이콘 세트가 포함됩니다.",
     ),
-    "cut": MessageLookupByLibrary.simpleMessage("ьЮШыЭ╝ыВ┤ъ╕░"),
-    "dark": MessageLookupByLibrary.simpleMessage("ыЛдэБм"),
-    "dashboard": MessageLookupByLibrary.simpleMessage("ыМАьЛЬы│┤ыУЬ"),
-    "dashboardAddableSection": MessageLookupByLibrary.simpleMessage(
-      "ь╢Фъ░А ъ░АыКе",
-    ),
+    "cut": MessageLookupByLibrary.simpleMessage("잘라내기"),
+    "dark": MessageLookupByLibrary.simpleMessage("다크"),
+    "dashboard": MessageLookupByLibrary.simpleMessage("대시보드"),
+    "dashboardAddableSection": MessageLookupByLibrary.simpleMessage("추가 가능"),
     "databaseWriteFailedTip": MessageLookupByLibrary.simpleMessage(
-      "ы│Аъ▓╜ ьВмэХньЭД ьаАьЮеэХШьзА ык╗эХ┤ ыРШыПМыа╕ьК╡ыЛИыЛд",
+      "변경 사항을 저장하지 못해 되돌렸습니다",
     ),
     "daysAgo": m17,
     "daysAgoShort": m18,
-    "defaultSelected": MessageLookupByLibrary.simpleMessage("ъ╕░ы│╕ ьДаэГЭ"),
-    "defaultText": MessageLookupByLibrary.simpleMessage("ъ╕░ы│╕ъ░Т"),
+    "defaultSelected": MessageLookupByLibrary.simpleMessage("기본 선택"),
+    "defaultText": MessageLookupByLibrary.simpleMessage("기본값"),
     "definitionNotMap": MessageLookupByLibrary.simpleMessage(
-      "ъ╡мьД▒ьЭА ьЭ┤ыжДъ│╝ ьЬаэШХьЭ┤ ьЮИыКФ YAML ыздэХСьЭ┤ьЦ┤ьХ╝ эХйыЛИыЛд",
+      "구성은 이름과 유형이 있는 YAML 매핑이어야 합니다",
     ),
-    "delay": MessageLookupByLibrary.simpleMessage("ьзАьЧ░"),
-    "delayFailed": MessageLookupByLibrary.simpleMessage("ьЛдэМи"),
-    "delayTest": MessageLookupByLibrary.simpleMessage("ьзАьЧ░ эЕМьКдэК╕"),
-    "delete": MessageLookupByLibrary.simpleMessage("ьВньаЬ"),
+    "delay": MessageLookupByLibrary.simpleMessage("지연"),
+    "delayFailed": MessageLookupByLibrary.simpleMessage("실패"),
+    "delayTest": MessageLookupByLibrary.simpleMessage("지연 테스트"),
+    "delayTestAll": MessageLookupByLibrary.simpleMessage("모든 지연 테스트"),
+    "delete": MessageLookupByLibrary.simpleMessage("삭제"),
     "deleteMultipTip": m19,
     "deleteTip": m20,
     "desc": MessageLookupByLibrary.simpleMessage(
-      "ClashMeta ъ╕░ы░ШьЭШ ыйАэЛ░ эФМыЮлэП╝ эФДыбЭьЛЬ эБ┤ыЭ╝ьЭ┤ьЦ╕эК╕ыбЬ, ъ░ДэО╕эХШъ▓М ьВмьЪйэХа ьИШ ьЮИьЬ╝ый░ ьШдэФИ ьЖМьКдьЭ┤ъ│а ъ┤Съ│аъ░А ьЧЖьК╡ыЛИыЛд.",
+      "Mihomo 기반의 멀티 플랫폼 프록시 클라이언트로, 간편하게 사용할 수 있으며 오픈 소스이고 광고가 없습니다.",
     ),
-    "destination": MessageLookupByLibrary.simpleMessage("ыкйьаБьзА"),
-    "destinationGeoIP": MessageLookupByLibrary.simpleMessage("ыкйьаБьзА GeoIP"),
-    "destinationIPASN": MessageLookupByLibrary.simpleMessage(
-      "ыкйьаБьзА IP ASN",
-    ),
+    "destination": MessageLookupByLibrary.simpleMessage("목적지"),
+    "destinationGeoIP": MessageLookupByLibrary.simpleMessage("목적지 GeoIP"),
+    "destinationIPASN": MessageLookupByLibrary.simpleMessage("목적지 IP ASN"),
     "details": m21,
     "detectionTip": MessageLookupByLibrary.simpleMessage(
-      "ьДЬыУЬэММэЛ░ APIьЧР ьЭШьб┤эХШыпАыбЬ ь░╕ъ│аьЪйьЬ╝ыбЬызМ ьВмьЪйэХШьД╕ьЪФ",
+      "타사 API 사용: ipinfo.io",
     ),
-    "developerMode": MessageLookupByLibrary.simpleMessage("ъ░Ьы░ЬьЮР ыкиыУЬ"),
+    "developerMode": MessageLookupByLibrary.simpleMessage("개발자 모드"),
     "developerModeEnableTip": MessageLookupByLibrary.simpleMessage(
-      "ъ░Ьы░ЬьЮР ыкиыУЬъ░А ь╝ЬьбМьК╡ыЛИыЛд.",
+      "개발자 모드가 켜졌습니다.",
     ),
-    "dialerProxy": MessageLookupByLibrary.simpleMessage(
-      "ыЛдьЭ┤ьЦ╝ыЯм эФДыбЭьЛЬ",
+    "deviceIdNotSent": MessageLookupByLibrary.simpleMessage(
+      "이 구독은 HWID가 필요하지만 앱이 보내지 않았습니다. 프로필 설정에서 HWID 전송을 켜세요.",
     ),
+    "deviceIdUnsupported": MessageLookupByLibrary.simpleMessage(
+      "이 구독은 HWID가 필요하지만 이 플랫폼에서는 제공할 수 없습니다.",
+    ),
+    "deviceIdUnsupportedTitle": MessageLookupByLibrary.simpleMessage(
+      "HWID 미지원",
+    ),
+    "deviceLimitReached": MessageLookupByLibrary.simpleMessage("기기 한도에 도달했습니다"),
+    "dialerProxy": MessageLookupByLibrary.simpleMessage("다이얼러 프록시"),
     "dialerProxyDesc": MessageLookupByLibrary.simpleMessage(
-      "ыЛдьЭ┤ьЦ╝ыЯм эФДыбЭьЛЬыКФ NTP ьДЬы▓ДьЧР ьЧ░ъ▓░эХа ыХМ ьВмьЪйэХШыКФ ьХДьЫГы░ФьЪ┤ыУЬьЮЕыЛИыЛд.",
+      "다이얼러 프록시는 NTP 서버에 연결할 때 사용하는 아웃바운드입니다.",
     ),
     "dialerProxyLoopStopped": m22,
-    "direct": MessageLookupByLibrary.simpleMessage("ьзБьаС"),
+    "direct": MessageLookupByLibrary.simpleMessage("직접"),
     "disableIcmpForwarding": MessageLookupByLibrary.simpleMessage(
-      "ICMP ьаДыЛм ьВмьЪй ьХИ эХи",
+      "ICMP 전달 사용 안 함",
     ),
     "disableIcmpForwardingDesc": MessageLookupByLibrary.simpleMessage(
-      "ICMP ьаДыЛмьЭД ыБДый┤ TUNьЭ┤ pingьЧР ьзБьаС ьЭСыЛ╡эХШыпАыбЬ pingьЧР ьЛдьаЬ ьзАьЧ░ ьЛЬъ░ДьЭ┤ эСЬьЛЬыРШьзА ьХКьК╡ыЛИыЛд.",
+      "ICMP 전달을 끄면 TUN이 ping에 직접 응답하므로 ping에 실제 지연 시간이 표시되지 않습니다.",
     ),
     "disableKeepAlive": MessageLookupByLibrary.simpleMessage(
-      "TCP эВ╡ьЦ╝ыЭ╝ьЭ┤ы╕М ьВмьЪй ьХИ эХи",
+      "TCP 킵얼라이브 사용 안 함",
     ),
-    "disableUDP": MessageLookupByLibrary.simpleMessage("UDP ьВмьЪй ьХИ эХи"),
-    "disabled": MessageLookupByLibrary.simpleMessage("ьВмьЪй ьХИ эХи"),
-    "discardChanges": MessageLookupByLibrary.simpleMessage(
-      "ы│Аъ▓╜ ьВмэХньЭД ь╖иьЖМэХШьЛЬъ▓аьК╡ыЛИъ╣М?",
-    ),
-    "disclaimer": MessageLookupByLibrary.simpleMessage("ый┤ь▒Е ьб░эХн"),
-    "disclaimerAcceptContent": MessageLookupByLibrary.simpleMessage(
-      "ы│╕ ьЖМэФДэК╕ьЫиьЦ┤ые╝ ьДдь╣Ш, ы│╡ьВм ыШРыКФ ьВмьЪйэХШый┤ ьЭ┤ ым╕ьДЬ ьаДь▓┤ые╝ ьЭ╜ъ│а ыПЩьЭШэХЬ ъ▓ГьЬ╝ыбЬ ъ░Дьг╝эХйыЛИыЛд. ьЦ┤ыКР ьб░эХньЭ┤ыЭ╝ыПД ыПЩьЭШэХШьзА ьХКыКФ ъ▓╜ьЪ░ ьжЙьЛЬ ы│╕ ьЖМэФДэК╕ьЫиьЦ┤ьЭШ ьВмьЪйьЭД ьдСыЛиэХШъ│а ьВньаЬэХШьД╕ьЪФ.",
-    ),
-    "disclaimerAcceptTitle": MessageLookupByLibrary.simpleMessage("ыПЩьЭШ"),
-    "disclaimerAcknowledgeLabel": MessageLookupByLibrary.simpleMessage(
-      "ьЭ┤ ым╕ъ╡мые╝ ьЭ╜ъ│а ьЭ┤эХ┤эЦИьК╡ыЛИыЛд",
-    ),
-    "disclaimerAcknowledgeTip": MessageLookupByLibrary.simpleMessage(
-      "ыВ┤ьЪйьЭД ьЭ┤эХ┤эЦИыКФьзА эЩХьЭ╕эХШъ╕░ ьЬДэХ┤ ыЛдьЭМ ым╕ъ╡мые╝ ьЭ╜ъ│а ьХДыЮШ эХныкйьЧР ь▓┤эБмэХШьД╕ьЪФ.",
-    ),
-    "disclaimerAcknowledgeTitle": MessageLookupByLibrary.simpleMessage(
-      "ым╕ъ╡м эЩХьЭ╕",
-    ),
-    "disclaimerChangesContent": MessageLookupByLibrary.simpleMessage(
-      "ъ░Ьы░ЬьЮРыКФ ыж┤ыжмьКдьЩА эХиъ╗Ш ы│╕ ым╕ьДЬые╝ ъ░ЬьаХэХа ьИШ ьЮИьЬ╝ый░, ъ░ЬьаХ ыВ┤ьЪйьЭА эХ┤ыЛ╣ ыж┤ыжмьКдъ░А ъ│╡ъ░ЬыРШыКФ ьЛЬьаРьЧР эЪиыаеьЭ┤ ы░ЬьГЭэХйыЛИыЛд. ьЧЕыН░ьЭ┤эК╕ эЫДьЧРыПД ы│╕ ьЖМэФДэК╕ьЫиьЦ┤ые╝ ъ│ДьЖН ьВмьЪйэХШый┤ ъ░ЬьаХыРЬ ым╕ьДЬые╝ ьИШыЭ╜эХЬ ъ▓ГьЬ╝ыбЬ ъ░Дьг╝эХйыЛИыЛд.",
-    ),
-    "disclaimerChangesTitle": MessageLookupByLibrary.simpleMessage(
-      "ы│╕ ым╕ьДЬьЭШ ы│Аъ▓╜",
-    ),
+    "disableUDP": MessageLookupByLibrary.simpleMessage("UDP 사용 안 함"),
+    "disabled": MessageLookupByLibrary.simpleMessage("사용 안 함"),
+    "discardChanges": MessageLookupByLibrary.simpleMessage("변경 사항을 취소하시겠습니까?"),
+    "disclaimer": MessageLookupByLibrary.simpleMessage("면책 조항"),
     "disclaimerDesc": MessageLookupByLibrary.simpleMessage(
-      "FlClash(ьЭ┤эХШ тАЬы│╕ ьЖМэФДэК╕ьЫиьЦ┤тАЭ)ые╝ ьВмьЪйэХШъ╕░ ьаДьЧР ьЭ┤ ым╕ьДЬые╝ ьг╝ьЭШ ъ╣Къ▓М ьЭ╜ъ│а ыкиыУа ыВ┤ьЪйьЭД ьЭ┤эХ┤эЦИыКФьзА эЩХьЭ╕эХШьД╕ьЪФ. тАЬыПЩьЭШтАЭые╝ ыИДые┤ый┤ ьХДыЮШ ыкиыУа ьб░эХньЭД ьЭ╜ъ│а ьЭ┤эХ┤эЦИьЬ╝ый░ ьИШыЭ╜эХЬ ъ▓ГьЬ╝ыбЬ ъ░Дьг╝эХйыЛИыЛд. ыПЩьЭШэХШьзА ьХКьЬ╝ый┤ тАЬьвЕыгМтАЭые╝ ыИДые┤ъ│а ы│╕ ьЖМэФДэК╕ьЫиьЦ┤ьЭШ ьВмьЪйьЭД ьдСыЛиэХШьД╕ьЪФ.",
-    ),
-    "disclaimerLiabilityContent": MessageLookupByLibrary.simpleMessage(
-      "ъ┤Аыаи ы▓ХыеаьЭ┤ эЧИьЪйэХШыКФ ь╡ЬыМА ы▓ФьЬДьЧРьДЬ, ъ░Ьы░ЬьЮРьЩА ъ╕░ьЧмьЮРыКФ ы│╕ ьЖМэФДэК╕ьЫиьЦ┤ьЭШ ьВмьЪй ыШРыКФ ьВмьЪй ы╢ИыКеьЬ╝ыбЬ ы░ЬьГЭэХШыКФ ьзБьаС, ъ░ДьаС, ы╢АьИШьаБ, эК╣ы│Д, ьзХы▓МьаБ ыШРыКФ ъ▓░ъ│╝ьаБ ьЖРэХ┤ьЧР ыМАэХ┤ ь▒ЕьЮДьЭД ьзАьзА ьХКьК╡ыЛИыЛд. ьЧмъ╕░ьЧРыКФ ыН░ьЭ┤эД░ ьЖРьЛд, ъ╕░ъ╕░ ьЖРьГБ, ыДдэК╕ьЫМэБм ьЮеьХа, ьВмьЧЕ ьдСыЛи, ьЭ┤ьЭ╡ ьЖРьЛд ы░П ъ╖╕ыбЬ ьЭ╕эХЬ ы▓ХьаБ ы╢ДьЯБьЭ┤ эПмэХиыРШый░ ьЭ┤ьЧР ъ╡нэХЬыРШьзА ьХКъ│а, ъ╖╕ыЯмэХЬ ьЖРэХ┤ьЭШ ъ░АыКеьД▒ьЭД ьВмьаДьЧР эЖ╡ьзАы░ЫьЭА ъ▓╜ьЪ░ьЧРыПД ызИь░мъ░АьзАьЮЕыЛИыЛд.",
-    ),
-    "disclaimerLiabilityTitle": MessageLookupByLibrary.simpleMessage(
-      "ь▒ЕьЮДьЭШ ьаЬэХЬ",
+      "FlClashX는 Mihomo 코어 기반의 무료 오픈소스 클라이언트입니다. 무엇을 하고, 무엇을 하지 않으며, 어떤 데이터를 수집하는지 간단히 안내합니다. “동의합니다”를 누르면 이 조건에 동의하는 것입니다.",
     ),
     "disclaimerLicenseContent": MessageLookupByLibrary.simpleMessage(
-      "ы│╕ ьЖМэФДэК╕ьЫиьЦ┤ыКФ GPL-3.0 ыЭ╝ьЭ┤ьДаьКдыбЬ ъ│╡ъ░ЬыРЬ ьШдэФИ ьЖМьКдьЮЕыЛИыЛд. эММьГЭ ьаАьЮСым╝ыПД GPL-3.0ьЬ╝ыбЬ ы░░эПмэХШъ│а ьЫРьаАьЮСъ╢М ъ│аьзАые╝ ьЬаьзАэХ┤ьХ╝ эХШыКФ ыЭ╝ьЭ┤ьДаьКд ьб░ъ▒┤ьЭД ьдАьИШэХШыКФ эХЬ ьЮРьЬаыбнъ▓М ьВмьЪй, ьИШьаХ, ы░░эПмэХа ьИШ ьЮИьК╡ыЛИыЛд.\n\nClash.Meta ь╜ФьЦ┤ые╝ эПмэХиэХЬ ы│╕ ьЖМэФДэК╕ьЫиьЦ┤ьЭШ ьаЬ3ьЮР ъ╡мьД▒ ьЪФьЖМыКФ ъ░БьЮРьЭШ ыЭ╝ьЭ┤ьДаьКдые╝ ыФ░ыжЕыЛИыЛд. ьЫРьаАьЮСьЮРыКФ ьИШьаХ ыШРыКФ ьЮмы░░эПмыРЬ ы▓ДьаДьЧРьДЬ ы░ЬьГЭэХШыКФ ьЦ┤ыЦаэХЬ ым╕ьаЬьЧРыПД ь▒ЕьЮДьЭД ьзАьзА ьХКьК╡ыЛИыЛд.",
+      "소스 코드는 GPL-3.0 라이선스로 공개되어 있습니다. Mihomo 코어와 기타 제3자 구성 요소는 각자의 라이선스를 따릅니다. 수정되었거나 제3자가 배포한 빌드에 대해 작성자는 책임지지 않습니다.",
     ),
-    "disclaimerLicenseTitle": MessageLookupByLibrary.simpleMessage(
-      "ьШдэФИ ьЖМьКд ыЭ╝ьЭ┤ьДаьКд",
-    ),
-    "disclaimerNoServiceStatement": MessageLookupByLibrary.simpleMessage(
-      "ы│╕ ьЖМэФДэК╕ьЫиьЦ┤ ьЮРь▓┤ыКФ эФДыбЭьЛЬ ьДЬы▓Д, ыЕ╕ыУЬ, ъ╡мыПЕ, ыДдэК╕ьЫМэБм ьаСьЖН ьДЬы╣ДьКдые╝ ьЭ╝ьаИ ьаЬъ│╡эХШьзА ьХКьЬ╝ый░, ьЭ┤ыЯмэХЬ ьДЬы╣ДьКдьЭШ ьЦ┤ыЦд ьаЬъ│╡ьЮРьЩАыПД ьаЬэЬ┤, ыМАыжм ыШРыКФ ы│┤ьжЭ ъ┤Аъ│Дъ░А ьЧЖьК╡ыЛИыЛд.",
-    ),
+    "disclaimerLicenseTitle": MessageLookupByLibrary.simpleMessage("라이선스"),
     "disclaimerPrivacyContent": MessageLookupByLibrary.simpleMessage(
-      "ы│╕ ьЖМэФДэК╕ьЫиьЦ┤ыКФ ъ╡мыПЕ URL, ыЕ╕ыУЬ ьаХы│┤, ъ╡мьД▒ ыВ┤ьЪй, ы░йым╕эХЬ ьЫ╣ьВмьЭ┤эК╕, ьЧ░ъ▓░ ъ╕░ыбЭ, эК╕ыЮШэФ╜ ыВ┤ьЪй, ыбЬъ╖╕ые╝ ьИШьзСэХШъ▒░ыВШ ьЧЕыбЬыУЬэХШьзА ьХКьК╡ыЛИыЛд. ьЭ┤ ыН░ьЭ┤эД░ыКФ ьВмьЪйьЮРьЭШ ъ╕░ъ╕░ьЧРызМ ьаАьЮеыРШый░ ъ░Ьы░ЬьЮРыКФ ьаСъ╖╝эХа ьИШ ьЧЖьК╡ыЛИыЛд.\n\nы│╕ ьЖМэФДэК╕ьЫиьЦ┤ыКФ эФДыбЬэХДьЭД ьЧЕыН░ьЭ┤эК╕эХа ыХМ ьВмьЪйьЮРъ░А ьЮЕыаеэХЬ ъ╡мыПЕ URLьЭД ъ░Аьа╕ьШдъ▒░ыВШ ьЧЕыН░ьЭ┤эК╕ые╝ эЩХьЭ╕эХа ыХМ GitHubьЧР ьаСьЖНэХШыКФ ыУ▒ ъ╕░ыКеьЭ┤ эХДьЪФэХа ыХМызМ ыДдэК╕ьЫМэБмьЧР ьаСьЖНэХйыЛИыЛд.\n\nы│╕ ьЖМэФДэК╕ьЫиьЦ┤ьЧРыКФ ьЦ┤ыЦд эФМыЮлэП╝ьЧРьДЬыПД ы╢ДьДЭ ыШРыКФ ы╣ДьаХьГБ ьвЕыгМ ы│┤ъ│а ьДЬы╣ДьКдъ░А эПмэХиыРШьЦ┤ ьЮИьзА ьХКьК╡ыЛИыЛд.",
+      "오류를 찾기 위해 이 앱은 Google Firebase를 통해 기술 데이터를 수집합니다. 충돌 보고서, 앱과 시스템 버전, 기기 모델, 익명화된 기능 사용 통계입니다.\n\n구독 링크, 설정 내용, 서버, 방문한 사이트, 연결, 트래픽, 로그는 수집하거나 어디로도 전송하지 않습니다. 기기에만 남습니다.",
     ),
-    "disclaimerPrivacyTitle": MessageLookupByLibrary.simpleMessage(
-      "ыН░ьЭ┤эД░ ьИШьзС ы░П ъ░ЬьЭ╕ьаХы│┤ ы│┤эШ╕",
-    ),
+    "disclaimerPrivacyTitle": MessageLookupByLibrary.simpleMessage("데이터"),
     "disclaimerResponsibilityContent": MessageLookupByLibrary.simpleMessage(
-      "ы│╕ ьЖМэФДэК╕ьЫиьЦ┤ьЭШ ьВмьЪйьЭ┤ ъ▒░ьг╝ьзАьЧРьДЬ ьаБы▓ХэХЬьзА эЩХьЭ╕эХа ь▒ЕьЮДьЭА ьВмьЪйьЮРьЧРъ▓М ьЮИьЬ╝ый░, ы│╕ ьЖМэФДэК╕ьЫиьЦ┤ыбЬ эХЬ ыкиыУа эЦЙьЬДьЩА ъ╖╕ ъ▓░ъ│╝ьЧР ыМАэХЬ ы▓ХьаБ ь▒ЕьЮДьЭА ьВмьЪйьЮР ы│╕ьЭ╕ьЭ┤ ы╢АыЛ┤эХйыЛИыЛд.\n\nъ░Аьа╕ьШдыКФ ъ╡мыПЕ, ыЕ╕ыУЬ, ъ╡мьД▒ьЭА ьВмьЪйьЮР ы│╕ьЭ╕ьЭШ ьДаэГЭьЮЕыЛИыЛд. ь╢Ьь▓ШьЭШ ьаБы▓ХьД▒, ь╜ШэЕРь╕аьЭШ ьХИьаДьД▒, ьДЬы╣ДьКдьЭШ ьЛаыв░ьД▒ьЭА ьВмьЪйьЮРьЩА эХ┤ыЛ╣ ьаЬъ│╡ьЮР ьВмьЭ┤ьЭШ ым╕ьаЬьЮЕыЛИыЛд.",
+      "거주 국가에서 이 앱의 사용이 합법인지는 사용자가 직접 판단하며, 앱으로 하는 행위에 대한 책임도 사용자에게 있습니다.\n\n이 앱은 어떠한 보증도 없이 “있는 그대로” 제공됩니다. 개발자는 앱의 사용 또는 사용 불가로 인한 손해, 제3자의 구독, 설정, 링크에 대해 책임지지 않습니다.",
     ),
-    "disclaimerResponsibilityTitle": MessageLookupByLibrary.simpleMessage(
-      "ьВмьЪйьЮРьЭШ ь▒ЕьЮД",
-    ),
-    "disclaimerRestateHint": MessageLookupByLibrary.simpleMessage(
-      "ьЬД ым╕ъ╡мые╝ ьЮЕыаеэХШьД╕ьЪФ",
-    ),
-    "disclaimerRestateMismatch": MessageLookupByLibrary.simpleMessage(
-      "ым╕ъ╡мьЩА ьЭ╝ь╣ШэХШьзА ьХКьК╡ыЛИыЛд",
-    ),
-    "disclaimerRestateTip": MessageLookupByLibrary.simpleMessage(
-      "ыВ┤ьЪйьЭД ьЭ┤эХ┤эЦИыКФьзА эЩХьЭ╕эХШъ╕░ ьЬДэХ┤ ьХДыЮШ ьЮЕыаеыЮАьЧР ыЛдьЭМ ым╕ъ╡мые╝ ъ╖╕ыМАыбЬ ьЮЕыаеэХШьД╕ьЪФ.",
-    ),
-    "disclaimerRestateTitle": MessageLookupByLibrary.simpleMessage(
-      "ым╕ъ╡м ыЛдьЛЬ ьЮЕыае",
-    ),
+    "disclaimerResponsibilityTitle": MessageLookupByLibrary.simpleMessage("책임"),
     "disclaimerSoftwareContent": MessageLookupByLibrary.simpleMessage(
-      "ы│╕ ьЖМэФДэК╕ьЫиьЦ┤ыКФ Clash.Meta(mihomo) ь╜ФьЦ┤ые╝ ъ╕░ы░ШьЬ╝ыбЬ эХЬ ьШдэФИ ьЖМьКд ыДдэК╕ьЫМэБм эФДыбЭьЛЬ эБ┤ыЭ╝ьЭ┤ьЦ╕эК╕ьЮЕыЛИыЛд. ъ╡мьД▒ ъ┤Аыжм, ъ╖Ьь╣Щ ъ╕░ы░Ш ыЭ╝ьЪ░эМЕ, эК╕ыЮШэФ╜ ьаДыЛмъ│╝ ъ░ЩьЭА ыбЬь╗м ыПДъ╡мызМ ьаЬъ│╡эХйыЛИыЛд.",
+      "이 앱은 기기에서 설정을 관리하고 규칙에 따라 트래픽을 전달하는 일만 합니다.\n\n우리는 아무것도 판매하지 않으며 프록시 서버, 노드, 구독, 네트워크 접속을 제공하지 않습니다. 모든 서버와 구독은 제3자 제공자에게서 받는 것이며, 그 합법성, 안전성, 품질은 사용자와 해당 제공자 사이의 문제입니다. 이 앱은 그러한 제공자와 관련이 없으며 책임지지 않습니다.",
     ),
     "disclaimerSoftwareTitle": MessageLookupByLibrary.simpleMessage(
-      "ьЖМэФДэК╕ьЫиьЦ┤ьЭШ ьД▒ъ▓й",
+      "무엇이고 무엇이 아닌가",
     ),
-    "disclaimerThirdPartyContent": MessageLookupByLibrary.simpleMessage(
-      "ъ╡мыПЕ ызБэБм, ъ╡мьД▒ эММьЭ╝, ъ╖Ьь╣Щ ьД╕эК╕, ьКдэБмыж╜эК╕, ьЩ╕ы╢А ыжмьЖМьКд, ьЩ╕ы╢А ызБэБмыКФ ыкиыСР ьаЬ3ьЮРъ░А ьаЬъ│╡эХйыЛИыЛд. ъ░Ьы░ЬьЮРыКФ ьЭ┤ыУдьЭШ ьаБы▓ХьД▒, ьаХэЩХьД▒, ьХИьаДьД▒, ъ░АьЪйьД▒ьЭД ьЛмьВмэХШъ▒░ыВШ ы│┤ьжЭэХа ьИШ ьЧЖьЬ╝ый░ ы│┤ьжЭэХШьзА ьХКьК╡ыЛИыЛд.\n\nьаЬ3ьЮР ь╜ШэЕРь╕аыбЬ ьЭ╕эХЬ ыН░ьЭ┤эД░ ьЬаь╢Ь, ъ╕ИьаДьаБ ьЖРьЛд, ъ│ДьаХ ьаХьзА ы░П ъ╕░эГА ьЖРэХ┤ыКФ ьВмьЪйьЮРьЩА эХ┤ыЛ╣ ьаЬ3ьЮР ьВмьЭ┤ьЧРьДЬ эХ┤ъ▓░эХ┤ьХ╝ эХШый░, ъ░Ьы░ЬьЮРыКФ ьЭ┤ьЧР ыМАэХ┤ ь▒ЕьЮДьЭД ьзАьзА ьХКьК╡ыЛИыЛд.",
-    ),
-    "disclaimerThirdPartyTitle": MessageLookupByLibrary.simpleMessage(
-      "ьаЬ3ьЮР ь╜ШэЕРь╕а",
-    ),
-    "disclaimerUsageContent": MessageLookupByLibrary.simpleMessage(
-      "ы│╕ ьЖМэФДэК╕ьЫиьЦ┤ыКФ эХЩьК╡, ъ╡РыеШ, ъ╕░ьИа ьЧ░ъ╡мьЩА ъ░ЩьЭА ы╣ДьГБьЧЕьаБ ьЪйыПДыбЬызМ ьаЬъ│╡ыРйыЛИыЛд. ьЬаыгМ ы░░эПм, ыБ╝ьЫМ эМФъ╕░, ьГБьЧЕ ьДЬы╣ДьКдьЭШ ьЭ╝ы╢АыбЬ ьВмьЪй, ы│╕ ьЖМэФДэК╕ьЫиьЦ┤ьЭШ ьЭ┤ыжДьЭД ыВ┤ьД╕ьЪ┤ ьШБьЧЕ ыУ▒ ьЦ┤ыЦаэХЬ ьГБьЧЕьаБ ыкйьаБьЭШ ьВмьЪйыПД ьЧДъ▓йэЮИ ъ╕ИьзАыРШый░, ьЭ┤ьЧР ъ╡нэХЬыРШьзА ьХКьК╡ыЛИыЛд. ыкиыУа ьГБьЧЕ эЩЬыПЩьЭА ы│╕ ьЖМэФДэК╕ьЫиьЦ┤ ы░П ъ░Ьы░ЬьЮРьЩА ым┤ъ┤АэХйыЛИыЛд.\n\nъ▒░ьг╝ ъ╡нъ░А ыШРыКФ ьзАьЧньЭШ ы▓Хыа╣ьЭД ьЬДы░ШэХШыКФ ьЪйыПДыбЬ ы│╕ ьЖМэФДэК╕ьЫиьЦ┤ые╝ ьВмьЪйэХШыКФ ъ▓ГьЭА ьЧДъ▓йэЮИ ъ╕ИьзАыРйыЛИыЛд. ьЧмъ╕░ьЧРыКФ эХйы▓ХьаБьЬ╝ыбЬ ы╢Аъ│╝ыРЬ ыДдэК╕ьЫМэБм ьаСьЖН ьаЬэХЬ ьЪ░эЪМ, ы╢Иы▓Х ь╜ШэЕРь╕а ьЬаэПм, ыДдэК╕ьЫМэБм ъ│╡ъ▓й, эГАьЭ╕ьЭШ эХйы▓ХьаБ ъ╢Мыжм ь╣иэХ┤ъ░А эПмэХиыРШый░ ьЭ┤ьЧР ъ╡нэХЬыРШьзА ьХКьК╡ыЛИыЛд.",
-    ),
-    "disclaimerUsageTitle": MessageLookupByLibrary.simpleMessage(
-      "ьВмьЪй ьаЬэХЬ",
-    ),
-    "disclaimerWarrantyContent": MessageLookupByLibrary.simpleMessage(
-      "ы│╕ ьЖМэФДэК╕ьЫиьЦ┤ыКФ тАЬьЮИыКФ ъ╖╕ыМАыбЬтАЭ, тАЬьЭ┤ьЪй ъ░АыКеэХЬ ьГБэГЬыбЬтАЭ ьаЬъ│╡ыРШый░, ьГБэТИьД▒, эК╣ьаХ ыкйьаБьЧРьЭШ ьаБэХйьД▒, ы╣Дь╣иэХ┤ьД▒, ьдСыЛи ьЧЖыКФ ьЭ┤ьЪй ъ░АыКеьД▒, ьШдыеШ ьЧЖьЭМ, ы│┤ьХИ ь╖иьХ╜ьаР ьЧЖьЭМьЧР ыМАэХЬ ы│┤ьжЭьЭД эПмэХиэХШыРШ ьЭ┤ьЧР ъ╡нэХЬыРШьзА ьХКъ│а ыкЕьЛЬьаБьЭ┤ыУа ым╡ьЛЬьаБьЭ┤ыУа ьЦ┤ыЦаэХЬ ьвЕыеШьЭШ ы│┤ьжЭыПД эХШьзА ьХКьК╡ыЛИыЛд.\n\nъ░Ьы░ЬьЮРыКФ ы│╕ ьЖМэФДэК╕ьЫиьЦ┤ъ░А ьВмьЪйьЮРьЭШ ьЪФъ╡мые╝ ь╢йьб▒эХШъ▒░ыВШ ьдСыЛи ы░П ьШдыеШ ьЧЖьЭ┤ ьЛдэЦЙыРа ъ▓ГьЮДьЭД ы│┤ьжЭэХШьзА ьХКьК╡ыЛИыЛд.",
-    ),
-    "disclaimerWarrantyTitle": MessageLookupByLibrary.simpleMessage(
-      "ы│┤ьжЭ ы╢АьЭ╕",
-    ),
-    "disconnected": MessageLookupByLibrary.simpleMessage("ьЧ░ъ▓░ ыБКъ╣А"),
-    "discoverNewVersion": MessageLookupByLibrary.simpleMessage(
-      "ьГИ ы▓ДьаД ы░Ьъ▓м",
-    ),
+    "disconnected": MessageLookupByLibrary.simpleMessage("연결 끊김"),
+    "discoverNewVersion": MessageLookupByLibrary.simpleMessage("새 버전 발견"),
     "dnsHijackDesc": MessageLookupByLibrary.simpleMessage(
-      "ь╢Фъ░АэХШьзА ьХКьЬ╝ый┤ 53ы▓И эПмэК╕ыбЬ ъ░АыКФ ыкиыУа DNS ь┐╝ыжмые╝ эХШьЭ┤ьЮмэВ╣эХйыЛИыЛд(any:53).",
+      "추가하지 않으면 53번 포트로 가는 모든 DNS 쿼리를 하이재킹합니다(any:53).",
     ),
-    "dnsHijacking": MessageLookupByLibrary.simpleMessage("DNS эХШьЭ┤ьЮмэВ╣"),
-    "dnsMode": MessageLookupByLibrary.simpleMessage("DNS ыкиыУЬ"),
+    "dnsHijacking": MessageLookupByLibrary.simpleMessage("DNS 하이재킹"),
+    "dnsMode": MessageLookupByLibrary.simpleMessage("DNS 모드"),
     "dnsOverrideDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЧмъ╕░ьЧР ь╢Фъ░АэХЬ эХныкйьЭА ыкиыУа URL ы░П эММьЭ╝ эФДыбЬэХДьЭШ DNSые╝ ыМАь▓┤эХйыЛИыЛд. ь╢Фъ░АэХШьзА ьХКьЭА эХныкйьЭА эФДыбЬэХД ьЮРь▓┤ ьДдьаХьЭД ьЬаьзАэХйыЛИыЛд. ьВмьЪйьЮР ьзАьаХ эФДыбЬэХДьЭА ыВ┤ьЪйьЧРьДЬ DNSые╝ ьДдьаХэХйыЛИыЛд.",
+      "여기에 추가한 항목은 모든 URL 및 파일 프로필의 DNS를 대체합니다. 추가하지 않은 항목은 프로필 자체 설정을 유지합니다. 사용자 지정 프로필은 내용에서 DNS를 설정합니다.",
     ),
-    "dnsQueries": MessageLookupByLibrary.simpleMessage("DNS ь┐╝ыжм"),
-    "docked": MessageLookupByLibrary.simpleMessage("ъ│аьаХ"),
-    "domain": MessageLookupByLibrary.simpleMessage("ыПДыйФьЭ╕"),
-    "done": MessageLookupByLibrary.simpleMessage("ьЩДыгМ"),
-    "download": MessageLookupByLibrary.simpleMessage("ыЛдьЪ┤ыбЬыУЬ"),
-    "downloadBandwidth": MessageLookupByLibrary.simpleMessage(
-      "ыЛдьЪ┤ыбЬыУЬ ыМАьЧнэПн",
-    ),
-    "duration": MessageLookupByLibrary.simpleMessage("ьЖМьЪФ ьЛЬъ░Д"),
-    "edit": MessageLookupByLibrary.simpleMessage("эО╕ьзС"),
-    "editDashboard": MessageLookupByLibrary.simpleMessage(
-      "ыМАьЛЬы│┤ыУЬ эО╕ьзС",
-    ),
-    "editGlobalRules": MessageLookupByLibrary.simpleMessage(
-      "ьаДьЧн ъ╖Ьь╣Щ эО╕ьзС",
-    ),
-    "editProxy": MessageLookupByLibrary.simpleMessage("эФДыбЭьЛЬ эО╕ьзС"),
-    "editProxyGroup": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЭьЛЬ ъ╖╕ыг╣ эО╕ьзС",
-    ),
-    "editRule": MessageLookupByLibrary.simpleMessage("ъ╖Ьь╣Щ эО╕ьзС"),
-    "editSsid": MessageLookupByLibrary.simpleMessage("SSID эО╕ьзС"),
-    "editorUnavailable": MessageLookupByLibrary.simpleMessage(
-      "эО╕ьзСъ╕░ые╝ ьВмьЪйэХа ьИШ ьЧЖьЭМ",
-    ),
-    "elapsed": MessageLookupByLibrary.simpleMessage("ьЖМьЪФ"),
-    "emptyFallback": MessageLookupByLibrary.simpleMessage("ы╣И эП┤ы░▒"),
+    "dnsQueries": MessageLookupByLibrary.simpleMessage("DNS 쿼리"),
+    "docked": MessageLookupByLibrary.simpleMessage("고정"),
+    "domain": MessageLookupByLibrary.simpleMessage("도메인"),
+    "done": MessageLookupByLibrary.simpleMessage("완료"),
+    "download": MessageLookupByLibrary.simpleMessage("다운로드"),
+    "downloadBandwidth": MessageLookupByLibrary.simpleMessage("다운로드 대역폭"),
+    "duration": MessageLookupByLibrary.simpleMessage("소요 시간"),
+    "edit": MessageLookupByLibrary.simpleMessage("편집"),
+    "editDashboard": MessageLookupByLibrary.simpleMessage("대시보드 편집"),
+    "editGlobalRules": MessageLookupByLibrary.simpleMessage("전역 규칙 편집"),
+    "editProxy": MessageLookupByLibrary.simpleMessage("프록시 편집"),
+    "editProxyGroup": MessageLookupByLibrary.simpleMessage("프록시 그룹 편집"),
+    "editRule": MessageLookupByLibrary.simpleMessage("규칙 편집"),
+    "editSsid": MessageLookupByLibrary.simpleMessage("SSID 편집"),
+    "editorUnavailable": MessageLookupByLibrary.simpleMessage("편집기를 사용할 수 없음"),
+    "elapsed": MessageLookupByLibrary.simpleMessage("소요"),
+    "emptyFallback": MessageLookupByLibrary.simpleMessage("빈 폴백"),
     "emptyTip": m23,
-    "en": MessageLookupByLibrary.simpleMessage("ьШБьЦ┤"),
-    "enabled": MessageLookupByLibrary.simpleMessage("ьВмьЪй"),
-    "entries": MessageLookupByLibrary.simpleMessage("ъ░Ь эХныкй"),
-    "error": MessageLookupByLibrary.simpleMessage("ьШдыеШ"),
-    "errorDetails": MessageLookupByLibrary.simpleMessage(
-      "ьШдыеШ ьД╕ы╢А ьаХы│┤",
-    ),
-    "es": MessageLookupByLibrary.simpleMessage("ьКдэОШьЭ╕ьЦ┤"),
-    "exclude": MessageLookupByLibrary.simpleMessage(
-      "ь╡Ьъ╖╝ ьЮСьЧЕьЧРьДЬ ьИиъ╕░ъ╕░",
-    ),
-    "excludeDstPort": MessageLookupByLibrary.simpleMessage(
-      "ьаЬьЩ╕эХа ыМАьГБ эПмэК╕",
-    ),
+    "en": MessageLookupByLibrary.simpleMessage("영어"),
+    "enabled": MessageLookupByLibrary.simpleMessage("사용"),
+    "entries": MessageLookupByLibrary.simpleMessage("개 항목"),
+    "error": MessageLookupByLibrary.simpleMessage("오류"),
+    "errorDetails": MessageLookupByLibrary.simpleMessage("오류 세부 정보"),
+    "es": MessageLookupByLibrary.simpleMessage("스페인어"),
+    "exclude": MessageLookupByLibrary.simpleMessage("최근 작업에서 숨기기"),
+    "excludeDstPort": MessageLookupByLibrary.simpleMessage("제외할 대상 포트"),
     "excludeDstPortDesc": MessageLookupByLibrary.simpleMessage(
-      "ьаЬьЩ╕эХа ыМАьГБ эПмэК╕ыбЬ ъ░АыКФ эК╕ыЮШэФ╜ьЭА TUNьЭД ъ▒░ь╣ШьзА ьХКьК╡ыЛИыЛд.",
+      "제외할 대상 포트로 가는 트래픽은 TUN을 거치지 않습니다.",
     ),
-    "excludeFilter": MessageLookupByLibrary.simpleMessage("ьаЬьЩ╕ эХДэД░"),
-    "excludeInterface": MessageLookupByLibrary.simpleMessage(
-      "ьаЬьЩ╕эХа ьЭ╕эД░эОШьЭ┤ьКд",
-    ),
+    "excludeFilter": MessageLookupByLibrary.simpleMessage("제외 필터"),
+    "excludeInterface": MessageLookupByLibrary.simpleMessage("제외할 인터페이스"),
     "excludeInterfaceDesc": MessageLookupByLibrary.simpleMessage(
-      "docker0ьЩА ъ░ЩьЭ┤ ьаЬьЩ╕эХа ьЭ╕эД░эОШьЭ┤ьКдыбЬ ыУдьЦ┤ьШдыКФ эК╕ыЮШэФ╜ьЭА TUNьЭД ъ▒░ь╣ШьзА ьХКьК╡ыЛИыЛд.",
+      "docker0와 같이 제외할 인터페이스로 들어오는 트래픽은 TUN을 거치지 않습니다.",
     ),
-    "excludeSrcPort": MessageLookupByLibrary.simpleMessage(
-      "ьаЬьЩ╕эХа ьЖМьКд эПмэК╕",
-    ),
+    "excludeSrcPort": MessageLookupByLibrary.simpleMessage("제외할 소스 포트"),
     "excludeSrcPortDesc": MessageLookupByLibrary.simpleMessage(
-      "ьаЬьЩ╕эХа ьЖМьКд эПмэК╕ьЧРьДЬ ыВШъ░АыКФ эК╕ыЮШэФ╜ьЭА TUNьЭД ъ▒░ь╣ШьзА ьХКьК╡ыЛИыЛд.",
+      "제외할 소스 포트에서 나가는 트래픽은 TUN을 거치지 않습니다.",
     ),
-    "excludeSsids": MessageLookupByLibrary.simpleMessage("ьаЬьЩ╕эХа SSID"),
+    "excludeSsids": MessageLookupByLibrary.simpleMessage("제외할 SSID"),
     "excludeSsidsDesc": MessageLookupByLibrary.simpleMessage(
-      "ьаЬьЩ╕ SSIDьЭШ Wi-FiьЧР ьЧ░ъ▓░ыРШый┤ ьХ▒ьЭШ ьЛдэЦЙ ьГБэГЬъ░А ьЮРыПЩьЬ╝ыбЬ ьаДэЩШыРйыЛИыЛд.",
+      "제외 SSID의 Wi-Fi에 연결되면 앱의 실행 상태가 자동으로 전환됩니다.",
     ),
-    "excludeUid": MessageLookupByLibrary.simpleMessage(
-      "ьаЬьЩ╕эХа ьВмьЪйьЮР ID",
-    ),
+    "excludeUid": MessageLookupByLibrary.simpleMessage("제외할 사용자 ID"),
     "excludeUidDesc": MessageLookupByLibrary.simpleMessage(
-      "ьаЬьЩ╕эХа ьВмьЪйьЮР IDьЭШ эФДыбЬьД╕ьКд эК╕ыЮШэФ╜ьЭА TUNьЭД ъ▒░ь╣ШьзА ьХКьК╡ыЛИыЛд.",
+      "제외할 사용자 ID의 프로세스 트래픽은 TUN을 거치지 않습니다.",
     ),
     "existsTip": m24,
-    "exit": MessageLookupByLibrary.simpleMessage("ьвЕыгМ"),
-    "exitFullScreen": MessageLookupByLibrary.simpleMessage(
-      "ьаДь▓┤ эЩФый┤ ьвЕыгМ",
-    ),
-    "exitNodes": MessageLookupByLibrary.simpleMessage("ь╢Ьъ╡м ыЕ╕ыУЬ"),
-    "expectedStatus": MessageLookupByLibrary.simpleMessage("ьШИьГБ ьГБэГЬ"),
-    "expireTime": MessageLookupByLibrary.simpleMessage("ызМыгМ ьЛЬъ░Д"),
-    "exportFile": MessageLookupByLibrary.simpleMessage("эММьЭ╝ ыВ┤ы│┤ыВ┤ъ╕░"),
-    "exportLogs": MessageLookupByLibrary.simpleMessage("ыбЬъ╖╕ ыВ┤ы│┤ыВ┤ъ╕░"),
-    "exportSuccess": MessageLookupByLibrary.simpleMessage(
-      "ыВ┤ы│┤ыВ┤ъ╕░ ьЩДыгМ",
-    ),
-    "extend": MessageLookupByLibrary.simpleMessage("эЩХьЮе"),
-    "extendMode": MessageLookupByLibrary.simpleMessage("эЩХьЮе ыкиыУЬ"),
-    "extendScript": MessageLookupByLibrary.simpleMessage("эЩХьЮе ьКдэБмыж╜эК╕"),
-    "externalController": MessageLookupByLibrary.simpleMessage(
-      "ьЩ╕ы╢А ь╗иэК╕ыбдыЯм",
-    ),
-    "externalControllerDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЩ╕ы╢А ь╗иэК╕ыбдыЯмые╝ ьВмьЪйэХШый┤ 9090 эПмэК╕ыбЬ ь╜ФьЦ┤ые╝ ьаЬьЦ┤эХа ьИШ ьЮИьК╡ыЛИыЛд.",
-    ),
+    "exit": MessageLookupByLibrary.simpleMessage("종료"),
+    "exitFullScreen": MessageLookupByLibrary.simpleMessage("전체 화면 종료"),
+    "exitNodes": MessageLookupByLibrary.simpleMessage("출구 노드"),
+    "expectedStatus": MessageLookupByLibrary.simpleMessage("예상 상태"),
+    "expireTime": MessageLookupByLibrary.simpleMessage("만료 시간"),
+    "exportFile": MessageLookupByLibrary.simpleMessage("파일 내보내기"),
+    "exportLogs": MessageLookupByLibrary.simpleMessage("로그 내보내기"),
+    "exportSuccess": MessageLookupByLibrary.simpleMessage("내보내기 완료"),
+    "extend": MessageLookupByLibrary.simpleMessage("확장"),
+    "extendMode": MessageLookupByLibrary.simpleMessage("확장 모드"),
+    "extendScript": MessageLookupByLibrary.simpleMessage("확장 스크립트"),
+    "externalController": MessageLookupByLibrary.simpleMessage("외부 컨트롤러"),
+    "externalControllerDesc": m25,
     "externalControllerSecret": MessageLookupByLibrary.simpleMessage(
-      "ьЩ╕ы╢А ь╗иэК╕ыбдыЯм ьЛЬэБмыж┐",
+      "외부 컨트롤러 시크릿",
     ),
-    "externalLink": MessageLookupByLibrary.simpleMessage("ьЩ╕ы╢А ызБэБм"),
-    "extraLarge": MessageLookupByLibrary.simpleMessage("ыздьЪ░ эБмъ▓М"),
-    "fade": MessageLookupByLibrary.simpleMessage("эОШьЭ┤ыУЬ"),
-    "failedCount": m25,
-    "failedItem": m26,
-    "fakeipFilter": MessageLookupByLibrary.simpleMessage("Fake-IP эХДэД░"),
-    "fakeipFilterMode": MessageLookupByLibrary.simpleMessage(
-      "Fake-IP эХДэД░ ыкиыУЬ",
-    ),
+    "externalLink": MessageLookupByLibrary.simpleMessage("외부 링크"),
+    "extraLarge": MessageLookupByLibrary.simpleMessage("매우 크게"),
+    "fade": MessageLookupByLibrary.simpleMessage("페이드"),
+    "failedCount": m26,
+    "failedItem": m27,
+    "fakeipFilter": MessageLookupByLibrary.simpleMessage("Fake-IP 필터"),
+    "fakeipFilterMode": MessageLookupByLibrary.simpleMessage("Fake-IP 필터 모드"),
     "fakeipFilterModeDesc": MessageLookupByLibrary.simpleMessage(
-      "Fake-IP эХДэД░ ыкиыУЬьЧРьДЬ ы╕ФыЮЩыжмьКдэК╕ыКФ ьЭ╝ь╣Ш эХныкйьЭД ьаЬьЩ╕эХШъ│а, эЩФьЭ┤эК╕ыжмьКдэК╕ыКФ ьЭ╝ь╣Ш эХныкйьЧРызМ ъ░АьзЬ IPые╝ ьВмьЪйэХШый░, ъ╖Ьь╣ЩьЭА ъ╖Ьь╣ЩьЧР ыФ░ыЭ╝ ьЭ╝ь╣ШьЛЬэВ╡ыЛИыЛд.",
+      "Fake-IP 필터 모드에서 블랙리스트는 일치 항목을 제외하고, 화이트리스트는 일치 항목에만 가짜 IP를 사용하며, 규칙은 규칙에 따라 일치시킵니다.",
     ),
-    "fakeipRange": MessageLookupByLibrary.simpleMessage("Fake-IP ы▓ФьЬД"),
-    "fakeipRange6": MessageLookupByLibrary.simpleMessage(
-      "Fake-IP ы▓ФьЬД(IPv6)",
-    ),
+    "fakeipRange": MessageLookupByLibrary.simpleMessage("Fake-IP 범위"),
+    "fakeipRange6": MessageLookupByLibrary.simpleMessage("Fake-IP 범위(IPv6)"),
     "fakeipTtl": MessageLookupByLibrary.simpleMessage("Fake-IP TTL"),
-    "fallbackFilter": MessageLookupByLibrary.simpleMessage("эП┤ы░▒ эХДэД░"),
-    "file": MessageLookupByLibrary.simpleMessage("эММьЭ╝"),
-    "fileDesc": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЬэХД эММьЭ╝ьЭД ьзБьаС ьЧЕыбЬыУЬ",
-    ),
+    "fallbackFilter": MessageLookupByLibrary.simpleMessage("폴백 필터"),
+    "file": MessageLookupByLibrary.simpleMessage("파일"),
+    "fileDesc": MessageLookupByLibrary.simpleMessage("프로필 파일을 직접 업로드"),
     "fileIsUpdate": MessageLookupByLibrary.simpleMessage(
-      "эММьЭ╝ьЭ┤ ьИШьаХыРШьЧИьК╡ыЛИыЛд. ы│Аъ▓╜ ьВмэХньЭД ьаАьЮеэХШьЛЬъ▓аьК╡ыЛИъ╣М?",
+      "파일이 수정되었습니다. 변경 사항을 저장하시겠습니까?",
     ),
-    "filter": MessageLookupByLibrary.simpleMessage("эХДэД░"),
-    "filters": MessageLookupByLibrary.simpleMessage("эХДэД░"),
-    "findProcessMode": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЬьД╕ьКд ь░╛ъ╕░",
-    ),
-    "floating": MessageLookupByLibrary.simpleMessage("эФМыбЬэМЕ"),
-    "followProfile": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЬэХД ыФ░ые┤ъ╕░",
-    ),
-    "followSystem": MessageLookupByLibrary.simpleMessage(
-      "ьЛЬьКдэЕЬ ьДдьаХ ыФ░ые┤ъ╕░",
-    ),
-    "fontFamily": MessageLookupByLibrary.simpleMessage("ъ╕Аъ╝┤"),
-    "fontSize": MessageLookupByLibrary.simpleMessage("эБмъ╕░"),
-    "forceDnsMapping": MessageLookupByLibrary.simpleMessage(
-      "DNS ыздэХС ъ░ХьаЬ",
-    ),
+    "filter": MessageLookupByLibrary.simpleMessage("필터"),
+    "filters": MessageLookupByLibrary.simpleMessage("필터"),
+    "findProcessMode": MessageLookupByLibrary.simpleMessage("프로세스 찾기"),
+    "floating": MessageLookupByLibrary.simpleMessage("플로팅"),
+    "foldAllGroups": MessageLookupByLibrary.simpleMessage("모든 그룹 접기"),
+    "followProfile": MessageLookupByLibrary.simpleMessage("프로필 따르기"),
+    "followSystem": MessageLookupByLibrary.simpleMessage("시스템 설정 따르기"),
+    "fontFamily": MessageLookupByLibrary.simpleMessage("글꼴"),
+    "fontSize": MessageLookupByLibrary.simpleMessage("크기"),
+    "forceDnsMapping": MessageLookupByLibrary.simpleMessage("DNS 매핑 강제"),
     "forceDnsMappingDesc": MessageLookupByLibrary.simpleMessage(
-      "DNS ыздэХС ъ░ХьаЬыКФ DNS ыздэХСьЧРьДЬ ыПДыйФьЭ╕ьЭД ьЦ╗ьЭА ьЧ░ъ▓░ыПД ьКдыЛИэХСэХйыЛИыЛд.",
+      "DNS 매핑 강제는 DNS 매핑에서 도메인을 얻은 연결도 스니핑합니다.",
     ),
-    "forceDomain": MessageLookupByLibrary.simpleMessage("ъ░ХьаЬ ыПДыйФьЭ╕"),
+    "forceDomain": MessageLookupByLibrary.simpleMessage("강제 도메인"),
     "forceDomainDesc": MessageLookupByLibrary.simpleMessage(
-      "ъ░ХьаЬ ыПДыйФьЭ╕ьЭА эХньГБ ьКдыЛИэХСэХйыЛИыЛд. ьЭ┤ып╕ ыПДыйФьЭ╕ьЭ┤ ьЮИыКФ ыЛдые╕ ьЧ░ъ▓░ьЭА ъ╖╕ыМАыбЬ ыСбыЛИыЛд.",
+      "강제 도메인은 항상 스니핑합니다. 이미 도메인이 있는 다른 연결은 그대로 둡니다.",
     ),
     "forceRestartCoreTip": MessageLookupByLibrary.simpleMessage(
-      "ь╜ФьЦ┤ые╝ ъ░ХьаЬыбЬ ыЛдьЛЬ ьЛЬьЮСэХШьЛЬъ▓аьК╡ыЛИъ╣М?",
+      "코어를 강제로 다시 시작하시겠습니까?",
     ),
-    "fr": MessageLookupByLibrary.simpleMessage("эФДыЮСьКдьЦ┤"),
-    "general": MessageLookupByLibrary.simpleMessage("ьЭ╝ы░Ш"),
+    "fr": MessageLookupByLibrary.simpleMessage("프랑스어"),
+    "general": MessageLookupByLibrary.simpleMessage("일반"),
     "geoResources": MessageLookupByLibrary.simpleMessage("Geo"),
-    "geoSkipped": m27,
-    "geoUpdated": m28,
-    "geodataLoader": MessageLookupByLibrary.simpleMessage(
-      "Geo ьаАыйФыкиыжм ыкиыУЬ",
-    ),
-    "global": MessageLookupByLibrary.simpleMessage("ьаДьЧн"),
-    "go": MessageLookupByLibrary.simpleMessage("ьЭ┤ыПЩ"),
-    "goDownload": MessageLookupByLibrary.simpleMessage("ыЛдьЪ┤ыбЬыУЬ"),
+    "geoSkipped": m28,
+    "geoUpdated": m29,
+    "geodataLoader": MessageLookupByLibrary.simpleMessage("Geo 저메모리 모드"),
+    "global": MessageLookupByLibrary.simpleMessage("전역"),
+    "go": MessageLookupByLibrary.simpleMessage("이동"),
+    "goDownload": MessageLookupByLibrary.simpleMessage("다운로드"),
     "goToConfigureAddedRules": MessageLookupByLibrary.simpleMessage(
-      "ь╢Фъ░АэХЬ ъ╖Ьь╣Щ ъ╡мьД▒ьЬ╝ыбЬ ьЭ┤ыПЩ",
+      "추가한 규칙 구성으로 이동",
     ),
-    "goToConfigureScript": MessageLookupByLibrary.simpleMessage(
-      "ьКдэБмыж╜эК╕ ъ╡мьД▒ьЬ╝ыбЬ ьЭ┤ыПЩ",
-    ),
-    "grid": MessageLookupByLibrary.simpleMessage("ъ▓йьЮР"),
-    "groupCount": m29,
-    "groupCountUnit": MessageLookupByLibrary.simpleMessage("ъ░Ь"),
-    "groupTimeoutCount": m30,
-    "hasCacheChange": MessageLookupByLibrary.simpleMessage(
-      "ы│Аъ▓╜ ьВмэХньЭД ь║РьЛЬэХШьЛЬъ▓аьК╡ыЛИъ╣М?",
-    ),
-    "hashByInUser": MessageLookupByLibrary.simpleMessage(
-      "ьЭ╕ы░ФьЪ┤ыУЬ ьВмьЪйьЮРы│Д эХ┤ьЛЬ",
-    ),
-    "healthCheck": MessageLookupByLibrary.simpleMessage("ьГБэГЬ эЩХьЭ╕"),
+    "goToConfigureScript": MessageLookupByLibrary.simpleMessage("스크립트 구성으로 이동"),
+    "gratitude": MessageLookupByLibrary.simpleMessage("감사"),
+    "grid": MessageLookupByLibrary.simpleMessage("격자"),
+    "groupCount": m30,
+    "groupCountUnit": MessageLookupByLibrary.simpleMessage("개"),
+    "groupTimeoutCount": m31,
+    "hasCacheChange": MessageLookupByLibrary.simpleMessage("변경 사항을 캐시하시겠습니까?"),
+    "hashByInUser": MessageLookupByLibrary.simpleMessage("인바운드 사용자별 해시"),
+    "healthCheck": MessageLookupByLibrary.simpleMessage("상태 확인"),
     "helperCorruptTip": MessageLookupByLibrary.simpleMessage(
-      "эЧмэН╝ ьДЬы╣ДьКдые╝ ьВмьЪйэХа ьИШ ьЧЖьЦ┤ TUN ыкиыУЬые╝ ь╝д ьИШ ьЧЖьК╡ыЛИыЛд. FlClashые╝ ыЛдьЛЬ ьДдь╣ШэХШьЧм ы│╡ъ╡мэХШьД╕ьЪФ.",
+      "헬퍼 서비스를 사용할 수 없어 TUN 모드를 켤 수 없습니다. FlClashX를 다시 설치하여 복구하세요.",
     ),
-    "hex": MessageLookupByLibrary.simpleMessage("16ьзДьИШ"),
-    "hideFromList": MessageLookupByLibrary.simpleMessage(
-      "ыкйыбЭьЧРьДЬ ьИиъ╕░ъ╕░",
-    ),
-    "hideIp": MessageLookupByLibrary.simpleMessage("IP ьИиъ╕░ъ╕░"),
-    "hidePassword": MessageLookupByLibrary.simpleMessage(
-      "ы╣Ды░Аы▓ИэШ╕ ьИиъ╕░ъ╕░",
-    ),
+    "hex": MessageLookupByLibrary.simpleMessage("16진수"),
+    "hideFromList": MessageLookupByLibrary.simpleMessage("목록에서 숨기기"),
+    "hideIp": MessageLookupByLibrary.simpleMessage("IP 숨기기"),
+    "hidePassword": MessageLookupByLibrary.simpleMessage("비밀번호 숨기기"),
     "hideTimeoutProxies": MessageLookupByLibrary.simpleMessage(
-      "ьЛЬъ░Д ь┤Иъ│╝ыРЬ эФДыбЭьЛЬ ьИиъ╕░ъ╕░",
+      "시간 초과된 프록시 숨기기",
     ),
     "hideTimeoutProxiesDesc": MessageLookupByLibrary.simpleMessage(
-      "ызИьзАызЙ ьзАьЧ░ эЕМьКдэК╕ьЧРьДЬ ьЛЬъ░Д ь┤Иъ│╝ыРЬ эФДыбЭьЛЬые╝ ьаЬьЩ╕эХйыЛИыЛд",
+      "마지막 지연 테스트에서 시간 초과된 프록시를 제외합니다",
     ),
-    "hopInterval": MessageLookupByLibrary.simpleMessage("эШ╕эХС ъ░Дъ▓й"),
-    "host": MessageLookupByLibrary.simpleMessage("эШ╕ьКдэК╕"),
-    "hostname": MessageLookupByLibrary.simpleMessage("эШ╕ьКдэК╕ ьЭ┤ыжД"),
-    "hotkeyConflictWith": m31,
+    "hopInterval": MessageLookupByLibrary.simpleMessage("호핑 간격"),
+    "host": MessageLookupByLibrary.simpleMessage("호스트"),
+    "hostname": MessageLookupByLibrary.simpleMessage("호스트 이름"),
+    "hotkeyConflictWith": m32,
     "hotkeyDesc": MessageLookupByLibrary.simpleMessage(
-      "ьаДьЧн ыЛиь╢ХэВдыКФ ь░╜ьЭ┤ ьИиъ▓иьа╕ ьЮИьЦ┤ыПД ьЮСыПЩэХйыЛИыЛд. ыПЩьЮСьЭД ыИМыЯм эВд ьб░эХйьЭД ъ╕░ыбЭэХШьД╕ьЪФ.",
+      "전역 단축키는 창이 숨겨져 있어도 작동합니다. 동작을 눌러 키 조합을 기록하세요.",
     ),
-    "hotkeyManagement": MessageLookupByLibrary.simpleMessage(
-      "ыЛиь╢ХэВд ъ┤Аыжм",
-    ),
-    "hotkeyNeedsModifier": m32,
-    "hotkeyNotSet": MessageLookupByLibrary.simpleMessage("ьДдьаХ ьХИ ыРи"),
+    "hotkeyManagement": MessageLookupByLibrary.simpleMessage("단축키 관리"),
+    "hotkeyNeedsModifier": m33,
+    "hotkeyNotSet": MessageLookupByLibrary.simpleMessage("설정 안 됨"),
     "hotkeyUnavailable": MessageLookupByLibrary.simpleMessage(
-      "ыУ▒ыбЭыРШьзА ьХКьЭМ: ыЛдые╕ ьХ▒ьЭ┤ ьВмьЪй ьдСьЭ╝ ьИШ ьЮИьК╡ыЛИыЛд",
+      "등록되지 않음: 다른 앱이 사용 중일 수 있습니다",
     ),
-    "hours": MessageLookupByLibrary.simpleMessage("ьЛЬъ░Д"),
-    "hoursAgo": m33,
-    "hoursAgoShort": m34,
-    "hue": MessageLookupByLibrary.simpleMessage("ьГЙьб░"),
-    "icon": MessageLookupByLibrary.simpleMessage("ьХДьЭ┤ь╜Ш"),
-    "iconRecords": MessageLookupByLibrary.simpleMessage("ьХДьЭ┤ь╜Ш ъ╕░ыбЭ"),
-    "iconSets": MessageLookupByLibrary.simpleMessage("ьХДьЭ┤ь╜Ш ьД╕эК╕"),
+    "hours": MessageLookupByLibrary.simpleMessage("시간"),
+    "hoursAgo": m34,
+    "hoursAgoShort": m35,
+    "hue": MessageLookupByLibrary.simpleMessage("색조"),
+    "icon": MessageLookupByLibrary.simpleMessage("아이콘"),
+    "iconRecords": MessageLookupByLibrary.simpleMessage("아이콘 기록"),
+    "iconSets": MessageLookupByLibrary.simpleMessage("아이콘 세트"),
     "iconSetsEmptyTip": MessageLookupByLibrary.simpleMessage(
-      "ьХДьЭ┤ь╜Ш ьД╕эК╕ъ░А ьХДьзБ ьЧЖьК╡ыЛИыЛд. ьВмьЪйьЮР ьзАьаХ эФДыбЬэХД ыжмьЖМьКд тЖТ ьХДьЭ┤ь╜Ш ьД╕эК╕ьЧРьДЬ ь╢Фъ░АэХШьД╕ьЪФ",
+      "아이콘 세트가 아직 없습니다. 사용자 지정 프로필 리소스 → 아이콘 세트에서 추가하세요",
     ),
-    "iconStyle": MessageLookupByLibrary.simpleMessage("ьХДьЭ┤ь╜Ш ьКдэГАьЭ╝"),
-    "iconStyleFilled": MessageLookupByLibrary.simpleMessage("ь▒ДьЫА"),
-    "iconStyleHidden": MessageLookupByLibrary.simpleMessage("ьИиъ╣А"),
-    "iconStylePlain": MessageLookupByLibrary.simpleMessage("ъ╕░ы│╕"),
-    "iconUrl": MessageLookupByLibrary.simpleMessage("ьХДьЭ┤ь╜Ш URL"),
+    "iconStyle": MessageLookupByLibrary.simpleMessage("아이콘 스타일"),
+    "iconStyleFilled": MessageLookupByLibrary.simpleMessage("채움"),
+    "iconStyleHidden": MessageLookupByLibrary.simpleMessage("숨김"),
+    "iconStylePlain": MessageLookupByLibrary.simpleMessage("기본"),
+    "iconUrl": MessageLookupByLibrary.simpleMessage("아이콘 URL"),
     "ignoreBatteryOptimization": MessageLookupByLibrary.simpleMessage(
-      "ы░░эД░ыжм ь╡ЬьаБэЩФ ым┤ьЛЬ",
+      "배터리 최적화 무시",
     ),
-    "import": MessageLookupByLibrary.simpleMessage("ъ░Аьа╕ьШдъ╕░"),
+    "import": MessageLookupByLibrary.simpleMessage("가져오기"),
     "importConfigInvalid": MessageLookupByLibrary.simpleMessage(
-      "ъ░Аьа╕ьШм ьИШ ьЮИыКФ ъ╡мьД▒ эММьЭ╝ьЭ┤ ьХДыЛЩыЛИыЛд",
+      "가져올 수 있는 구성 파일이 아닙니다",
     ),
     "importConfigReplaceTip": MessageLookupByLibrary.simpleMessage(
-      "ъ░Аьа╕ьШдый┤ ьЭ┤ эФДыбЬэХДьЭШ эШДьЮм эФДыбЭьЛЬ ъ╖╕ыг╣, ъ╖Ьь╣Щ, ьДдьаХьЭ┤ ыМАь▓┤ыРйыЛИыЛд",
+      "가져오면 이 프로필의 현재 프록시 그룹, 규칙, 설정이 대체됩니다",
     ),
-    "importFile": MessageLookupByLibrary.simpleMessage(
-      "эММьЭ╝ьЧРьДЬ ъ░Аьа╕ьШдъ╕░",
-    ),
-    "importFromLink": MessageLookupByLibrary.simpleMessage(
-      "ызБэБмьЧРьДЬ ъ░Аьа╕ьШдъ╕░",
-    ),
-    "importUrl": MessageLookupByLibrary.simpleMessage("URLьЧРьДЬ ъ░Аьа╕ьШдъ╕░"),
-    "inbound": MessageLookupByLibrary.simpleMessage("ьЭ╕ы░ФьЪ┤ыУЬ"),
-    "includeInterface": MessageLookupByLibrary.simpleMessage(
-      "эПмэХиэХа ьЭ╕эД░эОШьЭ┤ьКд",
-    ),
+    "importFile": MessageLookupByLibrary.simpleMessage("파일에서 가져오기"),
+    "importFromLink": MessageLookupByLibrary.simpleMessage("링크에서 가져오기"),
+    "importUrl": MessageLookupByLibrary.simpleMessage("URL에서 가져오기"),
+    "inbound": MessageLookupByLibrary.simpleMessage("인바운드"),
+    "includeInterface": MessageLookupByLibrary.simpleMessage("포함할 인터페이스"),
     "includeInterfaceDesc": MessageLookupByLibrary.simpleMessage(
-      "эПмэХиэХа ьЭ╕эД░эОШьЭ┤ьКдыбЬ ыУдьЦ┤ьШдыКФ эК╕ыЮШэФ╜ызМ TUNьЭД ъ▒░ь╣Шый░, ьаЬьЩ╕эХа ьЭ╕эД░эОШьЭ┤ьКдыКФ ыНФ ьЭ┤ьГБ ьаБьЪйыРШьзА ьХКьК╡ыЛИыЛд.",
+      "포함할 인터페이스로 들어오는 트래픽만 TUN을 거치며, 제외할 인터페이스는 더 이상 적용되지 않습니다.",
     ),
-    "includeUid": MessageLookupByLibrary.simpleMessage(
-      "эПмэХиэХа ьВмьЪйьЮР ID",
-    ),
+    "includeUid": MessageLookupByLibrary.simpleMessage("포함할 사용자 ID"),
     "includeUidDesc": MessageLookupByLibrary.simpleMessage(
-      "эПмэХиэХа ьВмьЪйьЮР IDьЭШ эФДыбЬьД╕ьКд эК╕ыЮШэФ╜ызМ TUNьЭД ъ▒░ь╣йыЛИыЛд.",
+      "포함할 사용자 ID의 프로세스 트래픽만 TUN을 거칩니다.",
     ),
-    "infiniteTime": MessageLookupByLibrary.simpleMessage("ызМыгМыРШьзА ьХКьЭМ"),
-    "init": MessageLookupByLibrary.simpleMessage("ь┤Иъ╕░эЩФ"),
-    "initFailed": MessageLookupByLibrary.simpleMessage("ьЛЬьЮС ьЛдэМи"),
+    "infiniteTime": MessageLookupByLibrary.simpleMessage("만료되지 않음"),
+    "init": MessageLookupByLibrary.simpleMessage("초기화"),
+    "initFailed": MessageLookupByLibrary.simpleMessage("시작 실패"),
     "initFailedTip": MessageLookupByLibrary.simpleMessage(
-      "FlClashые╝ ьЛЬьЮСэХШыКФ ьдС ьШдыеШъ░А ы░ЬьГЭэХШьЧм ъ│ДьЖНэХа ьИШ ьЧЖьК╡ыЛИыЛд. ьД╕ы╢А ьаХы│┤ые╝ ы│╡ьВмэХШьЧм ым╕ьаЬые╝ ы│┤ъ│аэХШьД╕ьЪФ. ым╕ьаЬъ░А ъ│ДьЖНыРШый┤ ыН░ьЭ┤эД░ые╝ ьзАьЪ░ый┤ ыМАъ░Ь ьХ▒ьЭ┤ ыЛдьЛЬ ьЛЬьЮСыРйыЛИыЛд.",
+      "FlClashX를 시작하는 중 오류가 발생하여 계속할 수 없습니다. 세부 정보를 복사하여 문제를 보고하세요. 문제가 계속되면 데이터를 지우면 대개 앱이 다시 시작됩니다.",
     ),
-    "initiator": MessageLookupByLibrary.simpleMessage("ьЪФь▓ньЮР"),
-    "initiatorShort": MessageLookupByLibrary.simpleMessage("ь╢Ьь▓Ш"),
+    "initiator": MessageLookupByLibrary.simpleMessage("요청자"),
+    "initiatorShort": MessageLookupByLibrary.simpleMessage("출처"),
     "inputProxyGroupName": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЭьЛЬ ъ╖╕ыг╣ ьЭ┤ыжДьЭД ьЮЕыаеэХШьД╕ьЪФ",
+      "프록시 그룹 이름을 입력하세요",
     ),
-    "inputRuleContent": MessageLookupByLibrary.simpleMessage(
-      "ъ╖Ьь╣Щ ыВ┤ьЪйьЭД ьЮЕыаеэХШьД╕ьЪФ",
-    ),
-    "installedAppsPermissionDeniedMessage": MessageLookupByLibrary.simpleMessage(
-      "ьХ▒ ыкйыбЭ ъ╢МэХЬьЭ┤ ъ▒░ы╢АыРШьЦ┤ ьДдь╣ШыРЬ ьХ▒ьЭД эСЬьЛЬэХа ьИШ ьЧЖьК╡ыЛИыЛд. ьЛЬьКдэЕЬ ьДдьаХьЧРьДЬ ьзБьаС эЧИьЪйэХ┤ ьг╝ьД╕ьЪФ.",
-    ),
+    "inputRuleContent": MessageLookupByLibrary.simpleMessage("규칙 내용을 입력하세요"),
+    "installedAppsPermissionDeniedMessage":
+        MessageLookupByLibrary.simpleMessage(
+          "앱 목록 권한이 거부되어 설치된 앱을 표시할 수 없습니다. 시스템 설정에서 직접 허용해 주세요.",
+        ),
     "installedAppsPermissionDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЭ┤ ьЛЬьКдэЕЬьЭА ъ╢МэХЬьЭД эЧИьЪйэХШъ╕░ ьаДъ╣МьзА ьДдь╣ШыРЬ ьХ▒ ыкйыбЭьЭД ьИиъ╣БыЛИыЛд. ьХ▒ы│Д эФДыбЭьЛЬые╝ ъ╡мьД▒эХШыадый┤ ъ╢МэХЬьЭД эЧИьЪйэХШьД╕ьЪФ.",
+      "이 시스템은 권한을 허용하기 전까지 설치된 앱 목록을 숨깁니다. 앱별 프록시를 구성하려면 권한을 허용하세요.",
     ),
     "installedAppsPermissionRequired": MessageLookupByLibrary.simpleMessage(
-      "ьХ▒ ыкйыбЭ ъ╢МэХЬ эХДьЪФ",
+      "앱 목록 권한 필요",
     ),
-    "installedFonts": MessageLookupByLibrary.simpleMessage("ьДдь╣ШыРЬ ъ╕Аъ╝┤"),
-    "intelligentSelected": MessageLookupByLibrary.simpleMessage(
-      "ьКдызИэК╕ ьДаэГЭ",
-    ),
-    "interfaceName": MessageLookupByLibrary.simpleMessage(
-      "ьЭ╕эД░эОШьЭ┤ьКд ьЭ┤ыжД",
-    ),
+    "installedFonts": MessageLookupByLibrary.simpleMessage("설치된 글꼴"),
+    "interfaceName": MessageLookupByLibrary.simpleMessage("인터페이스 이름"),
     "interfaceNameDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЭ╕эД░эОШьЭ┤ьКд ьЭ┤ыжДьЭА ьХДьЫГы░ФьЪ┤ыУЬ ьЧ░ъ▓░ьЭ┤ ьВмьЪйэХШыКФ ыДдэК╕ьЫМэБм ьЭ╕эД░эОШьЭ┤ьКдьЮЕыЛИыЛд.",
+      "인터페이스 이름은 아웃바운드 연결이 사용하는 네트워크 인터페이스입니다.",
     ),
-    "interfaceNameMode": MessageLookupByLibrary.simpleMessage(
-      "ьХДьЫГы░ФьЪ┤ыУЬ ьЭ╕эД░эОШьЭ┤ьКд",
-    ),
-    "interfaceNameModeClear": MessageLookupByLibrary.simpleMessage(
-      "ьзАьаХ ьХИ эХи",
-    ),
-    "interfaceNameModeCustom": MessageLookupByLibrary.simpleMessage(
-      "ьВмьЪйьЮР ьзАьаХ",
-    ),
-    "interfaceNameModeFollow": MessageLookupByLibrary.simpleMessage(
-      "ъ╡мьД▒ ыФ░ые┤ъ╕░",
-    ),
-    "internet": MessageLookupByLibrary.simpleMessage("ьЭ╕эД░ыД╖"),
-    "interval": MessageLookupByLibrary.simpleMessage("ъ░Дъ▓й"),
-    "intranetIP": MessageLookupByLibrary.simpleMessage("ыВ┤ы╢АызЭ IP"),
-    "invalidBackupFile": MessageLookupByLibrary.simpleMessage(
-      "ьШмы░Фые┤ьзА ьХКьЭА ы░▒ьЧЕ эММьЭ╝",
-    ),
+    "interfaceNameMode": MessageLookupByLibrary.simpleMessage("아웃바운드 인터페이스"),
+    "interfaceNameModeClear": MessageLookupByLibrary.simpleMessage("지정 안 함"),
+    "interfaceNameModeCustom": MessageLookupByLibrary.simpleMessage("사용자 지정"),
+    "interfaceNameModeFollow": MessageLookupByLibrary.simpleMessage("구성 따르기"),
+    "internet": MessageLookupByLibrary.simpleMessage("인터넷"),
+    "interval": MessageLookupByLibrary.simpleMessage("간격"),
+    "intranetIP": MessageLookupByLibrary.simpleMessage("내부망 IP"),
+    "invalidBackupFile": MessageLookupByLibrary.simpleMessage("올바르지 않은 백업 파일"),
     "invalidCidrContent": MessageLookupByLibrary.simpleMessage(
-      "192.168.0.0/16ъ│╝ ъ░ЩьЭА CIDR эШХьЛЭьЭШ IP ы▓ФьЬДые╝ ьЮЕыаеэХШьД╕ьЪФ",
+      "192.168.0.0/16과 같은 CIDR 형식의 IP 범위를 입력하세요",
     ),
     "invalidDscpContent": MessageLookupByLibrary.simpleMessage(
-      "DSCP ызИэБмыКФ 63ьЭД ыДШьЭД ьИШ ьЧЖьК╡ыЛИыЛд",
+      "DSCP 마크는 63을 넘을 수 없습니다",
     ),
     "invalidHostContent": MessageLookupByLibrary.simpleMessage(
-      "ыПДыйФьЭ╕ ыШРыКФ IP ьг╝ьЖМые╝ ьЮЕыаеэХШьД╕ьЪФ",
+      "도메인 또는 IP 주소를 입력하세요",
     ),
-    "invalidIconSet": MessageLookupByLibrary.simpleMessage(
-      "ьШмы░Фые╕ ьХДьЭ┤ь╜Ш ьД╕эК╕ъ░А ьХДыЛЩыЛИыЛд",
-    ),
+    "invalidIconSet": MessageLookupByLibrary.simpleMessage("올바른 아이콘 세트가 아닙니다"),
     "invalidLinkTip": MessageLookupByLibrary.simpleMessage(
-      "ъ╡мыПЕ ызБэБм ыШРыКФ эФДыбЭьЛЬ ъ│╡ьЬа ызБэБмъ░А ьХДыЛЩыЛИыЛд",
+      "구독 링크 또는 프록시 공유 링크가 아닙니다",
     ),
     "invalidListenContent": MessageLookupByLibrary.simpleMessage(
-      "0.0.0.0:1053ъ│╝ ъ░ЩьЭА ьг╝ьЖМьЩА эПмэК╕ые╝ ьЮЕыаеэХШьД╕ьЪФ",
+      "0.0.0.0:1053과 같은 주소와 포트를 입력하세요",
     ),
     "invalidNetworkContent": MessageLookupByLibrary.simpleMessage(
-      "tcp ыШРыКФ udpызМ ьзАьЫРэХйыЛИыЛд",
+      "tcp 또는 udp만 지원합니다",
     ),
-    "invalidPolicy": m35,
+    "invalidPolicy": m36,
     "invalidPortRangeContent": MessageLookupByLibrary.simpleMessage(
-      "443 ыШРыКФ 8000-9000ъ│╝ ъ░ЩьЭА эПмэК╕ыВШ ы▓ФьЬДые╝ ьЮЕыаеэХШьД╕ьЪФ",
+      "443 또는 8000-9000과 같은 포트나 범위를 입력하세요",
     ),
     "invalidProfileQrcode": MessageLookupByLibrary.simpleMessage(
-      "ьЭ┤ QR ь╜ФыУЬьЧРыКФ эФДыбЬэХД ызБэБмъ░А ьЧЖьК╡ыЛИыЛд",
+      "이 QR 코드에는 프로필 링크가 없습니다",
     ),
-    "invalidProxy": m36,
-    "invalidProxyProvider": m37,
+    "invalidProxy": m37,
+    "invalidProxyProvider": m38,
     "invalidRangeContent": MessageLookupByLibrary.simpleMessage(
-      "80 ыШРыКФ 8000-9000ъ│╝ ъ░ЩьЭА ьИльЮРыВШ ы▓ФьЬДые╝ /ыбЬ ъ╡мы╢ДэХШьЧм ьЮЕыаеэХШьД╕ьЪФ",
+      "80 또는 8000-9000과 같은 숫자나 범위를 /로 구분하여 입력하세요",
     ),
-    "invalidRuleSet": m38,
-    "invalidSubRule": m39,
-    "ipAddress": MessageLookupByLibrary.simpleMessage("IP ьг╝ьЖМ"),
+    "invalidRuleSet": m39,
+    "invalidSubRule": m40,
+    "ipAddress": MessageLookupByLibrary.simpleMessage("IP 주소"),
     "ipAsn": MessageLookupByLibrary.simpleMessage("ASN"),
-    "ipFlagAbuser": MessageLookupByLibrary.simpleMessage("ьХЕьЪй ьЭ┤ыае"),
-    "ipFlagProxy": MessageLookupByLibrary.simpleMessage("эФДыбЭьЛЬ"),
+    "ipFlagAbuser": MessageLookupByLibrary.simpleMessage("악용 이력"),
+    "ipFlagProxy": MessageLookupByLibrary.simpleMessage("프록시"),
     "ipFlagTor": MessageLookupByLibrary.simpleMessage("Tor"),
     "ipFlagVpn": MessageLookupByLibrary.simpleMessage("VPN"),
-    "ipFlags": MessageLookupByLibrary.simpleMessage("эФМыЮШъ╖╕"),
-    "ipOrganization": MessageLookupByLibrary.simpleMessage("ьб░ьзБ"),
+    "ipFlags": MessageLookupByLibrary.simpleMessage("플래그"),
+    "ipOrganization": MessageLookupByLibrary.simpleMessage("조직"),
     "ipQualityFailed": MessageLookupByLibrary.simpleMessage(
-      "IP ьЬаэШХьЭД эЩХьЭ╕эХа ьИШ ьЧЖьК╡ыЛИыЛд",
+      "IP 유형을 확인할 수 없습니다",
     ),
-    "ipQualityGood": MessageLookupByLibrary.simpleMessage("ьЦСэШ╕"),
-    "ipQualityLevel": MessageLookupByLibrary.simpleMessage("ыУ▒ъ╕Й"),
-    "ipQualityNormal": MessageLookupByLibrary.simpleMessage("ы│┤эЖ╡"),
-    "ipQualityRetry": MessageLookupByLibrary.simpleMessage("ыЛдьЛЬ эЩХьЭ╕"),
-    "ipQualityRisky": MessageLookupByLibrary.simpleMessage("ьЬДэЧШ"),
-    "ipQualityShort": MessageLookupByLibrary.simpleMessage("эТИьзИ"),
-    "ipQualitySource": MessageLookupByLibrary.simpleMessage("ьЭСыЛ╡ ь╢Ьь▓Ш"),
-    "ipQualitySources": MessageLookupByLibrary.simpleMessage("ь╢Ьь▓Ш"),
-    "ipSourceIpMismatch": MessageLookupByLibrary.simpleMessage(
-      "ьХДьЫГы░ФьЪ┤ыУЬ IPъ░А ыЛдыжД",
-    ),
-    "ipSourceNoType": MessageLookupByLibrary.simpleMessage("ьЬаэШХ ьЧЖьЭМ"),
-    "ipSourceRateLimited": MessageLookupByLibrary.simpleMessage(
-      "ьЪФь▓н ьаЬэХЬыРи",
-    ),
-    "ipType": MessageLookupByLibrary.simpleMessage("ьЬаэШХ"),
-    "ipTypeBusiness": MessageLookupByLibrary.simpleMessage("ъ╕░ьЧЕьЪй"),
-    "ipTypeHosting": MessageLookupByLibrary.simpleMessage("ыН░ьЭ┤эД░ ьД╝эД░"),
-    "ipTypeMobile": MessageLookupByLibrary.simpleMessage(
-      "ыкиы░ФьЭ╝ ыДдэК╕ьЫМэБм",
-    ),
-    "ipTypeResidential": MessageLookupByLibrary.simpleMessage("ъ░АьаХьЪй"),
-    "ipTypeUnknown": MessageLookupByLibrary.simpleMessage(
-      "ьХМ ьИШ ьЧЖыКФ ьЬаэШХ",
-    ),
-    "ipVersion": MessageLookupByLibrary.simpleMessage("IP ы▓ДьаД"),
+    "ipQualityGood": MessageLookupByLibrary.simpleMessage("양호"),
+    "ipQualityLevel": MessageLookupByLibrary.simpleMessage("등급"),
+    "ipQualityNormal": MessageLookupByLibrary.simpleMessage("보통"),
+    "ipQualityRetry": MessageLookupByLibrary.simpleMessage("다시 확인"),
+    "ipQualityRisky": MessageLookupByLibrary.simpleMessage("위험"),
+    "ipQualityShort": MessageLookupByLibrary.simpleMessage("품질"),
+    "ipQualitySource": MessageLookupByLibrary.simpleMessage("응답 출처"),
+    "ipQualitySources": MessageLookupByLibrary.simpleMessage("출처"),
+    "ipSourceIpMismatch": MessageLookupByLibrary.simpleMessage("아웃바운드 IP가 다름"),
+    "ipSourceNoType": MessageLookupByLibrary.simpleMessage("유형 없음"),
+    "ipSourceRateLimited": MessageLookupByLibrary.simpleMessage("요청 제한됨"),
+    "ipType": MessageLookupByLibrary.simpleMessage("유형"),
+    "ipTypeBusiness": MessageLookupByLibrary.simpleMessage("기업용"),
+    "ipTypeHosting": MessageLookupByLibrary.simpleMessage("데이터 센터"),
+    "ipTypeMobile": MessageLookupByLibrary.simpleMessage("모바일 네트워크"),
+    "ipTypeResidential": MessageLookupByLibrary.simpleMessage("가정용"),
+    "ipTypeUnknown": MessageLookupByLibrary.simpleMessage("알 수 없는 유형"),
+    "ipVersion": MessageLookupByLibrary.simpleMessage("IP 버전"),
     "ipv6Desc": MessageLookupByLibrary.simpleMessage(
-      "IPv6 эК╕ыЮШэФ╜ьЭА IPv6ъ░А ь╝Ььа╕ ьЮИьЭД ыХМызМ ьИШьЛаыРйыЛИыЛд.",
+      "IPv6 트래픽은 IPv6가 켜져 있을 때만 수신됩니다.",
     ),
     "ipv6InboundDesc": MessageLookupByLibrary.simpleMessage(
-      "IPv6ые╝ ь╝Ьый┤ VPNьЭ┤ IPv6 ьЭ╕ы░ФьЪ┤ыУЬые╝ эЧИьЪйэХйыЛИыЛд.",
+      "IPv6를 켜면 VPN이 IPv6 인바운드를 허용합니다.",
     ),
-    "ipv6Timeout": MessageLookupByLibrary.simpleMessage(
-      "IPv6 эГАьЮДьХДьЫГ(ms)",
-    ),
-    "itemsCount": m40,
-    "ja": MessageLookupByLibrary.simpleMessage("ьЭ╝ы│╕ьЦ┤"),
-    "justNow": MessageLookupByLibrary.simpleMessage("ы░йъ╕И"),
-    "keepAliveIdle": MessageLookupByLibrary.simpleMessage(
-      "TCP эВ╡ьЦ╝ыЭ╝ьЭ┤ы╕М ьЬаэЬ┤ ьЛЬъ░Д",
-    ),
+    "ipv6Timeout": MessageLookupByLibrary.simpleMessage("IPv6 타임아웃(ms)"),
+    "itemsCount": m41,
+    "ja": MessageLookupByLibrary.simpleMessage("일본어"),
+    "justNow": MessageLookupByLibrary.simpleMessage("방금"),
+    "keepAliveIdle": MessageLookupByLibrary.simpleMessage("TCP 킵얼라이브 유휴 시간"),
     "keepAliveIntervalDesc": MessageLookupByLibrary.simpleMessage(
-      "TCP эВ╡ьЦ╝ыЭ╝ьЭ┤ы╕М ъ░Дъ▓й",
+      "TCP 킵얼라이브 간격",
     ),
-    "key": MessageLookupByLibrary.simpleMessage("эВд"),
-    "ko": MessageLookupByLibrary.simpleMessage("эХЬъ╡ньЦ┤"),
-    "label": MessageLookupByLibrary.simpleMessage("ыаИьЭ┤ы╕Ф"),
-    "language": MessageLookupByLibrary.simpleMessage("ьЦ╕ьЦ┤"),
-    "large": MessageLookupByLibrary.simpleMessage("эБмъ▓М"),
-    "lastUpdated": MessageLookupByLibrary.simpleMessage(
-      "ызИьзАызЙ ьЧЕыН░ьЭ┤эК╕",
-    ),
-    "launchInterrupted": MessageLookupByLibrary.simpleMessage(
-      "ьЛЬьЮСьЭ┤ ьЩДыгМыРШьзА ьХКьЭМ",
-    ),
+    "key": MessageLookupByLibrary.simpleMessage("키"),
+    "ko": MessageLookupByLibrary.simpleMessage("한국어"),
+    "label": MessageLookupByLibrary.simpleMessage("레이블"),
+    "language": MessageLookupByLibrary.simpleMessage("언어"),
+    "large": MessageLookupByLibrary.simpleMessage("크게"),
+    "lastUpdated": MessageLookupByLibrary.simpleMessage("마지막 업데이트"),
+    "launchInterrupted": MessageLookupByLibrary.simpleMessage("시작이 완료되지 않음"),
     "launchInterruptedTip": MessageLookupByLibrary.simpleMessage(
-      "ьзАыВЬы▓И ьЛЬьЮСэХШыКФ ьдСьЧР ьХ▒ьЭ┤ ьШИъ╕░ь╣Ш ьХКъ▓М ьвЕыгМыРШьЧИьК╡ыЛИыЛд. ьЭ┤ы▓И ьЛдэЦЙьЧРьДЬыКФ ьЮРыПЩ ьДдьаХьЭД ъ▒┤ыДИыЫ░ьЧИьЬ╝ыЛИ ьзБьаС ьЛЬьЮСэХШьЧм ыЛдьЛЬ ьЛЬыПДэХШьД╕ьЪФ.",
+      "지난번 시작하는 중에 앱이 예기치 않게 종료되었습니다. 이번 실행에서는 자동 설정을 건너뛰었으니 직접 시작하여 다시 시도하세요.",
     ),
-    "layout": MessageLookupByLibrary.simpleMessage("ыаИьЭ┤ьХДьЫГ"),
-    "light": MessageLookupByLibrary.simpleMessage("ыЭ╝ьЭ┤эК╕"),
-    "lineIssueTip": m41,
-    "lineWrap": MessageLookupByLibrary.simpleMessage("ьЮРыПЩ ьдД ы░Фъ┐И"),
-    "link": MessageLookupByLibrary.simpleMessage("ызБэБм"),
+    "layout": MessageLookupByLibrary.simpleMessage("레이아웃"),
+    "light": MessageLookupByLibrary.simpleMessage("라이트"),
+    "lineIssueTip": m42,
+    "lineWrap": MessageLookupByLibrary.simpleMessage("자동 줄 바꿈"),
+    "link": MessageLookupByLibrary.simpleMessage("링크"),
     "linkDesc": MessageLookupByLibrary.simpleMessage(
-      "ъ╡мыПЕ ызБэБм ыШРыКФ эФДыбЭьЛЬ ъ│╡ьЬа ызБэБмыбЬ эФДыбЬэХД ъ░Аьа╕ьШдъ╕░",
+      "구독 링크 또는 프록시 공유 링크로 프로필 가져오기",
     ),
     "liquidGlass": MessageLookupByLibrary.simpleMessage("Liquid Glass"),
-    "list": MessageLookupByLibrary.simpleMessage("ыкйыбЭ"),
-    "listen": MessageLookupByLibrary.simpleMessage("ьИШьЛа"),
-    "listenRoutingMark": MessageLookupByLibrary.simpleMessage(
-      "ьИШьЛа ыЭ╝ьЪ░эМЕ ызИэБм",
-    ),
+    "list": MessageLookupByLibrary.simpleMessage("목록"),
+    "listen": MessageLookupByLibrary.simpleMessage("수신"),
+    "listenRoutingMark": MessageLookupByLibrary.simpleMessage("수신 라우팅 마크"),
     "listenRoutingMarkDesc": MessageLookupByLibrary.simpleMessage(
-      "ьИШьЛа ыЭ╝ьЪ░эМЕ ызИэБмыКФ LinuxьЧРьДЬызМ ьЮСыПЩэХйыЛИыЛд.",
+      "수신 라우팅 마크는 Linux에서만 작동합니다.",
     ),
-    "liveConnections": MessageLookupByLibrary.simpleMessage("ьЛдьЛЬъ░Д ьЧ░ъ▓░"),
-    "loading": MessageLookupByLibrary.simpleMessage("ыбЬыУЬ ьдСтАж"),
-    "local": MessageLookupByLibrary.simpleMessage("ыбЬь╗м"),
-    "localImage": MessageLookupByLibrary.simpleMessage("ыбЬь╗м ьЭ┤ып╕ьзА"),
+    "liveConnections": MessageLookupByLibrary.simpleMessage("실시간 연결"),
+    "loading": MessageLookupByLibrary.simpleMessage("로드 중…"),
+    "local": MessageLookupByLibrary.simpleMessage("로컬"),
+    "localImage": MessageLookupByLibrary.simpleMessage("로컬 이미지"),
     "localNetworkDeniedTip": MessageLookupByLibrary.simpleMessage(
-      "ыбЬь╗м ыДдэК╕ьЫМэБм ъ╢МэХЬьЭ┤ ъ▒░ы╢АыРШьЧИьК╡ыЛИыЛд. gvisor ьКдэГЭьЭД ьВмьЪйэХШыпАыбЬ LANьЧР ьЧ░ъ▓░эХа ьИШ ьЧЖьК╡ыЛИыЛд.",
+      "로컬 네트워크 권한이 거부되었습니다. gvisor 스택을 사용하므로 LAN에 연결할 수 없습니다.",
     ),
-    "localProxies": MessageLookupByLibrary.simpleMessage("ыбЬь╗м эФДыбЭьЛЬ"),
-    "locationPermission": MessageLookupByLibrary.simpleMessage("ьЬДь╣Ш ъ╢МэХЬ"),
+    "localProxies": MessageLookupByLibrary.simpleMessage("로컬 프록시"),
+    "locationPermission": MessageLookupByLibrary.simpleMessage("위치 권한"),
     "locationPermissionDeniedMessage": MessageLookupByLibrary.simpleMessage(
-      "ьЬДь╣Ш ъ╢МэХЬьЭ┤ ъ▒░ы╢АыРШьЦ┤ эШДьЮм Wi-Fi ьЭ┤ыжДьЭД ьЭ╜ьЭД ьИШ ьЧЖьК╡ыЛИыЛд. ьЛЬьКдэЕЬ ьДдьаХьЧРьДЬ ьЬДь╣Ш ъ╢МэХЬьЭД ьзБьаС ь╝Ь ьг╝ьД╕ьЪФ.",
+      "위치 권한이 거부되어 현재 Wi-Fi 이름을 읽을 수 없습니다. 시스템 설정에서 위치 권한을 직접 켜 주세요.",
     ),
     "locationPermissionDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЛЬьКдэЕЬьЧРьДЬ Wi-Fi ьЭ┤ыжДьЭД ьЭ╜ьЬ╝ыадый┤ ьЬДь╣Ш ъ╢МэХЬьЭ┤ эХДьЪФэХйыЛИыЛд. AndroidьЧРьДЬыКФ тАЬэХньГБ эЧИьЪйтАЭьЭД ьДаэГЭэХ┤ьХ╝ эХШый░, ъ╖╕ыаЗьзА ьХКьЬ╝ый┤ ьХ▒ьЭ┤ ы░▒ъ╖╕ыЭ╝ьЪ┤ыУЬьЧР ьЮИьЭД ыХМ Wi-Fi ьЭ┤ыжДьЭД ьЭ╜ьЭД ьИШ ьЧЖьК╡ыЛИыЛд.",
+      "시스템에서 Wi-Fi 이름을 읽으려면 위치 권한이 필요합니다. Android에서는 “항상 허용”을 선택해야 하며, 그렇지 않으면 앱이 백그라운드에 있을 때 Wi-Fi 이름을 읽을 수 없습니다.",
     ),
-    "locationPermissionGuide": m42,
+    "locationPermissionGuide": m43,
     "locationPermissionRequired": MessageLookupByLibrary.simpleMessage(
-      "ьЬДь╣Ш ъ╢МэХЬ эХДьЪФ",
+      "위치 권한 필요",
     ),
-    "log": MessageLookupByLibrary.simpleMessage("ыбЬъ╖╕"),
-    "logLevel": MessageLookupByLibrary.simpleMessage("ыбЬъ╖╕ ьИШьдА"),
+    "log": MessageLookupByLibrary.simpleMessage("로그"),
+    "logLevel": MessageLookupByLibrary.simpleMessage("로그 수준"),
     "logcat": MessageLookupByLibrary.simpleMessage("Logcat"),
     "logcatDesc": MessageLookupByLibrary.simpleMessage(
-      "LogcatьЭД ыБДый┤ ыбЬъ╖╕ эХныкйьЭ┤ ьИиъ▓иьзСыЛИыЛд.",
+      "Logcat을 끄면 로그 항목이 숨겨집니다.",
     ),
-    "logs": MessageLookupByLibrary.simpleMessage("ыбЬъ╖╕"),
-    "logsAndDiagnostics": MessageLookupByLibrary.simpleMessage(
-      "ыбЬъ╖╕ ы░П ьзДыЛи",
+    "logs": MessageLookupByLibrary.simpleMessage("로그"),
+    "logsAndDiagnostics": MessageLookupByLibrary.simpleMessage("로그 및 진단"),
+    "logsTest": MessageLookupByLibrary.simpleMessage("로그 테스트"),
+    "loopback": MessageLookupByLibrary.simpleMessage("UWP 루프백 예외"),
+    "loose": MessageLookupByLibrary.simpleMessage("넓게"),
+    "managedByProvider": MessageLookupByLibrary.simpleMessage("제공자가 관리"),
+    "managedByProviderTip": MessageLookupByLibrary.simpleMessage(
+      "이 값은 구독에서 옵니다. 직접 변경하면 구독 업데이트가 더 이상 건드리지 않습니다. 행을 우클릭하거나 길게 눌러 제공자에게 돌려줄 수 있습니다.",
     ),
-    "logsTest": MessageLookupByLibrary.simpleMessage("ыбЬъ╖╕ эЕМьКдэК╕"),
-    "loopback": MessageLookupByLibrary.simpleMessage("UWP ыгиэФДы░▒ ьШИьЩ╕"),
-    "loose": MessageLookupByLibrary.simpleMessage("ыДУъ▓М"),
-    "matchCase": MessageLookupByLibrary.simpleMessage("ыМА/ьЖМым╕ьЮР ъ╡мы╢Д"),
-    "matchSourceIp": MessageLookupByLibrary.simpleMessage(
-      "ь╢Ьы░ЬьзА IP ьЭ╝ь╣Ш",
+    "managedSettingsHint": MessageLookupByLibrary.simpleMessage(
+      "흐리게 표시된 설정은 구독이 지정합니다. 직접 바꾸려면 항목을 누르세요.",
     ),
+    "matchCase": MessageLookupByLibrary.simpleMessage("대/소문자 구분"),
+    "matchSourceIp": MessageLookupByLibrary.simpleMessage("출발지 IP 일치"),
     "matchTarget": MessageLookupByLibrary.simpleMessage("MATCH-TARGET"),
-    "maxFailedTimes": MessageLookupByLibrary.simpleMessage(
-      "ь╡ЬыМА ьЛдэМи эЪЯьИШ",
-    ),
-    "maxLengthTip": m43,
-    "maximize": MessageLookupByLibrary.simpleMessage("ь╡ЬыМАэЩФ"),
-    "memoryAppResident": MessageLookupByLibrary.simpleMessage(
-      "ьГБьг╝ ыйФыкиыжм",
-    ),
-    "memoryAppShared": MessageLookupByLibrary.simpleMessage("ьХ▒ ы░П ъ│╡ьЬа"),
-    "memoryCoreHeapIdle": MessageLookupByLibrary.simpleMessage("ьЬаэЬ┤ эЮЩ"),
-    "memoryCoreHeapInuse": MessageLookupByLibrary.simpleMessage(
-      "ьВмьЪй ьдСьЭ╕ эЮЩ",
-    ),
+    "maxFailedTimes": MessageLookupByLibrary.simpleMessage("최대 실패 횟수"),
+    "maxLengthTip": m44,
+    "maximize": MessageLookupByLibrary.simpleMessage("최대화"),
+    "memoryAppResident": MessageLookupByLibrary.simpleMessage("상주 메모리"),
+    "memoryAppShared": MessageLookupByLibrary.simpleMessage("앱 및 공유"),
+    "memoryCoreHeapIdle": MessageLookupByLibrary.simpleMessage("유휴 힙"),
+    "memoryCoreHeapInuse": MessageLookupByLibrary.simpleMessage("사용 중인 힙"),
     "memoryCoreNotRunning": MessageLookupByLibrary.simpleMessage(
-      "ь╜ФьЦ┤ъ░А ьЛдэЦЙ ьдСьЭ┤ ьХДыЛЩыЛИыЛд",
+      "코어가 실행 중이 아닙니다",
     ),
-    "memoryCoreRuntime": MessageLookupByLibrary.simpleMessage(
-      "ыЯ░эГАьЮД ьШды▓ДэЧдыУЬ",
-    ),
-    "memoryCoreStack": MessageLookupByLibrary.simpleMessage("ъ│аыгиэЛ┤ ьКдэГЭ"),
+    "memoryCoreRuntime": MessageLookupByLibrary.simpleMessage("런타임 오버헤드"),
+    "memoryCoreStack": MessageLookupByLibrary.simpleMessage("고루틴 스택"),
     "memoryEstimateDesc": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЬьД╕ьКд ьГБьг╝ ыйФыкиыжмыбЬ ь╢ФьаХэХЬ ъ░ТьЭ┤ый░ ьЛЬьКдэЕЬьЧР эСЬьЛЬыРШыКФ ъ░Тъ│╝ ыЛдые╝ ьИШ ьЮИьК╡ыЛИыЛд.",
+      "프로세스 상주 메모리로 추정한 값이며 시스템에 표시되는 값과 다를 수 있습니다.",
     ),
     "memoryEstimateSharedDesc": MessageLookupByLibrary.simpleMessage(
-      "ь╜ФьЦ┤ыКФ ьХ▒ эФДыбЬьД╕ьКд ьХИьЧРьДЬ ьЛдэЦЙыРйыЛИыЛд. ь╜ФьЦ┤ьЭШ ьаРьЬаыЯЙьЭА ыЯ░эГАьЮД эЖ╡ъ│ДыбЬ ь╢ФьаХэХШый░, ыВШыи╕ьзАыКФ ьХ▒ ы░П ъ│╡ьЬа ыйФыкиыжмыбЬ ьзСъ│ДэХйыЛИыЛд.",
+      "코어는 앱 프로세스 안에서 실행됩니다. 코어의 점유량은 런타임 통계로 추정하며, 나머지는 앱 및 공유 메모리로 집계합니다.",
     ),
-    "memoryInfo": MessageLookupByLibrary.simpleMessage("ыйФыкиыжм ьаХы│┤"),
-    "memoryInfoDesc": MessageLookupByLibrary.simpleMessage(
-      "ьХ▒ъ│╝ ь╜ФьЦ┤ъ░А ьВмьЪйэХШыКФ ыйФыкиыжм",
+    "memoryInfo": MessageLookupByLibrary.simpleMessage("메모리 정보"),
+    "memoryInfoDesc": MessageLookupByLibrary.simpleMessage("앱과 코어가 사용하는 메모리"),
+    "memoryReleased": MessageLookupByLibrary.simpleMessage("메모리를 해제했습니다"),
+    "memoryReleasedSize": m45,
+    "menuBarMode": MessageLookupByLibrary.simpleMessage("메뉴 막대에 고정"),
+    "menuBarModeDesc": MessageLookupByLibrary.simpleMessage(
+      "앱이 메뉴 막대에 상주하며 아이콘에서 팝오버로 열립니다. Dock 아이콘은 없습니다. 확대 버튼으로도 고정됩니다.",
     ),
-    "memoryReleased": MessageLookupByLibrary.simpleMessage(
-      "ыйФыкиыжмые╝ эХ┤ьаЬэЦИьК╡ыЛИыЛд",
-    ),
-    "memoryReleasedSize": m44,
-    "messageTest": MessageLookupByLibrary.simpleMessage("ыйФьЛЬьзА эЕМьКдэК╕"),
-    "messageTestTip": MessageLookupByLibrary.simpleMessage(
-      "ьЭ┤ъ▓ГьЭА ыйФьЛЬьзАьЮЕыЛИыЛд.",
-    ),
-    "minimize": MessageLookupByLibrary.simpleMessage("ь╡ЬьЖМэЩФ"),
-    "minimizeOnExit": MessageLookupByLibrary.simpleMessage(
-      "ьвЕыгМ ьЛЬ ь╡ЬьЖМэЩФ",
-    ),
-    "minutes": MessageLookupByLibrary.simpleMessage("ы╢Д"),
-    "minutesAgo": m45,
-    "minutesAgoShort": m46,
-    "mixedPort": MessageLookupByLibrary.simpleMessage("эШ╝эХй эПмэК╕"),
-    "mode": MessageLookupByLibrary.simpleMessage("ыкиыУЬ"),
-    "monochromeScheme": MessageLookupByLibrary.simpleMessage("ыкиыЕ╕эБмыбм"),
-    "monthsAgo": m47,
-    "monthsAgoShort": m48,
-    "more": MessageLookupByLibrary.simpleMessage("ыНФ ы│┤ъ╕░"),
-    "name": MessageLookupByLibrary.simpleMessage("ьЭ┤ыжД"),
-    "navigationBarStyle": MessageLookupByLibrary.simpleMessage("эХШыЛи ы░Ф"),
-    "network": MessageLookupByLibrary.simpleMessage("ыДдэК╕ьЫМэБм"),
-    "networkAccessDeniedError": m49,
-    "networkBadResponseError": m50,
+    "messageTest": MessageLookupByLibrary.simpleMessage("메시지 테스트"),
+    "messageTestTip": MessageLookupByLibrary.simpleMessage("이것은 메시지입니다."),
+    "minimize": MessageLookupByLibrary.simpleMessage("최소화"),
+    "minimizeOnExit": MessageLookupByLibrary.simpleMessage("종료 시 최소화"),
+    "minutes": MessageLookupByLibrary.simpleMessage("분"),
+    "minutesAgo": m46,
+    "minutesAgoShort": m47,
+    "mixedPort": MessageLookupByLibrary.simpleMessage("혼합 포트"),
+    "mode": MessageLookupByLibrary.simpleMessage("모드"),
+    "monochromeScheme": MessageLookupByLibrary.simpleMessage("모노크롬"),
+    "monthsAgo": m48,
+    "monthsAgoShort": m49,
+    "more": MessageLookupByLibrary.simpleMessage("더 보기"),
+    "name": MessageLookupByLibrary.simpleMessage("이름"),
+    "navigationBarStyle": MessageLookupByLibrary.simpleMessage("하단 바"),
+    "network": MessageLookupByLibrary.simpleMessage("네트워크"),
+    "networkAccessDeniedError": m50,
+    "networkBadResponseError": m51,
     "networkCancelledError": MessageLookupByLibrary.simpleMessage(
-      "ьЪФь▓ньЭ┤ ь╖иьЖМыРШьЧИьК╡ыЛИыЛд",
+      "요청이 취소되었습니다",
     ),
     "networkConnectionError": MessageLookupByLibrary.simpleMessage(
-      "ьДЬы▓ДьЧР ьЧ░ъ▓░эХа ьИШ ьЧЖьК╡ыЛИыЛд. ыДдэК╕ьЫМэБм ьЧ░ъ▓░ьЭ┤ыВШ эФДыбЭьЛЬ ьДдьаХьЭД эЩХьЭ╕эХШьД╕ьЪФ",
+      "서버에 연결할 수 없습니다. 네트워크 연결이나 프록시 설정을 확인하세요",
     ),
     "networkHostLookupError": MessageLookupByLibrary.simpleMessage(
-      "ьДЬы▓Д ьг╝ьЖМые╝ эЩХьЭ╕эХа ьИШ ьЧЖьК╡ыЛИыЛд. URLьЭ┤ ьШмы░Фые╕ьзА, DNSъ░А ьаХьГБьЭ╕ьзА эЩХьЭ╕эХШьД╕ьЪФ",
+      "서버 주소를 확인할 수 없습니다. URL이 올바른지, DNS가 정상인지 확인하세요",
     ),
-    "networkName": MessageLookupByLibrary.simpleMessage("ыДдэК╕ьЫМэБм ьЭ┤ыжД"),
-    "networkNotFoundError": m51,
+    "networkName": MessageLookupByLibrary.simpleMessage("네트워크 이름"),
+    "networkNotFoundError": m52,
     "networkRateLimitedError": MessageLookupByLibrary.simpleMessage(
-      "ьЪФь▓ньЭ┤ ыДИым┤ ызОьК╡ыЛИыЛд(HTTP 429). ьЮаьЛЬ эЫД ыЛдьЛЬ ьЛЬыПДэХШьД╕ьЪФ",
+      "요청이 너무 많습니다(HTTP 429). 잠시 후 다시 시도하세요",
     ),
-    "networkRequestFailed": m52,
-    "networkSecret": MessageLookupByLibrary.simpleMessage(
-      "ыДдэК╕ьЫМэБм ьЛЬэБмыж┐",
-    ),
-    "networkServerError": m53,
-    "networkSpeed": MessageLookupByLibrary.simpleMessage("ыДдэК╕ьЫМэБм ьЖНыПД"),
-    "networkTakeover": MessageLookupByLibrary.simpleMessage(
-      "эК╕ыЮШэФ╜ ъ░АыбЬь▒Дъ╕░",
-    ),
+    "networkRequestFailed": m53,
+    "networkSecret": MessageLookupByLibrary.simpleMessage("네트워크 시크릿"),
+    "networkServerError": m54,
+    "networkSpeed": MessageLookupByLibrary.simpleMessage("네트워크 속도"),
+    "networkTakeover": MessageLookupByLibrary.simpleMessage("트래픽 가로채기"),
     "networkTimeoutError": MessageLookupByLibrary.simpleMessage(
-      "ьЪФь▓н ьЛЬъ░ДьЭ┤ ь┤Иъ│╝ыРШьЧИьК╡ыЛИыЛд. ыДдэК╕ьЫМэБмыВШ эФДыбЭьЛЬые╝ эЩХьЭ╕эХЬ эЫД ыЛдьЛЬ ьЛЬыПДэХШьД╕ьЪФ",
+      "요청 시간이 초과되었습니다. 네트워크나 프록시를 확인한 후 다시 시도하세요",
     ),
     "networkTlsError": MessageLookupByLibrary.simpleMessage(
-      "ы│┤ьХИ ьЧ░ъ▓░ьЧР ьЛдэМиэЦИьК╡ыЛИыЛд. ьДЬы▓Д ьЭ╕ьжЭьДЬъ░А ьШмы░Фые┤ьзА ьХКъ▒░ыВШ ьЧ░ъ▓░ьЭ┤ ъ░АыбЬь▒ДьЭ┤ъ│а ьЮИьЭД ьИШ ьЮИьК╡ыЛИыЛд",
+      "보안 연결에 실패했습니다. 서버 인증서가 올바르지 않거나 연결이 가로채이고 있을 수 있습니다",
     ),
-    "networkType": MessageLookupByLibrary.simpleMessage("ыДдэК╕ьЫМэБм ьЬаэШХ"),
-    "nextMatch": MessageLookupByLibrary.simpleMessage("ыЛдьЭМ ъ▓░ъ│╝"),
-    "no": MessageLookupByLibrary.simpleMessage("ьХДыЛИьЪФ"),
-    "noData": MessageLookupByLibrary.simpleMessage("ыН░ьЭ┤эД░ ьЧЖьЭМ"),
-    "noInfo": MessageLookupByLibrary.simpleMessage("ьаХы│┤ ьЧЖьЭМ"),
-    "noLongerRemind": MessageLookupByLibrary.simpleMessage(
-      "ыЛдьЛЬ ьХМыжмьзА ьХКьЭМ",
-    ),
-    "noNetwork": MessageLookupByLibrary.simpleMessage("ыДдэК╕ьЫМэБм ьЧЖьЭМ"),
-    "noNetworkApp": MessageLookupByLibrary.simpleMessage(
-      "ыДдэК╕ьЫМэБм ып╕ьВмьЪй ьХ▒",
-    ),
-    "noResolve": MessageLookupByLibrary.simpleMessage("IP эЩХьЭ╕ ьХИ эХи"),
-    "noResolveHostname": MessageLookupByLibrary.simpleMessage(
-      "эШ╕ьКдэК╕ ьЭ┤ыжД эЩХьЭ╕ ьХИ эХи",
-    ),
-    "noSearchResults": MessageLookupByLibrary.simpleMessage(
-      "ьЭ╝ь╣ШэХШыКФ ъ▓░ъ│╝ ьЧЖьЭМ",
-    ),
-    "nodes": MessageLookupByLibrary.simpleMessage("ыЕ╕ыУЬ"),
+    "networkType": MessageLookupByLibrary.simpleMessage("네트워크 유형"),
+    "nextMatch": MessageLookupByLibrary.simpleMessage("다음 결과"),
+    "no": MessageLookupByLibrary.simpleMessage("아니요"),
+    "noData": MessageLookupByLibrary.simpleMessage("데이터 없음"),
+    "noInfo": MessageLookupByLibrary.simpleMessage("정보 없음"),
+    "noLongerRemind": MessageLookupByLibrary.simpleMessage("다시 알리지 않음"),
+    "noNetwork": MessageLookupByLibrary.simpleMessage("네트워크 없음"),
+    "noNetworkApp": MessageLookupByLibrary.simpleMessage("네트워크 미사용 앱"),
+    "noResolve": MessageLookupByLibrary.simpleMessage("IP 확인 안 함"),
+    "noResolveHostname": MessageLookupByLibrary.simpleMessage("호스트 이름 확인 안 함"),
+    "noSearchResults": MessageLookupByLibrary.simpleMessage("일치하는 결과 없음"),
+    "nodes": MessageLookupByLibrary.simpleMessage("노드"),
     "nonTextProviderFile": MessageLookupByLibrary.simpleMessage(
-      "ьЭ┤ ьЩ╕ы╢А ыжмьЖМьКдыКФ эЕНьКдэК╕ эММьЭ╝ьЭ┤ ьХДыЛЩыЛИыЛд",
+      "이 외부 리소스는 텍스트 파일이 아닙니다",
     ),
-    "none": MessageLookupByLibrary.simpleMessage("ьЧЖьЭМ"),
-    "notRunning": MessageLookupByLibrary.simpleMessage("ьЛдэЦЙ ьдС ьХДыЛШ"),
+    "none": MessageLookupByLibrary.simpleMessage("없음"),
+    "notRunning": MessageLookupByLibrary.simpleMessage("실행 중 아님"),
     "notSelectedTip": MessageLookupByLibrary.simpleMessage(
-      "эШДьЮм эФДыбЭьЛЬ ъ╖╕ыг╣ьЭА ьДаэГЭэХа ьИШ ьЧЖьК╡ыЛИыЛд",
+      "현재 프록시 그룹은 선택할 수 없습니다",
     ),
-    "ntpInterval": MessageLookupByLibrary.simpleMessage(
-      "ыПЩъ╕░эЩФ ъ░Дъ▓й(ы╢Д)",
-    ),
+    "ntpInterval": MessageLookupByLibrary.simpleMessage("동기화 간격(분)"),
     "ntpStatusDesc": MessageLookupByLibrary.simpleMessage(
-      "NTPыКФ ьЛЬьКдэЕЬ ьЛЬъ│Д ыМАьЛа NTP ьДЬы▓ДьЧРьДЬ ьЛЬъ░ДьЭД ъ░Аьа╕ьШ╡ыЛИыЛд.",
+      "NTP는 시스템 시계 대신 NTP 서버에서 시간을 가져옵니다.",
     ),
-    "nullProfileDesc": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЬэХДьЭД ь╢Фъ░АэХШьЧм ьЛЬьЮСэХШьД╕ьЪФ",
-    ),
-    "nullTip": m54,
-    "numberRangeTip": m55,
-    "numberTip": m56,
-    "obfs": MessageLookupByLibrary.simpleMessage("ыВЬыПЕэЩФ"),
-    "obfsHost": MessageLookupByLibrary.simpleMessage("ыВЬыПЕэЩФ эШ╕ьКдэК╕"),
-    "obfsMode": MessageLookupByLibrary.simpleMessage("ыВЬыПЕэЩФ ыкиыУЬ"),
-    "obfsParam": MessageLookupByLibrary.simpleMessage("ыВЬыПЕэЩФ ыздъ░Ьы│АьИШ"),
-    "obfsPassword": MessageLookupByLibrary.simpleMessage(
-      "ыВЬыПЕэЩФ ы╣Ды░Аы▓ИэШ╕",
-    ),
-    "onDemand": MessageLookupByLibrary.simpleMessage("эХДьЪФ ьЛЬ ьЛдэЦЙ"),
+    "nullProfileDesc": MessageLookupByLibrary.simpleMessage("프로필을 추가하여 시작하세요"),
+    "nullTip": m55,
+    "numberRangeTip": m56,
+    "numberTip": m57,
+    "obfs": MessageLookupByLibrary.simpleMessage("난독화"),
+    "obfsHost": MessageLookupByLibrary.simpleMessage("난독화 호스트"),
+    "obfsMode": MessageLookupByLibrary.simpleMessage("난독화 모드"),
+    "obfsParam": MessageLookupByLibrary.simpleMessage("난독화 매개변수"),
+    "obfsPassword": MessageLookupByLibrary.simpleMessage("난독화 비밀번호"),
+    "onDemand": MessageLookupByLibrary.simpleMessage("필요 시 실행"),
     "onDemandDesc": MessageLookupByLibrary.simpleMessage(
-      "эХДьЪФ ьЛЬ ьЛдэЦЙьЭА ьаЬьЩ╕ыРЬ Wi-FiьЧРьДЬ эФДыбЭьЛЬые╝ ьЭ╝ьЛЬ ьдСьзАэХйыЛИыЛд.",
+      "필요 시 실행은 제외된 Wi-Fi에서 프록시를 일시 중지합니다.",
     ),
-    "onlyStatisticsProxy": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЭьЛЬ эК╕ыЮШэФ╜ызМ ьзСъ│Д",
-    ),
-    "optional": MessageLookupByLibrary.simpleMessage("ьДаэГЭ ьВмэХн"),
-    "options": MessageLookupByLibrary.simpleMessage("ьШ╡ьЕШ"),
-    "other": MessageLookupByLibrary.simpleMessage("ъ╕░эГА"),
-    "otherContributors": MessageLookupByLibrary.simpleMessage(
-      "ъ╕░эГА ъ╕░ьЧмьЮР",
-    ),
-    "outbound": MessageLookupByLibrary.simpleMessage("ьХДьЫГы░ФьЪ┤ыУЬ"),
-    "outboundExit": MessageLookupByLibrary.simpleMessage("ь╢Ьъ╡м"),
-    "outboundIp": MessageLookupByLibrary.simpleMessage("ьХДьЫГы░ФьЪ┤ыУЬ IP"),
-    "outboundMode": MessageLookupByLibrary.simpleMessage(
-      "ьХДьЫГы░ФьЪ┤ыУЬ ыкиыУЬ",
-    ),
-    "overrideDestination": MessageLookupByLibrary.simpleMessage(
-      "ыМАьГБ ыНоьЦ┤ьУ░ъ╕░",
-    ),
+    "onlyStatisticsProxy": MessageLookupByLibrary.simpleMessage("프록시 트래픽만 집계"),
+    "openLogsFolder": MessageLookupByLibrary.simpleMessage("로그 폴더 열기"),
+    "optional": MessageLookupByLibrary.simpleMessage("선택 사항"),
+    "options": MessageLookupByLibrary.simpleMessage("옵션"),
+    "originalRepository": MessageLookupByLibrary.simpleMessage("원본 저장소"),
+    "other": MessageLookupByLibrary.simpleMessage("기타"),
+    "otherContributors": MessageLookupByLibrary.simpleMessage("기타 기여자"),
+    "outbound": MessageLookupByLibrary.simpleMessage("아웃바운드"),
+    "outboundExit": MessageLookupByLibrary.simpleMessage("출구"),
+    "outboundIp": MessageLookupByLibrary.simpleMessage("아웃바운드 IP"),
+    "outboundMode": MessageLookupByLibrary.simpleMessage("아웃바운드 모드"),
+    "overrideDestination": MessageLookupByLibrary.simpleMessage("대상 덮어쓰기"),
     "overrideDestinationDesc": MessageLookupByLibrary.simpleMessage(
-      "ыМАьГБ ыНоьЦ┤ьУ░ъ╕░ыКФ ьЫРыЮШ ьг╝ьЖМ ыМАьЛа ьКдыЛИэХСэХЬ ыПДыйФьЭ╕ьЬ╝ыбЬ ьЧ░ъ▓░эХйыЛИыЛд.",
+      "대상 덮어쓰기는 원래 주소 대신 스니핑한 도메인으로 연결합니다.",
     ),
-    "overrideEntries": MessageLookupByLibrary.simpleMessage(
-      "ыНоьЦ┤ьУ░ъ╕░ эХныкй",
-    ),
-    "parsePureIp": MessageLookupByLibrary.simpleMessage("ьИЬьИШ IP ы╢ДьДЭ"),
+    "overrideEntries": MessageLookupByLibrary.simpleMessage("덮어쓰기 항목"),
+    "parsePureIp": MessageLookupByLibrary.simpleMessage("순수 IP 분석"),
     "parsePureIpDesc": MessageLookupByLibrary.simpleMessage(
-      "ьИЬьИШ IP ы╢ДьДЭьЭА IP ьг╝ьЖМызМ ьЮИыКФ ьЧ░ъ▓░ьЭД ьКдыЛИэХСэХйыЛИыЛд.",
+      "순수 IP 분석은 IP 주소만 있는 연결을 스니핑합니다.",
     ),
-    "password": MessageLookupByLibrary.simpleMessage("ы╣Ды░Аы▓ИэШ╕"),
-    "paste": MessageLookupByLibrary.simpleMessage("ы╢ЩьЧмыДгъ╕░"),
-    "peers": MessageLookupByLibrary.simpleMessage("эФ╝ьЦ┤"),
-    "pickFromAlbum": MessageLookupByLibrary.simpleMessage(
-      "ьХиы▓ФьЧРьДЬ ьДаэГЭ",
-    ),
-    "pinWindow": MessageLookupByLibrary.simpleMessage("ь░╜ ъ│аьаХ"),
-    "pleaseBindWebDAV": MessageLookupByLibrary.simpleMessage(
-      "WebDAVые╝ ьЧ░ъ▓░эХШьД╕ьЪФ",
-    ),
+    "password": MessageLookupByLibrary.simpleMessage("비밀번호"),
+    "paste": MessageLookupByLibrary.simpleMessage("붙여넣기"),
+    "peers": MessageLookupByLibrary.simpleMessage("피어"),
+    "pickFromAlbum": MessageLookupByLibrary.simpleMessage("앨범에서 선택"),
+    "pinWindow": MessageLookupByLibrary.simpleMessage("창 고정"),
+    "pleaseBindWebDAV": MessageLookupByLibrary.simpleMessage("WebDAV를 연결하세요"),
     "pleaseEnterScriptName": MessageLookupByLibrary.simpleMessage(
-      "ьКдэБмыж╜эК╕ ьЭ┤ыжДьЭД ьЮЕыаеэХШьД╕ьЪФ",
+      "스크립트 이름을 입력하세요",
     ),
     "pleaseUploadValidQrcode": MessageLookupByLibrary.simpleMessage(
-      "ьШмы░Фые╕ QR ь╜ФыУЬые╝ ьЧЕыбЬыУЬэХШьД╕ьЪФ",
+      "올바른 QR 코드를 업로드하세요",
     ),
-    "plugin": MessageLookupByLibrary.simpleMessage("эФМыЯмъ╖╕ьЭ╕"),
-    "pluginHost": MessageLookupByLibrary.simpleMessage(
-      "эФМыЯмъ╖╕ьЭ╕ эШ╕ьКдэК╕",
-    ),
-    "pluginMode": MessageLookupByLibrary.simpleMessage("эФМыЯмъ╖╕ьЭ╕ ыкиыУЬ"),
-    "port": MessageLookupByLibrary.simpleMessage("эПмэК╕"),
-    "portConflictTip": MessageLookupByLibrary.simpleMessage(
-      "ыЛдые╕ эПмэК╕ые╝ ьЮЕыаеэХШьД╕ьЪФ",
-    ),
-    "portHopping": MessageLookupByLibrary.simpleMessage("эПмэК╕ эШ╕эХС"),
-    "portTip": m57,
-    "portValue": m58,
-    "ports": MessageLookupByLibrary.simpleMessage("эПмэК╕"),
-    "preSharedKey": MessageLookupByLibrary.simpleMessage("ьВмьаД ъ│╡ьЬа эВд"),
-    "prerequisites": MessageLookupByLibrary.simpleMessage("ьВмьаД ьЪФъ▒┤"),
-    "pressKeyboard": MessageLookupByLibrary.simpleMessage(
-      "эВд ьб░эХйьЭД ыИДые┤ьД╕ьЪФ",
-    ),
-    "preview": MessageLookupByLibrary.simpleMessage("ып╕ыжмы│┤ъ╕░"),
-    "previousMatch": MessageLookupByLibrary.simpleMessage("ьЭ┤ьаД ъ▓░ъ│╝"),
-    "privateKey": MessageLookupByLibrary.simpleMessage("ъ░ЬьЭ╕ эВд"),
-    "privateKeyPassphrase": MessageLookupByLibrary.simpleMessage(
-      "ъ░ЬьЭ╕ эВд ьХФэШ╕",
-    ),
-    "process": MessageLookupByLibrary.simpleMessage("эФДыбЬьД╕ьКд"),
-    "profile": MessageLookupByLibrary.simpleMessage("эФДыбЬэХД"),
+    "plugin": MessageLookupByLibrary.simpleMessage("플러그인"),
+    "pluginHost": MessageLookupByLibrary.simpleMessage("플러그인 호스트"),
+    "pluginMode": MessageLookupByLibrary.simpleMessage("플러그인 모드"),
+    "port": MessageLookupByLibrary.simpleMessage("포트"),
+    "portConflictTip": MessageLookupByLibrary.simpleMessage("다른 포트를 입력하세요"),
+    "portHopping": MessageLookupByLibrary.simpleMessage("포트 호핑"),
+    "portTip": m58,
+    "portValue": m59,
+    "ports": MessageLookupByLibrary.simpleMessage("포트"),
+    "preSharedKey": MessageLookupByLibrary.simpleMessage("사전 공유 키"),
+    "prerequisites": MessageLookupByLibrary.simpleMessage("사전 요건"),
+    "pressKeyboard": MessageLookupByLibrary.simpleMessage("키 조합을 누르세요"),
+    "preview": MessageLookupByLibrary.simpleMessage("미리보기"),
+    "previousMatch": MessageLookupByLibrary.simpleMessage("이전 결과"),
+    "privateKey": MessageLookupByLibrary.simpleMessage("개인 키"),
+    "privateKeyPassphrase": MessageLookupByLibrary.simpleMessage("개인 키 암호"),
+    "process": MessageLookupByLibrary.simpleMessage("프로세스"),
+    "profile": MessageLookupByLibrary.simpleMessage("프로필"),
     "profileAutoUpdateIntervalInvalidValidationDesc":
-        MessageLookupByLibrary.simpleMessage(
-          "ьШмы░Фые╕ ъ░Дъ▓йьЭД ьЮЕыаеэХШьД╕ьЪФ",
-        ),
+        MessageLookupByLibrary.simpleMessage("올바른 간격을 입력하세요"),
     "profileAutoUpdateIntervalNullValidationDesc":
-        MessageLookupByLibrary.simpleMessage(
-          "ьЮРыПЩ ьЧЕыН░ьЭ┤эК╕ ъ░Дъ▓йьЭД ьЮЕыаеэХШьД╕ьЪФ",
-        ),
-    "profileDaysLeft": m59,
-    "profileExpiresIn": m60,
+        MessageLookupByLibrary.simpleMessage("자동 업데이트 간격을 입력하세요"),
+    "profileDaysFigure": m60,
+    "profileDaysLeft": m61,
+    "profileExpired": MessageLookupByLibrary.simpleMessage("만료됨"),
+    "profileExpiresIn": m62,
     "profileHasUpdate": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЬэХДьЭ┤ ьИШьаХыРШьЧИьК╡ыЛИыЛд. ьЮРыПЩ ьЧЕыН░ьЭ┤эК╕ые╝ ыБДьЛЬъ▓аьК╡ыЛИъ╣М?",
+      "프로필이 수정되었습니다. 자동 업데이트를 끄시겠습니까?",
     ),
+    "profileHoursFigure": m63,
+    "profileLeftOfTotal": m64,
+    "profileMinutesFigure": m65,
     "profileNameNullValidationDesc": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЬэХД ьЭ┤ыжДьЭД ьЮЕыаеэХШьД╕ьЪФ",
+      "프로필 이름을 입력하세요",
     ),
+    "profileNoExpiry": MessageLookupByLibrary.simpleMessage("무기한"),
     "profileSettingsDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЭ┤ эФДыбЬэХДьЧРызМ ьаБьЪйыРШый░, ь╢Фъ░АэХШьзА ьХКьЭА эХныкйьЭА ъ╕░ы│╕ъ░ТьЭД ьВмьЪйэХйыЛИыЛд.",
+      "이 프로필에만 적용되며, 추가하지 않은 항목은 기본값을 사용합니다.",
     ),
+    "profileTrafficUnlimited": MessageLookupByLibrary.simpleMessage("무제한"),
     "profileTunSettingsDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЭ┤ эФДыбЬэХДьЧРызМ ьаБьЪйыРШый░ ыДдэК╕ьЫМэБм ьДдьаХьЭШ TUN ыНоьЦ┤ьУ░ъ╕░ эХныкйы│┤ыЛд ьЪ░ьДаэХйыЛИыЛд.",
+      "이 프로필에만 적용되며 네트워크 설정의 TUN 덮어쓰기 항목보다 우선합니다.",
     ),
-    "profileUpdatedAt": m61,
+    "profileTypeCustom": MessageLookupByLibrary.simpleMessage("사용자 지정"),
+    "profileTypeFile": MessageLookupByLibrary.simpleMessage("파일"),
+    "profileTypeSubscription": MessageLookupByLibrary.simpleMessage("구독"),
+    "profileUntil": m66,
+    "profileUpdatedAt": m67,
     "profileUrlInvalidValidationDesc": MessageLookupByLibrary.simpleMessage(
-      "ьШмы░Фые╕ эФДыбЬэХД URLьЭД ьЮЕыаеэХШьД╕ьЪФ",
+      "올바른 프로필 URL을 입력하세요",
     ),
     "profileUrlNullValidationDesc": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЬэХД URLьЭД ьЮЕыаеэХШьД╕ьЪФ",
+      "프로필 URL을 입력하세요",
     ),
-    "profiles": MessageLookupByLibrary.simpleMessage("эФДыбЬэХД"),
-    "profilesSort": MessageLookupByLibrary.simpleMessage("эФДыбЬэХД ьаХыам"),
-    "project": MessageLookupByLibrary.simpleMessage("эФДыбЬьаЭэК╕"),
-    "protocol": MessageLookupByLibrary.simpleMessage("эФДыбЬэЖаь╜Ь"),
-    "protocolParam": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЬэЖаь╜Ь ыздъ░Ьы│АьИШ",
-    ),
-    "protocolVersion": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЬэЖаь╜Ь ы▓ДьаД",
-    ),
-    "providerInUse": m62,
-    "providerUrlTip": MessageLookupByLibrary.simpleMessage(
-      "ьЫРъ▓й ъ│╡ъ╕ЙьЮРызМ ьзАьЫРэХйыЛИыЛд",
-    ),
-    "providers": MessageLookupByLibrary.simpleMessage("ьЩ╕ы╢А ыжмьЖМьКд"),
-    "proxies": MessageLookupByLibrary.simpleMessage("эФДыбЭьЛЬ"),
-    "proxiesCount": m63,
-    "proxiesProfileLabel": m64,
-    "proxiesRemovedTip": m65,
-    "proxiesReplacedTip": m66,
-    "proxyChains": MessageLookupByLibrary.simpleMessage("эФДыбЭьЛЬ ь▓┤ьЭ╕"),
-    "proxyGroup": MessageLookupByLibrary.simpleMessage("эФДыбЭьЛЬ ъ╖╕ыг╣"),
-    "proxyGroupEmpty": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЭьЛЬ ъ╖╕ыг╣ьЭ┤ ы╣ДьЦ┤ ьЮИьК╡ыЛИыЛд",
-    ),
-    "proxyGroupInUse": m67,
+    "profiles": MessageLookupByLibrary.simpleMessage("프로필"),
+    "profilesSort": MessageLookupByLibrary.simpleMessage("프로필 정렬"),
+    "project": MessageLookupByLibrary.simpleMessage("프로젝트"),
+    "protocol": MessageLookupByLibrary.simpleMessage("프로토콜"),
+    "protocolParam": MessageLookupByLibrary.simpleMessage("프로토콜 매개변수"),
+    "protocolVersion": MessageLookupByLibrary.simpleMessage("프로토콜 버전"),
+    "providerInUse": m68,
+    "providerUrlTip": MessageLookupByLibrary.simpleMessage("원격 공급자만 지원합니다"),
+    "providers": MessageLookupByLibrary.simpleMessage("외부 리소스"),
+    "proxies": MessageLookupByLibrary.simpleMessage("프록시"),
+    "proxiesCount": m69,
+    "proxiesProfileLabel": m70,
+    "proxiesRemovedTip": m71,
+    "proxiesReplacedTip": m72,
+    "proxyChains": MessageLookupByLibrary.simpleMessage("프록시 체인"),
+    "proxyGroup": MessageLookupByLibrary.simpleMessage("프록시 그룹"),
+    "proxyGroupEmpty": MessageLookupByLibrary.simpleMessage("프록시 그룹이 비어 있습니다"),
+    "proxyGroupInUse": m73,
     "proxyGroupsAfterStart": MessageLookupByLibrary.simpleMessage(
-      "ь╜ФьЦ┤ъ░А ьЛЬьЮСыРШый┤ ъ╖╕ыг╣ьЭ┤ ьЧмъ╕░ьЧР эСЬьЛЬыРйыЛИыЛд",
+      "코어가 시작되면 그룹이 여기에 표시됩니다",
     ),
-    "proxyGroupsCount": m68,
-    "proxyProviders": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЭьЛЬ ъ│╡ъ╕ЙьЮР",
-    ),
-    "proxyType": MessageLookupByLibrary.simpleMessage("эФДыбЭьЛЬ ьЬаэШХ"),
-    "pruneCache": MessageLookupByLibrary.simpleMessage("ь║РьЛЬ ьаХыжм"),
-    "publicKey": MessageLookupByLibrary.simpleMessage("ъ│╡ъ░Ь эВд"),
-    "pureBlack": MessageLookupByLibrary.simpleMessage("эУиьЦ┤ ы╕ФыЮЩ"),
-    "pureBlackMode": MessageLookupByLibrary.simpleMessage(
-      "эУиьЦ┤ ы╕ФыЮЩ ыкиыУЬ",
-    ),
-    "qrcode": MessageLookupByLibrary.simpleMessage("QR ь╜ФыУЬ"),
-    "qrcodeDesc": MessageLookupByLibrary.simpleMessage(
-      "QR ь╜ФыУЬые╝ ьКдь║ФэХШьЧм эФДыбЬэХД ъ░Аьа╕ьШдъ╕░",
-    ),
-    "quickActions": MessageLookupByLibrary.simpleMessage("ы╣аые╕ ьЮСьЧЕ"),
-    "quickEdit": MessageLookupByLibrary.simpleMessage("ы╣аые╕ эО╕ьзС"),
-    "recentRequests": MessageLookupByLibrary.simpleMessage("ь╡Ьъ╖╝ ьЪФь▓н"),
-    "recommendedIcons": MessageLookupByLibrary.simpleMessage("ь╢Фь▓Ь"),
-    "recordType": MessageLookupByLibrary.simpleMessage("ыаИь╜ФыУЬ ьЬаэШХ"),
-    "redirPort": MessageLookupByLibrary.simpleMessage("Redir эПмэК╕"),
-    "redo": MessageLookupByLibrary.simpleMessage("ыЛдьЛЬ ьЛдэЦЙ"),
-    "regex": MessageLookupByLibrary.simpleMessage("ьаХъ╖ЬьЛЭ"),
-    "releaseMemory": MessageLookupByLibrary.simpleMessage("ыйФыкиыжм эХ┤ьаЬ"),
+    "proxyGroupsCount": m74,
+    "proxyProviders": MessageLookupByLibrary.simpleMessage("프록시 공급자"),
+    "proxyType": MessageLookupByLibrary.simpleMessage("프록시 유형"),
+    "pruneCache": MessageLookupByLibrary.simpleMessage("캐시 정리"),
+    "publicKey": MessageLookupByLibrary.simpleMessage("공개 키"),
+    "pureBlack": MessageLookupByLibrary.simpleMessage("퓨어 블랙"),
+    "pureBlackMode": MessageLookupByLibrary.simpleMessage("퓨어 블랙 모드"),
+    "qrcode": MessageLookupByLibrary.simpleMessage("QR 코드"),
+    "qrcodeDesc": MessageLookupByLibrary.simpleMessage("QR 코드를 스캔하여 프로필 가져오기"),
+    "quickActions": MessageLookupByLibrary.simpleMessage("빠른 작업"),
+    "quickEdit": MessageLookupByLibrary.simpleMessage("빠른 편집"),
+    "recentRequests": MessageLookupByLibrary.simpleMessage("최근 요청"),
+    "recommendedIcons": MessageLookupByLibrary.simpleMessage("추천"),
+    "recordType": MessageLookupByLibrary.simpleMessage("레코드 유형"),
+    "redirPort": MessageLookupByLibrary.simpleMessage("Redir 포트"),
+    "redo": MessageLookupByLibrary.simpleMessage("다시 실행"),
+    "regex": MessageLookupByLibrary.simpleMessage("정규식"),
+    "releaseMemory": MessageLookupByLibrary.simpleMessage("메모리 해제"),
     "releaseMemoryFailed": MessageLookupByLibrary.simpleMessage(
-      "ыйФыкиыжмые╝ эХ┤ьаЬэХШьзА ык╗эЦИьК╡ыЛИыЛд",
+      "메모리를 해제하지 못했습니다",
     ),
-    "remote": MessageLookupByLibrary.simpleMessage("ьЫРъ▓й"),
-    "remoteDestination": MessageLookupByLibrary.simpleMessage(
-      "ьЫРъ▓й ыкйьаБьзА",
+    "remote": MessageLookupByLibrary.simpleMessage("원격"),
+    "remoteDestination": MessageLookupByLibrary.simpleMessage("원격 목적지"),
+    "remoteDnsResolve": MessageLookupByLibrary.simpleMessage("원격 DNS 확인"),
+    "remove": MessageLookupByLibrary.simpleMessage("제거"),
+    "rename": MessageLookupByLibrary.simpleMessage("이름 변경"),
+    "renew": MessageLookupByLibrary.simpleMessage("갱신"),
+    "replace": MessageLookupByLibrary.simpleMessage("바꾸기"),
+    "replaceAll": MessageLookupByLibrary.simpleMessage("모두 바꾸기"),
+    "request": MessageLookupByLibrary.simpleMessage("요청"),
+    "requests": MessageLookupByLibrary.simpleMessage("요청"),
+    "requestsAndUpdates": MessageLookupByLibrary.simpleMessage("요청 및 업데이트"),
+    "required": MessageLookupByLibrary.simpleMessage("필수"),
+    "reset": MessageLookupByLibrary.simpleMessage("초기화"),
+    "resetApp": MessageLookupByLibrary.simpleMessage("앱 초기화"),
+    "resetAppTip": MessageLookupByLibrary.simpleMessage(
+      "모든 프로필, 설정, 앱 작업 폴더를 삭제한 뒤 앱이 종료됩니다. 계속할까요?",
     ),
-    "remoteDnsResolve": MessageLookupByLibrary.simpleMessage(
-      "ьЫРъ▓й DNS эЩХьЭ╕",
-    ),
-    "remove": MessageLookupByLibrary.simpleMessage("ьаЬъ▒░"),
-    "rename": MessageLookupByLibrary.simpleMessage("ьЭ┤ыжД ы│Аъ▓╜"),
-    "replace": MessageLookupByLibrary.simpleMessage("ы░Фъ╛╕ъ╕░"),
-    "replaceAll": MessageLookupByLibrary.simpleMessage("ыкиыСР ы░Фъ╛╕ъ╕░"),
-    "request": MessageLookupByLibrary.simpleMessage("ьЪФь▓н"),
-    "requests": MessageLookupByLibrary.simpleMessage("ьЪФь▓н"),
-    "requestsAndUpdates": MessageLookupByLibrary.simpleMessage(
-      "ьЪФь▓н ы░П ьЧЕыН░ьЭ┤эК╕",
-    ),
-    "required": MessageLookupByLibrary.simpleMessage("эХДьИШ"),
-    "reset": MessageLookupByLibrary.simpleMessage("ь┤Иъ╕░эЩФ"),
     "resetPageChangesTip": MessageLookupByLibrary.simpleMessage(
-      "ьЭ┤ эОШьЭ┤ьзАьЧР ы│Аъ▓╜ ьВмэХньЭ┤ ьЮИьК╡ыЛИыЛд. ь┤Иъ╕░эЩФэХШьЛЬъ▓аьК╡ыЛИъ╣М?",
+      "이 페이지에 변경 사항이 있습니다. 초기화하시겠습니까?",
     ),
-    "resetTip": MessageLookupByLibrary.simpleMessage(
-      "ь┤Иъ╕░эЩФэХШьЛЬъ▓аьК╡ыЛИъ╣М?",
-    ),
+    "resetTip": MessageLookupByLibrary.simpleMessage("초기화하시겠습니까?"),
     "resourceUpdateInterval": MessageLookupByLibrary.simpleMessage(
-      "ьЮРыПЩ ьЧЕыН░ьЭ┤эК╕ ъ░Дъ▓й",
+      "자동 업데이트 간격",
     ),
     "resourceUpdateIntervalTip": MessageLookupByLibrary.simpleMessage(
-      "ьЮРыПЩ ьЧЕыН░ьЭ┤эК╕ ъ░Дъ▓йьЭА 0ы│┤ыЛд ь╗дьХ╝ эХйыЛИыЛд",
+      "자동 업데이트 간격은 0보다 커야 합니다",
     ),
-    "resources": MessageLookupByLibrary.simpleMessage("ыжмьЖМьКд"),
-    "respectRules": MessageLookupByLibrary.simpleMessage("ъ╖Ьь╣Щ ьдАьИШ"),
+    "resources": MessageLookupByLibrary.simpleMessage("리소스"),
+    "respectRules": MessageLookupByLibrary.simpleMessage("규칙 준수"),
     "respectRulesDesc": MessageLookupByLibrary.simpleMessage(
-      "ъ╖Ьь╣Щ ьдАьИШыКФ DNS ьЧ░ъ▓░ьЭД ъ╖Ьь╣ЩьЧР ыФ░ыЭ╝ ыЭ╝ьЪ░эМЕэХШый░ Proxy Server Nameserverъ░А эХДьЪФэХйыЛИыЛд.",
+      "규칙 준수는 DNS 연결을 규칙에 따라 라우팅하며 Proxy Server Nameserver가 필요합니다.",
     ),
-    "responseCode": MessageLookupByLibrary.simpleMessage("ьЭСыЛ╡ ь╜ФыУЬ"),
-    "restart": MessageLookupByLibrary.simpleMessage("ыЛдьЛЬ ьЛЬьЮС"),
-    "restartCoreTip": MessageLookupByLibrary.simpleMessage(
-      "ь╜ФьЦ┤ые╝ ыЛдьЛЬ ьЛЬьЮСэХШьЛЬъ▓аьК╡ыЛИъ╣М?",
+    "responseCode": MessageLookupByLibrary.simpleMessage("응답 코드"),
+    "restart": MessageLookupByLibrary.simpleMessage("다시 시작"),
+    "restartCoreTip": MessageLookupByLibrary.simpleMessage("코어를 다시 시작하시겠습니까?"),
+    "restore": MessageLookupByLibrary.simpleMessage("복원"),
+    "restoreAllData": MessageLookupByLibrary.simpleMessage("모든 데이터 복원"),
+    "restoreOnlyConfig": MessageLookupByLibrary.simpleMessage("프로필만 복원"),
+    "restoreStrategy": MessageLookupByLibrary.simpleMessage("복원 방식"),
+    "restoreStrategyCompatible": MessageLookupByLibrary.simpleMessage("호환"),
+    "restoreStrategyOverride": MessageLookupByLibrary.simpleMessage("덮어쓰기"),
+    "restoreSuccess": MessageLookupByLibrary.simpleMessage("복원 완료"),
+    "result": MessageLookupByLibrary.simpleMessage("결과"),
+    "retry": MessageLookupByLibrary.simpleMessage("다시 시도"),
+    "returnAllToProvider": MessageLookupByLibrary.simpleMessage(
+      "설정을 제공자에게 돌려주기",
     ),
-    "restore": MessageLookupByLibrary.simpleMessage("ы│╡ьЫР"),
-    "restoreAllData": MessageLookupByLibrary.simpleMessage(
-      "ыкиыУа ыН░ьЭ┤эД░ ы│╡ьЫР",
+    "returnAllToProviderTip": MessageLookupByLibrary.simpleMessage(
+      "직접 변경한 모든 설정이 다시 구독을 따릅니다.",
     ),
-    "restoreOnlyConfig": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЬэХДызМ ы│╡ьЫР",
-    ),
-    "restoreStrategy": MessageLookupByLibrary.simpleMessage("ы│╡ьЫР ы░йьЛЭ"),
-    "restoreStrategyCompatible": MessageLookupByLibrary.simpleMessage("эШ╕эЩШ"),
-    "restoreStrategyOverride": MessageLookupByLibrary.simpleMessage(
-      "ыНоьЦ┤ьУ░ъ╕░",
-    ),
-    "restoreSuccess": MessageLookupByLibrary.simpleMessage("ы│╡ьЫР ьЩДыгМ"),
-    "result": MessageLookupByLibrary.simpleMessage("ъ▓░ъ│╝"),
-    "retry": MessageLookupByLibrary.simpleMessage("ыЛдьЛЬ ьЛЬыПД"),
-    "routeAddress": MessageLookupByLibrary.simpleMessage("ыЭ╝ьЪ░эМЕ ьг╝ьЖМ"),
-    "routeExcludeAddress": MessageLookupByLibrary.simpleMessage(
-      "ыЭ╝ьЪ░эМЕ ьаЬьЩ╕ ьг╝ьЖМ",
-    ),
-    "routingMark": MessageLookupByLibrary.simpleMessage("ыЭ╝ьЪ░эМЕ ызИэБм"),
-    "ru": MessageLookupByLibrary.simpleMessage("ыЯмьЛЬьХДьЦ┤"),
-    "rule": MessageLookupByLibrary.simpleMessage("ъ╖Ьь╣Щ"),
-    "ruleActionAndDesc": MessageLookupByLibrary.simpleMessage(
-      "ыЕ╝ыжм ъ╖Ьь╣Щ AND",
-    ),
-    "ruleActionDomainDesc": MessageLookupByLibrary.simpleMessage(
-      "ьаДь▓┤ ыПДыйФьЭ╕ ьЭ╝ь╣Ш",
-    ),
+    "returnToProvider": MessageLookupByLibrary.simpleMessage("제공자에게 돌려주기"),
+    "routeAddress": MessageLookupByLibrary.simpleMessage("라우팅 주소"),
+    "routeExcludeAddress": MessageLookupByLibrary.simpleMessage("라우팅 제외 주소"),
+    "routingMark": MessageLookupByLibrary.simpleMessage("라우팅 마크"),
+    "ru": MessageLookupByLibrary.simpleMessage("러시아어"),
+    "rule": MessageLookupByLibrary.simpleMessage("규칙"),
+    "ruleActionAndDesc": MessageLookupByLibrary.simpleMessage("논리 규칙 AND"),
+    "ruleActionDomainDesc": MessageLookupByLibrary.simpleMessage("전체 도메인 일치"),
     "ruleActionDomainKeywordDesc": MessageLookupByLibrary.simpleMessage(
-      "ыПДыйФьЭ╕ эВдьЫМыУЬ ьЭ╝ь╣Ш",
+      "도메인 키워드 일치",
     ),
     "ruleActionDomainRegexDesc": MessageLookupByLibrary.simpleMessage(
-      "ыПДыйФьЭ╕ ьаХъ╖ЬьЛЭ ьЭ╝ь╣Ш",
+      "도메인 정규식 일치",
     ),
     "ruleActionDomainSuffixDesc": MessageLookupByLibrary.simpleMessage(
-      "ыПДыйФьЭ╕ ьаСып╕ьВм ьЭ╝ь╣Ш",
+      "도메인 접미사 일치",
     ),
     "ruleActionDomainWildcardDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЩАьЭ╝ыУЬь╣┤ыУЬ ьЭ╝ь╣Ш, *ьЩА ?ызМ ьзАьЫР",
+      "와일드카드 일치, *와 ?만 지원",
     ),
     "ruleActionDscpDesc": MessageLookupByLibrary.simpleMessage(
-      "DSCP ызИэБм ьЭ╝ь╣Ш(tproxy UDP ьЭ╕ы░ФьЪ┤ыУЬ ьаДьЪй)",
+      "DSCP 마크 일치(tproxy UDP 인바운드 전용)",
     ),
     "ruleActionDstPortDesc": MessageLookupByLibrary.simpleMessage(
-      "ыкйьаБьзА эПмэК╕ ы▓ФьЬД ьЭ╝ь╣Ш",
+      "목적지 포트 범위 일치",
     ),
-    "ruleActionGeoipDesc": MessageLookupByLibrary.simpleMessage(
-      "IPьЭШ ъ╡нъ░А ь╜ФыУЬ ьЭ╝ь╣Ш",
-    ),
+    "ruleActionGeoipDesc": MessageLookupByLibrary.simpleMessage("IP의 국가 코드 일치"),
     "ruleActionGeositeDesc": MessageLookupByLibrary.simpleMessage(
-      "GeositeьЭШ ыПДыйФьЭ╕ ьЭ╝ь╣Ш",
+      "Geosite의 도메인 일치",
     ),
-    "ruleActionInNameDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЭ╕ы░ФьЪ┤ыУЬ ьЭ┤ыжД ьЭ╝ь╣Ш",
-    ),
-    "ruleActionInPortDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЭ╕ы░ФьЪ┤ыУЬ эПмэК╕ ьЭ╝ь╣Ш",
-    ),
-    "ruleActionInTypeDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЭ╕ы░ФьЪ┤ыУЬ ьЬаэШХ ьЭ╝ь╣Ш",
-    ),
+    "ruleActionInNameDesc": MessageLookupByLibrary.simpleMessage("인바운드 이름 일치"),
+    "ruleActionInPortDesc": MessageLookupByLibrary.simpleMessage("인바운드 포트 일치"),
+    "ruleActionInTypeDesc": MessageLookupByLibrary.simpleMessage("인바운드 유형 일치"),
     "ruleActionInUserDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЭ╕ы░ФьЪ┤ыУЬ ьВмьЪйьЮР ьЭ┤ыжД ьЭ╝ь╣Ш, ьЧмыЯм ьВмьЪйьЮР ьЭ┤ыжДьЭА /ыбЬ ъ╡мы╢Д",
+      "인바운드 사용자 이름 일치, 여러 사용자 이름은 /로 구분",
     ),
-    "ruleActionIpAsnDesc": MessageLookupByLibrary.simpleMessage(
-      "IPьЭШ ASN ьЭ╝ь╣Ш",
-    ),
+    "ruleActionIpAsnDesc": MessageLookupByLibrary.simpleMessage("IP의 ASN 일치"),
     "ruleActionIpCidr6Desc": MessageLookupByLibrary.simpleMessage(
-      "IP ьг╝ьЖМ ы▓ФьЬД ьЭ╝ь╣Ш, IP-CIDR6ыКФ ы│Дь╣ньЭ╝ ы┐РьЮЕыЛИыЛд",
+      "IP 주소 범위 일치, IP-CIDR6는 별칭일 뿐입니다",
     ),
-    "ruleActionIpCidrDesc": MessageLookupByLibrary.simpleMessage(
-      "IP ьг╝ьЖМ ы▓ФьЬД ьЭ╝ь╣Ш",
-    ),
+    "ruleActionIpCidrDesc": MessageLookupByLibrary.simpleMessage("IP 주소 범위 일치"),
     "ruleActionIpSuffixDesc": MessageLookupByLibrary.simpleMessage(
-      "IP ьаСып╕ьВм ы▓ФьЬД ьЭ╝ь╣Ш",
+      "IP 접미사 범위 일치",
     ),
     "ruleActionMatchDesc": MessageLookupByLibrary.simpleMessage(
-      "ыкиыУа ьЪФь▓нъ│╝ ьЭ╝ь╣Ш, ьб░ъ▒┤ ы╢ИэХДьЪФ",
+      "모든 요청과 일치, 조건 불필요",
     ),
     "ruleActionNetworkDesc": MessageLookupByLibrary.simpleMessage(
-      "TCP ыШРыКФ UDP ьЭ╝ь╣Ш",
+      "TCP 또는 UDP 일치",
     ),
-    "ruleActionNotDesc": MessageLookupByLibrary.simpleMessage(
-      "ыЕ╝ыжм ъ╖Ьь╣Щ NOT",
-    ),
-    "ruleActionOrDesc": MessageLookupByLibrary.simpleMessage(
-      "ыЕ╝ыжм ъ╖Ьь╣Щ OR",
-    ),
+    "ruleActionNotDesc": MessageLookupByLibrary.simpleMessage("논리 규칙 NOT"),
+    "ruleActionOrDesc": MessageLookupByLibrary.simpleMessage("논리 규칙 OR"),
     "ruleActionProcessNameDesc": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЬьД╕ьКд ьЭ┤ыжДьЬ╝ыбЬ ьЭ╝ь╣Ш, AndroidьЧРьДЬыКФ эМиэВдьзА ьЭ┤ыжДъ│╝ ьЭ╝ь╣Ш",
+      "프로세스 이름으로 일치, Android에서는 패키지 이름과 일치",
     ),
     "ruleActionProcessNameRegexDesc": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЬьД╕ьКд ьЭ┤ыжД ьаХъ╖ЬьЛЭьЬ╝ыбЬ ьЭ╝ь╣Ш, AndroidьЧРьДЬыКФ эМиэВдьзА ьЭ┤ыжДъ│╝ ьЭ╝ь╣Ш",
+      "프로세스 이름 정규식으로 일치, Android에서는 패키지 이름과 일치",
     ),
     "ruleActionProcessNameWildcardDesc": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЬьД╕ьКд ьЭ┤ыжД ьЩАьЭ╝ыУЬь╣┤ыУЬыбЬ ьЭ╝ь╣Ш, *ьЩА ?ызМ ьзАьЫР",
+      "프로세스 이름 와일드카드로 일치, *와 ?만 지원",
     ),
     "ruleActionProcessPathDesc": MessageLookupByLibrary.simpleMessage(
-      "ьаДь▓┤ эФДыбЬьД╕ьКд ъ▓╜ыбЬыбЬ ьЭ╝ь╣Ш",
+      "전체 프로세스 경로로 일치",
     ),
     "ruleActionProcessPathRegexDesc": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЬьД╕ьКд ъ▓╜ыбЬ ьаХъ╖ЬьЛЭьЬ╝ыбЬ ьЭ╝ь╣Ш",
+      "프로세스 경로 정규식으로 일치",
     ),
     "ruleActionProcessPathWildcardDesc": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЬьД╕ьКд ъ▓╜ыбЬ ьЩАьЭ╝ыУЬь╣┤ыУЬыбЬ ьЭ╝ь╣Ш, *ьЩА ?ызМ ьзАьЫР",
+      "프로세스 경로 와일드카드로 일치, *와 ?만 지원",
     ),
     "ruleActionRematchNameDesc": MessageLookupByLibrary.simpleMessage(
-      "ыжмыздь╣Ш ьЭ┤ыжД ьЭ╝ь╣Ш, ьЧмыЯм ьЭ┤ыжДьЭА /ыбЬ ъ╡мы╢Д",
+      "리매치 이름 일치, 여러 이름은 /로 구분",
     ),
     "ruleActionRuleSetDesc": MessageLookupByLibrary.simpleMessage(
-      "ъ╖Ьь╣Щ ьД╕эК╕ ь░╕ьб░, rule-providers эХДьЪФ",
+      "규칙 세트 참조, rule-providers 필요",
     ),
     "ruleActionSrcGeoipDesc": MessageLookupByLibrary.simpleMessage(
-      "ь╢Ьы░ЬьзА IPьЭШ ъ╡нъ░А ь╜ФыУЬ ьЭ╝ь╣Ш",
+      "출발지 IP의 국가 코드 일치",
     ),
     "ruleActionSrcIpAsnDesc": MessageLookupByLibrary.simpleMessage(
-      "ь╢Ьы░ЬьзА IPьЭШ ASN ьЭ╝ь╣Ш",
+      "출발지 IP의 ASN 일치",
     ),
     "ruleActionSrcIpCidrDesc": MessageLookupByLibrary.simpleMessage(
-      "ь╢Ьы░ЬьзА IP ьг╝ьЖМ ы▓ФьЬД ьЭ╝ь╣Ш",
+      "출발지 IP 주소 범위 일치",
     ),
     "ruleActionSrcIpSuffixDesc": MessageLookupByLibrary.simpleMessage(
-      "ь╢Ьы░ЬьзА IP ьаСып╕ьВм ы▓ФьЬД ьЭ╝ь╣Ш",
+      "출발지 IP 접미사 범위 일치",
     ),
     "ruleActionSrcPortDesc": MessageLookupByLibrary.simpleMessage(
-      "ь╢Ьы░ЬьзА эПмэК╕ ы▓ФьЬД ьЭ╝ь╣Ш",
+      "출발지 포트 범위 일치",
     ),
     "ruleActionSubRuleDesc": MessageLookupByLibrary.simpleMessage(
-      "эХШьЬД ъ╖Ьь╣ЩьЬ╝ыбЬ ьЭ╝ь╣Ш, ъ┤ДэШ╕ьЧР ьЬаьЭШ",
+      "하위 규칙으로 일치, 괄호에 유의",
     ),
     "ruleActionUidDesc": MessageLookupByLibrary.simpleMessage(
-      "Linux ьВмьЪйьЮР ID ьЭ╝ь╣Ш",
+      "Linux 사용자 ID 일치",
     ),
-    "ruleEmpty": MessageLookupByLibrary.simpleMessage(
-      "ъ╖Ьь╣ЩьЭ┤ ы╣ДьЦ┤ ьЮИьК╡ыЛИыЛд",
-    ),
+    "ruleEmpty": MessageLookupByLibrary.simpleMessage("규칙이 비어 있습니다"),
     "ruleListInvalid": MessageLookupByLibrary.simpleMessage(
-      "ъ╖Ьь╣ЩьЭА эХныкйызИыЛд ъ╖Ьь╣Щ эХШыВШьЭ╕ YAML ыкйыбЭьЭ┤ьЦ┤ьХ╝ эХйыЛИыЛд. ьШИ: - DOMAIN,example.com,DIRECT",
+      "규칙은 항목마다 규칙 하나인 YAML 목록이어야 합니다. 예: - DOMAIN,example.com,DIRECT",
     ),
     "rulePresetBittorrentDirect": MessageLookupByLibrary.simpleMessage(
-      "BitTorrent ьзБьаС ьЧ░ъ▓░",
+      "BitTorrent 직접 연결",
     ),
     "rulePresetBlockDot": MessageLookupByLibrary.simpleMessage(
-      "DNS over TLS ь░иыЛи",
+      "DNS over TLS 차단",
     ),
     "rulePresetBlockLoopback": MessageLookupByLibrary.simpleMessage(
-      "эФДыбЭьЛЬ ыгиэФДы░▒ ь░иыЛи",
+      "프록시 루프백 차단",
     ),
-    "rulePresetBlockQuic": MessageLookupByLibrary.simpleMessage("QUIC ь░иыЛи"),
-    "rulePresetBlockStun": MessageLookupByLibrary.simpleMessage("STUN ь░иыЛи"),
-    "rulePresetLanDirect": MessageLookupByLibrary.simpleMessage(
-      "LAN ьзБьаС ьЧ░ъ▓░",
-    ),
+    "rulePresetBlockQuic": MessageLookupByLibrary.simpleMessage("QUIC 차단"),
+    "rulePresetBlockStun": MessageLookupByLibrary.simpleMessage("STUN 차단"),
+    "rulePresetLanDirect": MessageLookupByLibrary.simpleMessage("LAN 직접 연결"),
     "rulePresetSystemServicesDirect": MessageLookupByLibrary.simpleMessage(
-      "Apple ы░П Microsoft ьзБьаС ьЧ░ъ▓░",
+      "Apple 및 Microsoft 직접 연결",
     ),
-    "ruleProviders": MessageLookupByLibrary.simpleMessage("ъ╖Ьь╣Щ ъ│╡ъ╕ЙьЮР"),
-    "ruleSet": MessageLookupByLibrary.simpleMessage("ъ╖Ьь╣Щ ьД╕эК╕"),
+    "ruleProviders": MessageLookupByLibrary.simpleMessage("규칙 공급자"),
+    "ruleSet": MessageLookupByLibrary.simpleMessage("규칙 세트"),
     "ruleSetEmptyTip": MessageLookupByLibrary.simpleMessage(
-      "ъ╖Ьь╣Щ ьД╕эК╕ьЧР ьВмьЪйэХа ьИШ ьЮИыКФ эХныкйьЭ┤ ьЧЖьК╡ыЛИыЛд",
+      "규칙 세트에 사용할 수 있는 항목이 없습니다",
     ),
     "ruleSetInvalidTip": MessageLookupByLibrary.simpleMessage(
-      "ьЭ┤ mrs эММьЭ╝ьЭД ьЭ╜ьЭД ьИШ ьЧЖьК╡ыЛИыЛд",
+      "이 mrs 파일을 읽을 수 없습니다",
     ),
     "ruleSetMixedTip": MessageLookupByLibrary.simpleMessage(
-      "ъ╖Ьь╣Щ ьД╕эК╕ьЧР ыПДыйФьЭ╕ъ│╝ IP ы▓ФьЬДъ░А ьДЮьЧм ьЮИьЦ┤ ьЬаэШХьЭД эМРы│ДэХа ьИШ ьЧЖьК╡ыЛИыЛд",
+      "규칙 세트에 도메인과 IP 범위가 섞여 있어 유형을 판별할 수 없습니다",
     ),
-    "ruleTarget": MessageLookupByLibrary.simpleMessage("ъ╖Ьь╣Щ ыМАьГБ"),
+    "ruleTarget": MessageLookupByLibrary.simpleMessage("규칙 대상"),
     "ruleTextInvalid": MessageLookupByLibrary.simpleMessage(
-      "ъ╖Ьь╣ЩьЭА DOMAIN,example.com,DIRECTь▓ШыЯ╝ ьзАьЫРэХШыКФ ьЬаэШХьЬ╝ыбЬ ьЛЬьЮСэХ┤ьХ╝ эХйыЛИыЛд",
+      "규칙은 DOMAIN,example.com,DIRECT처럼 지원하는 유형으로 시작해야 합니다",
     ),
-    "rules": MessageLookupByLibrary.simpleMessage("ъ╖Ьь╣Щ"),
-    "rulesCount": m69,
-    "runTime": MessageLookupByLibrary.simpleMessage("ьЛдэЦЙ ьЛЬъ░Д"),
-    "running": MessageLookupByLibrary.simpleMessage("ьЛдэЦЙ ьдС"),
-    "runtimeConfig": MessageLookupByLibrary.simpleMessage("ыЯ░эГАьЮД ъ╡мьД▒"),
-    "safeMode": MessageLookupByLibrary.simpleMessage("ьХИьаД ыкиыУЬ"),
-    "safeModeAppTitle": m70,
-    "saturation": MessageLookupByLibrary.simpleMessage("ь▒ДыПД"),
-    "save": MessageLookupByLibrary.simpleMessage("ьаАьЮе"),
-    "saveChanges": MessageLookupByLibrary.simpleMessage(
-      "ы│Аъ▓╜ ьВмэХньЭД ьаАьЮеэХШьЛЬъ▓аьК╡ыЛИъ╣М?",
-    ),
-    "script": MessageLookupByLibrary.simpleMessage("ьКдэБмыж╜эК╕"),
+    "rules": MessageLookupByLibrary.simpleMessage("규칙"),
+    "rulesCount": m75,
+    "runTime": MessageLookupByLibrary.simpleMessage("실행 시간"),
+    "running": MessageLookupByLibrary.simpleMessage("실행 중"),
+    "runtimeConfig": MessageLookupByLibrary.simpleMessage("런타임 구성"),
+    "safeMode": MessageLookupByLibrary.simpleMessage("안전 모드"),
+    "safeModeAppTitle": m76,
+    "saturation": MessageLookupByLibrary.simpleMessage("채도"),
+    "save": MessageLookupByLibrary.simpleMessage("저장"),
+    "saveChanges": MessageLookupByLibrary.simpleMessage("변경 사항을 저장하시겠습니까?"),
+    "script": MessageLookupByLibrary.simpleMessage("스크립트"),
     "scriptModeDesc": MessageLookupByLibrary.simpleMessage(
-      "ьКдэБмыж╜эК╕ ыкиыУЬ: эЩХьЮе ьКдэБмыж╜эК╕ыбЬ эФДыбЬэХД ьаДь▓┤ые╝ ыЛдьЛЬ ьЮСьД▒эХйыЛИыЛд",
+      "스크립트 모드: 확장 스크립트로 프로필 전체를 다시 작성합니다",
     ),
-    "scrollToSelected": MessageLookupByLibrary.simpleMessage(
-      "ьДаэГЭ эХныкйьЬ╝ыбЬ ьКдэБмыбд",
-    ),
-    "search": MessageLookupByLibrary.simpleMessage("ъ▓АьГЙ"),
-    "seconds": MessageLookupByLibrary.simpleMessage("ь┤И"),
-    "secondsCount": m71,
-    "secretKey": MessageLookupByLibrary.simpleMessage("эВд"),
-    "sectionsInEffect": m72,
-    "selectAll": MessageLookupByLibrary.simpleMessage("ыкиыСР ьДаэГЭ"),
-    "selectRuleSet": MessageLookupByLibrary.simpleMessage(
-      "ъ╖Ьь╣Щ ьД╕эК╕ые╝ ьДаэГЭэХШьД╕ьЪФ",
-    ),
-    "selectSplitStrategy": MessageLookupByLibrary.simpleMessage(
-      "ы╢ДэХа ьаДыЮ╡ьЭД ьДаэГЭэХШьД╕ьЪФ",
-    ),
-    "selected": MessageLookupByLibrary.simpleMessage("ьДаэГЭыРи"),
-    "server": MessageLookupByLibrary.simpleMessage("ьДЬы▓Д"),
-    "serviceAbnormalCount": m73,
-    "serviceAllAvailable": MessageLookupByLibrary.simpleMessage(
-      "ыкиыСР ьВмьЪй ъ░АыКе",
-    ),
-    "serviceAvailable": MessageLookupByLibrary.simpleMessage("ьВмьЪй ъ░АыКе"),
-    "serviceBlocked": MessageLookupByLibrary.simpleMessage("ь░иыЛиыРи"),
-    "serviceCheck": MessageLookupByLibrary.simpleMessage("эЩХьЭ╕"),
-    "serviceCheckAll": MessageLookupByLibrary.simpleMessage("ыкиыСР эЩХьЭ╕"),
-    "serviceCheckedAt": m74,
-    "serviceComingSoon": MessageLookupByLibrary.simpleMessage("ь╢ЬьЛЬ ьШИьаХ"),
-    "serviceDisallowedIsp": MessageLookupByLibrary.simpleMessage(
-      "эЧИьЪйыРШьзА ьХКыКФ ISP",
-    ),
-    "serviceFailed": MessageLookupByLibrary.simpleMessage("эЩХьЭ╕ ьЛдэМи"),
-    "serviceManage": MessageLookupByLibrary.simpleMessage("ьДЬы╣ДьКд ъ┤Аыжм"),
-    "serviceOriginalsOnly": MessageLookupByLibrary.simpleMessage(
-      "ьШдыжмьзАыДР ь╜ШэЕРь╕аызМ",
-    ),
-    "servicePending": MessageLookupByLibrary.simpleMessage("эЩХьЭ╕ ьаД"),
-    "serviceRestricted": MessageLookupByLibrary.simpleMessage(
-      "ьаСъ╖╝ ьаЬэХЬыРи",
-    ),
+    "scrollToSelected": MessageLookupByLibrary.simpleMessage("선택 항목으로 스크롤"),
+    "search": MessageLookupByLibrary.simpleMessage("검색"),
+    "seconds": MessageLookupByLibrary.simpleMessage("초"),
+    "secondsCount": m77,
+    "secretKey": MessageLookupByLibrary.simpleMessage("키"),
+    "sectionsInEffect": m78,
+    "selectAll": MessageLookupByLibrary.simpleMessage("모두 선택"),
+    "selectRuleSet": MessageLookupByLibrary.simpleMessage("규칙 세트를 선택하세요"),
+    "selectSplitStrategy": MessageLookupByLibrary.simpleMessage("분할 전략을 선택하세요"),
+    "selected": MessageLookupByLibrary.simpleMessage("선택됨"),
+    "sendDeviceHeaders": MessageLookupByLibrary.simpleMessage("HWID 보내기"),
+    "server": MessageLookupByLibrary.simpleMessage("서버"),
+    "serviceAbnormalCount": m79,
+    "serviceAllAvailable": MessageLookupByLibrary.simpleMessage("모두 사용 가능"),
+    "serviceAvailable": MessageLookupByLibrary.simpleMessage("사용 가능"),
+    "serviceBlocked": MessageLookupByLibrary.simpleMessage("차단됨"),
+    "serviceCheck": MessageLookupByLibrary.simpleMessage("확인"),
+    "serviceCheckAll": MessageLookupByLibrary.simpleMessage("모두 확인"),
+    "serviceCheckedAt": m80,
+    "serviceComingSoon": MessageLookupByLibrary.simpleMessage("출시 예정"),
+    "serviceDisallowedIsp": MessageLookupByLibrary.simpleMessage("허용되지 않는 ISP"),
+    "serviceFailed": MessageLookupByLibrary.simpleMessage("확인 실패"),
+    "serviceManage": MessageLookupByLibrary.simpleMessage("서비스 관리"),
+    "serviceOriginalsOnly": MessageLookupByLibrary.simpleMessage("오리지널 콘텐츠만"),
+    "servicePending": MessageLookupByLibrary.simpleMessage("확인 전"),
+    "serviceRestricted": MessageLookupByLibrary.simpleMessage("접근 제한됨"),
     "serviceShownOnDashboard": MessageLookupByLibrary.simpleMessage(
-      "ыМАьЛЬы│┤ыУЬьЧР эСЬьЛЬыРи",
+      "대시보드에 표시됨",
     ),
-    "serviceStatus": MessageLookupByLibrary.simpleMessage("ьДЬы╣ДьКд ьГБэГЬ"),
-    "serviceUnavailable": MessageLookupByLibrary.simpleMessage("ьВмьЪй ы╢Иъ░А"),
+    "serviceStatus": MessageLookupByLibrary.simpleMessage("서비스 상태"),
+    "serviceUnavailable": MessageLookupByLibrary.simpleMessage("사용 불가"),
     "serviceUnsupportedRegion": MessageLookupByLibrary.simpleMessage(
-      "ьзАьЫРэХШьзА ьХКыКФ ьзАьЧн",
+      "지원하지 않는 지역",
     ),
-    "settingEntries": MessageLookupByLibrary.simpleMessage("ьДдьаХ"),
-    "settings": MessageLookupByLibrary.simpleMessage("ьДдьаХ"),
-    "settingsCount": m75,
-    "shareLinkUnreadable": m76,
+    "settingEntries": MessageLookupByLibrary.simpleMessage("설정"),
+    "settings": MessageLookupByLibrary.simpleMessage("설정"),
+    "settingsCount": m81,
+    "shareLinkUnreadable": m82,
     "shareLinksInvalid": MessageLookupByLibrary.simpleMessage(
-      "ызБэБмьЧРьДЬ ьЭ╜ьЭД ьИШ ьЮИыКФ эФДыбЭьЛЬъ░А ьЧЖьК╡ыЛИыЛд",
+      "링크에서 읽을 수 있는 프록시가 없습니다",
     ),
-    "show": MessageLookupByLibrary.simpleMessage("эСЬьЛЬ"),
-    "showLess": MessageLookupByLibrary.simpleMessage("ьаСъ╕░"),
-    "showMore": MessageLookupByLibrary.simpleMessage("эО╝ь╣Шъ╕░"),
+    "show": MessageLookupByLibrary.simpleMessage("표시"),
+    "showLess": MessageLookupByLibrary.simpleMessage("접기"),
+    "showMore": MessageLookupByLibrary.simpleMessage("펼치기"),
     "showNotificationStopAction": MessageLookupByLibrary.simpleMessage(
-      "ьХМыж╝ьЧР ьдСьзА ы▓ДэК╝ эСЬьЛЬ",
+      "알림에 중지 버튼 표시",
     ),
-    "showPassword": MessageLookupByLibrary.simpleMessage("ы╣Ды░Аы▓ИэШ╕ эСЬьЛЬ"),
-    "sidebarBlur": MessageLookupByLibrary.simpleMessage("ьВмьЭ┤ыУЬы░Ф ы╕ФыЯм"),
+    "showPassword": MessageLookupByLibrary.simpleMessage("비밀번호 표시"),
+    "sidebarBlur": MessageLookupByLibrary.simpleMessage("사이드바 블러"),
     "sidebarBlurDesc": MessageLookupByLibrary.simpleMessage(
-      "ьВмьЭ┤ыУЬы░Фые╝ эЖ╡эХ┤ ь░╜ ыТдьЭШ эЭРыж┐эХЬ ы░ФэГХэЩФый┤ьЭД эСЬьЛЬэХйыЛИыЛд",
+      "사이드바를 통해 창 뒤의 흐릿한 바탕화면을 표시합니다",
     ),
-    "silentLaunch": MessageLookupByLibrary.simpleMessage(
-      "ы░▒ъ╖╕ыЭ╝ьЪ┤ыУЬ ьЛдэЦЙ",
-    ),
+    "silentLaunch": MessageLookupByLibrary.simpleMessage("백그라운드 실행"),
     "silentLaunchDesc": MessageLookupByLibrary.simpleMessage(
-      "ы░▒ъ╖╕ыЭ╝ьЪ┤ыУЬ ьЛдэЦЙьЭА ь░╜ьЭД эСЬьЛЬэХШьзА ьХКъ│а ьЛЬьЮСэХйыЛИыЛд.",
+      "백그라운드 실행은 창을 표시하지 않고 시작합니다.",
     ),
-    "singleAdd": MessageLookupByLibrary.simpleMessage("ъ░Ьы│Д ь╢Фъ░А"),
-    "singleImport": MessageLookupByLibrary.simpleMessage("ъ░Ьы│Д ъ░Аьа╕ьШдъ╕░"),
+    "singleAdd": MessageLookupByLibrary.simpleMessage("개별 추가"),
+    "singleImport": MessageLookupByLibrary.simpleMessage("개별 가져오기"),
     "singleShareLinkOnly": MessageLookupByLibrary.simpleMessage(
-      "ьЧмъ╕░ьЧРыКФ ызБэБмые╝ эХШыВШызМ ьЮЕыаеэХШьД╕ьЪФ. ьЧмыЯм ъ░ЬыКФ ыкйыбЭьЭШ ы╣аые╕ эО╕ьзСьЧРьДЬ эО╕ьзСэХШьД╕ьЪФ",
+      "여기에는 링크를 하나만 입력하세요. 여러 개는 목록의 빠른 편집에서 편집하세요",
     ),
-    "singleValueTip": m77,
-    "size": MessageLookupByLibrary.simpleMessage("эБмъ╕░"),
-    "skipCertVerify": MessageLookupByLibrary.simpleMessage(
-      "ьЭ╕ьжЭьДЬ ъ▓АьжЭ ъ▒┤ыДИыЫ░ъ╕░",
-    ),
-    "skipDomain": MessageLookupByLibrary.simpleMessage("ъ▒┤ыДИыЫ╕ ыПДыйФьЭ╕"),
+    "singleValueTip": m83,
+    "size": MessageLookupByLibrary.simpleMessage("크기"),
+    "skipCertVerify": MessageLookupByLibrary.simpleMessage("인증서 검증 건너뛰기"),
+    "skipDomain": MessageLookupByLibrary.simpleMessage("건너뛸 도메인"),
     "skipDomainDesc": MessageLookupByLibrary.simpleMessage(
-      "ъ▒┤ыДИыЫ╕ ыПДыйФьЭ╕ ыкйыбЭьЧР ьЮИыКФ ьКдыЛИэХСыРЬ ыПДыйФьЭ╕ьЭА ьВмьЪйэХШьзА ьХКьК╡ыЛИыЛд.",
+      "건너뛸 도메인 목록에 있는 스니핑된 도메인은 사용하지 않습니다.",
     ),
-    "skipDstAddress": MessageLookupByLibrary.simpleMessage(
-      "ъ▒┤ыДИыЫ╕ ыкйьаБьзА ьг╝ьЖМ",
-    ),
-    "skipSrcAddress": MessageLookupByLibrary.simpleMessage(
-      "ъ▒┤ыДИыЫ╕ ь╢Ьы░ЬьзА ьг╝ьЖМ",
-    ),
-    "slide": MessageLookupByLibrary.simpleMessage("ьКмыЭ╝ьЭ┤ыУЬ"),
-    "sliders": MessageLookupByLibrary.simpleMessage("ьКмыЭ╝ьЭ┤ыНФ"),
-    "smartAutomatic": MessageLookupByLibrary.simpleMessage("ьЮРыПЩ ьДаэГЭ"),
-    "smartAutomaticRouting": MessageLookupByLibrary.simpleMessage(
-      "ыкйьаБьзАы│Д ьЮРыПЩ ьДаэГЭ",
-    ),
-    "smartCollectData": MessageLookupByLibrary.simpleMessage(
-      "эХЩьК╡ ыН░ьЭ┤эД░ ьИШьзС",
-    ),
-    "smartCoreStopped": MessageLookupByLibrary.simpleMessage(
-      "Smart ьИЬьЬДые╝ ы│┤ыадый┤ ьДЬы╣ДьКдые╝ ьЛЬьЮСэХШьД╕ьЪФ.",
-    ),
-    "smartCurrentNode": MessageLookupByLibrary.simpleMessage("эШДьЮм ыЕ╕ыУЬ"),
-    "smartCurrentNodeUnavailable": MessageLookupByLibrary.simpleMessage(
-      "ьДаэГЭыРЬ ыЕ╕ыУЬ ьЧЖьЭМ",
-    ),
-    "smartDetails": MessageLookupByLibrary.simpleMessage("Smart ьД╕ы╢А ьаХы│┤"),
-    "smartLoadFailed": MessageLookupByLibrary.simpleMessage(
-      "Smart ьИЬьЬДые╝ ы╢ИыЯмьШдьзА ык╗эЦИьК╡ыЛИыЛд.",
-    ),
-    "smartMostUsed": MessageLookupByLibrary.simpleMessage("ьЮРьг╝ ьВмьЪй"),
-    "smartNoMatchingNodes": MessageLookupByLibrary.simpleMessage(
-      "ьЭ╝ь╣ШэХШыКФ ыЕ╕ыУЬ ьЧЖьЭМ",
-    ),
-    "smartNoWeights": MessageLookupByLibrary.simpleMessage(
-      "ьХДьзБ Smart ьИЬьЬДъ░А ьЧЖьК╡ыЛИыЛд",
-    ),
-    "smartNoWeightsTip": MessageLookupByLibrary.simpleMessage(
-      "Smartъ░А эК╕ыЮШэФ╜ьЭД ь▓ШыжмэХШый┤ ьИЬьЬДъ░А эСЬьЛЬыРйыЛИыЛд.",
-    ),
-    "smartOccasionallyUsed": MessageLookupByLibrary.simpleMessage(
-      "ъ░АыБФ ьВмьЪй",
-    ),
-    "smartPinNode": MessageLookupByLibrary.simpleMessage("ыЕ╕ыУЬ ъ│аьаХ"),
-    "smartPinned": MessageLookupByLibrary.simpleMessage("ъ│аьаХыРи"),
-    "smartPolicyPriority": MessageLookupByLibrary.simpleMessage(
-      "ьаХь▒Е ьЪ░ьДаьИЬьЬД",
-    ),
-    "smartPreferAsn": MessageLookupByLibrary.simpleMessage("ASN ъ╕░ыбЭ ьЪ░ьДа"),
-    "smartRarelyUsed": MessageLookupByLibrary.simpleMessage("ыУЬым╝ъ▓М ьВмьЪй"),
-    "smartRefresh": MessageLookupByLibrary.simpleMessage("ьИЬьЬД ьГИыбЬъ│аь╣и"),
-    "smartRestoreAutomatic": MessageLookupByLibrary.simpleMessage(
-      "ьЮРыПЩ ьДаэГЭьЬ╝ыбЬ ы│╡ьЫР",
-    ),
-    "smartSampleRate": MessageLookupByLibrary.simpleMessage(
-      "эХЩьК╡ ыН░ьЭ┤эД░ ьГШэФМызБ ы╣ДьЬи",
-    ),
-    "smartScore": MessageLookupByLibrary.simpleMessage("ьаРьИШ"),
-    "smartScoreExplanation": MessageLookupByLibrary.simpleMessage(
-      "ьаРьИШьЩА ьВмьЪй ыУ▒ъ╕ЙьЭА ь╜ФьЦ┤ьЧРьДЬ ьаЬъ│╡эХШый░, ьаРьИШыКФ ы░▒ы╢ДьЬиьЭ┤ ьХДыЛЩыЛИыЛд.",
-    ),
-    "smartTitle": MessageLookupByLibrary.simpleMessage("Smart"),
-    "smartUnknownUsage": MessageLookupByLibrary.simpleMessage("ьХМ ьИШ ьЧЖьЭМ"),
-    "smartUsage": MessageLookupByLibrary.simpleMessage("ьВмьЪй ы╣ИыПД"),
-    "smartUseLightGbm": MessageLookupByLibrary.simpleMessage("LightGBM ьВмьЪй"),
-    "sniffProtocols": MessageLookupByLibrary.simpleMessage("эФДыбЬэЖаь╜Ь"),
-    "sniffer": MessageLookupByLibrary.simpleMessage("ьКдыЛИэН╝"),
+    "skipDstAddress": MessageLookupByLibrary.simpleMessage("건너뛸 목적지 주소"),
+    "skipSrcAddress": MessageLookupByLibrary.simpleMessage("건너뛸 출발지 주소"),
+    "slide": MessageLookupByLibrary.simpleMessage("슬라이드"),
+    "sliders": MessageLookupByLibrary.simpleMessage("슬라이더"),
+    "sniffProtocols": MessageLookupByLibrary.simpleMessage("프로토콜"),
+    "sniffer": MessageLookupByLibrary.simpleMessage("스니퍼"),
     "snifferStatusDesc": MessageLookupByLibrary.simpleMessage(
-      "ьКдыЛИэН╝ыКФ TLS, HTTP, QUIC эК╕ыЮШэФ╜ьЧРьДЬ ыПДыйФьЭ╕ьЭД ьЭ╜ьЦ┤ ъ╖Ьь╣ЩьЭ┤ ьЭ╝ь╣ШэХа ьИШ ьЮИъ▓М эХйыЛИыЛд.",
+      "스니퍼는 TLS, HTTP, QUIC 트래픽에서 도메인을 읽어 규칙이 일치할 수 있게 합니다.",
     ),
-    "socksPort": MessageLookupByLibrary.simpleMessage("SOCKS эПмэК╕"),
-    "softStyle": MessageLookupByLibrary.simpleMessage("ы╢АыУЬыЯмьЫА"),
-    "sort": MessageLookupByLibrary.simpleMessage("ьаХыам"),
-    "source": MessageLookupByLibrary.simpleMessage("ьЖМьКд"),
-    "sourceIp": MessageLookupByLibrary.simpleMessage("ь╢Ьы░ЬьзА IP"),
-    "specialProxy": MessageLookupByLibrary.simpleMessage("эК╣ьИШ эФДыбЭьЛЬ"),
-    "specialRules": MessageLookupByLibrary.simpleMessage("эК╣ьИШ ъ╖Ьь╣Щ"),
-    "spectrum": MessageLookupByLibrary.simpleMessage("ьКдэОЩэК╕ыЯ╝"),
-    "speedStatistics": MessageLookupByLibrary.simpleMessage("ьЖНыПД эЖ╡ъ│Д"),
-    "splitStrategy": MessageLookupByLibrary.simpleMessage("ы╢ДэХа ьаДыЮ╡"),
+    "socksPort": MessageLookupByLibrary.simpleMessage("SOCKS 포트"),
+    "softStyle": MessageLookupByLibrary.simpleMessage("부드러움"),
+    "sort": MessageLookupByLibrary.simpleMessage("정렬"),
+    "source": MessageLookupByLibrary.simpleMessage("소스"),
+    "sourceIp": MessageLookupByLibrary.simpleMessage("출발지 IP"),
+    "specialProxy": MessageLookupByLibrary.simpleMessage("특수 프록시"),
+    "specialRules": MessageLookupByLibrary.simpleMessage("특수 규칙"),
+    "spectrum": MessageLookupByLibrary.simpleMessage("스펙트럼"),
+    "speedStatistics": MessageLookupByLibrary.simpleMessage("속도 통계"),
+    "splitStrategy": MessageLookupByLibrary.simpleMessage("분할 전략"),
     "splitStrategyNotEmpty": MessageLookupByLibrary.simpleMessage(
-      "ы╢ДэХа ьаДыЮ╡ьЭД ьЮЕыаеэХШьД╕ьЪФ",
+      "분할 전략을 입력하세요",
     ),
-    "ssidsEmpty": MessageLookupByLibrary.simpleMessage(
-      "SSIDъ░А ы╣ДьЦ┤ ьЮИьК╡ыЛИыЛд",
-    ),
-    "stackMode": MessageLookupByLibrary.simpleMessage("ьКдэГЭ ыкиыУЬ"),
-    "stackTrace": MessageLookupByLibrary.simpleMessage("ьКдэГЭ эК╕ыаИьЭ┤ьКд"),
-    "standard": MessageLookupByLibrary.simpleMessage("эСЬьдА"),
+    "ssidsEmpty": MessageLookupByLibrary.simpleMessage("SSID가 비어 있습니다"),
+    "stackMode": MessageLookupByLibrary.simpleMessage("스택 모드"),
+    "stackTrace": MessageLookupByLibrary.simpleMessage("스택 트레이스"),
+    "standard": MessageLookupByLibrary.simpleMessage("표준"),
     "standardModeDesc": MessageLookupByLibrary.simpleMessage(
-      "эСЬьдА ыкиыУЬ: эФДыбЬэХД ьЬДьЧР ъ╖Ьь╣ЩьЭД ь╢Фъ░АэХйыЛИыЛд",
+      "표준 모드: 프로필 위에 규칙을 추가합니다",
     ),
-    "start": MessageLookupByLibrary.simpleMessage("ьЛЬьЮС"),
-    "startFromScratch": MessageLookupByLibrary.simpleMessage(
-      "ь▓ШьЭМы╢АэД░ ьЛЬьЮС",
-    ),
-    "startVpn": MessageLookupByLibrary.simpleMessage("VPN ьЛЬьЮС ьдСтАж"),
-    "startupAndBackground": MessageLookupByLibrary.simpleMessage(
-      "ьЛЬьЮС ы░П ы░▒ъ╖╕ыЭ╝ьЪ┤ыУЬ",
-    ),
-    "status": MessageLookupByLibrary.simpleMessage("ьГБэГЬ"),
+    "start": MessageLookupByLibrary.simpleMessage("시작"),
+    "startFromScratch": MessageLookupByLibrary.simpleMessage("처음부터 시작"),
+    "startVpn": MessageLookupByLibrary.simpleMessage("VPN 시작 중…"),
+    "startupAndBackground": MessageLookupByLibrary.simpleMessage("시작 및 백그라운드"),
+    "status": MessageLookupByLibrary.simpleMessage("상태"),
     "statusDesc": MessageLookupByLibrary.simpleMessage(
-      "DNSые╝ ыБДый┤ ьЛЬьКдэЕЬ DNSые╝ ьВмьЪйэХйыЛИыЛд.",
+      "DNS를 끄면 시스템 DNS를 사용합니다.",
     ),
-    "stop": MessageLookupByLibrary.simpleMessage("ьдСьзА"),
-    "stopVpn": MessageLookupByLibrary.simpleMessage("VPN ьдСьзА ьдСтАж"),
-    "strategy": MessageLookupByLibrary.simpleMessage("ьаДыЮ╡"),
-    "strictRoute": MessageLookupByLibrary.simpleMessage("ьЧДъ▓йэХЬ ыЭ╝ьЪ░эМЕ"),
+    "stop": MessageLookupByLibrary.simpleMessage("중지"),
+    "stopVpn": MessageLookupByLibrary.simpleMessage("VPN 중지 중…"),
+    "strategy": MessageLookupByLibrary.simpleMessage("전략"),
+    "strictRoute": MessageLookupByLibrary.simpleMessage("엄격한 라우팅"),
     "strictRouteDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЧДъ▓йэХЬ ыЭ╝ьЪ░эМЕьЭА DNS ыУ▒ьЭШ эК╕ыЮШэФ╜ьЭ┤ TUNьЭД ьЪ░эЪМэХШьзА ык╗эХШъ▓М эХШый░, IPv6ъ░А ъ║╝ьа╕ ьЮИьЬ╝ый┤ ьЭ┤ ъ╕░ъ╕░ьЭШ IPv6 ьЧ░ъ▓░ьЭД ь░иыЛиэХйыЛИыЛд.",
+      "엄격한 라우팅은 DNS 등의 트래픽이 TUN을 우회하지 못하게 하며, IPv6가 꺼져 있으면 이 기기의 IPv6 연결을 차단합니다.",
     ),
-    "style": MessageLookupByLibrary.simpleMessage("ьКдэГАьЭ╝"),
-    "submit": MessageLookupByLibrary.simpleMessage("ьаЬь╢Ь"),
-    "subscriptionInfo": MessageLookupByLibrary.simpleMessage("ъ╡мыПЕ ьаХы│┤"),
+    "style": MessageLookupByLibrary.simpleMessage("스타일"),
+    "submit": MessageLookupByLibrary.simpleMessage("제출"),
+    "subscriptionExpired": MessageLookupByLibrary.simpleMessage("구독이 만료되었습니다"),
+    "subscriptionExpiresInDays": m84,
+    "subscriptionExpiresSoon": MessageLookupByLibrary.simpleMessage(
+      "구독이 곧 만료됩니다",
+    ),
+    "subscriptionExpiresToday": MessageLookupByLibrary.simpleMessage(
+      "구독이 오늘 만료됩니다",
+    ),
+    "subscriptionInfo": MessageLookupByLibrary.simpleMessage("구독 정보"),
     "sudoPasswordTitle": MessageLookupByLibrary.simpleMessage(
-      "sudo ы╣Ды░Аы▓ИэШ╕ые╝ ьЮЕыаеэХШьД╕ьЪФ",
+      "sudo 비밀번호를 입력하세요",
     ),
-    "suspended": MessageLookupByLibrary.simpleMessage("ьЭ╝ьЛЬ ьдСьзАыРитАж"),
-    "switchProfile": MessageLookupByLibrary.simpleMessage("эФДыбЬэХД ьаДэЩШ"),
-    "sync": MessageLookupByLibrary.simpleMessage("ыПЩъ╕░эЩФ"),
-    "system": MessageLookupByLibrary.simpleMessage("ьЛЬьКдэЕЬ"),
-    "systemApp": MessageLookupByLibrary.simpleMessage("ьЛЬьКдэЕЬ ьХ▒"),
-    "systemProxy": MessageLookupByLibrary.simpleMessage("ьЛЬьКдэЕЬ эФДыбЭьЛЬ"),
-    "tab": MessageLookupByLibrary.simpleMessage("эГн"),
-    "tabAnimation": MessageLookupByLibrary.simpleMessage("эГн ьХаыЛИыйФьЭ┤ьЕШ"),
-    "tapIconToRetry": MessageLookupByLibrary.simpleMessage(
-      "ьХДьЭ┤ь╜ШьЭД ыИМыЯм ыЛдьЛЬ ьЛЬыПД",
-    ),
-    "tapToAuthorize": MessageLookupByLibrary.simpleMessage("ыИМыЯмьДЬ эЧИьЪй"),
-    "target": MessageLookupByLibrary.simpleMessage("ыМАьГБ"),
-    "tcpConcurrent": MessageLookupByLibrary.simpleMessage("TCP ыПЩьЛЬ ьЧ░ъ▓░"),
-    "testInterval": MessageLookupByLibrary.simpleMessage("эЕМьКдэК╕ ъ░Дъ▓й"),
-    "testUrl": MessageLookupByLibrary.simpleMessage("эЕМьКдэК╕ URL"),
-    "testWhenUsed": MessageLookupByLibrary.simpleMessage(
-      "ьВмьЪйэХа ыХМ эЕМьКдэК╕",
-    ),
-    "textScale": MessageLookupByLibrary.simpleMessage("ъ╕АьЮР эБмъ╕░ ьб░ьаИ"),
+    "support": MessageLookupByLibrary.simpleMessage("지원"),
+    "suspended": MessageLookupByLibrary.simpleMessage("일시 중지됨…"),
+    "switchProfile": MessageLookupByLibrary.simpleMessage("프로필 전환"),
+    "sync": MessageLookupByLibrary.simpleMessage("동기화"),
+    "system": MessageLookupByLibrary.simpleMessage("시스템"),
+    "systemApp": MessageLookupByLibrary.simpleMessage("시스템 앱"),
+    "systemProxy": MessageLookupByLibrary.simpleMessage("시스템 프록시"),
+    "tab": MessageLookupByLibrary.simpleMessage("탭"),
+    "tabAnimation": MessageLookupByLibrary.simpleMessage("탭 애니메이션"),
+    "takeOver": MessageLookupByLibrary.simpleMessage("변경"),
+    "tapIconToRetry": MessageLookupByLibrary.simpleMessage("아이콘을 눌러 다시 시도"),
+    "tapToAuthorize": MessageLookupByLibrary.simpleMessage("눌러서 허용"),
+    "target": MessageLookupByLibrary.simpleMessage("대상"),
+    "tcpConcurrent": MessageLookupByLibrary.simpleMessage("TCP 동시 연결"),
+    "testInterval": MessageLookupByLibrary.simpleMessage("테스트 간격"),
+    "testUrl": MessageLookupByLibrary.simpleMessage("테스트 URL"),
+    "testWhenUsed": MessageLookupByLibrary.simpleMessage("사용할 때 테스트"),
+    "textScale": MessageLookupByLibrary.simpleMessage("글자 크기 조절"),
     "textScalePreview": MessageLookupByLibrary.simpleMessage(
-      "ьХ▒ьЭШ ъ╕АьЮРъ░А ьЭ┤ыаЗъ▓М эСЬьЛЬыРйыЛИыЛд",
+      "앱의 글자가 이렇게 표시됩니다",
     ),
-    "theme": MessageLookupByLibrary.simpleMessage("эЕМызИ"),
-    "themeColor": MessageLookupByLibrary.simpleMessage("эЕМызИ ьГЙьГБ"),
-    "themeMode": MessageLookupByLibrary.simpleMessage("эЕМызИ ыкиыУЬ"),
-    "tight": MessageLookupByLibrary.simpleMessage("ьвБъ▓М"),
-    "time": MessageLookupByLibrary.simpleMessage("ьЛЬъ░Д"),
-    "timeout": MessageLookupByLibrary.simpleMessage("ьЛЬъ░Д ь┤Иъ│╝"),
-    "tintedStyle": MessageLookupByLibrary.simpleMessage("эЛ┤эК╕"),
-    "tip": MessageLookupByLibrary.simpleMessage("ьХИыВ┤"),
-    "toggle": MessageLookupByLibrary.simpleMessage("ьаДэЩШ"),
-    "tolerance": MessageLookupByLibrary.simpleMessage("эЧИьЪй ьШдь░и"),
-    "tools": MessageLookupByLibrary.simpleMessage("ыПДъ╡м"),
-    "torch": MessageLookupByLibrary.simpleMessage("ьЖРьаДыУ▒"),
-    "total": MessageLookupByLibrary.simpleMessage("эХйъ│Д"),
-    "totalDownload": MessageLookupByLibrary.simpleMessage("ыЛдьЪ┤ыбЬыУЬыЯЙ"),
-    "totalTraffic": MessageLookupByLibrary.simpleMessage("ьаДь▓┤ эК╕ыЮШэФ╜"),
-    "totalUpload": MessageLookupByLibrary.simpleMessage("ьЧЕыбЬыУЬыЯЙ"),
-    "tproxyPort": MessageLookupByLibrary.simpleMessage("TProxy эПмэК╕"),
-    "traffic": MessageLookupByLibrary.simpleMessage("эК╕ыЮШэФ╜"),
-    "trafficPeak": m78,
-    "trafficTotal": m79,
-    "trafficUsage": MessageLookupByLibrary.simpleMessage("эК╕ыЮШэФ╜ ьВмьЪйыЯЙ"),
-    "transport": MessageLookupByLibrary.simpleMessage("ьаДьЖб"),
+    "thanks": MessageLookupByLibrary.simpleMessage("기여에 감사드립니다"),
+    "theme": MessageLookupByLibrary.simpleMessage("테마"),
+    "themeColor": MessageLookupByLibrary.simpleMessage("테마 색상"),
+    "themeMode": MessageLookupByLibrary.simpleMessage("외관"),
+    "themeStyle": MessageLookupByLibrary.simpleMessage("테마 모드"),
+    "themeStyleDesc": MessageLookupByLibrary.simpleMessage(
+      "향상됨은 홈 화면에 위젯 그리드 대신 서비스 로고, 요금제, 서버, 연결 버튼을 표시합니다.",
+    ),
+    "themeStyleEnhanced": MessageLookupByLibrary.simpleMessage("향상됨"),
+    "themeStyleOriginal": MessageLookupByLibrary.simpleMessage("오리지널"),
+    "tight": MessageLookupByLibrary.simpleMessage("좁게"),
+    "time": MessageLookupByLibrary.simpleMessage("시간"),
+    "timeout": MessageLookupByLibrary.simpleMessage("시간 초과"),
+    "tintedStyle": MessageLookupByLibrary.simpleMessage("틴트"),
+    "tip": MessageLookupByLibrary.simpleMessage("안내"),
+    "toggle": MessageLookupByLibrary.simpleMessage("전환"),
+    "tolerance": MessageLookupByLibrary.simpleMessage("허용 오차"),
+    "tools": MessageLookupByLibrary.simpleMessage("설정"),
+    "torch": MessageLookupByLibrary.simpleMessage("손전등"),
+    "total": MessageLookupByLibrary.simpleMessage("합계"),
+    "totalDownload": MessageLookupByLibrary.simpleMessage("다운로드량"),
+    "totalTraffic": MessageLookupByLibrary.simpleMessage("전체 트래픽"),
+    "totalUpload": MessageLookupByLibrary.simpleMessage("업로드량"),
+    "tproxyPort": MessageLookupByLibrary.simpleMessage("TProxy 포트"),
+    "traffic": MessageLookupByLibrary.simpleMessage("트래픽"),
+    "trafficPeak": m85,
+    "trafficTotal": m86,
+    "trafficUsage": MessageLookupByLibrary.simpleMessage("트래픽 사용량"),
+    "transport": MessageLookupByLibrary.simpleMessage("전송"),
     "tun": MessageLookupByLibrary.simpleMessage("TUN"),
     "tunAuthorizationFailed": MessageLookupByLibrary.simpleMessage(
-      "TUN ъ╢МэХЬьЭД ьЦ╗ьзА ык╗эХ┤ ыБДъ╕░ыбЬ ыРШыПМыа╕ьК╡ыЛИыЛд.",
+      "TUN 권한을 얻지 못해 끄기로 되돌렸습니다.",
     ),
-    "tunDesc": MessageLookupByLibrary.simpleMessage(
-      "TUNьЭА ъ┤АыжмьЮР ыкиыУЬьЧРьДЬызМ ьЮСыПЩэХйыЛИыЛд.",
-    ),
+    "tunDesc": MessageLookupByLibrary.simpleMessage("TUN은 관리자 모드에서만 작동합니다."),
     "tunOverrideDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЧмъ╕░ьЧР ь╢Фъ░АэХЬ эХныкйьЭА ыкиыУа эФДыбЬэХДьЭШ TUN ьДдьаХьЭД ыМАь▓┤эХйыЛИыЛд. ь╢Фъ░АэХШьзА ьХКьЭА эХныкйьЭА эФДыбЬэХД ьЮРь▓┤ ьДдьаХьЭД ьЬаьзАэХйыЛИыЛд. ьВмьЪйьЮР ьзАьаХ эФДыбЬэХДьЭ┤ ьзБьаС ь╢Фъ░АэХЬ эХныкйьЭ┤ ьЪ░ьДаэХйыЛИыЛд.",
+      "여기에 추가한 항목은 모든 프로필의 TUN 설정을 대체합니다. 추가하지 않은 항목은 프로필 자체 설정을 유지합니다. 사용자 지정 프로필이 직접 추가한 항목이 우선합니다.",
     ),
-    "turnOff": MessageLookupByLibrary.simpleMessage("ыБДъ╕░"),
-    "turnOn": MessageLookupByLibrary.simpleMessage("ь╝Ьъ╕░"),
-    "udpRelayMode": MessageLookupByLibrary.simpleMessage(
-      "UDP ыж┤ыаИьЭ┤ ыкиыУЬ",
-    ),
-    "udpTimeout": MessageLookupByLibrary.simpleMessage("UDP ьЛЬъ░Д ьаЬэХЬ"),
+    "turnOff": MessageLookupByLibrary.simpleMessage("끄기"),
+    "turnOn": MessageLookupByLibrary.simpleMessage("켜기"),
+    "udpRelayMode": MessageLookupByLibrary.simpleMessage("UDP 릴레이 모드"),
+    "udpTimeout": MessageLookupByLibrary.simpleMessage("UDP 시간 제한"),
     "udpTimeoutDesc": MessageLookupByLibrary.simpleMessage(
-      "UDP ьЛЬъ░Д ьаЬэХЬьЭА ь┤И ыЛиьЬДьЭ┤ый░ gvisor, system, mixed ьКдэГЭьЧРьДЬызМ ьЮСыПЩэХйыЛИыЛд.",
+      "UDP 시간 제한은 초 단위이며 gvisor, system, mixed 스택에서만 작동합니다.",
     ),
-    "ultra": MessageLookupByLibrary.simpleMessage("ь╡Ьъ│а"),
-    "undo": MessageLookupByLibrary.simpleMessage("ьЛдэЦЙ ь╖иьЖМ"),
-    "unifiedDelay": MessageLookupByLibrary.simpleMessage("эЖ╡эХй ьзАьЧ░"),
-    "unknown": MessageLookupByLibrary.simpleMessage("ьХМ ьИШ ьЧЖьЭМ"),
+    "ultra": MessageLookupByLibrary.simpleMessage("최고"),
+    "undo": MessageLookupByLibrary.simpleMessage("실행 취소"),
+    "unfoldAllGroups": MessageLookupByLibrary.simpleMessage("모든 그룹 펼치기"),
+    "unifiedDelay": MessageLookupByLibrary.simpleMessage("통합 지연"),
+    "unknown": MessageLookupByLibrary.simpleMessage("알 수 없음"),
     "unknownNetworkError": MessageLookupByLibrary.simpleMessage(
-      "ьХМ ьИШ ьЧЖыКФ ыДдэК╕ьЫМэБм ьШдыеШ",
+      "알 수 없는 네트워크 오류",
     ),
-    "unmaximize": MessageLookupByLibrary.simpleMessage(
-      "ьЭ┤ьаД эБмъ╕░ыбЬ ы│╡ьЫР",
-    ),
-    "unnamed": MessageLookupByLibrary.simpleMessage("ьЭ┤ыжД ьЧЖьЭМ"),
-    "unpinWindow": MessageLookupByLibrary.simpleMessage("ь░╜ ъ│аьаХ эХ┤ьаЬ"),
-    "update": MessageLookupByLibrary.simpleMessage("ьЧЕыН░ьЭ┤эК╕"),
-    "upload": MessageLookupByLibrary.simpleMessage("ьЧЕыбЬыУЬ"),
-    "uploadBandwidth": MessageLookupByLibrary.simpleMessage(
-      "ьЧЕыбЬыУЬ ыМАьЧнэПн",
-    ),
+    "unmaximize": MessageLookupByLibrary.simpleMessage("이전 크기로 복원"),
+    "unnamed": MessageLookupByLibrary.simpleMessage("이름 없음"),
+    "unpinWindow": MessageLookupByLibrary.simpleMessage("창 고정 해제"),
+    "update": MessageLookupByLibrary.simpleMessage("업데이트"),
+    "upload": MessageLookupByLibrary.simpleMessage("업로드"),
+    "uploadBandwidth": MessageLookupByLibrary.simpleMessage("업로드 대역폭"),
     "url": MessageLookupByLibrary.simpleMessage("URL"),
-    "urlTip": m80,
-    "useHosts": MessageLookupByLibrary.simpleMessage("hosts ьВмьЪй"),
-    "useSystemHosts": MessageLookupByLibrary.simpleMessage(
-      "ьЛЬьКдэЕЬ hosts ьВмьЪй",
-    ),
-    "usedShort": MessageLookupByLibrary.simpleMessage("ьВмьЪй"),
-    "usedTraffic": MessageLookupByLibrary.simpleMessage("ьВмьЪйэХЬ эК╕ыЮШэФ╜"),
-    "userAgent": MessageLookupByLibrary.simpleMessage("User-Agent"),
-    "username": MessageLookupByLibrary.simpleMessage("ьВмьЪйьЮР ьЭ┤ыжД"),
-    "value": MessageLookupByLibrary.simpleMessage("ъ░Т"),
-    "view": MessageLookupByLibrary.simpleMessage("ы│┤ъ╕░"),
-    "virtualIpv4": MessageLookupByLibrary.simpleMessage("ъ░АьГБ IPv4"),
-    "vividStyle": MessageLookupByLibrary.simpleMessage("ьДаыкЕ"),
+    "urlTip": m87,
+    "useHosts": MessageLookupByLibrary.simpleMessage("hosts 사용"),
+    "useSystemHosts": MessageLookupByLibrary.simpleMessage("시스템 hosts 사용"),
+    "usedShort": MessageLookupByLibrary.simpleMessage("사용"),
+    "usedTraffic": MessageLookupByLibrary.simpleMessage("사용한 트래픽"),
+    "username": MessageLookupByLibrary.simpleMessage("사용자 이름"),
+    "value": MessageLookupByLibrary.simpleMessage("값"),
+    "view": MessageLookupByLibrary.simpleMessage("보기"),
+    "virtualIpv4": MessageLookupByLibrary.simpleMessage("가상 IPv4"),
+    "vividStyle": MessageLookupByLibrary.simpleMessage("선명"),
     "vpnConfigChangeDetected": MessageLookupByLibrary.simpleMessage(
-      "VPN ъ┤Аыаи ъ╡мьД▒ ы│Аъ▓╜ьЭ┤ ъ░РьзАыРШьЧИьК╡ыЛИыЛд",
+      "VPN 관련 구성 변경이 감지되었습니다",
     ),
     "vpnEnableDesc": MessageLookupByLibrary.simpleMessage(
-      "VPNьЭА VpnServiceые╝ эЖ╡эХ┤ ыкиыУа ьЛЬьКдэЕЬ эК╕ыЮШэФ╜ьЭД ьЮРыПЩьЬ╝ыбЬ ыЭ╝ьЪ░эМЕэХйыЛИыЛд.",
+      "VPN은 VpnService를 통해 모든 시스템 트래픽을 자동으로 라우팅합니다.",
     ),
-    "webDAVConfiguration": MessageLookupByLibrary.simpleMessage(
-      "WebDAV ъ╡мьД▒",
-    ),
-    "whitelistMode": MessageLookupByLibrary.simpleMessage(
-      "эЩФьЭ┤эК╕ыжмьКдэК╕ ыкиыУЬ",
-    ),
-    "writeToSystem": MessageLookupByLibrary.simpleMessage(
-      "ьЛЬьКдэЕЬьЧР ъ╕░ыбЭ",
-    ),
+    "webDAVConfiguration": MessageLookupByLibrary.simpleMessage("WebDAV 구성"),
+    "website": MessageLookupByLibrary.simpleMessage("웹사이트"),
+    "whitelistMode": MessageLookupByLibrary.simpleMessage("화이트리스트 모드"),
+    "writeToSystem": MessageLookupByLibrary.simpleMessage("시스템에 기록"),
     "writeToSystemDesc": MessageLookupByLibrary.simpleMessage(
-      "ьЛЬьКдэЕЬьЧР ъ╕░ыбЭэХШый┤ ьЛЬьКдэЕЬ ьЛЬъ│ДыПД ьДдьаХэХйыЛИыЛд. AndroidьЧРьДЬыКФ ым┤ьЛЬыРйыЛИыЛд.",
+      "시스템에 기록하면 시스템 시계도 설정합니다. Android에서는 무시됩니다.",
     ),
-    "yearsAgo": m81,
-    "yearsAgoShort": m82,
-    "yes": MessageLookupByLibrary.simpleMessage("ьШИ"),
-    "zhCN": MessageLookupByLibrary.simpleMessage("ьдСъ╡ньЦ┤ ъ░Дь▓┤"),
+    "yearsAgo": m88,
+    "yearsAgoShort": m89,
+    "yes": MessageLookupByLibrary.simpleMessage("예"),
+    "zhCN": MessageLookupByLibrary.simpleMessage("중국어 간체"),
   };
 }

@@ -24,9 +24,7 @@ void selectGroupProxy(
         : null;
     final currentProxyName = group == null
         ? savedProxyName
-        : group.fixed == true
-        ? group.now
-        : null;
+        : (group.now?.isNotEmpty == true ? group.now : null);
     final nextProxyName = switch (isComputedSelected) {
       true => currentProxyName == proxyName ? '' : proxyName,
       false => proxyName,
@@ -146,12 +144,7 @@ class ProxyCard extends ConsumerWidget {
           ).select((name) => name == proxy.name),
         );
         final pinned = groupType == GroupType.Smart
-            ? inUse &&
-                  ref.watch(
-                    groupsProvider.select(
-                      (groups) => groups.getGroup(groupName)?.fixed == true,
-                    ),
-                  )
+            ? inUse && (ref.read(proxyNameProvider(groupName)) ?? '').isNotEmpty
             : groupType.isComputedSelected &&
                   ref.watch(
                     proxyNameProvider(

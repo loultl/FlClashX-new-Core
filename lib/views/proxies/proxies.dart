@@ -175,7 +175,7 @@ class _ProxiesViewState extends ConsumerState<ProxiesView> {
           if (_isTab && currentGroup?.type == GroupType.Smart)
             IconButtonData(
               glyph: AppGlyphs.sparkle,
-              tooltip: context.appLocalizations.smartDetails,
+              tooltip: 'Smart details',
               onPressed: () => showSmartDetails(context, currentGroup!.name),
             ),
           if (_isTab && !picker)
@@ -199,3 +199,4 @@ class _ProxiesViewState extends ConsumerState<ProxiesView> {
     );
   }
 }
+
