@@ -224,12 +224,8 @@ func handleConvertProxies(path string) ([]map[string]any, error) {
 	return convert.ConvertsV2Ray(buf)
 }
 
-// handleGetSmartWeights returns the per-node usage ranking for a Smart group.
-// The core does not expose these over its Go IPC bridge (mihomo keeps them in
-// its bbolt store and only serves them through the external controller), so we
-// return an empty list here: the UI shows its "no weights yet" hint instead of
-// an error. Enabling the external controller (Settings -> General) is the way
-// to inspect them through Zashboard.
+// handleGetSmartWeights remains as an empty IPC response for older clients.
+// The current Dart host reads rankings from the external controller API.
 func handleGetSmartWeights() []any {
 	return []any{}
 }

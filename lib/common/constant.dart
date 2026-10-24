@@ -10,6 +10,8 @@ import 'package:fl_clash/models/models.dart';
 import 'package:material_ui/material_ui.dart';
 
 const appName = 'FlClashX';
+const prizrakAppName = 'FlClashXprizrak';
+const prizrakUserAgentMarker = 'FlClashXprizrak';
 const appHelperService = 'FlClashXHelperService';
 const coreManifestName = 'manifest.json';
 const browserUa =

@@ -7,6 +7,8 @@ import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/enum/enum.dart';
+import 'package:fl_clash/models/models.dart';
+import 'package:fl_clash/providers/config.dart';
 import 'package:fl_clash/state.dart';
 import 'package:flutter/foundation.dart' show visibleForTesting;
 
@@ -47,13 +49,22 @@ class Request {
     Map<String, String> headers = const {},
   }) {
     final target = downloadTarget(url);
+    final selectedUserAgent = _read
+        ?.call<PatchClashConfig>(patchClashConfigProvider)
+        .globalUa;
     final cancelToken = CancelToken();
     return _clashDio
         .getUri<T>(
           target.uri,
           options: Options(
             responseType: responseType,
-            headers: {...headers, ...target.headers},
+            headers: {
+              'User-Agent': selectedUserAgent == prizrakUserAgentMarker
+                  ? globalState.prizrakUa
+                  : globalState.ua,
+              ...headers,
+              ...target.headers,
+            },
           ),
           cancelToken: cancelToken,
         )
@@ -100,6 +111,44 @@ class Request {
       );
       rethrow;
     }
+  }
+
+  /// Reads the Smart group's learned ranking from the running core controller.
+  Future<List<SmartWeight>> getSmartWeights(String groupName) async {
+    final read = _read;
+    if (read == null) {
+      throw StateError('Request is not attached to the application state');
+    }
+    final config = read(patchClashConfigProvider);
+    final controller = config.externalController.trim();
+    if (controller.isEmpty) return const [];
+    final uri = Uri.parse(
+      controller.contains('://') ? controller : 'http://$controller',
+    ).replace(
+      pathSegments: ['proxies', groupName, 'weights'],
+      query: null,
+      fragment: null,
+    );
+    final response = await dio.getUri<dynamic>(
+      uri,
+      options: Options(
+        responseType: ResponseType.json,
+        headers: {
+          if (config.secret.isNotEmpty)
+            HttpHeaders.authorizationHeader: 'Bearer ${config.secret}',
+        },
+      ),
+    );
+    final body = response.data;
+    final rows = body is List ? body : (body as Map?)?['weights'];
+    if (rows is! List) {
+      throw FormatException('Unexpected Smart weights response from $uri');
+    }
+    return List.unmodifiable(
+      rows.map(
+        (item) => SmartWeight.fromJson(Map<String, Object?>.from(item as Map)),
+      ),
+    );
   }
 
   /// Null when this build is current; throws when GitHub cannot be asked.

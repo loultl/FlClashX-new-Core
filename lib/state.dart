@@ -47,6 +47,11 @@ class GlobalState {
     coreVersion.isNotEmpty ? coreVersion : coreVersionDefine,
   );
 
+  String get prizrakUa => packageInfo.uaWith(
+    coreVersion.isNotEmpty ? coreVersion : coreVersionDefine,
+    applicationName: prizrakAppName,
+  );
+
   Future<T?> loadingRun<T>(
     FutureOr<T> Function() futureFunction, {
     String? title,

@@ -204,7 +204,7 @@ class CoreController {
   }
 
   Future<List<SmartWeight>> getSmartWeights(String groupName) {
-    return _interface.getSmartWeights(groupName);
+    return request.getSmartWeights(groupName);
   }
 
   Future<ChangeProxyResult> changeProxy(ChangeProxyParams changeProxyParams) {
