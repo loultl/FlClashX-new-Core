@@ -360,6 +360,106 @@ class AppLocalizations {
     return Intl.message('User-Agent', name: 'userAgent', desc: '', args: []);
   }
 
+  String get smartDetails {
+    return Intl.message(
+      'Smart details',
+      name: 'smartDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get smartLabel {
+    return Intl.message('Smart', name: 'smartLabel', desc: '', args: []);
+  }
+
+  String get smartRefresh {
+    return Intl.message('Refresh', name: 'smartRefresh', desc: '', args: []);
+  }
+
+  String get coreStopped {
+    return Intl.message(
+      'Core stopped',
+      name: 'coreStopped',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get failedToLoad {
+    return Intl.message(
+      'Failed to load',
+      name: 'failedToLoad',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get noMatchingNodes {
+    return Intl.message(
+      'No matching nodes',
+      name: 'noMatchingNodes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get noWeightsYet {
+    return Intl.message(
+      'No weights yet',
+      name: 'noWeightsYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get startCoreToCollectUsageData {
+    return Intl.message(
+      'Start the core to collect usage data.',
+      name: 'startCoreToCollectUsageData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get smartLogs {
+    return Intl.message('Smart logs', name: 'smartLogs', desc: '', args: []);
+  }
+
+  String get smartLogsDebugHint {
+    return Intl.message(
+      'No Smart logs yet. Set the core log level to debug to see detailed Smart activity.',
+      name: 'smartLogsDebugHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get scoreLabel {
+    return Intl.message('Score', name: 'scoreLabel', desc: '', args: []);
+  }
+
+  String get usageLabel {
+    return Intl.message('Usage', name: 'usageLabel', desc: '', args: []);
+  }
+
+  String get mostUsed {
+    return Intl.message('Most used', name: 'mostUsed', desc: '', args: []);
+  }
+
+  String get occasionallyUsed {
+    return Intl.message(
+      'Occasionally used',
+      name: 'occasionallyUsed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  String get rarelyUsed {
+    return Intl.message('Rarely used', name: 'rarelyUsed', desc: '', args: []);
+  }
+
   /// `More`
   String get more {
     return Intl.message('More', name: 'more', desc: '', args: []);

@@ -634,6 +634,27 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "defaultText": MessageLookupByLibrary.simpleMessage("Par défaut"),
     "userAgent": MessageLookupByLibrary.simpleMessage("Agent utilisateur"),
+    "smartDetails": MessageLookupByLibrary.simpleMessage("Détails Smart"),
+    "smartLabel": MessageLookupByLibrary.simpleMessage("Smart"),
+    "smartRefresh": MessageLookupByLibrary.simpleMessage("Actualiser"),
+    "coreStopped": MessageLookupByLibrary.simpleMessage("Le cœur est arrêté"),
+    "failedToLoad": MessageLookupByLibrary.simpleMessage("Échec du chargement"),
+    "noMatchingNodes": MessageLookupByLibrary.simpleMessage("Aucun résultat"),
+    "noWeightsYet": MessageLookupByLibrary.simpleMessage("Aucune pondération"),
+    "startCoreToCollectUsageData": MessageLookupByLibrary.simpleMessage(
+      "Démarrez le cœur pour collecter les données d’utilisation.",
+    ),
+    "smartLogs": MessageLookupByLibrary.simpleMessage("Journaux Smart"),
+    "smartLogsDebugHint": MessageLookupByLibrary.simpleMessage(
+      "Aucun journal Smart. Réglez le niveau de journalisation du cœur sur debug pour afficher l’activité détaillée.",
+    ),
+    "scoreLabel": MessageLookupByLibrary.simpleMessage("Score"),
+    "usageLabel": MessageLookupByLibrary.simpleMessage("Utilisation"),
+    "mostUsed": MessageLookupByLibrary.simpleMessage("Le plus utilisé"),
+    "occasionallyUsed": MessageLookupByLibrary.simpleMessage(
+      "Utilisé occasionnellement",
+    ),
+    "rarelyUsed": MessageLookupByLibrary.simpleMessage("Rarement utilisé"),
     "definitionNotMap": MessageLookupByLibrary.simpleMessage(
       "La configuration doit être un mappage YAML avec un nom et un type",
     ),

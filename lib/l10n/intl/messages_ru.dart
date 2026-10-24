@@ -616,6 +616,31 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "defaultText": MessageLookupByLibrary.simpleMessage("По умолчанию"),
     "userAgent": MessageLookupByLibrary.simpleMessage("User-Agent"),
+    "smartDetails": MessageLookupByLibrary.simpleMessage("Подробности Smart"),
+    "smartLabel": MessageLookupByLibrary.simpleMessage("Smart"),
+    "smartRefresh": MessageLookupByLibrary.simpleMessage("Обновить"),
+    "coreStopped": MessageLookupByLibrary.simpleMessage("Ядро остановлено"),
+    "failedToLoad": MessageLookupByLibrary.simpleMessage(
+      "Не удалось загрузить",
+    ),
+    "noMatchingNodes": MessageLookupByLibrary.simpleMessage("Совпадений нет"),
+    "noWeightsYet": MessageLookupByLibrary.simpleMessage(
+      "Данных о весах пока нет",
+    ),
+    "startCoreToCollectUsageData": MessageLookupByLibrary.simpleMessage(
+      "Запустите ядро, чтобы начать собирать данные об использовании.",
+    ),
+    "smartLogs": MessageLookupByLibrary.simpleMessage("Логи Smart"),
+    "smartLogsDebugHint": MessageLookupByLibrary.simpleMessage(
+      "Пока нет логов Smart. Установите уровень логирования ядра «debug», чтобы видеть подробности работы Smart.",
+    ),
+    "scoreLabel": MessageLookupByLibrary.simpleMessage("Оценка"),
+    "usageLabel": MessageLookupByLibrary.simpleMessage("Использование"),
+    "mostUsed": MessageLookupByLibrary.simpleMessage("Используется чаще всего"),
+    "occasionallyUsed": MessageLookupByLibrary.simpleMessage(
+      "Используется время от времени",
+    ),
+    "rarelyUsed": MessageLookupByLibrary.simpleMessage("Используется редко"),
     "definitionNotMap": MessageLookupByLibrary.simpleMessage(
       "Конфигурация должна быть YAML-словарём с полями name и type",
     ),

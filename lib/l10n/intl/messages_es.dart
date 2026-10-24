@@ -633,6 +633,31 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "defaultText": MessageLookupByLibrary.simpleMessage("Predeterminado"),
     "userAgent": MessageLookupByLibrary.simpleMessage("Agente de usuario"),
+    "smartDetails": MessageLookupByLibrary.simpleMessage("Detalles de Smart"),
+    "smartLabel": MessageLookupByLibrary.simpleMessage("Smart"),
+    "smartRefresh": MessageLookupByLibrary.simpleMessage("Actualizar"),
+    "coreStopped": MessageLookupByLibrary.simpleMessage(
+      "El núcleo está detenido",
+    ),
+    "failedToLoad": MessageLookupByLibrary.simpleMessage("No se pudo cargar"),
+    "noMatchingNodes": MessageLookupByLibrary.simpleMessage(
+      "No hay coincidencias",
+    ),
+    "noWeightsYet": MessageLookupByLibrary.simpleMessage(
+      "Aún no hay ponderaciones",
+    ),
+    "startCoreToCollectUsageData": MessageLookupByLibrary.simpleMessage(
+      "Inicia el núcleo para recopilar datos de uso.",
+    ),
+    "smartLogs": MessageLookupByLibrary.simpleMessage("Registros de Smart"),
+    "smartLogsDebugHint": MessageLookupByLibrary.simpleMessage(
+      "Aún no hay registros de Smart. Establece el nivel de registro del núcleo en debug para ver la actividad detallada.",
+    ),
+    "scoreLabel": MessageLookupByLibrary.simpleMessage("Puntuación"),
+    "usageLabel": MessageLookupByLibrary.simpleMessage("Uso"),
+    "mostUsed": MessageLookupByLibrary.simpleMessage("Más utilizado"),
+    "occasionallyUsed": MessageLookupByLibrary.simpleMessage("Uso ocasional"),
+    "rarelyUsed": MessageLookupByLibrary.simpleMessage("Poco utilizado"),
     "definitionNotMap": MessageLookupByLibrary.simpleMessage(
       "La configuración debe ser un mapa YAML con un nombre y un tipo",
     ),

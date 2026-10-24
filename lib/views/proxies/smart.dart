@@ -24,7 +24,7 @@ class SmartDetailsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tooltip(
-      message: 'Smart details',
+      message: context.appLocalizations.smartDetails,
       child: TextButton(
         style: TextButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -33,7 +33,7 @@ class SmartDetailsButton extends StatelessWidget {
           textStyle: style ?? AppTextStyle.footnote.of(context),
         ),
         onPressed: () => showSmartDetails(context, groupName),
-        child: Text('Smart'),
+        child: Text(context.appLocalizations.smart),
       ),
     );
   }
@@ -86,10 +86,10 @@ class _SmartDetailsViewState extends ConsumerState<SmartDetailsView>
         ? ref.watch(smartWeightsProvider(widget.groupName))
         : null;
     return CommonScaffold(
-      title: 'Smart details',
+      title: context.appLocalizations.smartDetails,
       primaryAction: IconButtonData(
         glyph: AppGlyphs.refresh,
-        tooltip: 'Refresh',
+        tooltip: context.appLocalizations.smartRefresh,
         isLoading: weights?.isLoading ?? false,
         onPressed: running && weights?.isLoading != true ? _refresh : null,
       ),
@@ -105,7 +105,7 @@ class _SmartDetailsViewState extends ConsumerState<SmartDetailsView>
               ),
             )
           : NullStatus(
-              label: 'Core stopped',
+              label: context.appLocalizations.coreStopped,
               illustration: NullStatusIllustration.proxies,
             ),
     );
@@ -127,9 +127,12 @@ class _SmartDetailsViewState extends ConsumerState<SmartDetailsView>
         .toList(growable: false);
     if (state.hasError && weights == null) {
       return NullStatus(
-        label: 'Failed to load',
+        label: context.appLocalizations.failedToLoad,
         illustration: NullStatusIllustration.error,
-        action: FilledButton(onPressed: _refresh, child: Text('Retry')),
+        action: FilledButton(
+          onPressed: _refresh,
+          child: Text(context.appLocalizations.retry),
+        ),
       );
     }
     final search = SearchQuery(_query);
@@ -139,7 +142,7 @@ class _SmartDetailsViewState extends ConsumerState<SmartDetailsView>
     return NullStatusSwitcher(
       isLoading: weights == null && state.isLoading,
       loadingStatus: NullStatus(
-        label: 'Loading',
+        label: context.appLocalizations.loading,
         illustration: NullStatusIllustration.proxies,
       ),
       child: CommonScrollBar(
@@ -159,15 +162,10 @@ class _SmartDetailsViewState extends ConsumerState<SmartDetailsView>
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     _SmartGroupStatus(groupName: widget.groupName),
-                    const SizedBox(height: 12),
-                    Text(
-                      'Nodes are ranked by usage; pinning overrides automatic selection.',
-                      style: AppTextStyle.footnote.of(context).toLight,
-                    ),
                     if (state.hasError) ...[
                       const SizedBox(height: 12),
                       Text(
-                        'Failed to load',
+                        context.appLocalizations.failedToLoad,
                         style: AppTextStyle.footnote
                             .of(context)
                             .copyWith(color: context.colorScheme.error),
@@ -177,15 +175,15 @@ class _SmartDetailsViewState extends ConsumerState<SmartDetailsView>
                       const SizedBox(height: 32),
                       Text(
                         search.isNotEmpty
-                            ? 'No matching nodes'
-                            : 'No weights yet',
+                            ? context.appLocalizations.noMatchingNodes
+                            : context.appLocalizations.noWeightsYet,
                         textAlign: TextAlign.center,
                         style: AppTextStyle.headline.of(context),
                       ),
                       if (search.isEmpty) ...[
                         const SizedBox(height: 8),
                         Text(
-                          'Start the core to collect usage data.',
+                          context.appLocalizations.startCoreToCollectUsageData,
                           textAlign: TextAlign.center,
                           style: AppTextStyle.footnote.of(context).toLight,
                         ),
@@ -215,13 +213,15 @@ class _SmartDetailsViewState extends ConsumerState<SmartDetailsView>
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: ExpansionTile(
                   tilePadding: EdgeInsets.zero,
-                  title: Text('Smart logs (${smartLogs.length})'),
+                  title: Text(
+                    '${context.appLocalizations.smartLogs} (${smartLogs.length})',
+                  ),
                   children: smartLogs.isEmpty
                       ? [
                           Padding(
                             padding: const EdgeInsets.only(bottom: 12),
                             child: Text(
-                              'No Smart logs yet. Set the core log level to debug to see detailed Smart activity.',
+                              context.appLocalizations.smartLogsDebugHint,
                               style: AppTextStyle.footnote.of(context).toLight,
                             ),
                           ),
@@ -254,64 +254,27 @@ class _SmartDetailsViewState extends ConsumerState<SmartDetailsView>
   }
 }
 
-class _SmartGroupStatus extends ConsumerWidget {
+class _SmartGroupStatus extends StatelessWidget {
   const _SmartGroupStatus({required this.groupName});
 
   final String groupName;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final saved = ref.watch(proxyNameProvider(groupName)) ?? '';
-    final pinned = saved.isNotEmpty;
-    final selected = ref.watch(selectedProxyNameProvider(groupName)) ?? '';
-    final node = selected == 'Smart - Select'
-        ? 'Automatic'
-        : selected.isEmpty
-        ? 'Unavailable'
-        : selected;
+  Widget build(BuildContext context) {
     return CommonCard(
       radius: AppCorner.xl,
       child: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
+          spacing: 12,
           children: [
-            Row(
-              spacing: 12,
-              children: [
-                GlyphIcon(
-                  pinned ? AppGlyphs.pin : AppGlyphs.sparkle,
-                  color: context.colorScheme.primary,
-                ),
-                Expanded(
-                  child: EmojiText(
-                    groupName,
-                    style: AppTextStyle.headline.of(context),
-                  ),
-                ),
-                Text(
-                  pinned ? 'Pinned' : 'Automatic',
-                  style: AppTextStyle.caption1.of(context, emphasized: true),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Current node',
-              style: AppTextStyle.caption1.of(context).toLight,
-            ),
-            const SizedBox(height: 4),
-            EmojiText(node, style: AppTextStyle.callout.of(context)),
-            if (pinned) ...[
-              const SizedBox(height: 16),
-              FilledButton.icon(
-                onPressed: () => ref
-                    .read(proxiesActionProvider.notifier)
-                    .changeProxyDebounce(groupName, ''),
-                icon: const GlyphIcon(AppGlyphs.sparkle, fill: 1),
-                label: Text('Restore automatic'),
+            GlyphIcon(AppGlyphs.sparkle, color: context.colorScheme.primary),
+            Expanded(
+              child: EmojiText(
+                groupName,
+                style: AppTextStyle.headline.of(context),
               ),
-            ],
+            ),
           ],
         ),
       ),
@@ -334,20 +297,12 @@ class _SmartWeightRow extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selected = ref.watch(selectedProxyNameProvider(groupName)) ?? '';
-    final saved = ref.watch(proxyNameProvider(groupName)) ?? '';
-    final group = ref.watch(
-      groupsProvider.select((groups) => groups.getGroup(groupName)),
-    );
-    final fixed = saved.isNotEmpty;
-    final pinned = fixed && selected == weight.name;
     final inUse = selected == weight.name;
-    final member =
-        group?.all.any((proxy) => proxy.name == weight.name) ?? false;
     final usage = switch (weight.rank) {
-      'MostUsed' => 'Most used',
-      'OccasionalUsed' => 'Occasionally used',
-      'RarelyUsed' => 'Rarely used',
-      _ => 'Unknown usage',
+      'MostUsed' => context.appLocalizations.mostUsed,
+      'OccasionalUsed' => context.appLocalizations.occasionallyUsed,
+      'RarelyUsed' => context.appLocalizations.rarelyUsed,
+      _ => context.appLocalizations.unknown,
     };
     return CommonCard(
       isSelected: inUse,
@@ -380,32 +335,16 @@ class _SmartWeightRow extends ConsumerWidget {
                     runSpacing: 4,
                     children: [
                       Text(
-                        '${'Score'}: ${weight.weight}',
+                        '${context.appLocalizations.scoreLabel}: ${weight.weight}',
                         style: AppTextStyle.caption1.of(context).toLight,
                       ),
                       Text(
-                        '${'Usage'}: $usage',
+                        '${context.appLocalizations.usageLabel}: $usage',
                         style: AppTextStyle.caption1.of(context).toLight,
                       ),
                     ],
                   ),
                 ],
-              ),
-            ),
-            TonalButtonTheme(
-              size: TonalButtonSize.compact,
-              child: IconButton(
-                isSelected: pinned,
-                tooltip: pinned ? 'Restore automatic' : 'Pin node',
-                onPressed: member
-                    ? () => ref
-                          .read(proxiesActionProvider.notifier)
-                          .changeProxyDebounce(
-                            groupName,
-                            pinned ? '' : weight.name,
-                          )
-                    : null,
-                icon: GlyphIcon(AppGlyphs.pin, fill: pinned ? 1 : 0),
               ),
             ),
           ],

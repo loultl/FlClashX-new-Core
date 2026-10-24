@@ -592,6 +592,29 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "defaultText": MessageLookupByLibrary.simpleMessage("Default"),
     "userAgent": MessageLookupByLibrary.simpleMessage("User-Agent"),
+    "smartDetails": MessageLookupByLibrary.simpleMessage("Smart details"),
+    "smartLabel": MessageLookupByLibrary.simpleMessage("Smart"),
+    "smartRefresh": MessageLookupByLibrary.simpleMessage("Refresh"),
+    "coreStopped": MessageLookupByLibrary.simpleMessage("Core stopped"),
+    "failedToLoad": MessageLookupByLibrary.simpleMessage("Failed to load"),
+    "noMatchingNodes": MessageLookupByLibrary.simpleMessage(
+      "No matching nodes",
+    ),
+    "noWeightsYet": MessageLookupByLibrary.simpleMessage("No weights yet"),
+    "startCoreToCollectUsageData": MessageLookupByLibrary.simpleMessage(
+      "Start the core to collect usage data.",
+    ),
+    "smartLogs": MessageLookupByLibrary.simpleMessage("Smart logs"),
+    "smartLogsDebugHint": MessageLookupByLibrary.simpleMessage(
+      "No Smart logs yet. Set the core log level to debug to see detailed Smart activity.",
+    ),
+    "scoreLabel": MessageLookupByLibrary.simpleMessage("Score"),
+    "usageLabel": MessageLookupByLibrary.simpleMessage("Usage"),
+    "mostUsed": MessageLookupByLibrary.simpleMessage("Most used"),
+    "occasionallyUsed": MessageLookupByLibrary.simpleMessage(
+      "Occasionally used",
+    ),
+    "rarelyUsed": MessageLookupByLibrary.simpleMessage("Rarely used"),
     "definitionNotMap": MessageLookupByLibrary.simpleMessage(
       "The configuration must be a YAML mapping with a name and a type",
     ),
