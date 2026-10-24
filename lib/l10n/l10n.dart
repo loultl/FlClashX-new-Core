@@ -937,7 +937,12 @@ class AppLocalizations {
 
   /// `Starting VPNтАж`
   String get startVpn {
-    return Intl.message('Starting VPNтАж', name: 'startVpn', desc: '', args: []);
+    return Intl.message(
+      'Starting VPNтАж',
+      name: 'startVpn',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Stopping VPNтАж`
@@ -4017,7 +4022,12 @@ class AppLocalizations {
 
   /// `ConnectingтАж`
   String get connecting {
-    return Intl.message('ConnectingтАж', name: 'connecting', desc: '', args: []);
+    return Intl.message(
+      'ConnectingтАж',
+      name: 'connecting',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Are you sure you want to restart the core?`

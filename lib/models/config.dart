@@ -596,5 +596,3 @@ Map<String, Object?> _withLegacyRouteMode(Map<String, Object?> json) {
       },
   };
 }
-
-

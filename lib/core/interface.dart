@@ -424,6 +424,7 @@ abstract class CoreHandlerInterface with CoreInterface {
       ),
     );
   }
+
   @override
   Future<ChangeProxyResult> changeProxy(
     ChangeProxyParams changeProxyParams,
@@ -659,4 +660,3 @@ abstract class CoreHandlerInterface with CoreInterface {
     return await _invokeMethod<String>(method: CoreMethod.getCoreVersion) ?? '';
   }
 }
-

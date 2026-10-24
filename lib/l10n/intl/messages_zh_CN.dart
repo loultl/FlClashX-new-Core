@@ -20,7 +20,8 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'zh_CN';
 
-  static String m0(count, skipped) => "х░Жц╖╗хКа ${count} щб╣я╝Мш╖│ш┐З ${skipped} щб╣х╖▓хнШхЬи";
+  static String m0(count, skipped) =>
+      "х░Жц╖╗хКа ${count} щб╣я╝Мш╖│ш┐З ${skipped} щб╣х╖▓хнШхЬи";
 
   static String m1(detail) => "ц╕ЕщЩдцХ░цНохд▒ш┤ея╝Ъ${detail}";
 
@@ -40,13 +41,16 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m7(proxy, target) =>
       "${proxy} ч╗П ${target} цЛихП╖я╝МшАМ ${target} хПИф╝ЪхЫЮхИ░ ${proxy}я╝Мх╜вцИРчОпш╖п";
 
-  static String m8(name) => "хРНчз░ ${name} х╖▓швлхЕ╢ф╗Цф╗гчРЖцИЦчнЦчХеч╗Дф╜┐чФи";
+  static String m8(name) =>
+      "хРНчз░ ${name} х╖▓швлхЕ╢ф╗Цф╗гчРЖцИЦчнЦчХеч╗Дф╜┐чФи";
 
   static String m9(path) => "чнЦчХеч╗Дф╣ЛщЧ┤хнШхЬих╛кчОпх╝ХчФия╝Ъ${path}";
 
-  static String m10(name) => "чй║ч╗ДхЕЬх║ХхПкшГ╜цШпф╗гчРЖя╝М${name} ф╕НхнШхЬицИЦцШпчнЦчХеч╗Д";
+  static String m10(name) =>
+      "чй║ч╗ДхЕЬх║ХхПкшГ╜цШпф╗гчРЖя╝М${name} ф╕НхнШхЬицИЦцШпчнЦчХеч╗Д";
 
-  static String m11(name, message) => "${name}ф╕НцШпцЬЙцХИчЪДцнгхИЩя╝Ъ${message}";
+  static String m11(name, message) =>
+      "${name}ф╕НцШпцЬЙцХИчЪДцнгхИЩя╝Ъ${message}";
 
   static String m12(name) => "цЛихП╖ф╗гчРЖ ${name} ф╕НхнШхЬи";
 
@@ -56,7 +60,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m15(name) => "${name} цШпхЖЕч╜очнЦчХехРНя╝Мф╕НшГ╜хЬицндф╜┐чФи";
 
-  static String m16(count) => "${count} щб╣хнШхЬищЧощвШя╝Мх║ФчФищЕНч╜охПпшГ╜хд▒ш┤е";
+  static String m16(count) =>
+      "${count} щб╣хнШхЬищЧощвШя╝Мх║ФчФищЕНч╜охПпшГ╜хд▒ш┤е";
 
   static String m17(count) => "${count} хдйхЙН";
 
@@ -68,7 +73,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m21(label) => "${label}шпжцГЕ";
 
-  static String m22(name) => "ч╗П ${name} цЛихП╖ф╝Ъч╗ХхЫЮф╜┐чФихоГчЪДф╗гчРЖя╝Мш┐ЮцОех╖▓ф╕нцнв";
+  static String m22(name) =>
+      "ч╗П ${name} цЛихП╖ф╝Ъч╗ХхЫЮф╜┐чФихоГчЪДф╗гчРЖя╝Мш┐ЮцОех╖▓ф╕нцнв";
 
   static String m23(label) => "${label}ф╕НшГ╜ф╕║чй║";
 
@@ -86,7 +92,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m30(count) => "${count} ш╢ЕцЧ╢";
 
-  static String m31(action) => "х╖▓швлтАЬ${action}тАЭф╜┐чФия╝Мф┐ЭхнШхРОх░Жчз╗хИ░ш┐ЩщЗМ";
+  static String m31(action) =>
+      "х╖▓швлтАЬ${action}тАЭф╜┐чФия╝Мф┐ЭхнШхРОх░Жчз╗хИ░ш┐ЩщЗМ";
 
   static String m32(modifiers) => "шЗ│х░СхМЕхРл ${modifiers} ф╕нчЪДф╕Аф╕к";
 
@@ -98,7 +105,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m36(proxyName) => "${proxyName} цШпф╕Аф╕кцЧацХИчЪДф╗гчРЖ";
 
-  static String m37(providerName) => "${providerName} цШпф╕Аф╕кцЧацХИчЪДф╗гчРЖщЫЖ";
+  static String m37(providerName) =>
+      "${providerName} цШпф╕Аф╕кцЧацХИчЪДф╗гчРЖщЫЖ";
 
   static String m38(ruleSet) => "${ruleSet} ф╕НцШпцЬЙцХИчЪДшзДхИЩщЫЖ";
 
@@ -123,19 +131,23 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m48(count) => "${count} ф╕кцЬИхЙН";
 
-  static String m49(code) => "цЬНхКбхЩицЛТч╗Эшо┐щЧоя╝ИHTTP ${code}я╝Йя╝МщУ╛цОехПпшГ╜х╖▓ш┐ЗцЬЯцИЦхЗнцНоцЬЙшпп";
+  static String m49(code) =>
+      "цЬНхКбхЩицЛТч╗Эшо┐щЧоя╝ИHTTP ${code}я╝Йя╝МщУ╛цОехПпшГ╜х╖▓ш┐ЗцЬЯцИЦхЗнцНоцЬЙшпп";
 
   static String m50(code) => "цЬНхКбхЩицЛТч╗Эф║Жшп╖ц▒Вя╝ИHTTP ${code}я╝Й";
 
-  static String m51(code) => "шпехЬ░хЭАф╕Лц▓бцЬЙхЖЕхо╣я╝ИHTTP ${code}я╝Йя╝Мшп╖чбошодщУ╛цОецШпхРжцнгчбо";
+  static String m51(code) =>
+      "шпехЬ░хЭАф╕Лц▓бцЬЙхЖЕхо╣я╝ИHTTP ${code}я╝Йя╝Мшп╖чбошодщУ╛цОецШпхРжцнгчбо";
 
   static String m52(detail) => "ч╜Сч╗Ьшп╖ц▒Вхд▒ш┤ея╝Ъ${detail}";
 
-  static String m53(code) => "цЬНхКбхЩихЗ║чО░щЧощвШя╝ИHTTP ${code}я╝Йя╝Мшп╖чиНхРОхЖНшпХ";
+  static String m53(code) =>
+      "цЬНхКбхЩихЗ║чО░щЧощвШя╝ИHTTP ${code}я╝Йя╝Мшп╖чиНхРОхЖНшпХ";
 
   static String m54(label) => "цЪВцЧа${label}";
 
-  static String m55(label, min, max) => "${label}х┐Ещб╗хЬи ${min} хИ░ ${max} ф╣ЛщЧ┤";
+  static String m55(label, min, max) =>
+      "${label}х┐Ещб╗хЬи ${min} хИ░ ${max} ф╣ЛщЧ┤";
 
   static String m56(label) => "${label}х┐Ещб╗ф╕║цХ░хнЧ";
 
@@ -214,10 +226,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "accessControlNotAllowDesc": MessageLookupByLibrary.simpleMessage(
       "щАЙф╕нх║ФчФих░Жф╝ЪшвлцОТщЩдхЬиVPNф╣ЛхдЦ",
     ),
-    "accessControlSettings": MessageLookupByLibrary.simpleMessage("шо┐щЧоцОзхИ╢шо╛ч╜о"),
+    "accessControlSettings": MessageLookupByLibrary.simpleMessage(
+      "шо┐щЧоцОзхИ╢шо╛ч╜о",
+    ),
     "account": MessageLookupByLibrary.simpleMessage("ш┤жхП╖"),
     "action": MessageLookupByLibrary.simpleMessage("цУНф╜Ь"),
-    "actionDelayTest": MessageLookupByLibrary.simpleMessage("ц╡ЛшпХхЕищГих╗╢ш┐Я"),
+    "actionDelayTest": MessageLookupByLibrary.simpleMessage(
+      "ц╡ЛшпХхЕищГих╗╢ш┐Я",
+    ),
     "actionDirectMode": MessageLookupByLibrary.simpleMessage("чЫ┤ш┐Юцибх╝П"),
     "actionGlobalMode": MessageLookupByLibrary.simpleMessage("хЕих▒Ацибх╝П"),
     "actionMode": MessageLookupByLibrary.simpleMessage("хИЗцНвцибх╝П"),
@@ -225,7 +241,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "actionRuleMode": MessageLookupByLibrary.simpleMessage("шзДхИЩцибх╝П"),
     "actionStart": MessageLookupByLibrary.simpleMessage("хРпхКи/хБЬцнв"),
     "actionTun": MessageLookupByLibrary.simpleMessage("шЩЪцЛЯч╜СхНб"),
-    "actionUpdateProfiles": MessageLookupByLibrary.simpleMessage("цЫ┤цЦ░хЕищГищЕНч╜о"),
+    "actionUpdateProfiles": MessageLookupByLibrary.simpleMessage(
+      "цЫ┤цЦ░хЕищГищЕНч╜о",
+    ),
     "actionView": MessageLookupByLibrary.simpleMessage("цШ╛чд║/щЪРшЧП"),
     "add": MessageLookupByLibrary.simpleMessage("ц╖╗хКа"),
     "addCustomProxy": MessageLookupByLibrary.simpleMessage("ц╖╗хКаф╗гчРЖ"),
@@ -238,34 +256,50 @@ class MessageLookup extends MessageLookupByLibrary {
     "addSettingEntry": MessageLookupByLibrary.simpleMessage("ц╖╗хКашо╛ч╜ощб╣"),
     "addSsid": MessageLookupByLibrary.simpleMessage("ц╖╗хКаSSID"),
     "addedRules": MessageLookupByLibrary.simpleMessage("щЩДхКашзДхИЩ"),
-    "additionalParameters": MessageLookupByLibrary.simpleMessage("щЩДхКахПВцХ░"),
+    "additionalParameters": MessageLookupByLibrary.simpleMessage(
+      "щЩДхКахПВцХ░",
+    ),
     "additionalPrefix": MessageLookupByLibrary.simpleMessage("хРНчз░хЙНч╝А"),
     "additionalSuffix": MessageLookupByLibrary.simpleMessage("хРНчз░хРОч╝А"),
     "address": MessageLookupByLibrary.simpleMessage("хЬ░хЭА"),
-    "addressHelp": MessageLookupByLibrary.simpleMessage("WebDAVцЬНхКбхЩихЬ░хЭА"),
-    "addressTip": MessageLookupByLibrary.simpleMessage("шп╖ш╛УхЕецЬЙцХИчЪДWebDAVхЬ░хЭА"),
+    "addressHelp": MessageLookupByLibrary.simpleMessage(
+      "WebDAVцЬНхКбхЩихЬ░хЭА",
+    ),
+    "addressTip": MessageLookupByLibrary.simpleMessage(
+      "шп╖ш╛УхЕецЬЙцХИчЪДWebDAVхЬ░хЭА",
+    ),
     "advancedConfig": MessageLookupByLibrary.simpleMessage("ш┐ЫщШ╢щЕНч╜о"),
     "advancedConfigDesc": MessageLookupByLibrary.simpleMessage(
       "ш┐ЫщШ╢щЕНч╜охМЕхРлч╜Сч╗ЬуАБDNSуАБщЩДхКашзДхИЩф╕ОшДЪцЬмуАВ",
     ),
-    "ageEncryptedProfile": MessageLookupByLibrary.simpleMessage("щЕНч╜ох╖▓хКахпЖ"),
+    "ageEncryptedProfile": MessageLookupByLibrary.simpleMessage(
+      "щЕНч╜ох╖▓хКахпЖ",
+    ),
     "ageSecretKey": MessageLookupByLibrary.simpleMessage("age чзБщТе"),
     "ageSecretKeyRequiredTip": MessageLookupByLibrary.simpleMessage(
       "шпещЕНч╜ох╖▓чФи age хКахпЖя╝МщЬАшжБ age чзБщТецЙНшГ╜шзгхпЖ",
     ),
     "agree": MessageLookupByLibrary.simpleMessage("хРМцДП"),
-    "allReferencedProxies": MessageLookupByLibrary.simpleMessage("хЕищГишвлх╝ХчФичЪДф╗гчРЖ"),
+    "allReferencedProxies": MessageLookupByLibrary.simpleMessage(
+      "хЕищГишвлх╝ХчФичЪДф╗гчРЖ",
+    ),
     "allReferencedProxyProviders": MessageLookupByLibrary.simpleMessage(
       "хЕищГишвлх╝ХчФичЪДф╗гчРЖщЫЖ",
     ),
-    "allowBypass": MessageLookupByLibrary.simpleMessage("хЕБшо╕х║ФчФич╗Хш┐ЗVPN"),
+    "allowBypass": MessageLookupByLibrary.simpleMessage(
+      "хЕБшо╕х║ФчФич╗Хш┐ЗVPN",
+    ),
     "allowLan": MessageLookupByLibrary.simpleMessage("х▒АхЯЯч╜Сф╗гчРЖ"),
     "allowedIps": MessageLookupByLibrary.simpleMessage("хЕБшо╕чЪД IP"),
     "answers": MessageLookupByLibrary.simpleMessage("х║ФчнФ"),
     "app": MessageLookupByLibrary.simpleMessage("х║ФчФи"),
-    "appAccessControl": MessageLookupByLibrary.simpleMessage("х║ФчФишо┐щЧоцОзхИ╢"),
+    "appAccessControl": MessageLookupByLibrary.simpleMessage(
+      "х║ФчФишо┐щЧоцОзхИ╢",
+    ),
     "appIconDesign": MessageLookupByLibrary.simpleMessage("х║ФчФихЫ╛цаЗшо╛шоб"),
-    "appProxiesEmpty": MessageLookupByLibrary.simpleMessage("цЪВцЧацЬмхЬ░ф╗гчРЖ"),
+    "appProxiesEmpty": MessageLookupByLibrary.simpleMessage(
+      "цЪВцЧацЬмхЬ░ф╗гчРЖ",
+    ),
     "appendSystemDns": MessageLookupByLibrary.simpleMessage("ш┐╜хКач│╗ч╗ЯDNS"),
     "authentication": MessageLookupByLibrary.simpleMessage("шодшпБ"),
     "authenticationDesc": MessageLookupByLibrary.simpleMessage(
@@ -277,18 +311,28 @@ class MessageLookup extends MessageLookupByLibrary {
     "authorize": MessageLookupByLibrary.simpleMessage("цОИцЭГ"),
     "authorized": MessageLookupByLibrary.simpleMessage("х╖▓цОИцЭГ"),
     "auto": MessageLookupByLibrary.simpleMessage("шЗкхКи"),
-    "autoCheckUpdate": MessageLookupByLibrary.simpleMessage("шЗкхКицгАцЯецЫ┤цЦ░"),
-    "autoCloseConnections": MessageLookupByLibrary.simpleMessage("шЗкхКихЕ│щЧнш┐ЮцОе"),
+    "autoCheckUpdate": MessageLookupByLibrary.simpleMessage(
+      "шЗкхКицгАцЯецЫ┤цЦ░",
+    ),
+    "autoCloseConnections": MessageLookupByLibrary.simpleMessage(
+      "шЗкхКихЕ│щЧнш┐ЮцОе",
+    ),
     "autoCloseConnectionsDesc": MessageLookupByLibrary.simpleMessage(
       "шЗкхКихЕ│щЧнш┐ЮцОеф╝ЪхЬихИЗцНвф╗гчРЖхРОцЦнх╝Ах╖▓цЬЙш┐ЮцОеуАВ",
     ),
     "autoInclude": MessageLookupByLibrary.simpleMessage("шЗкхКихМЕхРл"),
     "autoLaunch": MessageLookupByLibrary.simpleMessage("шЗкхРпхКи"),
     "autoRun": MessageLookupByLibrary.simpleMessage("шЗкхКиш┐РшбМ"),
-    "autoRunDesc": MessageLookupByLibrary.simpleMessage("шЗкхКиш┐РшбМф╝ЪхЬицЙУх╝Ах║ФчФицЧ╢хРпхКиф╗гчРЖуАВ"),
-    "autoSetSystemDns": MessageLookupByLibrary.simpleMessage("шЗкхКишо╛ч╜оч│╗ч╗ЯDNS"),
+    "autoRunDesc": MessageLookupByLibrary.simpleMessage(
+      "шЗкхКиш┐РшбМф╝ЪхЬицЙУх╝Ах║ФчФицЧ╢хРпхКиф╗гчРЖуАВ",
+    ),
+    "autoSetSystemDns": MessageLookupByLibrary.simpleMessage(
+      "шЗкхКишо╛ч╜оч│╗ч╗ЯDNS",
+    ),
     "autoUpdate": MessageLookupByLibrary.simpleMessage("шЗкхКицЫ┤цЦ░"),
-    "autoUpdateInterval": MessageLookupByLibrary.simpleMessage("шЗкхКицЫ┤цЦ░щЧ┤щЪФ"),
+    "autoUpdateInterval": MessageLookupByLibrary.simpleMessage(
+      "шЗкхКицЫ┤цЦ░щЧ┤щЪФ",
+    ),
     "back": MessageLookupByLibrary.simpleMessage("ш┐ФхЫЮ"),
     "backup": MessageLookupByLibrary.simpleMessage("хдЗф╗╜"),
     "backupAndRestore": MessageLookupByLibrary.simpleMessage("хдЗф╗╜ф╕ОцБвхдН"),
@@ -300,9 +344,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "basicStrategy": MessageLookupByLibrary.simpleMessage("хЯ║чбАчнЦчХе"),
     "batchAdd": MessageLookupByLibrary.simpleMessage("цЙ╣щЗПц╖╗хКа"),
     "batchImport": MessageLookupByLibrary.simpleMessage("цЙ╣щЗПхп╝хЕе"),
-    "batchLinkInputTip": MessageLookupByLibrary.simpleMessage("цпПшбМф╕Аф╕кщУ╛цОе"),
-    "batchListInputTip": MessageLookupByLibrary.simpleMessage("цпПшбМф╕Ащб╣я╝Мф╣ЯхПпчФищАЧхП╖хИЖщЪФ"),
-    "batchMapInputTip": MessageLookupByLibrary.simpleMessage("цпПшбМф╕АцЭбя╝МщФохТМхА╝ф╣ЛщЧ┤чФичй║ца╝хИЖщЪФ"),
+    "batchLinkInputTip": MessageLookupByLibrary.simpleMessage(
+      "цпПшбМф╕Аф╕кщУ╛цОе",
+    ),
+    "batchListInputTip": MessageLookupByLibrary.simpleMessage(
+      "цпПшбМф╕Ащб╣я╝Мф╣ЯхПпчФищАЧхП╖хИЖщЪФ",
+    ),
+    "batchMapInputTip": MessageLookupByLibrary.simpleMessage(
+      "цпПшбМф╕АцЭбя╝МщФохТМхА╝ф╣ЛщЧ┤чФичй║ца╝хИЖщЪФ",
+    ),
     "batchPreviewTip": m0,
     "batchUrlInputTip": MessageLookupByLibrary.simpleMessage("цпПшбМф╕Аф╕кURL"),
     "batteryOptimizationDesc": MessageLookupByLibrary.simpleMessage(
@@ -316,19 +366,27 @@ class MessageLookup extends MessageLookupByLibrary {
     "bypassDomainDesc": MessageLookupByLibrary.simpleMessage(
       "цОТщЩдхЯЯхРНф╗ЕхЬич│╗ч╗Яф╗гчРЖхРпчФицЧ╢чФЯцХИуАВ",
     ),
-    "bypassPrivateRoute": MessageLookupByLibrary.simpleMessage("ч╗Хш┐ЗчзБцЬЙш╖пчФ▒хЬ░хЭА"),
+    "bypassPrivateRoute": MessageLookupByLibrary.simpleMessage(
+      "ч╗Хш┐ЗчзБцЬЙш╖пчФ▒хЬ░хЭА",
+    ),
     "bypassPrivateRouteDesc": MessageLookupByLibrary.simpleMessage(
       "х╝АхРпч╗Хш┐ЗчзБцЬЙш╖пчФ▒хЬ░хЭАхРОя╝Мх▒АхЯЯч╜СуАБхЫЮчОпхТМч╗ДцТнхЬ░хЭАф╕Нч╗Пш┐ЗшЩЪцЛЯч╜СхНбуАВ",
     ),
     "cache": MessageLookupByLibrary.simpleMessage("ч╝УхнШ"),
     "cacheAlgorithm": MessageLookupByLibrary.simpleMessage("ч╝УхнШчоЧц│Х"),
-    "cacheCorrupt": MessageLookupByLibrary.simpleMessage("ч╝УхнШх╖▓цНЯхЭПя╝МцШпхРжц╕Ечй║я╝Я"),
+    "cacheCorrupt": MessageLookupByLibrary.simpleMessage(
+      "ч╝УхнШх╖▓цНЯхЭПя╝МцШпхРжц╕Ечй║я╝Я",
+    ),
     "cacheMaxSize": MessageLookupByLibrary.simpleMessage("ч╝УхнШхдзх░П"),
     "cameraPermissionDesc": MessageLookupByLibrary.simpleMessage(
       "шп╖хЬич│╗ч╗Яшо╛ч╜оф╕нхЕБшо╕шо┐щЧочЫ╕цЬ║ф╗ецЙлцППф║Мч╗┤чаБя╝МцИЦф╗ОчЫ╕хЖМщАЙцЛйф║Мч╗┤чаБхЫ╛чЙЗуАВ",
     ),
-    "cameraPermissionRequired": MessageLookupByLibrary.simpleMessage("щЬАшжБчЫ╕цЬ║цЭГщЩР"),
-    "cameraUnavailable": MessageLookupByLibrary.simpleMessage("чЫ╕цЬ║ф╕НхПпчФи"),
+    "cameraPermissionRequired": MessageLookupByLibrary.simpleMessage(
+      "щЬАшжБчЫ╕цЬ║цЭГщЩР",
+    ),
+    "cameraUnavailable": MessageLookupByLibrary.simpleMessage(
+      "чЫ╕цЬ║ф╕НхПпчФи",
+    ),
     "cancel": MessageLookupByLibrary.simpleMessage("хПЦц╢И"),
     "cancelSelectAll": MessageLookupByLibrary.simpleMessage("хПЦц╢ИхЕищАЙ"),
     "cannotSave": MessageLookupByLibrary.simpleMessage("цЧац│Хф┐ЭхнШ"),
@@ -338,14 +396,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "changelogBreaking": MessageLookupByLibrary.simpleMessage("щЗНхдзхПШцЫ┤"),
     "changelogFeatures": MessageLookupByLibrary.simpleMessage("цЦ░хКЯшГ╜"),
     "changelogFixes": MessageLookupByLibrary.simpleMessage("щЧощвШф┐охдН"),
-    "changelogPerformance": MessageLookupByLibrary.simpleMessage("цАзшГ╜ф╝ШхМЦ"),
+    "changelogPerformance": MessageLookupByLibrary.simpleMessage(
+      "цАзшГ╜ф╝ШхМЦ",
+    ),
     "changelogReverts": MessageLookupByLibrary.simpleMessage("х╖▓хЫЮц╗Ъ"),
-    "checkCertificate": MessageLookupByLibrary.simpleMessage("цабщкМ TLS шпБф╣ж"),
+    "checkCertificate": MessageLookupByLibrary.simpleMessage(
+      "цабщкМ TLS шпБф╣ж",
+    ),
     "checkCertificateDesc": MessageLookupByLibrary.simpleMessage(
       "хЕ│щЧншпБф╣жцабщкМхРОя╝МшовщШЕхТМхдЗф╗╜хПпшГ╜щБнф╕нщЧ┤ф║║цФ╗хЗ╗уАВ",
     ),
     "checkUpdate": MessageLookupByLibrary.simpleMessage("цгАцЯецЫ┤цЦ░"),
-    "checkUpdateError": MessageLookupByLibrary.simpleMessage("х╜УхЙНх║ФчФих╖▓ч╗ПцШпцЬАцЦ░чЙИф║Ж"),
+    "checkUpdateError": MessageLookupByLibrary.simpleMessage(
+      "х╜УхЙНх║ФчФих╖▓ч╗ПцШпцЬАцЦ░чЙИф║Ж",
+    ),
     "cipher": MessageLookupByLibrary.simpleMessage("хКахпЖцЦ╣х╝П"),
     "clearData": MessageLookupByLibrary.simpleMessage("ц╕ЕщЩдцХ░цНо"),
     "clearDataAndExitTip": MessageLookupByLibrary.simpleMessage(
@@ -353,7 +417,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "clearDataFailed": m1,
     "clearSearch": MessageLookupByLibrary.simpleMessage("ц╕ЕщЩдцРЬч┤в"),
-    "clientFingerprint": MessageLookupByLibrary.simpleMessage("ховцИ╖члпцМЗч║╣"),
+    "clientFingerprint": MessageLookupByLibrary.simpleMessage(
+      "ховцИ╖члпцМЗч║╣",
+    ),
     "clipboardExport": MessageLookupByLibrary.simpleMessage("хп╝хЗ║хЙкш┤┤цЭ┐"),
     "clipboardImport": MessageLookupByLibrary.simpleMessage("хЙкш┤┤цЭ┐хп╝хЕе"),
     "clipboardWriteFailed": MessageLookupByLibrary.simpleMessage(
@@ -367,14 +433,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "compact": MessageLookupByLibrary.simpleMessage("ч┤зхЗС"),
     "compatible": MessageLookupByLibrary.simpleMessage("хЕ╝хо╣цибх╝П"),
     "confirm": MessageLookupByLibrary.simpleMessage("чбохоЪ"),
-    "confirmClearAllData": MessageLookupByLibrary.simpleMessage("чбохоЪшжБц╕ЕщЩдцЙАцЬЙцХ░цНоя╝Я"),
+    "confirmClearAllData": MessageLookupByLibrary.simpleMessage(
+      "чбохоЪшжБц╕ЕщЩдцЙАцЬЙцХ░цНоя╝Я",
+    ),
     "confirmDeleteProxyGroup": MessageLookupByLibrary.simpleMessage(
       "чбохоЪшжБхИащЩдх╜УхЙНчнЦчХеч╗ДхРЧя╝Я",
     ),
-    "confirmExitWindow": MessageLookupByLibrary.simpleMessage("чбохоЪшжБщААхЗ║х╜УхЙНчкЧхПгхРЧя╝Я"),
-    "confirmForceCrashCore": MessageLookupByLibrary.simpleMessage("чбохоЪшжБх╝║хИ╢х┤йц║Гца╕х┐Гя╝Я"),
+    "confirmExitWindow": MessageLookupByLibrary.simpleMessage(
+      "чбохоЪшжБщААхЗ║х╜УхЙНчкЧхПгхРЧя╝Я",
+    ),
+    "confirmForceCrashCore": MessageLookupByLibrary.simpleMessage(
+      "чбохоЪшжБх╝║хИ╢х┤йц║Гца╕х┐Гя╝Я",
+    ),
     "congestionControl": MessageLookupByLibrary.simpleMessage("цЛехбЮцОзхИ╢"),
-    "congestionController": MessageLookupByLibrary.simpleMessage("TCP цЛехбЮцОзхИ╢"),
+    "congestionController": MessageLookupByLibrary.simpleMessage(
+      "TCP цЛехбЮцОзхИ╢",
+    ),
     "congestionControllerDesc": MessageLookupByLibrary.simpleMessage(
       "TCP цЛехбЮцОзхИ╢ф╗ЕхЬи mips цаИчФЯцХИуАВ",
     ),
@@ -388,8 +462,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "connections": MessageLookupByLibrary.simpleMessage("ш┐ЮцОе"),
     "connectivity": MessageLookupByLibrary.simpleMessage("ш┐ЮщАЪцАзя╝Ъ"),
     "content": MessageLookupByLibrary.simpleMessage("хЖЕхо╣"),
-    "contentNotEmpty": MessageLookupByLibrary.simpleMessage("хЖЕхо╣ф╕НшГ╜ф╕║чй║"),
-    "controlGlobalAddedRules": MessageLookupByLibrary.simpleMessage("цОзхИ╢хЕих▒АщЩДхКашзДхИЩ"),
+    "contentNotEmpty": MessageLookupByLibrary.simpleMessage(
+      "хЖЕхо╣ф╕НшГ╜ф╕║чй║",
+    ),
+    "controlGlobalAddedRules": MessageLookupByLibrary.simpleMessage(
+      "цОзхИ╢хЕих▒АщЩДхКашзДхИЩ",
+    ),
     "copy": MessageLookupByLibrary.simpleMessage("хдНхИ╢"),
     "copyEnvVar": MessageLookupByLibrary.simpleMessage("хдНхИ╢чОпхвГхПШщЗП"),
     "copyLink": MessageLookupByLibrary.simpleMessage("хдНхИ╢щУ╛цОе"),
@@ -413,14 +491,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "create": MessageLookupByLibrary.simpleMessage("хИЫх╗║"),
     "createProfileFromUrlTip": m4,
     "creationTime": MessageLookupByLibrary.simpleMessage("хИЫх╗║цЧ╢щЧ┤"),
-    "currentOutboundDesc": MessageLookupByLibrary.simpleMessage("хРлхРпхКищФоя╝Мф╕НхПпчз╗щЩд"),
+    "currentOutboundDesc": MessageLookupByLibrary.simpleMessage(
+      "хРлхРпхКищФоя╝Мф╕НхПпчз╗щЩд",
+    ),
     "custom": MessageLookupByLibrary.simpleMessage("шЗкхоЪф╣Й"),
     "customColor": MessageLookupByLibrary.simpleMessage("шЗкхоЪф╣ЙщвЬшЙ▓"),
     "customImportDroppedSubRules": m5,
     "customIssueCoreRejected": m6,
     "customIssueDialerLoop": m7,
     "customIssueDuplicateName": m8,
-    "customIssueEmptyName": MessageLookupByLibrary.simpleMessage("хРНчз░ф╕║чй║"),
+    "customIssueEmptyName": MessageLookupByLibrary.simpleMessage(
+      "хРНчз░ф╕║чй║",
+    ),
     "customIssueGroupLoop": m9,
     "customIssueInvalidEmptyFallback": m10,
     "customIssueInvalidFilter": m11,
@@ -436,14 +518,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "customProfileDesc": MessageLookupByLibrary.simpleMessage(
       "хЯ║ф║Ох║ФчФиф╗гчРЖхТМхЕ╢ф╗ЦщЕНч╜оч╗Дх╗║чнЦчХеч╗Дф╕ОшзДхИЩ",
     ),
-    "customProfileResources": MessageLookupByLibrary.simpleMessage("шЗкхоЪф╣ЙщЕНч╜ош╡Дц║Р"),
+    "customProfileResources": MessageLookupByLibrary.simpleMessage(
+      "шЗкхоЪф╣ЙщЕНч╜ош╡Дц║Р",
+    ),
     "customProfileResourcesDesc": MessageLookupByLibrary.simpleMessage(
       "шЗкхоЪф╣ЙщЕНч╜ош╡Дц║РхМЕхРлф╗гчРЖуАБшзДхИЩщЫЖуАБчнЫщАЙф╕ОхЫ╛цаЗщЫЖуАВ",
     ),
     "cut": MessageLookupByLibrary.simpleMessage("хЙкхИЗ"),
     "dark": MessageLookupByLibrary.simpleMessage("ц╖▒шЙ▓"),
     "dashboard": MessageLookupByLibrary.simpleMessage("ф╗кшбичЫШ"),
-    "dashboardAddableSection": MessageLookupByLibrary.simpleMessage("хПпц╖╗хКа"),
+    "dashboardAddableSection": MessageLookupByLibrary.simpleMessage(
+      "хПпц╖╗хКа",
+    ),
     "databaseWriteFailedTip": MessageLookupByLibrary.simpleMessage(
       "ф┐ЭхнШцЫ┤цФ╣хд▒ш┤ея╝Мх╖▓хЫЮц╗Ъ",
     ),
@@ -464,92 +550,130 @@ class MessageLookup extends MessageLookupByLibrary {
       "хЯ║ф║ОClashMetaчЪДхдЪх╣│хП░ф╗гчРЖховцИ╖члпя╝МчоАхНХцШУчФия╝Мх╝Ац║РцЧах╣┐хСКуАВ",
     ),
     "destination": MessageLookupByLibrary.simpleMessage("чЫоцаЗхЬ░хЭА"),
-    "destinationGeoIP": MessageLookupByLibrary.simpleMessage("чЫоцаЗхЬ░чРЖхоЪф╜Н"),
+    "destinationGeoIP": MessageLookupByLibrary.simpleMessage(
+      "чЫоцаЗхЬ░чРЖхоЪф╜Н",
+    ),
     "destinationIPASN": MessageLookupByLibrary.simpleMessage("чЫоцаЗIP ASN"),
     "details": m21,
-    "detectionTip": MessageLookupByLibrary.simpleMessage("ф╛Эш╡Цчммф╕ЙцЦ╣apiя╝Мф╗Еф╛ЫхПВшАГ"),
+    "detectionTip": MessageLookupByLibrary.simpleMessage(
+      "ф╛Эш╡Цчммф╕ЙцЦ╣apiя╝Мф╗Еф╛ЫхПВшАГ",
+    ),
     "developerMode": MessageLookupByLibrary.simpleMessage("х╝АхПСшАЕцибх╝П"),
-    "developerModeEnableTip": MessageLookupByLibrary.simpleMessage("х╝АхПСшАЕцибх╝Пх╖▓хРпчФиуАВ"),
+    "developerModeEnableTip": MessageLookupByLibrary.simpleMessage(
+      "х╝АхПСшАЕцибх╝Пх╖▓хРпчФиуАВ",
+    ),
     "dialerProxy": MessageLookupByLibrary.simpleMessage("цЛихП╖ф╗гчРЖ"),
     "dialerProxyDesc": MessageLookupByLibrary.simpleMessage(
       "цЛихП╖ф╗гчРЖф╕║ш┐ЮцОе NTP цЬНхКбхЩиф╜┐чФичЪДхЗ║члЩуАВ",
     ),
     "dialerProxyLoopStopped": m22,
     "direct": MessageLookupByLibrary.simpleMessage("чЫ┤ш┐Ю"),
-    "disableIcmpForwarding": MessageLookupByLibrary.simpleMessage("чжБчФиICMPш╜мхПС"),
+    "disableIcmpForwarding": MessageLookupByLibrary.simpleMessage(
+      "чжБчФиICMPш╜мхПС",
+    ),
     "disableIcmpForwardingDesc": MessageLookupByLibrary.simpleMessage(
       "чжБчФи ICMP ш╜мхПСхРОчФ▒шЩЪцЛЯч╜СхНбчЫ┤цОех║ФчнФ pingя╝Мping х░Жф╕НхЖНцШ╛чд║чЬЯхоЮх╗╢ш┐ЯуАВ",
     ),
-    "disableKeepAlive": MessageLookupByLibrary.simpleMessage("чжБчФи TCP ф┐ЭцМБц┤╗хКи"),
+    "disableKeepAlive": MessageLookupByLibrary.simpleMessage(
+      "чжБчФи TCP ф┐ЭцМБц┤╗хКи",
+    ),
     "disableUDP": MessageLookupByLibrary.simpleMessage("чжБчФиUDP"),
     "disabled": MessageLookupByLibrary.simpleMessage("х╖▓хЕ│щЧн"),
-    "discardChanges": MessageLookupByLibrary.simpleMessage("цШпхРжцФ╛х╝ГцЫ┤цФ╣я╝Я"),
+    "discardChanges": MessageLookupByLibrary.simpleMessage(
+      "цШпхРжцФ╛х╝ГцЫ┤цФ╣я╝Я",
+    ),
     "disclaimer": MessageLookupByLibrary.simpleMessage("хЕНш┤гхг░цШО"),
     "disclaimerAcceptContent": MessageLookupByLibrary.simpleMessage(
       "ф╕АцЧжф╜ахоЙшгЕуАБхдНхИ╢цИЦф╜┐чФицЬмш╜пф╗╢я╝МхН│шзЖф╕║ф╜ах╖▓щШЕшп╗х╣╢хРМцДПцЬмхг░цШОчЪДхЕищГихЖЕхо╣уАВхжВф╜аф╕НхРМцДПцЬмхг░цШОчЪДф╗╗ф╜ХцЭбцм╛я╝Мшп╖члЛхН│хБЬцнвф╜┐чФих╣╢хН╕ш╜╜цЬмш╜пф╗╢уАВ",
     ),
-    "disclaimerAcceptTitle": MessageLookupByLibrary.simpleMessage("цОехПЧхг░цШО"),
+    "disclaimerAcceptTitle": MessageLookupByLibrary.simpleMessage(
+      "цОехПЧхг░цШО",
+    ),
     "disclaimerAcknowledgeLabel": MessageLookupByLibrary.simpleMessage(
       "цИСх╖▓щШЕшп╗х╣╢чРЖшзгцндхг░цШО",
     ),
     "disclaimerAcknowledgeTip": MessageLookupByLibrary.simpleMessage(
       "ф╕║чбошодф╜ах╖▓чЯецВЙя╝Мшп╖щШЕшп╗ф╗еф╕Лхг░цШОх╣╢хЛ╛щАЙф╕ЛцЦ╣щАЙщб╣я╝Ъ",
     ),
-    "disclaimerAcknowledgeTitle": MessageLookupByLibrary.simpleMessage("чбошодхг░цШО"),
+    "disclaimerAcknowledgeTitle": MessageLookupByLibrary.simpleMessage(
+      "чбошодхг░цШО",
+    ),
     "disclaimerChangesContent": MessageLookupByLibrary.simpleMessage(
       "х╝АхПСшАЕцЬЙцЭГщЪПчЙИцЬмцЫ┤цЦ░ф┐оцФ╣цЬмхг░цШОя╝Мф┐оцФ╣хРОчЪДхЖЕхо╣щЪПцЦ░чЙИцЬмхПСх╕ГхН│чФЯцХИуАВф╜ахЬицЫ┤цЦ░хРОч╗зч╗нф╜┐чФицЬмш╜пф╗╢я╝МхН│шзЖф╕║цОехПЧф┐оцФ╣хРОчЪДхг░цШОуАВ",
     ),
-    "disclaimerChangesTitle": MessageLookupByLibrary.simpleMessage("хг░цШОхПШцЫ┤"),
+    "disclaimerChangesTitle": MessageLookupByLibrary.simpleMessage(
+      "хг░цШОхПШцЫ┤",
+    ),
     "disclaimerDesc": MessageLookupByLibrary.simpleMessage(
       "хЬиф╜┐чФи FlClashя╝Иф╗еф╕ЛчоАчз░тАЬцЬмш╜пф╗╢тАЭя╝ЙхЙНя╝Мшп╖ф╗Фч╗ЖщШЕшп╗х╣╢хЕЕхИЖчРЖшзгцЬмхг░цШОчЪДхЕищГихЖЕхо╣уАВчВ╣хЗ╗тАЬхРМцДПтАЭхН│шбичд║ф╜ах╖▓щШЕшп╗уАБчРЖшзгх╣╢цОехПЧф╗еф╕ЛхЕищГицЭбцм╛я╝ЫхжВф╕НхРМцДПя╝Мшп╖чВ╣хЗ╗тАЬщААхЗ║тАЭх╣╢хБЬцнвф╜┐чФицЬмш╜пф╗╢уАВ",
     ),
     "disclaimerLiabilityContent": MessageLookupByLibrary.simpleMessage(
       "хЬищАВчФиц│Хх╛ЛхЕБшо╕чЪДцЬАхдзшМГхЫ┤хЖЕя╝Мх╝АхПСшАЕхПКцЙАцЬЙш┤бчМошАЕхЭЗф╕Нхп╣хЫаф╜┐чФицИЦцЧац│Хф╜┐чФицЬмш╜пф╗╢шАМф║зчФЯчЪДф╗╗ф╜ХчЫ┤цОеуАБщЧ┤цОеуАБхБ╢чД╢уАБчЙ╣цоКуАБцГйч╜ЪцАзцИЦхРОцЮЬцАзцНЯхо│цЙ┐цЛЕш┤гф╗╗я╝МхМЕцЛмф╜Жф╕НщЩРф║ОцХ░цНоф╕вхд▒уАБшо╛хдЗцНЯхЭПуАБч╜Сч╗Ьх╝Вх╕╕уАБф╕ЪхКбф╕нцЦнуАБхИйц╢жцНЯхд▒цИЦхЫацндх╝Хш╡╖чЪДф╗╗ф╜Хц│Хх╛Лч║ач║╖я╝МхН│ф╜┐х╖▓швлхСКчЯехПСчФЯцндч▒╗цНЯхо│чЪДхПпшГ╜цАзуАВ",
     ),
-    "disclaimerLiabilityTitle": MessageLookupByLibrary.simpleMessage("ш┤гф╗╗щЩРхИ╢"),
+    "disclaimerLiabilityTitle": MessageLookupByLibrary.simpleMessage(
+      "ш┤гф╗╗щЩРхИ╢",
+    ),
     "disclaimerLicenseContent": MessageLookupByLibrary.simpleMessage(
       "цЬмш╜пф╗╢ф╗е GPL-3.0 хНПшоох╝Ац║РуАВф╜ахПпф╗ехЬищБ╡хоИшпехНПшоочЪДхЙНцПРф╕ЛшЗкчФ▒ф╜┐чФиуАБф┐оцФ╣хТМхИЖхПСцЬмш╜пф╗╢я╝Мф╜Жщб╗хРМца╖ф╗е GPL-3.0 хНПшоох╝Ац║Рх╣╢ф┐ЭчХЩхОЯф╜ЬшАЕчЪДчЙИцЭГхг░цШОуАВ\n\nцЬмш╜пф╗╢хМЕхРлчЪДчммф╕ЙцЦ╣ч╗Дф╗╢я╝ИхМЕцЛм Clash.Meta хЖЕца╕я╝ЙхИЖхИлщБ╡х╛кхЕ╢хРДшЗкчЪДх╝Ац║РхНПшооуАВхЯ║ф║ОцЬмш╜пф╗╢ф┐оцФ╣цИЦхИЖхПСчЪДчЙИцЬмцЙАф║зчФЯчЪДф╗╗ф╜ХщЧощвШя╝Мф╕ОхОЯф╜ЬшАЕцЧахЕ│уАВ",
     ),
-    "disclaimerLicenseTitle": MessageLookupByLibrary.simpleMessage("х╝Ац║РхНПшоо"),
+    "disclaimerLicenseTitle": MessageLookupByLibrary.simpleMessage(
+      "х╝Ац║РхНПшоо",
+    ),
     "disclaimerNoServiceStatement": MessageLookupByLibrary.simpleMessage(
       "цЬмш╜пф╗╢шЗкш║лф╕НцПРф╛Ыф╗╗ф╜Хф╗гчРЖцЬНхКбхЩиуАБшКВчВ╣уАБшовщШЕуАБцЬ║хЬ║цИЦч╜Сч╗ЬцОехЕецЬНхКбя╝Мф╣Яф╕Нф╕Оф╗╗ф╜Хцндч▒╗цЬНхКбчЪДцПРф╛ЫшАЕхнШхЬихРИф╜ЬуАБф╗гчРЖцИЦцЛЕф┐ЭхЕ│ч│╗уАВ",
     ),
     "disclaimerPrivacyContent": MessageLookupByLibrary.simpleMessage(
       "цЬмш╜пф╗╢ф╕Нф╝ЪцФ╢щЫЖцИЦф╕Кф╝аф╜ачЪДшовщШЕхЬ░хЭАуАБшКВчВ╣ф┐бцБпуАБщЕНч╜охЖЕхо╣уАБшо┐щЧочЪДч╜СчлЩуАБш┐ЮцОешо░х╜ХуАБц╡БщЗПхЖЕхо╣хТМцЧех┐Чя╝Мш┐Щф║ЫцХ░цНоф╗Еф┐ЭхнШхЬиф╜ачЪДшо╛хдЗцЬмхЬ░я╝Мх╝АхПСшАЕцЧац│ХшО╖хПЦуАВ\n\nцЬмш╜пф╗╢хПкф╝ЪхЬиф╜аф╜┐чФичЫ╕х║ФхКЯшГ╜цЧ╢шо┐щЧохдЦщГич╜Сч╗Ья╝Мф╛ЛхжВцЫ┤цЦ░шовщШЕцЧ╢шо┐щЧоф╜ацПРф╛ЫчЪДшовщШЕхЬ░хЭАуАБцгАцЯецЫ┤цЦ░цЧ╢шо┐щЧо GitHubуАВ\n\nцЬмш╜пф╗╢хЬицЙАцЬЙх╣│хП░ф╕КхЭЗцЬкщЫЖцИРф╗╗ф╜ХцХ░цНоч╗ЯшобцИЦх┤йц║Гф╕КцКецЬНхКбуАВ",
     ),
-    "disclaimerPrivacyTitle": MessageLookupByLibrary.simpleMessage("цХ░цНоцФ╢щЫЖф╕ОщЪРчзБ"),
+    "disclaimerPrivacyTitle": MessageLookupByLibrary.simpleMessage(
+      "цХ░цНоцФ╢щЫЖф╕ОщЪРчзБ",
+    ),
     "disclaimerResponsibilityContent": MessageLookupByLibrary.simpleMessage(
       "ф╜ах║ФшЗкшбМчбошодф╜┐чФицЬмш╜пф╗╢хЬиф╜ацЙАхЬихЫ╜хо╢цИЦхЬ░хМ║цШпхРИц│ХчЪДя╝Мх╣╢хп╣ф╜┐чФицЬмш╜пф╗╢чЪДхЕищГишбМф╕║хПКхЕ╢хРОцЮЬчЛмчлЛцЙ┐цЛЕц│Хх╛Лш┤гф╗╗уАВ\n\nф╜ахп╝хЕечЪДшовщШЕуАБшКВчВ╣ф╕ОщЕНч╜очФ▒ф╜ашЗкшбМщАЙцЛйхТМхИдцЦня╝МхЕ╢цЭец║РцШпхРжхРИц│ХуАБхЖЕхо╣цШпхРжхоЙхЕиуАБцЬНхКбцШпхРжчи│хоЪя╝МхЭЗчФ▒ф╜аф╕ОчЫ╕хЕ│цПРф╛ЫшАЕшЗкшбМш┤Яш┤гуАВ",
     ),
     "disclaimerResponsibilityTitle": MessageLookupByLibrary.simpleMessage(
       "чФицИ╖ш┤гф╗╗",
     ),
-    "disclaimerRestateHint": MessageLookupByLibrary.simpleMessage("хЬицндш╛УхЕеф╕Кш┐░хг░цШО"),
+    "disclaimerRestateHint": MessageLookupByLibrary.simpleMessage(
+      "хЬицндш╛УхЕеф╕Кш┐░хг░цШО",
+    ),
     "disclaimerRestateMismatch": MessageLookupByLibrary.simpleMessage(
       "ф╕Охг░цШОхЖЕхо╣ф╕Нф╕АшЗ┤",
     ),
     "disclaimerRestateTip": MessageLookupByLibrary.simpleMessage(
       "ф╕║чбошодф╜ах╖▓чЯецВЙя╝Мшп╖хЬиф╕ЛцЦ╣ш╛УхЕецбЖф╕нхоМцХ┤хдНш┐░ф╗еф╕Лхг░цШОя╝Ъ",
     ),
-    "disclaimerRestateTitle": MessageLookupByLibrary.simpleMessage("хдНш┐░хг░цШО"),
+    "disclaimerRestateTitle": MessageLookupByLibrary.simpleMessage(
+      "хдНш┐░хг░цШО",
+    ),
     "disclaimerSoftwareContent": MessageLookupByLibrary.simpleMessage(
       "цЬмш╜пф╗╢цШпхЯ║ф║О Clash.Metaя╝Иmihomoя╝ЙхЖЕца╕чЪДх╝Ац║Рч╜Сч╗Ьф╗гчРЖховцИ╖члпя╝Мф╗ЕцПРф╛ЫщЕНч╜очобчРЖуАБшзДхИЩхИЖц╡Бф╕Оц╡БщЗПш╜мхПСчнЙцЬмхЬ░х╖ехЕ╖хКЯшГ╜уАВ",
     ),
-    "disclaimerSoftwareTitle": MessageLookupByLibrary.simpleMessage("ш╜пф╗╢цАзш┤и"),
+    "disclaimerSoftwareTitle": MessageLookupByLibrary.simpleMessage(
+      "ш╜пф╗╢цАзш┤и",
+    ),
     "disclaimerThirdPartyContent": MessageLookupByLibrary.simpleMessage(
       "шовщШЕщУ╛цОеуАБщЕНч╜оцЦЗф╗╢уАБшзДхИЩщЫЖуАБшДЪцЬмуАБхдЦщГиш╡Дц║РхПКхдЦщГищУ╛цОехЭЗчФ▒чммф╕ЙцЦ╣цПРф╛Ыя╝Мх╝АхПСшАЕцЧац│Хф╣Яф╕Нф╝Ъхп╣хЕ╢хРИц│ХцАзуАБхЗЖчбоцАзуАБхоЙхЕицАзхТМхПпчФицАзш┐ЫшбМхобцЯецИЦцЛЕф┐ЭуАВ\n\nхЫаф╜┐чФичммф╕ЙцЦ╣хЖЕхо╣хп╝шЗ┤чЪДцХ░цНоц│ДщЬ▓уАБш┤вф║зцНЯхд▒уАБш┤жхП╖х░БчжБцИЦхЕ╢ф╗Цф╗╗ф╜ХцНЯхд▒я╝МчФ▒ф╜аф╕Очммф╕ЙцЦ╣шЗкшбМшзгхЖ│я╝Мх╝АхПСшАЕф╕НцЙ┐цЛЕф╗╗ф╜Хш┤гф╗╗уАВ",
     ),
-    "disclaimerThirdPartyTitle": MessageLookupByLibrary.simpleMessage("чммф╕ЙцЦ╣хЖЕхо╣"),
+    "disclaimerThirdPartyTitle": MessageLookupByLibrary.simpleMessage(
+      "чммф╕ЙцЦ╣хЖЕхо╣",
+    ),
     "disclaimerUsageContent": MessageLookupByLibrary.simpleMessage(
       "цЬмш╜пф╗╢ф╗Еф╛Ыхнжф╣аф║дц╡БуАБцКАцЬпчаФчй╢чнЙщЭЮхХЖф╕ЪчФищАФуАВф╕ечжБх░ЖцЬмш╜пф╗╢чФиф║Оф╗╗ф╜ХхХЖф╕ЪчЫочЪДя╝МхМЕцЛмф╜Жф╕НщЩРф║Оф╗Шш┤╣хИЖхПСуАБцНЖч╗СщФАхФоуАБф╜Ьф╕║хХЖф╕ЪцЬНхКбчЪДч╗ДцИРщГихИЖцИЦф╗ецЬмш╜пф╗╢хРНф╣Йх╝Ах▒Хч╗ПшРец┤╗хКия╝Ыф╗╗ф╜ХхХЖф╕ЪшбМф╕║хЭЗф╕ОцЬмш╜пф╗╢хПКхЕ╢х╝АхПСшАЕцЧахЕ│уАВ\n\nф╕ечжБх░ЖцЬмш╜пф╗╢чФиф║Ош┐ЭхПНф╜ацЙАхЬихЫ╜хо╢цИЦхЬ░хМ║ц│Хх╛Лц│ХшзДчЪДц┤╗хКия╝МхМЕцЛмф╜Жф╕НщЩРф║Оч╗Хш┐Зф╛Эц│Хшо╛ч╜очЪДч╜Сч╗Ьшо┐щЧощЩРхИ╢уАБф╝ацТнш┐Эц│Хф┐бцБпуАБхоЮцЦ╜ч╜Сч╗ЬцФ╗хЗ╗цИЦф╛╡чКпф╗Цф║║хРИц│ХцЭГчЫКуАВ",
     ),
-    "disclaimerUsageTitle": MessageLookupByLibrary.simpleMessage("ф╜┐чФищЩРхИ╢"),
+    "disclaimerUsageTitle": MessageLookupByLibrary.simpleMessage(
+      "ф╜┐чФищЩРхИ╢",
+    ),
     "disclaimerWarrantyContent": MessageLookupByLibrary.simpleMessage(
       "цЬмш╜пф╗╢цМЙтАЬчО░чК╢тАЭхТМтАЬхПпчФитАЭчЪДхОЯхИЩцПРф╛Ыя╝Мф╕НщЩДх╕жф╗╗ф╜ХцШОчд║цИЦщ╗Шчд║чЪДцЛЕф┐Эя╝МхМЕцЛмф╜Жф╕НщЩРф║ОщАВщФАцАзуАБчЙ╣хоЪчФищАФщАВчФицАзуАБф╕Нф╛╡цЭГф╗ехПКцМБч╗нхПпчФиуАБцЧащФЩшппуАБцЧахоЙхЕиц╝Пц┤ЮчЪДцЛЕф┐ЭуАВ\n\nх╝АхПСшАЕф╕Нф┐ЭшпБцЬмш╜пф╗╢шГ╜ц╗бш╢│ф╜ачЪДщЬАц▒Вя╝Мф╣Яф╕Нф┐ЭшпБцЬмш╜пф╗╢чЪДш┐РшбМф╕Нф╝Ъф╕нцЦнцИЦф╕Нф╝ЪхЗ║чО░щФЩшппуАВ",
     ),
-    "disclaimerWarrantyTitle": MessageLookupByLibrary.simpleMessage("цЧацЛЕф┐Эхг░цШО"),
+    "disclaimerWarrantyTitle": MessageLookupByLibrary.simpleMessage(
+      "цЧацЛЕф┐Эхг░цШО",
+    ),
     "disconnected": MessageLookupByLibrary.simpleMessage("х╖▓цЦнх╝А"),
-    "discoverNewVersion": MessageLookupByLibrary.simpleMessage("хПСчО░цЦ░чЙИцЬм"),
+    "discoverNewVersion": MessageLookupByLibrary.simpleMessage(
+      "хПСчО░цЦ░чЙИцЬм",
+    ),
     "dnsHijackDesc": MessageLookupByLibrary.simpleMessage(
       "цЬкц╖╗хКацЧ╢хКлцМБцЙАцЬЙхПСх╛А 53 члпхПгчЪД DNS шп╖ц▒Вя╝Иany:53я╝ЙуАВ",
     ),
@@ -567,12 +691,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "duration": MessageLookupByLibrary.simpleMessage("цЧ╢щХ┐"),
     "edit": MessageLookupByLibrary.simpleMessage("ч╝Цш╛С"),
     "editDashboard": MessageLookupByLibrary.simpleMessage("ч╝Цш╛Сф╗кшбичЫШ"),
-    "editGlobalRules": MessageLookupByLibrary.simpleMessage("ч╝Цш╛СхЕих▒АшзДхИЩ"),
+    "editGlobalRules": MessageLookupByLibrary.simpleMessage(
+      "ч╝Цш╛СхЕих▒АшзДхИЩ",
+    ),
     "editProxy": MessageLookupByLibrary.simpleMessage("ч╝Цш╛Сф╗гчРЖ"),
     "editProxyGroup": MessageLookupByLibrary.simpleMessage("ч╝Цш╛СчнЦчХеч╗Д"),
     "editRule": MessageLookupByLibrary.simpleMessage("ч╝Цш╛СшзДхИЩ"),
     "editSsid": MessageLookupByLibrary.simpleMessage("ч╝Цш╛СSSID"),
-    "editorUnavailable": MessageLookupByLibrary.simpleMessage("ч╝Цш╛СхЩиф╕НхПпчФи"),
+    "editorUnavailable": MessageLookupByLibrary.simpleMessage(
+      "ч╝Цш╛СхЩиф╕НхПпчФи",
+    ),
     "elapsed": MessageLookupByLibrary.simpleMessage("шАЧцЧ╢"),
     "emptyFallback": MessageLookupByLibrary.simpleMessage("чй║ч╗ДхЕЬх║Х"),
     "emptyTip": m23,
@@ -583,7 +711,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "errorDetails": MessageLookupByLibrary.simpleMessage("щФЩшппшпжцГЕ"),
     "es": MessageLookupByLibrary.simpleMessage("ше┐чПнчЙЩшпн"),
     "exclude": MessageLookupByLibrary.simpleMessage("ф╗ОцЬАш┐Сф╗╗хКбф╕нщЪРшЧП"),
-    "excludeDstPort": MessageLookupByLibrary.simpleMessage("цОТщЩдчЫоцаЗчлпхПг"),
+    "excludeDstPort": MessageLookupByLibrary.simpleMessage(
+      "цОТщЩдчЫоцаЗчлпхПг",
+    ),
     "excludeDstPortDesc": MessageLookupByLibrary.simpleMessage(
       "хПСх╛Аш┐Щф║ЫчЫоцаЗчлпхПгчЪДц╡БщЗПф╕Нч╗Пш┐ЗшЩЪцЛЯч╜СхНбуАВ",
     ),
@@ -616,28 +746,40 @@ class MessageLookup extends MessageLookupByLibrary {
     "extend": MessageLookupByLibrary.simpleMessage("цЙйх▒Х"),
     "extendMode": MessageLookupByLibrary.simpleMessage("цЙйх▒Хцибх╝П"),
     "extendScript": MessageLookupByLibrary.simpleMessage("цЙйх▒ХшДЪцЬм"),
-    "externalController": MessageLookupByLibrary.simpleMessage("хдЦщГицОзхИ╢хЩи"),
+    "externalController": MessageLookupByLibrary.simpleMessage(
+      "хдЦщГицОзхИ╢хЩи",
+    ),
     "externalControllerDesc": MessageLookupByLibrary.simpleMessage(
       "хдЦщГицОзхИ╢хЩих╝АхРпхРОя╝МхПпщАЪш┐З 9090 члпхПгцОзхИ╢хЖЕца╕уАВ",
     ),
-    "externalControllerSecret": MessageLookupByLibrary.simpleMessage("хдЦщГицОзхИ╢хЩихпЖщТе"),
+    "externalControllerSecret": MessageLookupByLibrary.simpleMessage(
+      "хдЦщГицОзхИ╢хЩихпЖщТе",
+    ),
     "externalLink": MessageLookupByLibrary.simpleMessage("хдЦщГищУ╛цОе"),
     "extraLarge": MessageLookupByLibrary.simpleMessage("ш╢Ехдз"),
     "fade": MessageLookupByLibrary.simpleMessage("ц╖бхЕе"),
     "failedCount": m25,
     "failedItem": m26,
     "fakeipFilter": MessageLookupByLibrary.simpleMessage("Fake-IPш┐Зц╗д"),
-    "fakeipFilterMode": MessageLookupByLibrary.simpleMessage("Fake-IPш┐Зц╗дцибх╝П"),
+    "fakeipFilterMode": MessageLookupByLibrary.simpleMessage(
+      "Fake-IPш┐Зц╗дцибх╝П",
+    ),
     "fakeipFilterModeDesc": MessageLookupByLibrary.simpleMessage(
       "Fake-IP ш┐Зц╗дцибх╝Пф╕ня╝Мblacklist цОТщЩдхМ╣щЕНщб╣я╝Мwhitelist ф╗ЕчФиф║ОхМ╣щЕНщб╣я╝Мrule цМЙшзДхИЩхМ╣щЕНуАВ",
     ),
     "fakeipRange": MessageLookupByLibrary.simpleMessage("Fake-IPшМГхЫ┤"),
-    "fakeipRange6": MessageLookupByLibrary.simpleMessage("Fake-IPшМГхЫ┤я╝ИIPv6я╝Й"),
+    "fakeipRange6": MessageLookupByLibrary.simpleMessage(
+      "Fake-IPшМГхЫ┤я╝ИIPv6я╝Й",
+    ),
     "fakeipTtl": MessageLookupByLibrary.simpleMessage("Fake-IP TTL"),
     "fallbackFilter": MessageLookupByLibrary.simpleMessage("Fallbackш┐Зц╗д"),
     "file": MessageLookupByLibrary.simpleMessage("цЦЗф╗╢"),
-    "fileDesc": MessageLookupByLibrary.simpleMessage("чЫ┤цОеф╕Кф╝ащЕНч╜оцЦЗф╗╢"),
-    "fileIsUpdate": MessageLookupByLibrary.simpleMessage("цЦЗф╗╢цЬЙф┐оцФ╣я╝МцШпхРжф┐ЭхнШф┐оцФ╣"),
+    "fileDesc": MessageLookupByLibrary.simpleMessage(
+      "чЫ┤цОеф╕Кф╝ащЕНч╜оцЦЗф╗╢",
+    ),
+    "fileIsUpdate": MessageLookupByLibrary.simpleMessage(
+      "цЦЗф╗╢цЬЙф┐оцФ╣я╝МцШпхРжф┐ЭхнШф┐оцФ╣",
+    ),
     "filter": MessageLookupByLibrary.simpleMessage("чнЫщАЙ"),
     "filters": MessageLookupByLibrary.simpleMessage("чнЫщАЙ"),
     "findProcessMode": MessageLookupByLibrary.simpleMessage("цЯецЙ╛ш┐ЫчиЛ"),
@@ -654,7 +796,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "forceDomainDesc": MessageLookupByLibrary.simpleMessage(
       "х╝║хИ╢хЧЕцОвхЯЯхРНф╕нчЪДхЯЯхРНхРМца╖ф╝ЪшвлхЧЕцОвя╝МхЕ╢ф╜Щх╖▓цЬЙхЯЯхРНчЪДш┐ЮцОеф╕НхЧЕцОвуАВ",
     ),
-    "forceRestartCoreTip": MessageLookupByLibrary.simpleMessage("цВичбохоЪшжБх╝║хИ╢щЗНхРпца╕х┐ГхРЧя╝Я"),
+    "forceRestartCoreTip": MessageLookupByLibrary.simpleMessage(
+      "цВичбохоЪшжБх╝║хИ╢щЗНхРпца╕х┐ГхРЧя╝Я",
+    ),
     "fr": MessageLookupByLibrary.simpleMessage("ц│Хшпн"),
     "general": MessageLookupByLibrary.simpleMessage("х╕╕шзД"),
     "geoResources": MessageLookupByLibrary.simpleMessage("Geo"),
@@ -664,14 +808,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "global": MessageLookupByLibrary.simpleMessage("хЕих▒А"),
     "go": MessageLookupByLibrary.simpleMessage("хЙНх╛А"),
     "goDownload": MessageLookupByLibrary.simpleMessage("хЙНх╛Аф╕Лш╜╜"),
-    "goToConfigureAddedRules": MessageLookupByLibrary.simpleMessage("хЙНх╛АщЕНч╜ощЩДхКашзДхИЩ"),
-    "goToConfigureScript": MessageLookupByLibrary.simpleMessage("хЙНх╛АщЕНч╜ошДЪцЬм"),
+    "goToConfigureAddedRules": MessageLookupByLibrary.simpleMessage(
+      "хЙНх╛АщЕНч╜ощЩДхКашзДхИЩ",
+    ),
+    "goToConfigureScript": MessageLookupByLibrary.simpleMessage(
+      "хЙНх╛АщЕНч╜ошДЪцЬм",
+    ),
     "grid": MessageLookupByLibrary.simpleMessage("ч╜Сца╝"),
     "groupCount": m29,
     "groupCountUnit": MessageLookupByLibrary.simpleMessage("ф╕к"),
     "groupTimeoutCount": m30,
-    "hasCacheChange": MessageLookupByLibrary.simpleMessage("цШпхРжч╝УхнШф┐оцФ╣"),
-    "hashByInUser": MessageLookupByLibrary.simpleMessage("цМЙхЕечлЩчФицИ╖хУИх╕М"),
+    "hasCacheChange": MessageLookupByLibrary.simpleMessage(
+      "цШпхРжч╝УхнШф┐оцФ╣",
+    ),
+    "hashByInUser": MessageLookupByLibrary.simpleMessage(
+      "цМЙхЕечлЩчФицИ╖хУИх╕М",
+    ),
     "healthCheck": MessageLookupByLibrary.simpleMessage("хБех║╖цгАцЯе"),
     "helperCorruptTip": MessageLookupByLibrary.simpleMessage(
       "Helper цЬНхКбф╕НхПпчФия╝МцЧац│ХхРпчФи TUN цибх╝Пя╝Мшп╖щЗНцЦ░хоЙшгЕ FlClashуАВ",
@@ -680,7 +832,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "hideFromList": MessageLookupByLibrary.simpleMessage("ф╗ОхИЧшбиф╕нщЪРшЧП"),
     "hideIp": MessageLookupByLibrary.simpleMessage("щЪРшЧП IP"),
     "hidePassword": MessageLookupByLibrary.simpleMessage("щЪРшЧПхпЖчаБ"),
-    "hideTimeoutProxies": MessageLookupByLibrary.simpleMessage("щЪРшЧПш╢ЕцЧ╢ф╗гчРЖ"),
+    "hideTimeoutProxies": MessageLookupByLibrary.simpleMessage(
+      "щЪРшЧПш╢ЕцЧ╢ф╗гчРЖ",
+    ),
     "hideTimeoutProxiesDesc": MessageLookupByLibrary.simpleMessage(
       "ф╕НцШ╛чд║ф╕Кцмбх╗╢ш┐Яц╡ЛшпХш╢ЕцЧ╢чЪДф╗гчРЖ",
     ),
@@ -712,9 +866,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "iconStyleHidden": MessageLookupByLibrary.simpleMessage("щЪРшЧП"),
     "iconStylePlain": MessageLookupByLibrary.simpleMessage("ч║пхЫ╛цаЗ"),
     "iconUrl": MessageLookupByLibrary.simpleMessage("хЫ╛цаЗщУ╛цОе"),
-    "ignoreBatteryOptimization": MessageLookupByLibrary.simpleMessage("х┐╜чХечФ╡ц▒аф╝ШхМЦ"),
+    "ignoreBatteryOptimization": MessageLookupByLibrary.simpleMessage(
+      "х┐╜чХечФ╡ц▒аф╝ШхМЦ",
+    ),
     "import": MessageLookupByLibrary.simpleMessage("хп╝хЕе"),
-    "importConfigInvalid": MessageLookupByLibrary.simpleMessage("цндцЦЗф╗╢ф╕НцШпхПпхп╝хЕечЪДщЕНч╜о"),
+    "importConfigInvalid": MessageLookupByLibrary.simpleMessage(
+      "цндцЦЗф╗╢ф╕НцШпхПпхп╝хЕечЪДщЕНч╜о",
+    ),
     "importConfigReplaceTip": MessageLookupByLibrary.simpleMessage(
       "хп╝хЕеф╝ЪцЫ┐цНвцндщЕНч╜очО░цЬЙчЪДчнЦчХеч╗ДуАБшзДхИЩхТМшо╛ч╜о",
     ),
@@ -738,12 +896,15 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "initiator": MessageLookupByLibrary.simpleMessage("хПСш╡╖цЦ╣"),
     "initiatorShort": MessageLookupByLibrary.simpleMessage("хПСш╡╖"),
-    "inputProxyGroupName": MessageLookupByLibrary.simpleMessage("ш╛УхЕечнЦчХеч╗ДхРНчз░"),
-    "inputRuleContent": MessageLookupByLibrary.simpleMessage("ш╛УхЕешзДхИЩхЖЕхо╣"),
-    "installedAppsPermissionDeniedMessage":
-        MessageLookupByLibrary.simpleMessage(
-          "шп╗хПЦх║ФчФихИЧшбицЭГщЩРх╖▓швлцЛТч╗Эя╝МцЧац│ХшО╖хПЦх╖▓хоЙшгЕчЪДх║ФчФиуАВшп╖хЙНх╛Ач│╗ч╗Яшо╛ч╜оцЙЛхКих╝АхРпуАВ",
-        ),
+    "inputProxyGroupName": MessageLookupByLibrary.simpleMessage(
+      "ш╛УхЕечнЦчХеч╗ДхРНчз░",
+    ),
+    "inputRuleContent": MessageLookupByLibrary.simpleMessage(
+      "ш╛УхЕешзДхИЩхЖЕхо╣",
+    ),
+    "installedAppsPermissionDeniedMessage": MessageLookupByLibrary.simpleMessage(
+      "шп╗хПЦх║ФчФихИЧшбицЭГщЩРх╖▓швлцЛТч╗Эя╝МцЧац│ХшО╖хПЦх╖▓хоЙшгЕчЪДх║ФчФиуАВшп╖хЙНх╛Ач│╗ч╗Яшо╛ч╜оцЙЛхКих╝АхРпуАВ",
+    ),
     "installedAppsPermissionDesc": MessageLookupByLibrary.simpleMessage(
       "х╜УхЙНч│╗ч╗ЯхЬицОИцЭГхЙНф╕Нф╝ЪцПРф╛Ых╖▓хоЙшгЕчЪДх║ФчФихИЧшбия╝МцОИцЭГхРОхН│хПпщЕНч╜охИЖх║ФчФиф╗гчРЖуАВ",
     ),
@@ -758,21 +919,33 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "interfaceNameMode": MessageLookupByLibrary.simpleMessage("хЗ║члЩч╜СхНб"),
     "interfaceNameModeClear": MessageLookupByLibrary.simpleMessage("ц╕Ечй║"),
-    "interfaceNameModeCustom": MessageLookupByLibrary.simpleMessage("шЗкхоЪф╣Й"),
-    "interfaceNameModeFollow": MessageLookupByLibrary.simpleMessage("ш╖ЯщЪПщЕНч╜о"),
+    "interfaceNameModeCustom": MessageLookupByLibrary.simpleMessage(
+      "шЗкхоЪф╣Й",
+    ),
+    "interfaceNameModeFollow": MessageLookupByLibrary.simpleMessage(
+      "ш╖ЯщЪПщЕНч╜о",
+    ),
     "internet": MessageLookupByLibrary.simpleMessage("ф║ТшБФч╜С"),
     "interval": MessageLookupByLibrary.simpleMessage("щЧ┤щЪФ"),
     "intranetIP": MessageLookupByLibrary.simpleMessage("хЖЕч╜С IP"),
-    "invalidBackupFile": MessageLookupByLibrary.simpleMessage("цЧацХИхдЗф╗╜цЦЗф╗╢"),
+    "invalidBackupFile": MessageLookupByLibrary.simpleMessage(
+      "цЧацХИхдЗф╗╜цЦЗф╗╢",
+    ),
     "invalidCidrContent": MessageLookupByLibrary.simpleMessage(
       "шп╖ш╛УхЕе CIDR ца╝х╝ПчЪД IP цо╡я╝МхжВ 192.168.0.0/16",
     ),
     "invalidDscpContent": MessageLookupByLibrary.simpleMessage(
       "DSCP цаЗшо░ф╕НшГ╜ш╢Еш┐З 63",
     ),
-    "invalidHostContent": MessageLookupByLibrary.simpleMessage("шп╖ш╛УхЕехЯЯхРНцИЦ IP хЬ░хЭА"),
-    "invalidIconSet": MessageLookupByLibrary.simpleMessage("ф╕НцШпцЬЙцХИчЪДхЫ╛цаЗщЫЖ"),
-    "invalidLinkTip": MessageLookupByLibrary.simpleMessage("ф╕НцШпцЬЙцХИчЪДшовщШЕщУ╛цОецИЦф╗гчРЖхИЖф║лщУ╛цОе"),
+    "invalidHostContent": MessageLookupByLibrary.simpleMessage(
+      "шп╖ш╛УхЕехЯЯхРНцИЦ IP хЬ░хЭА",
+    ),
+    "invalidIconSet": MessageLookupByLibrary.simpleMessage(
+      "ф╕НцШпцЬЙцХИчЪДхЫ╛цаЗщЫЖ",
+    ),
+    "invalidLinkTip": MessageLookupByLibrary.simpleMessage(
+      "ф╕НцШпцЬЙцХИчЪДшовщШЕщУ╛цОецИЦф╗гчРЖхИЖф║лщУ╛цОе",
+    ),
     "invalidListenContent": MessageLookupByLibrary.simpleMessage(
       "шп╖ш╛УхЕехЬ░хЭАхТМчлпхПгя╝МхжВ 0.0.0.0:1053",
     ),
@@ -801,7 +974,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "ipFlagVpn": MessageLookupByLibrary.simpleMessage("VPN"),
     "ipFlags": MessageLookupByLibrary.simpleMessage("хС╜ф╕нцаЗшо░"),
     "ipOrganization": MessageLookupByLibrary.simpleMessage("ч╗Дч╗З"),
-    "ipQualityFailed": MessageLookupByLibrary.simpleMessage("ч▒╗хЮЛцЯешпвхд▒ш┤е"),
+    "ipQualityFailed": MessageLookupByLibrary.simpleMessage(
+      "ч▒╗хЮЛцЯешпвхд▒ш┤е",
+    ),
     "ipQualityGood": MessageLookupByLibrary.simpleMessage("ф╝Ш"),
     "ipQualityLevel": MessageLookupByLibrary.simpleMessage("чнЙч║з"),
     "ipQualityNormal": MessageLookupByLibrary.simpleMessage("цЩощАЪ"),
@@ -810,8 +985,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "ipQualityShort": MessageLookupByLibrary.simpleMessage("ш┤ищЗП"),
     "ipQualitySource": MessageLookupByLibrary.simpleMessage("щЗЗчФицЭец║Р"),
     "ipQualitySources": MessageLookupByLibrary.simpleMessage("хРДцЭец║Р"),
-    "ipSourceIpMismatch": MessageLookupByLibrary.simpleMessage("хЗ║члЩ IP ф╕Нф╕АшЗ┤"),
-    "ipSourceNoType": MessageLookupByLibrary.simpleMessage("цЧац│ХхИдхоЪч▒╗хЮЛ"),
+    "ipSourceIpMismatch": MessageLookupByLibrary.simpleMessage(
+      "хЗ║члЩ IP ф╕Нф╕АшЗ┤",
+    ),
+    "ipSourceNoType": MessageLookupByLibrary.simpleMessage(
+      "цЧац│ХхИдхоЪч▒╗хЮЛ",
+    ),
     "ipSourceRateLimited": MessageLookupByLibrary.simpleMessage("щЩРц╡Б"),
     "ipType": MessageLookupByLibrary.simpleMessage("ч▒╗хЮЛ"),
     "ipTypeBusiness": MessageLookupByLibrary.simpleMessage("хХЖф╕Ъ"),
@@ -820,23 +999,33 @@ class MessageLookup extends MessageLookupByLibrary {
     "ipTypeResidential": MessageLookupByLibrary.simpleMessage("ф╜ПхоЕ"),
     "ipTypeUnknown": MessageLookupByLibrary.simpleMessage("ч▒╗хЮЛцЬкчЯе"),
     "ipVersion": MessageLookupByLibrary.simpleMessage("IP чЙИцЬм"),
-    "ipv6Desc": MessageLookupByLibrary.simpleMessage("х╝АхРп IPv6 хРОцЙНф╝ЪцОецФ╢ IPv6 ц╡БщЗПуАВ"),
+    "ipv6Desc": MessageLookupByLibrary.simpleMessage(
+      "х╝АхРп IPv6 хРОцЙНф╝ЪцОецФ╢ IPv6 ц╡БщЗПуАВ",
+    ),
     "ipv6InboundDesc": MessageLookupByLibrary.simpleMessage(
       "х╝АхРп IPv6 хРОя╝МVPN хЕБшо╕ IPv6 хЕечлЩуАВ",
     ),
-    "ipv6Timeout": MessageLookupByLibrary.simpleMessage("IPv6ш╢ЕцЧ╢я╝ИцплчзТя╝Й"),
+    "ipv6Timeout": MessageLookupByLibrary.simpleMessage(
+      "IPv6ш╢ЕцЧ╢я╝ИцплчзТя╝Й",
+    ),
     "itemsCount": m40,
     "ja": MessageLookupByLibrary.simpleMessage("цЧешпн"),
     "justNow": MessageLookupByLibrary.simpleMessage("хИЪхИЪ"),
-    "keepAliveIdle": MessageLookupByLibrary.simpleMessage("TCP ф┐ЭцМБц┤╗хКичй║щЧ▓цЧ╢щЧ┤"),
-    "keepAliveIntervalDesc": MessageLookupByLibrary.simpleMessage("TCPф┐ЭцМБц┤╗хКищЧ┤щЪФ"),
+    "keepAliveIdle": MessageLookupByLibrary.simpleMessage(
+      "TCP ф┐ЭцМБц┤╗хКичй║щЧ▓цЧ╢щЧ┤",
+    ),
+    "keepAliveIntervalDesc": MessageLookupByLibrary.simpleMessage(
+      "TCPф┐ЭцМБц┤╗хКищЧ┤щЪФ",
+    ),
     "key": MessageLookupByLibrary.simpleMessage("щФо"),
     "ko": MessageLookupByLibrary.simpleMessage("щЯйшпн"),
     "label": MessageLookupByLibrary.simpleMessage("цаЗчн╛"),
     "language": MessageLookupByLibrary.simpleMessage("шпншиА"),
     "large": MessageLookupByLibrary.simpleMessage("хдз"),
     "lastUpdated": MessageLookupByLibrary.simpleMessage("ф╕КцмбцЫ┤цЦ░"),
-    "launchInterrupted": MessageLookupByLibrary.simpleMessage("хРпхКицЬкхоМцИР"),
+    "launchInterrupted": MessageLookupByLibrary.simpleMessage(
+      "хРпхКицЬкхоМцИР",
+    ),
     "launchInterruptedTip": MessageLookupByLibrary.simpleMessage(
       "х║ФчФиф╕КцмбхЬихРпхКиш┐ЗчиЛф╕нцДПхдЦщААхЗ║уАВх╖▓ш╖│ш┐ЗцЬмцмбшЗкхКищЕНч╜оя╝Мф╜ахПпф╗ецЙЛхКихРпхКищЗНшпХуАВ",
     ),
@@ -845,11 +1034,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "lineIssueTip": m41,
     "lineWrap": MessageLookupByLibrary.simpleMessage("шЗкхКицНвшбМ"),
     "link": MessageLookupByLibrary.simpleMessage("щУ╛цОе"),
-    "linkDesc": MessageLookupByLibrary.simpleMessage("щАЪш┐ЗшовщШЕщУ╛цОецИЦф╗гчРЖхИЖф║лщУ╛цОешО╖хПЦщЕНч╜оцЦЗф╗╢"),
+    "linkDesc": MessageLookupByLibrary.simpleMessage(
+      "щАЪш┐ЗшовщШЕщУ╛цОецИЦф╗гчРЖхИЖф║лщУ╛цОешО╖хПЦщЕНч╜оцЦЗф╗╢",
+    ),
     "liquidGlass": MessageLookupByLibrary.simpleMessage("ц╢▓цАБчО╗чТГ"),
     "list": MessageLookupByLibrary.simpleMessage("хИЧшби"),
     "listen": MessageLookupByLibrary.simpleMessage("чЫСхРм"),
-    "listenRoutingMark": MessageLookupByLibrary.simpleMessage("чЫСхРмш╖пчФ▒цаЗшо░"),
+    "listenRoutingMark": MessageLookupByLibrary.simpleMessage(
+      "чЫСхРмш╖пчФ▒цаЗшо░",
+    ),
     "listenRoutingMarkDesc": MessageLookupByLibrary.simpleMessage(
       "чЫСхРмш╖пчФ▒цаЗшо░ф╗ЕхЬи Linux чФЯцХИуАВ",
     ),
@@ -875,24 +1068,38 @@ class MessageLookup extends MessageLookupByLibrary {
     "log": MessageLookupByLibrary.simpleMessage("цЧех┐Ч"),
     "logLevel": MessageLookupByLibrary.simpleMessage("цЧех┐ЧчнЙч║з"),
     "logcat": MessageLookupByLibrary.simpleMessage("цЧех┐ЧцНХшО╖"),
-    "logcatDesc": MessageLookupByLibrary.simpleMessage("хЕ│щЧнцЧех┐ЧцНХшО╖ф╝ЪщЪРшЧПцЧех┐ЧхЕехПгуАВ"),
+    "logcatDesc": MessageLookupByLibrary.simpleMessage(
+      "хЕ│щЧнцЧех┐ЧцНХшО╖ф╝ЪщЪРшЧПцЧех┐ЧхЕехПгуАВ",
+    ),
     "logs": MessageLookupByLibrary.simpleMessage("цЧех┐Ч"),
-    "logsAndDiagnostics": MessageLookupByLibrary.simpleMessage("цЧех┐Чф╕ОшпКцЦн"),
+    "logsAndDiagnostics": MessageLookupByLibrary.simpleMessage(
+      "цЧех┐Чф╕ОшпКцЦн",
+    ),
     "logsTest": MessageLookupByLibrary.simpleMessage("цЧех┐Чц╡ЛшпХ"),
     "loopback": MessageLookupByLibrary.simpleMessage("UWP хЫЮчОпшзгщФБ"),
     "loose": MessageLookupByLibrary.simpleMessage("хо╜цЭ╛"),
     "matchCase": MessageLookupByLibrary.simpleMessage("хМ║хИЖхдзх░ПхЖЩ"),
     "matchSourceIp": MessageLookupByLibrary.simpleMessage("хМ╣щЕНцЭец║РIP"),
     "matchTarget": MessageLookupByLibrary.simpleMessage("MATCH-TARGET"),
-    "maxFailedTimes": MessageLookupByLibrary.simpleMessage("цЬАхдзхд▒ш┤ецмбцХ░"),
+    "maxFailedTimes": MessageLookupByLibrary.simpleMessage(
+      "цЬАхдзхд▒ш┤ецмбцХ░",
+    ),
     "maxLengthTip": m43,
     "maximize": MessageLookupByLibrary.simpleMessage("цЬАхдзхМЦ"),
     "memoryAppResident": MessageLookupByLibrary.simpleMessage("х╕╕щй╗хЖЕхнШ"),
     "memoryAppShared": MessageLookupByLibrary.simpleMessage("х║ФчФихПКхЕ▒ф║л"),
-    "memoryCoreHeapIdle": MessageLookupByLibrary.simpleMessage("хаЖхЖЕхнШчй║щЧ▓"),
-    "memoryCoreHeapInuse": MessageLookupByLibrary.simpleMessage("хаЖхЖЕхнШф╜┐чФиф╕н"),
-    "memoryCoreNotRunning": MessageLookupByLibrary.simpleMessage("хЖЕца╕цЬкш┐РшбМ"),
-    "memoryCoreRuntime": MessageLookupByLibrary.simpleMessage("ш┐РшбМцЧ╢х╝АщФА"),
+    "memoryCoreHeapIdle": MessageLookupByLibrary.simpleMessage(
+      "хаЖхЖЕхнШчй║щЧ▓",
+    ),
+    "memoryCoreHeapInuse": MessageLookupByLibrary.simpleMessage(
+      "хаЖхЖЕхнШф╜┐чФиф╕н",
+    ),
+    "memoryCoreNotRunning": MessageLookupByLibrary.simpleMessage(
+      "хЖЕца╕цЬкш┐РшбМ",
+    ),
+    "memoryCoreRuntime": MessageLookupByLibrary.simpleMessage(
+      "ш┐РшбМцЧ╢х╝АщФА",
+    ),
     "memoryCoreStack": MessageLookupByLibrary.simpleMessage("хНПчиЛцаИ"),
     "memoryEstimateDesc": MessageLookupByLibrary.simpleMessage(
       "хЯ║ф║Ош┐ЫчиЛх╕╕щй╗хЖЕхнШф╝░чоЧя╝МхПпшГ╜ф╕Оч│╗ч╗ЯцШ╛чд║чЪДцХ░хА╝ф╕НхРМуАВ",
@@ -901,13 +1108,19 @@ class MessageLookup extends MessageLookupByLibrary {
       "хЖЕца╕ф╕Ох║ФчФиш┐РшбМхЬихРМф╕Аш┐ЫчиЛя╝МхЖЕца╕щГихИЖцМЙш┐РшбМцЧ╢ч╗Яшобф╝░чоЧя╝МхЕ╢ф╜ЩшобхЕех║ФчФихПКхЕ▒ф║лхЖЕхнШуАВ",
     ),
     "memoryInfo": MessageLookupByLibrary.simpleMessage("хЖЕхнШф┐бцБп"),
-    "memoryInfoDesc": MessageLookupByLibrary.simpleMessage("х║ФчФиф╕ОхЖЕца╕хНачФичЪДхЖЕхнШ"),
+    "memoryInfoDesc": MessageLookupByLibrary.simpleMessage(
+      "х║ФчФиф╕ОхЖЕца╕хНачФичЪДхЖЕхнШ",
+    ),
     "memoryReleased": MessageLookupByLibrary.simpleMessage("хЖЕхнШх╖▓щЗКцФ╛"),
     "memoryReleasedSize": m44,
     "messageTest": MessageLookupByLibrary.simpleMessage("ц╢ИцБпц╡ЛшпХ"),
-    "messageTestTip": MessageLookupByLibrary.simpleMessage("ш┐ЩцШпф╕АцЭбц╢ИцБпуАВ"),
+    "messageTestTip": MessageLookupByLibrary.simpleMessage(
+      "ш┐ЩцШпф╕АцЭбц╢ИцБпуАВ",
+    ),
     "minimize": MessageLookupByLibrary.simpleMessage("цЬАх░ПхМЦ"),
-    "minimizeOnExit": MessageLookupByLibrary.simpleMessage("щААхЗ║цЧ╢цЬАх░ПхМЦ"),
+    "minimizeOnExit": MessageLookupByLibrary.simpleMessage(
+      "щААхЗ║цЧ╢цЬАх░ПхМЦ",
+    ),
     "minutes": MessageLookupByLibrary.simpleMessage("хИЖщТЯ"),
     "minutesAgo": m45,
     "minutesAgoShort": m46,
@@ -922,7 +1135,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "network": MessageLookupByLibrary.simpleMessage("ч╜Сч╗Ь"),
     "networkAccessDeniedError": m49,
     "networkBadResponseError": m50,
-    "networkCancelledError": MessageLookupByLibrary.simpleMessage("шп╖ц▒Вх╖▓хПЦц╢И"),
+    "networkCancelledError": MessageLookupByLibrary.simpleMessage(
+      "шп╖ц▒Вх╖▓хПЦц╢И",
+    ),
     "networkConnectionError": MessageLookupByLibrary.simpleMessage(
       "цЧац│Хш┐ЮцОехИ░цЬНхКбхЩия╝Мшп╖цгАцЯеч╜Сч╗Ьш┐ЮцОецИЦф╗гчРЖшо╛ч╜о",
     ),
@@ -954,18 +1169,30 @@ class MessageLookup extends MessageLookupByLibrary {
     "noNetwork": MessageLookupByLibrary.simpleMessage("цЧач╜Сч╗Ь"),
     "noNetworkApp": MessageLookupByLibrary.simpleMessage("цЧач╜Сч╗Ьх║ФчФи"),
     "noResolve": MessageLookupByLibrary.simpleMessage("ф╕НшзгцЮРIP"),
-    "noResolveHostname": MessageLookupByLibrary.simpleMessage("ф╕НшзгцЮРф╕╗цЬ║хРН"),
-    "noSearchResults": MessageLookupByLibrary.simpleMessage("ц▓бцЬЙхМ╣щЕНчЪДч╗УцЮЬ"),
+    "noResolveHostname": MessageLookupByLibrary.simpleMessage(
+      "ф╕НшзгцЮРф╕╗цЬ║хРН",
+    ),
+    "noSearchResults": MessageLookupByLibrary.simpleMessage(
+      "ц▓бцЬЙхМ╣щЕНчЪДч╗УцЮЬ",
+    ),
     "nodes": MessageLookupByLibrary.simpleMessage("шКВчВ╣"),
-    "nonTextProviderFile": MessageLookupByLibrary.simpleMessage("шпехдЦщГиш╡Дц║Рф╕НцШпцЦЗцЬмцЦЗф╗╢"),
+    "nonTextProviderFile": MessageLookupByLibrary.simpleMessage(
+      "шпехдЦщГиш╡Дц║Рф╕НцШпцЦЗцЬмцЦЗф╗╢",
+    ),
     "none": MessageLookupByLibrary.simpleMessage("цЧа"),
     "notRunning": MessageLookupByLibrary.simpleMessage("цЬкш┐РшбМ"),
-    "notSelectedTip": MessageLookupByLibrary.simpleMessage("х╜УхЙНф╗гчРЖч╗ДцЧац│ХщАЙф╕н"),
-    "ntpInterval": MessageLookupByLibrary.simpleMessage("хРМцнещЧ┤щЪФя╝ИхИЖщТЯя╝Й"),
+    "notSelectedTip": MessageLookupByLibrary.simpleMessage(
+      "х╜УхЙНф╗гчРЖч╗ДцЧац│ХщАЙф╕н",
+    ),
+    "ntpInterval": MessageLookupByLibrary.simpleMessage(
+      "хРМцнещЧ┤щЪФя╝ИхИЖщТЯя╝Й",
+    ),
     "ntpStatusDesc": MessageLookupByLibrary.simpleMessage(
       "х╝АхРп NTP хРОф╗О NTP цЬНхКбхЩишО╖хПЦцЧ╢щЧ┤я╝МшАМщЭЮч│╗ч╗ЯцЧ╢щТЯуАВ",
     ),
-    "nullProfileDesc": MessageLookupByLibrary.simpleMessage("ц╖╗хКаф╕Аф╕кщЕНч╜оцЦЗф╗╢хРОхН│хПпх╝АхзЛф╜┐чФи"),
+    "nullProfileDesc": MessageLookupByLibrary.simpleMessage(
+      "ц╖╗хКаф╕Аф╕кщЕНч╜оцЦЗф╗╢хРОхН│хПпх╝АхзЛф╜┐чФи",
+    ),
     "nullTip": m54,
     "numberRangeTip": m55,
     "numberTip": m56,
@@ -978,16 +1205,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "onDemandDesc": MessageLookupByLibrary.simpleMessage(
       "цМЙщЬАш┐РшбМф╝ЪхЬиш┐Юф╕КцОТщЩдчЪД Wi-Fi цЧ╢цЪВхБЬф╗гчРЖуАВ",
     ),
-    "onlyStatisticsProxy": MessageLookupByLibrary.simpleMessage("ф╗Еч╗Яшобф╗гчРЖц╡БщЗП"),
+    "onlyStatisticsProxy": MessageLookupByLibrary.simpleMessage(
+      "ф╗Еч╗Яшобф╗гчРЖц╡БщЗП",
+    ),
     "optional": MessageLookupByLibrary.simpleMessage("хПпщАЙ"),
     "options": MessageLookupByLibrary.simpleMessage("щАЙщб╣"),
     "other": MessageLookupByLibrary.simpleMessage("хЕ╢ф╗Ц"),
-    "otherContributors": MessageLookupByLibrary.simpleMessage("хЕ╢ф╗Цш┤бчМошАЕ"),
+    "otherContributors": MessageLookupByLibrary.simpleMessage(
+      "хЕ╢ф╗Цш┤бчМошАЕ",
+    ),
     "outbound": MessageLookupByLibrary.simpleMessage("хЗ║члЩ"),
     "outboundExit": MessageLookupByLibrary.simpleMessage("хЗ║хПг"),
     "outboundIp": MessageLookupByLibrary.simpleMessage("хЗ║члЩ IP"),
     "outboundMode": MessageLookupByLibrary.simpleMessage("хЗ║члЩцибх╝П"),
-    "overrideDestination": MessageLookupByLibrary.simpleMessage("шжЖчЫЦчЫоцаЗхЬ░хЭА"),
+    "overrideDestination": MessageLookupByLibrary.simpleMessage(
+      "шжЖчЫЦчЫоцаЗхЬ░хЭА",
+    ),
     "overrideDestinationDesc": MessageLookupByLibrary.simpleMessage(
       "шжЖчЫЦчЫоцаЗхЬ░хЭАф╜┐чФихЧЕцОвхИ░чЪДхЯЯхРНцЫ┐цНвхОЯчЫоцаЗхЬ░хЭАхПСш╡╖ш┐ЮцОеуАВ",
     ),
@@ -1002,7 +1235,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "pickFromAlbum": MessageLookupByLibrary.simpleMessage("ф╗ОчЫ╕хЖМщАЙцЛй"),
     "pinWindow": MessageLookupByLibrary.simpleMessage("чкЧхПгч╜ощб╢"),
     "pleaseBindWebDAV": MessageLookupByLibrary.simpleMessage("шп╖ч╗СхоЪWebDAV"),
-    "pleaseEnterScriptName": MessageLookupByLibrary.simpleMessage("шп╖ш╛УхЕешДЪцЬмхРНчз░"),
+    "pleaseEnterScriptName": MessageLookupByLibrary.simpleMessage(
+      "шп╖ш╛УхЕешДЪцЬмхРНчз░",
+    ),
     "pleaseUploadValidQrcode": MessageLookupByLibrary.simpleMessage(
       "шп╖ф╕Кф╝ацЬЙцХИчЪДф║Мч╗┤чаБ",
     ),
@@ -1010,7 +1245,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "pluginHost": MessageLookupByLibrary.simpleMessage("цПТф╗╢ф╕╗цЬ║"),
     "pluginMode": MessageLookupByLibrary.simpleMessage("цПТф╗╢цибх╝П"),
     "port": MessageLookupByLibrary.simpleMessage("члпхПг"),
-    "portConflictTip": MessageLookupByLibrary.simpleMessage("шп╖ш╛УхЕеф╕НхРМчЪДчлпхПг"),
+    "portConflictTip": MessageLookupByLibrary.simpleMessage(
+      "шп╖ш╛УхЕеф╕НхРМчЪДчлпхПг",
+    ),
     "portHopping": MessageLookupByLibrary.simpleMessage("члпхПгш╖│ш╖Г"),
     "portTip": m57,
     "portValue": m58,
@@ -1021,13 +1258,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "preview": MessageLookupByLibrary.simpleMessage("щвДшзИ"),
     "previousMatch": MessageLookupByLibrary.simpleMessage("ф╕Кф╕Аф╕кхМ╣щЕН"),
     "privateKey": MessageLookupByLibrary.simpleMessage("чзБщТе"),
-    "privateKeyPassphrase": MessageLookupByLibrary.simpleMessage("чзБщТехпЖчаБ"),
+    "privateKeyPassphrase": MessageLookupByLibrary.simpleMessage(
+      "чзБщТехпЖчаБ",
+    ),
     "process": MessageLookupByLibrary.simpleMessage("ш┐ЫчиЛ"),
     "profile": MessageLookupByLibrary.simpleMessage("щЕНч╜о"),
     "profileAutoUpdateIntervalInvalidValidationDesc":
-        MessageLookupByLibrary.simpleMessage("шп╖ш╛УхЕецЬЙцХИщЧ┤щЪФцЧ╢щЧ┤ца╝х╝П"),
+        MessageLookupByLibrary.simpleMessage(
+          "шп╖ш╛УхЕецЬЙцХИщЧ┤щЪФцЧ╢щЧ┤ца╝х╝П",
+        ),
     "profileAutoUpdateIntervalNullValidationDesc":
-        MessageLookupByLibrary.simpleMessage("шп╖ш╛УхЕешЗкхКицЫ┤цЦ░щЧ┤щЪФцЧ╢щЧ┤"),
+        MessageLookupByLibrary.simpleMessage(
+          "шп╖ш╛УхЕешЗкхКицЫ┤цЦ░щЧ┤щЪФцЧ╢щЧ┤",
+        ),
     "profileDaysLeft": m59,
     "profileExpiresIn": m60,
     "profileHasUpdate": MessageLookupByLibrary.simpleMessage(
@@ -1056,7 +1299,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "protocolParam": MessageLookupByLibrary.simpleMessage("хНПшоохПВцХ░"),
     "protocolVersion": MessageLookupByLibrary.simpleMessage("хНПшоочЙИцЬм"),
     "providerInUse": m62,
-    "providerUrlTip": MessageLookupByLibrary.simpleMessage("ф╗ЕцФпцМБш┐ЬчиЛш╡Дц║Р"),
+    "providerUrlTip": MessageLookupByLibrary.simpleMessage(
+      "ф╗ЕцФпцМБш┐ЬчиЛш╡Дц║Р",
+    ),
     "providers": MessageLookupByLibrary.simpleMessage("хдЦщГиш╡Дц║Р"),
     "proxies": MessageLookupByLibrary.simpleMessage("ф╗гчРЖ"),
     "proxiesCount": m63,
@@ -1078,7 +1323,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "pureBlack": MessageLookupByLibrary.simpleMessage("ч║пщ╗С"),
     "pureBlackMode": MessageLookupByLibrary.simpleMessage("ч║пщ╗Сцибх╝П"),
     "qrcode": MessageLookupByLibrary.simpleMessage("ф║Мч╗┤чаБ"),
-    "qrcodeDesc": MessageLookupByLibrary.simpleMessage("цЙлцППф║Мч╗┤чаБшО╖хПЦщЕНч╜оцЦЗф╗╢"),
+    "qrcodeDesc": MessageLookupByLibrary.simpleMessage(
+      "цЙлцППф║Мч╗┤чаБшО╖хПЦщЕНч╜оцЦЗф╗╢",
+    ),
     "quickActions": MessageLookupByLibrary.simpleMessage("х┐лцН╖цУНф╜Ь"),
     "quickEdit": MessageLookupByLibrary.simpleMessage("х┐лщАЯч╝Цш╛С"),
     "recentRequests": MessageLookupByLibrary.simpleMessage("цЬАш┐Сшп╖ц▒В"),
@@ -1088,24 +1335,32 @@ class MessageLookup extends MessageLookupByLibrary {
     "redo": MessageLookupByLibrary.simpleMessage("щЗНхБЪ"),
     "regex": MessageLookupByLibrary.simpleMessage("цнгхИЩ"),
     "releaseMemory": MessageLookupByLibrary.simpleMessage("щЗКцФ╛хЖЕхнШ"),
-    "releaseMemoryFailed": MessageLookupByLibrary.simpleMessage("щЗКцФ╛хЖЕхнШхд▒ш┤е"),
+    "releaseMemoryFailed": MessageLookupByLibrary.simpleMessage(
+      "щЗКцФ╛хЖЕхнШхд▒ш┤е",
+    ),
     "remote": MessageLookupByLibrary.simpleMessage("ш┐ЬчиЛ"),
     "remoteDestination": MessageLookupByLibrary.simpleMessage("ш┐ЬчиЛчЫоцаЗ"),
-    "remoteDnsResolve": MessageLookupByLibrary.simpleMessage("ш┐ЬчиЛ DNS шзгцЮР"),
+    "remoteDnsResolve": MessageLookupByLibrary.simpleMessage(
+      "ш┐ЬчиЛ DNS шзгцЮР",
+    ),
     "remove": MessageLookupByLibrary.simpleMessage("чз╗щЩд"),
     "rename": MessageLookupByLibrary.simpleMessage("щЗНхС╜хРН"),
     "replace": MessageLookupByLibrary.simpleMessage("цЫ┐цНв"),
     "replaceAll": MessageLookupByLibrary.simpleMessage("хЕищГицЫ┐цНв"),
     "request": MessageLookupByLibrary.simpleMessage("шп╖ц▒В"),
     "requests": MessageLookupByLibrary.simpleMessage("шп╖ц▒В"),
-    "requestsAndUpdates": MessageLookupByLibrary.simpleMessage("шп╖ц▒Вф╕ОцЫ┤цЦ░"),
+    "requestsAndUpdates": MessageLookupByLibrary.simpleMessage(
+      "шп╖ц▒Вф╕ОцЫ┤цЦ░",
+    ),
     "required": MessageLookupByLibrary.simpleMessage("х┐Ехбл"),
     "reset": MessageLookupByLibrary.simpleMessage("щЗНч╜о"),
     "resetPageChangesTip": MessageLookupByLibrary.simpleMessage(
       "х╜УхЙНщб╡щЭвхнШхЬицЫ┤цФ╣я╝МчбохоЪщЗНч╜охРЧя╝Я",
     ),
     "resetTip": MessageLookupByLibrary.simpleMessage("чбохоЪшжБщЗНч╜охРЧя╝Я"),
-    "resourceUpdateInterval": MessageLookupByLibrary.simpleMessage("шЗкхКицЫ┤цЦ░щЧ┤щЪФ"),
+    "resourceUpdateInterval": MessageLookupByLibrary.simpleMessage(
+      "шЗкхКицЫ┤цЦ░щЧ┤щЪФ",
+    ),
     "resourceUpdateIntervalTip": MessageLookupByLibrary.simpleMessage(
       "шЗкхКицЫ┤цЦ░щЧ┤щЪФх┐Ещб╗хдзф║О0",
     ),
@@ -1116,10 +1371,16 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "responseCode": MessageLookupByLibrary.simpleMessage("хУНх║ФчаБ"),
     "restart": MessageLookupByLibrary.simpleMessage("щЗНхРп"),
-    "restartCoreTip": MessageLookupByLibrary.simpleMessage("цВичбохоЪшжБщЗНхРпца╕х┐ГхРЧя╝Я"),
+    "restartCoreTip": MessageLookupByLibrary.simpleMessage(
+      "цВичбохоЪшжБщЗНхРпца╕х┐ГхРЧя╝Я",
+    ),
     "restore": MessageLookupByLibrary.simpleMessage("цБвхдН"),
-    "restoreAllData": MessageLookupByLibrary.simpleMessage("цБвхдНцЙАцЬЙцХ░цНо"),
-    "restoreOnlyConfig": MessageLookupByLibrary.simpleMessage("ф╗ЕцБвхдНщЕНч╜оцЦЗф╗╢"),
+    "restoreAllData": MessageLookupByLibrary.simpleMessage(
+      "цБвхдНцЙАцЬЙцХ░цНо",
+    ),
+    "restoreOnlyConfig": MessageLookupByLibrary.simpleMessage(
+      "ф╗ЕцБвхдНщЕНч╜оцЦЗф╗╢",
+    ),
     "restoreStrategy": MessageLookupByLibrary.simpleMessage("цБвхдНчнЦчХе"),
     "restoreStrategyCompatible": MessageLookupByLibrary.simpleMessage("хЕ╝хо╣"),
     "restoreStrategyOverride": MessageLookupByLibrary.simpleMessage("шжЖчЫЦ"),
@@ -1127,12 +1388,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "result": MessageLookupByLibrary.simpleMessage("ч╗УцЮЬ"),
     "retry": MessageLookupByLibrary.simpleMessage("щЗНшпХ"),
     "routeAddress": MessageLookupByLibrary.simpleMessage("ш╖пчФ▒хЬ░хЭА"),
-    "routeExcludeAddress": MessageLookupByLibrary.simpleMessage("цОТщЩдш╖пчФ▒хЬ░хЭА"),
+    "routeExcludeAddress": MessageLookupByLibrary.simpleMessage(
+      "цОТщЩдш╖пчФ▒хЬ░хЭА",
+    ),
     "routingMark": MessageLookupByLibrary.simpleMessage("ш╖пчФ▒цаЗшо░"),
     "ru": MessageLookupByLibrary.simpleMessage("ф┐Дшпн"),
     "rule": MessageLookupByLibrary.simpleMessage("шзДхИЩ"),
-    "ruleActionAndDesc": MessageLookupByLibrary.simpleMessage("щА╗ш╛СшзДхИЩ AND"),
-    "ruleActionDomainDesc": MessageLookupByLibrary.simpleMessage("хМ╣щЕНхоМцХ┤хЯЯхРН"),
+    "ruleActionAndDesc": MessageLookupByLibrary.simpleMessage(
+      "щА╗ш╛СшзДхИЩ AND",
+    ),
+    "ruleActionDomainDesc": MessageLookupByLibrary.simpleMessage(
+      "хМ╣щЕНхоМцХ┤хЯЯхРН",
+    ),
     "ruleActionDomainKeywordDesc": MessageLookupByLibrary.simpleMessage(
       "хМ╣щЕНхЯЯхРНхЕ│щФохнЧ",
     ),
@@ -1148,28 +1415,48 @@ class MessageLookup extends MessageLookupByLibrary {
     "ruleActionDscpDesc": MessageLookupByLibrary.simpleMessage(
       "хМ╣щЕНDSCPцаЗшо░я╝Иф╗ЕщЩР tproxy udp хЕечлЩя╝Й",
     ),
-    "ruleActionDstPortDesc": MessageLookupByLibrary.simpleMessage("хМ╣щЕНшп╖ц▒ВчЫоцаЗчлпхПгшМГхЫ┤"),
-    "ruleActionGeoipDesc": MessageLookupByLibrary.simpleMessage("хМ╣щЕН IP цЙАх▒ЮхЫ╜хо╢ф╗гчаБ"),
+    "ruleActionDstPortDesc": MessageLookupByLibrary.simpleMessage(
+      "хМ╣щЕНшп╖ц▒ВчЫоцаЗчлпхПгшМГхЫ┤",
+    ),
+    "ruleActionGeoipDesc": MessageLookupByLibrary.simpleMessage(
+      "хМ╣щЕН IP цЙАх▒ЮхЫ╜хо╢ф╗гчаБ",
+    ),
     "ruleActionGeositeDesc": MessageLookupByLibrary.simpleMessage(
       "хМ╣щЕН Geosite хЖЕчЪДхЯЯхРН",
     ),
-    "ruleActionInNameDesc": MessageLookupByLibrary.simpleMessage("хМ╣щЕНхЕечлЩхРНчз░"),
-    "ruleActionInPortDesc": MessageLookupByLibrary.simpleMessage("хМ╣щЕНхЕечлЩчлпхПг"),
-    "ruleActionInTypeDesc": MessageLookupByLibrary.simpleMessage("хМ╣щЕНхЕечлЩч▒╗хЮЛ"),
+    "ruleActionInNameDesc": MessageLookupByLibrary.simpleMessage(
+      "хМ╣щЕНхЕечлЩхРНчз░",
+    ),
+    "ruleActionInPortDesc": MessageLookupByLibrary.simpleMessage(
+      "хМ╣щЕНхЕечлЩчлпхПг",
+    ),
+    "ruleActionInTypeDesc": MessageLookupByLibrary.simpleMessage(
+      "хМ╣щЕНхЕечлЩч▒╗хЮЛ",
+    ),
     "ruleActionInUserDesc": MessageLookupByLibrary.simpleMessage(
       "хМ╣щЕНхЕечлЩчФицИ╖хРНя╝МцФпцМБф╜┐чФи / хИЖщЪФхдЪф╕кчФицИ╖хРН",
     ),
-    "ruleActionIpAsnDesc": MessageLookupByLibrary.simpleMessage("хМ╣щЕН IP цЙАх▒Ю ASN"),
+    "ruleActionIpAsnDesc": MessageLookupByLibrary.simpleMessage(
+      "хМ╣щЕН IP цЙАх▒Ю ASN",
+    ),
     "ruleActionIpCidr6Desc": MessageLookupByLibrary.simpleMessage(
       "хМ╣щЕН IP хЬ░хЭАшМГхЫ┤я╝МIP-CIDR6 хПкцШпф╕Аф╕кхИлхРН",
     ),
-    "ruleActionIpCidrDesc": MessageLookupByLibrary.simpleMessage("хМ╣щЕН IP хЬ░хЭАшМГхЫ┤"),
+    "ruleActionIpCidrDesc": MessageLookupByLibrary.simpleMessage(
+      "хМ╣щЕН IP хЬ░хЭАшМГхЫ┤",
+    ),
     "ruleActionIpSuffixDesc": MessageLookupByLibrary.simpleMessage(
       "хМ╣щЕН IP хРОч╝АшМГхЫ┤",
     ),
-    "ruleActionMatchDesc": MessageLookupByLibrary.simpleMessage("хМ╣щЕНцЙАцЬЙшп╖ц▒Вя╝МцЧащЬАцЭбф╗╢"),
-    "ruleActionNetworkDesc": MessageLookupByLibrary.simpleMessage("хМ╣щЕНTCPцИЦшАЕUDP"),
-    "ruleActionNotDesc": MessageLookupByLibrary.simpleMessage("щА╗ш╛СшзДхИЩ NOT"),
+    "ruleActionMatchDesc": MessageLookupByLibrary.simpleMessage(
+      "хМ╣щЕНцЙАцЬЙшп╖ц▒Вя╝МцЧащЬАцЭбф╗╢",
+    ),
+    "ruleActionNetworkDesc": MessageLookupByLibrary.simpleMessage(
+      "хМ╣щЕНTCPцИЦшАЕUDP",
+    ),
+    "ruleActionNotDesc": MessageLookupByLibrary.simpleMessage(
+      "щА╗ш╛СшзДхИЩ NOT",
+    ),
     "ruleActionOrDesc": MessageLookupByLibrary.simpleMessage("щА╗ш╛СшзДхИЩ OR"),
     "ruleActionProcessNameDesc": MessageLookupByLibrary.simpleMessage(
       "ф╜┐чФиш┐ЫчиЛхМ╣щЕНя╝МхЬиAndroidх╣│хП░хПпф╗ехМ╣щЕНхМЕхРН",
@@ -1207,7 +1494,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "ruleActionSrcIpSuffixDesc": MessageLookupByLibrary.simpleMessage(
       "хМ╣щЕНцЭец║Р IP хРОч╝АшМГхЫ┤",
     ),
-    "ruleActionSrcPortDesc": MessageLookupByLibrary.simpleMessage("хМ╣щЕНшп╖ц▒ВцЭец║РчлпхПгшМГхЫ┤"),
+    "ruleActionSrcPortDesc": MessageLookupByLibrary.simpleMessage(
+      "хМ╣щЕНшп╖ц▒ВцЭец║РчлпхПгшМГхЫ┤",
+    ),
     "ruleActionSubRuleDesc": MessageLookupByLibrary.simpleMessage(
       "хМ╣щЕНшЗ│хнРшзДхИЩя╝МщЬАшжБц│ицДПцЛмхП╖чЪДф╜┐чФи",
     ),
@@ -1224,17 +1513,25 @@ class MessageLookup extends MessageLookupByLibrary {
     "rulePresetBlockDot": MessageLookupByLibrary.simpleMessage(
       "х▒ПшФ╜ DNS over TLS",
     ),
-    "rulePresetBlockLoopback": MessageLookupByLibrary.simpleMessage("щШ▓цнвф╗гчРЖхЫЮчОп"),
+    "rulePresetBlockLoopback": MessageLookupByLibrary.simpleMessage(
+      "щШ▓цнвф╗гчРЖхЫЮчОп",
+    ),
     "rulePresetBlockQuic": MessageLookupByLibrary.simpleMessage("х▒ПшФ╜ QUIC"),
     "rulePresetBlockStun": MessageLookupByLibrary.simpleMessage("х▒ПшФ╜ STUN"),
-    "rulePresetLanDirect": MessageLookupByLibrary.simpleMessage("х▒АхЯЯч╜СчЫ┤ш┐Ю"),
+    "rulePresetLanDirect": MessageLookupByLibrary.simpleMessage(
+      "х▒АхЯЯч╜СчЫ┤ш┐Ю",
+    ),
     "rulePresetSystemServicesDirect": MessageLookupByLibrary.simpleMessage(
       "Apple ф╕О Microsoft чЫ┤ш┐Ю",
     ),
     "ruleProviders": MessageLookupByLibrary.simpleMessage("шзДхИЩщЫЖ"),
     "ruleSet": MessageLookupByLibrary.simpleMessage("шзДхИЩщЫЖ"),
-    "ruleSetEmptyTip": MessageLookupByLibrary.simpleMessage("шзДхИЩщЫЖф╕нц▓бцЬЙхПпчФичЪДцЭбчЫо"),
-    "ruleSetInvalidTip": MessageLookupByLibrary.simpleMessage("цЧац│Хшп╗хПЦшпе mrs цЦЗф╗╢"),
+    "ruleSetEmptyTip": MessageLookupByLibrary.simpleMessage(
+      "шзДхИЩщЫЖф╕нц▓бцЬЙхПпчФичЪДцЭбчЫо",
+    ),
+    "ruleSetInvalidTip": MessageLookupByLibrary.simpleMessage(
+      "цЧац│Хшп╗хПЦшпе mrs цЦЗф╗╢",
+    ),
     "ruleSetMixedTip": MessageLookupByLibrary.simpleMessage(
       "шзДхИЩщЫЖхРМцЧ╢хМЕхРлхЯЯхРНхТМ IP цо╡я╝МцЧац│ХхИдцЦнч▒╗хЮЛ",
     ),
@@ -1251,9 +1548,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "safeModeAppTitle": m70,
     "saturation": MessageLookupByLibrary.simpleMessage("ще▒хТМх║ж"),
     "save": MessageLookupByLibrary.simpleMessage("ф┐ЭхнШ"),
-    "saveChanges": MessageLookupByLibrary.simpleMessage("цШпхРжф┐ЭхнШцЫ┤цФ╣я╝Я"),
+    "saveChanges": MessageLookupByLibrary.simpleMessage(
+      "цШпхРжф┐ЭхнШцЫ┤цФ╣я╝Я",
+    ),
     "script": MessageLookupByLibrary.simpleMessage("шДЪцЬм"),
-    "scriptModeDesc": MessageLookupByLibrary.simpleMessage("шДЪцЬмцибх╝Пя╝Мф╜┐чФицЙйх▒ХшДЪцЬмцФ╣хЖЩцХ┤ф╕кщЕНч╜о"),
+    "scriptModeDesc": MessageLookupByLibrary.simpleMessage(
+      "шДЪцЬмцибх╝Пя╝Мф╜┐чФицЙйх▒ХшДЪцЬмцФ╣хЖЩцХ┤ф╕кщЕНч╜о",
+    ),
     "scrollToSelected": MessageLookupByLibrary.simpleMessage("ц╗ЪхКихИ░х╖▓щАЙ"),
     "search": MessageLookupByLibrary.simpleMessage("цРЬч┤в"),
     "seconds": MessageLookupByLibrary.simpleMessage("чзТ"),
@@ -1262,7 +1563,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "sectionsInEffect": m72,
     "selectAll": MessageLookupByLibrary.simpleMessage("хЕищАЙ"),
     "selectRuleSet": MessageLookupByLibrary.simpleMessage("шп╖щАЙцЛйшзДхИЩщЫЖ"),
-    "selectSplitStrategy": MessageLookupByLibrary.simpleMessage("шп╖щАЙцЛйхИЖц╡БчнЦчХе"),
+    "selectSplitStrategy": MessageLookupByLibrary.simpleMessage(
+      "шп╖щАЙцЛйхИЖц╡БчнЦчХе",
+    ),
     "selected": MessageLookupByLibrary.simpleMessage("х╖▓щАЙцЛй"),
     "server": MessageLookupByLibrary.simpleMessage("цЬНхКбхЩи"),
     "serviceAbnormalCount": m73,
@@ -1273,21 +1576,31 @@ class MessageLookup extends MessageLookupByLibrary {
     "serviceCheckAll": MessageLookupByLibrary.simpleMessage("хЕищГицгАц╡Л"),
     "serviceCheckedAt": m74,
     "serviceComingSoon": MessageLookupByLibrary.simpleMessage("хН│х░Жф╕Кч║┐"),
-    "serviceDisallowedIsp": MessageLookupByLibrary.simpleMessage("ф╕НхЕБшо╕чЪД ISP"),
+    "serviceDisallowedIsp": MessageLookupByLibrary.simpleMessage(
+      "ф╕НхЕБшо╕чЪД ISP",
+    ),
     "serviceFailed": MessageLookupByLibrary.simpleMessage("цгАц╡Лхд▒ш┤е"),
     "serviceManage": MessageLookupByLibrary.simpleMessage("чобчРЖцЬНхКб"),
-    "serviceOriginalsOnly": MessageLookupByLibrary.simpleMessage("ф╗ЕщЩРшЗкхИ╢хЖЕхо╣"),
+    "serviceOriginalsOnly": MessageLookupByLibrary.simpleMessage(
+      "ф╗ЕщЩРшЗкхИ╢хЖЕхо╣",
+    ),
     "servicePending": MessageLookupByLibrary.simpleMessage("х╛ЕцгАц╡Л"),
     "serviceRestricted": MessageLookupByLibrary.simpleMessage("шо┐щЧохПЧщЩР"),
-    "serviceShownOnDashboard": MessageLookupByLibrary.simpleMessage("цШ╛чд║хЬиф╗кшбичЫШ"),
+    "serviceShownOnDashboard": MessageLookupByLibrary.simpleMessage(
+      "цШ╛чд║хЬиф╗кшбичЫШ",
+    ),
     "serviceStatus": MessageLookupByLibrary.simpleMessage("цЬНхКбчК╢цАБ"),
     "serviceUnavailable": MessageLookupByLibrary.simpleMessage("ф╕НхПпчФи"),
-    "serviceUnsupportedRegion": MessageLookupByLibrary.simpleMessage("хЬ░хМ║ф╕НцФпцМБ"),
+    "serviceUnsupportedRegion": MessageLookupByLibrary.simpleMessage(
+      "хЬ░хМ║ф╕НцФпцМБ",
+    ),
     "settingEntries": MessageLookupByLibrary.simpleMessage("шо╛ч╜ощб╣"),
     "settings": MessageLookupByLibrary.simpleMessage("шо╛ч╜о"),
     "settingsCount": m75,
     "shareLinkUnreadable": m76,
-    "shareLinksInvalid": MessageLookupByLibrary.simpleMessage("цЧац│Хф╗ОщУ╛цОеф╕ншп╗хПЦф╗гчРЖ"),
+    "shareLinksInvalid": MessageLookupByLibrary.simpleMessage(
+      "цЧац│Хф╗ОщУ╛цОеф╕ншп╗хПЦф╗гчРЖ",
+    ),
     "show": MessageLookupByLibrary.simpleMessage("цШ╛чд║"),
     "showLess": MessageLookupByLibrary.simpleMessage("цФ╢ш╡╖"),
     "showMore": MessageLookupByLibrary.simpleMessage("х▒Хх╝А"),
@@ -1295,10 +1608,16 @@ class MessageLookup extends MessageLookupByLibrary {
       "щАЪчЯецаПцШ╛чд║хБЬцнвцМЙщТо",
     ),
     "showPassword": MessageLookupByLibrary.simpleMessage("цШ╛чд║хпЖчаБ"),
-    "sidebarBlur": MessageLookupByLibrary.simpleMessage("ф╛зш╛╣цаПшГМцЩпцибч│К"),
-    "sidebarBlurDesc": MessageLookupByLibrary.simpleMessage("ф╛зш╛╣цаПщАПхЗ║чкЧхПгхРОцЦ╣цибч│КчЪДцбМщЭв"),
+    "sidebarBlur": MessageLookupByLibrary.simpleMessage(
+      "ф╛зш╛╣цаПшГМцЩпцибч│К",
+    ),
+    "sidebarBlurDesc": MessageLookupByLibrary.simpleMessage(
+      "ф╛зш╛╣цаПщАПхЗ║чкЧхПгхРОцЦ╣цибч│КчЪДцбМщЭв",
+    ),
     "silentLaunch": MessageLookupByLibrary.simpleMessage("щЭЩщ╗ШхРпхКи"),
-    "silentLaunchDesc": MessageLookupByLibrary.simpleMessage("щЭЩщ╗ШхРпхКицЧ╢ф╕НцШ╛чд║чкЧхПгуАВ"),
+    "silentLaunchDesc": MessageLookupByLibrary.simpleMessage(
+      "щЭЩщ╗ШхРпхКицЧ╢ф╕НцШ╛чд║чкЧхПгуАВ",
+    ),
     "singleAdd": MessageLookupByLibrary.simpleMessage("хНХцЭбц╖╗хКа"),
     "singleImport": MessageLookupByLibrary.simpleMessage("хНХцЭбхп╝хЕе"),
     "singleShareLinkOnly": MessageLookupByLibrary.simpleMessage(
@@ -1306,16 +1625,28 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "singleValueTip": m77,
     "size": MessageLookupByLibrary.simpleMessage("х░║хп╕"),
-    "skipCertVerify": MessageLookupByLibrary.simpleMessage("ш╖│ш┐ЗшпБф╣жщкМшпБ"),
+    "skipCertVerify": MessageLookupByLibrary.simpleMessage(
+      "ш╖│ш┐ЗшпБф╣жщкМшпБ",
+    ),
     "skipDomain": MessageLookupByLibrary.simpleMessage("ш╖│ш┐ЗхЯЯхРН"),
-    "skipDomainDesc": MessageLookupByLibrary.simpleMessage("хЧЕцОвхИ░ш╖│ш┐ЗхЯЯхРНф╕нчЪДхЯЯхРНцЧ╢ф╕Нф║ИщЗЗчФиуАВ"),
-    "skipDstAddress": MessageLookupByLibrary.simpleMessage("ш╖│ш┐ЗчЫоцаЗхЬ░хЭА"),
-    "skipSrcAddress": MessageLookupByLibrary.simpleMessage("ш╖│ш┐ЗцЭец║РхЬ░хЭА"),
+    "skipDomainDesc": MessageLookupByLibrary.simpleMessage(
+      "хЧЕцОвхИ░ш╖│ш┐ЗхЯЯхРНф╕нчЪДхЯЯхРНцЧ╢ф╕Нф║ИщЗЗчФиуАВ",
+    ),
+    "skipDstAddress": MessageLookupByLibrary.simpleMessage(
+      "ш╖│ш┐ЗчЫоцаЗхЬ░хЭА",
+    ),
+    "skipSrcAddress": MessageLookupByLibrary.simpleMessage(
+      "ш╖│ш┐ЗцЭец║РхЬ░хЭА",
+    ),
     "slide": MessageLookupByLibrary.simpleMessage("ц╗СхКи"),
     "sliders": MessageLookupByLibrary.simpleMessage("ц╗СхЭЧ"),
     "smartAutomatic": MessageLookupByLibrary.simpleMessage("шЗкхКищАЙцЛй"),
-    "smartAutomaticRouting": MessageLookupByLibrary.simpleMessage("ца╣цНоцпПф╕кчЫоцаЗшЗкхКищАЙцЛй"),
-    "smartCollectData": MessageLookupByLibrary.simpleMessage("цФ╢щЫЖшонч╗ГцХ░цНо"),
+    "smartAutomaticRouting": MessageLookupByLibrary.simpleMessage(
+      "ца╣цНоцпПф╕кчЫоцаЗшЗкхКищАЙцЛй",
+    ),
+    "smartCollectData": MessageLookupByLibrary.simpleMessage(
+      "цФ╢щЫЖшонч╗ГцХ░цНо",
+    ),
     "smartCoreStopped": MessageLookupByLibrary.simpleMessage(
       "хРпхКицЬНхКбф╗ецЯечЬЛ Smart цОТхРНуАВ",
     ),
@@ -1324,22 +1655,38 @@ class MessageLookup extends MessageLookupByLibrary {
       "цЬкщАЙцЛйшКВчВ╣",
     ),
     "smartDetails": MessageLookupByLibrary.simpleMessage("Smart шпжцГЕ"),
-    "smartLoadFailed": MessageLookupByLibrary.simpleMessage("цЧац│ХхКаш╜╜ Smart цОТхРНуАВ"),
+    "smartLoadFailed": MessageLookupByLibrary.simpleMessage(
+      "цЧац│ХхКаш╜╜ Smart цОТхРНуАВ",
+    ),
     "smartMostUsed": MessageLookupByLibrary.simpleMessage("ч╗Пх╕╕ф╜┐чФи"),
-    "smartNoMatchingNodes": MessageLookupByLibrary.simpleMessage("ц▓бцЬЙхМ╣щЕНчЪДшКВчВ╣"),
-    "smartNoWeights": MessageLookupByLibrary.simpleMessage("цЪВцЧа Smart цОТхРН"),
+    "smartNoMatchingNodes": MessageLookupByLibrary.simpleMessage(
+      "ц▓бцЬЙхМ╣щЕНчЪДшКВчВ╣",
+    ),
+    "smartNoWeights": MessageLookupByLibrary.simpleMessage(
+      "цЪВцЧа Smart цОТхРН",
+    ),
     "smartNoWeightsTip": MessageLookupByLibrary.simpleMessage(
       "Smart хдДчРЖц╡БщЗПхРОх░ЖцШ╛чд║цОТхРНуАВ",
     ),
-    "smartOccasionallyUsed": MessageLookupByLibrary.simpleMessage("хБ╢х░Фф╜┐чФи"),
+    "smartOccasionallyUsed": MessageLookupByLibrary.simpleMessage(
+      "хБ╢х░Фф╜┐чФи",
+    ),
     "smartPinNode": MessageLookupByLibrary.simpleMessage("хЫ║хоЪшКВчВ╣"),
     "smartPinned": MessageLookupByLibrary.simpleMessage("х╖▓хЫ║хоЪ"),
-    "smartPolicyPriority": MessageLookupByLibrary.simpleMessage("чнЦчХеф╝ШхЕИч║з"),
-    "smartPreferAsn": MessageLookupByLibrary.simpleMessage("ф╝ШхЕИхПВшАГ ASN хОЖхП▓"),
+    "smartPolicyPriority": MessageLookupByLibrary.simpleMessage(
+      "чнЦчХеф╝ШхЕИч║з",
+    ),
+    "smartPreferAsn": MessageLookupByLibrary.simpleMessage(
+      "ф╝ШхЕИхПВшАГ ASN хОЖхП▓",
+    ),
     "smartRarelyUsed": MessageLookupByLibrary.simpleMessage("х╛Их░Сф╜┐чФи"),
     "smartRefresh": MessageLookupByLibrary.simpleMessage("хИ╖цЦ░цОТхРН"),
-    "smartRestoreAutomatic": MessageLookupByLibrary.simpleMessage("цБвхдНшЗкхКищАЙцЛй"),
-    "smartSampleRate": MessageLookupByLibrary.simpleMessage("шонч╗ГщЗЗца╖цпФф╛Л"),
+    "smartRestoreAutomatic": MessageLookupByLibrary.simpleMessage(
+      "цБвхдНшЗкхКищАЙцЛй",
+    ),
+    "smartSampleRate": MessageLookupByLibrary.simpleMessage(
+      "шонч╗ГщЗЗца╖цпФф╛Л",
+    ),
     "smartScore": MessageLookupByLibrary.simpleMessage("шпДхИЖ"),
     "smartScoreExplanation": MessageLookupByLibrary.simpleMessage(
       "шпДхИЖхТМф╜┐чФич▒╗хИлчФ▒хЖЕца╕цПРф╛ЫуАВшпДхИЖф╕НцШпчЩ╛хИЖцпФуАВ",
@@ -1363,7 +1710,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "spectrum": MessageLookupByLibrary.simpleMessage("хЕЙш░▒"),
     "speedStatistics": MessageLookupByLibrary.simpleMessage("ч╜СщАЯч╗Яшоб"),
     "splitStrategy": MessageLookupByLibrary.simpleMessage("хИЖц╡БчнЦчХе"),
-    "splitStrategyNotEmpty": MessageLookupByLibrary.simpleMessage("хИЖц╡БчнЦчХеф╕НшГ╜ф╕║чй║"),
+    "splitStrategyNotEmpty": MessageLookupByLibrary.simpleMessage(
+      "хИЖц╡БчнЦчХеф╕НшГ╜ф╕║чй║",
+    ),
     "ssidsEmpty": MessageLookupByLibrary.simpleMessage("SSIDsф╕║чй║"),
     "stackMode": MessageLookupByLibrary.simpleMessage("цаИцибх╝П"),
     "stackTrace": MessageLookupByLibrary.simpleMessage("хаЖцаИф┐бцБп"),
@@ -1374,9 +1723,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "start": MessageLookupByLibrary.simpleMessage("хРпхКи"),
     "startFromScratch": MessageLookupByLibrary.simpleMessage("ф╗ОщЫ╢х╝АхзЛ"),
     "startVpn": MessageLookupByLibrary.simpleMessage("цнгхЬихРпхКиVPNтАж"),
-    "startupAndBackground": MessageLookupByLibrary.simpleMessage("хРпхКиф╕ОхРОхП░"),
+    "startupAndBackground": MessageLookupByLibrary.simpleMessage(
+      "хРпхКиф╕ОхРОхП░",
+    ),
     "status": MessageLookupByLibrary.simpleMessage("чК╢цАБ"),
-    "statusDesc": MessageLookupByLibrary.simpleMessage("хЕ│щЧн DNS хРОх░Жф╜┐чФич│╗ч╗Я DNSуАВ"),
+    "statusDesc": MessageLookupByLibrary.simpleMessage(
+      "хЕ│щЧн DNS хРОх░Жф╜┐чФич│╗ч╗Я DNSуАВ",
+    ),
     "stop": MessageLookupByLibrary.simpleMessage("цЪВхБЬ"),
     "stopVpn": MessageLookupByLibrary.simpleMessage("цнгхЬихБЬцнвVPNтАж"),
     "strategy": MessageLookupByLibrary.simpleMessage("чнЦчХе"),
@@ -1387,7 +1740,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "style": MessageLookupByLibrary.simpleMessage("щгОца╝"),
     "submit": MessageLookupByLibrary.simpleMessage("цПРф║д"),
     "subscriptionInfo": MessageLookupByLibrary.simpleMessage("шовщШЕф┐бцБп"),
-    "sudoPasswordTitle": MessageLookupByLibrary.simpleMessage("ш╛УхЕе sudo хпЖчаБ"),
+    "sudoPasswordTitle": MessageLookupByLibrary.simpleMessage(
+      "ш╛УхЕе sudo хпЖчаБ",
+    ),
     "suspended": MessageLookupByLibrary.simpleMessage("цМВш╡╖ф╕нтАж"),
     "switchProfile": MessageLookupByLibrary.simpleMessage("хИЗцНвщЕНч╜о"),
     "sync": MessageLookupByLibrary.simpleMessage("хРМцне"),
@@ -1396,7 +1751,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "systemProxy": MessageLookupByLibrary.simpleMessage("ч│╗ч╗Яф╗гчРЖ"),
     "tab": MessageLookupByLibrary.simpleMessage("цаЗчн╛щб╡"),
     "tabAnimation": MessageLookupByLibrary.simpleMessage("щАЙщб╣хНбхКичФ╗"),
-    "tapIconToRetry": MessageLookupByLibrary.simpleMessage("чВ╣хЗ╗хЫ╛цаЗщЗНшпХ"),
+    "tapIconToRetry": MessageLookupByLibrary.simpleMessage(
+      "чВ╣хЗ╗хЫ╛цаЗщЗНшпХ",
+    ),
     "tapToAuthorize": MessageLookupByLibrary.simpleMessage("чВ╣хЗ╗цОИцЭГ"),
     "target": MessageLookupByLibrary.simpleMessage("чЫоцаЗ"),
     "tcpConcurrent": MessageLookupByLibrary.simpleMessage("TCPх╣╢хПС"),
@@ -1404,7 +1761,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "testUrl": MessageLookupByLibrary.simpleMessage("ц╡ЛщАЯщУ╛цОе"),
     "testWhenUsed": MessageLookupByLibrary.simpleMessage("ф╜┐чФицЧ╢ц╡ЛшпХ"),
     "textScale": MessageLookupByLibrary.simpleMessage("цЦЗцЬмч╝йцФ╛"),
-    "textScalePreview": MessageLookupByLibrary.simpleMessage("х║ФчФихЖЕчЪДцЦЗхнЧх░Жф╗еш┐Щф╕кхдзх░ПцШ╛чд║"),
+    "textScalePreview": MessageLookupByLibrary.simpleMessage(
+      "х║ФчФихЖЕчЪДцЦЗхнЧх░Жф╗еш┐Щф╕кхдзх░ПцШ╛чд║",
+    ),
     "theme": MessageLookupByLibrary.simpleMessage("ф╕╗щвШ"),
     "themeColor": MessageLookupByLibrary.simpleMessage("ф╕╗щвШшЙ▓х╜й"),
     "themeMode": MessageLookupByLibrary.simpleMessage("ф╕╗щвШцибх╝П"),
@@ -1431,7 +1790,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "tunAuthorizationFailed": MessageLookupByLibrary.simpleMessage(
       "шЩЪцЛЯч╜СхНбцОИцЭГхд▒ш┤ея╝Мх╖▓хЕ│щЧнуАВ",
     ),
-    "tunDesc": MessageLookupByLibrary.simpleMessage("шЩЪцЛЯч╜СхНбф╗ЕхЬичобчРЖхСШцибх╝ПчФЯцХИуАВ"),
+    "tunDesc": MessageLookupByLibrary.simpleMessage(
+      "шЩЪцЛЯч╜СхНбф╗ЕхЬичобчРЖхСШцибх╝ПчФЯцХИуАВ",
+    ),
     "tunOverrideDesc": MessageLookupByLibrary.simpleMessage(
       "ц╖╗хКачЪДщб╣ф╝ЪшжЖхЖЩцЙАцЬЙщЕНч╜очЪДшЩЪцЛЯч╜СхНбшо╛ч╜оя╝МцЬкц╖╗хКачЪДщб╣ц▓┐чФищЕНч╜ошЗкш║лчЪДшо╛ч╜оуАВшЗкхоЪф╣ЙщЕНч╜ошЗкх╖▒ц╖╗хКачЪДщб╣ф╝ШхЕИуАВ",
     ),
@@ -1446,7 +1807,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "undo": MessageLookupByLibrary.simpleMessage("цТдщФА"),
     "unifiedDelay": MessageLookupByLibrary.simpleMessage("ч╗Яф╕Ах╗╢ш┐Я"),
     "unknown": MessageLookupByLibrary.simpleMessage("цЬкчЯе"),
-    "unknownNetworkError": MessageLookupByLibrary.simpleMessage("цЬкчЯеч╜Сч╗ЬщФЩшпп"),
+    "unknownNetworkError": MessageLookupByLibrary.simpleMessage(
+      "цЬкчЯеч╜Сч╗ЬщФЩшпп",
+    ),
     "unmaximize": MessageLookupByLibrary.simpleMessage("хРСф╕Лш┐ШхОЯ"),
     "unnamed": MessageLookupByLibrary.simpleMessage("цЬкхС╜хРН"),
     "unpinWindow": MessageLookupByLibrary.simpleMessage("хПЦц╢Ич╜ощб╢"),

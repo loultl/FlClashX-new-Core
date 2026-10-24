@@ -23,7 +23,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m0(count, skipped) =>
       "╨С╤Г╨┤╨╡╤В ╨┤╨╛╨▒╨░╨▓╨╗╨╡╨╜╨╛: ${count}, ╨┐╤А╨╛╨┐╤Г╤Й╨╡╨╜╨╛ (╤Г╨╢╨╡ ╨╡╤Б╤В╤М): ${skipped}";
 
-  static String m1(detail) => "╨Э╨╡ ╤Г╨┤╨░╨╗╨╛╤Б╤М ╨╛╤З╨╕╤Б╤В╨╕╤В╤М ╨┤╨░╨╜╨╜╤Л╨╡: ${detail}";
+  static String m1(detail) =>
+      "╨Э╨╡ ╤Г╨┤╨░╨╗╨╛╤Б╤М ╨╛╤З╨╕╤Б╤В╨╕╤В╤М ╨┤╨░╨╜╨╜╤Л╨╡: ${detail}";
 
   static String m2(code) =>
       "Windows ╨╛╤В╨║╨░╨╖╨░╨╗╨░╤Б╤М ╨╖╨░╨┐╤Г╤Б╨║╨░╤В╤М FlClashCore.exe (╨╛╤И╨╕╨▒╨║╨░ ${code}). ╨Я╨╛╨╗╨╕╤В╨╕╨║╨╕ ╨║╨╛╨╜╤В╤А╨╛╨╗╤П ╨┐╤А╨╕╨╗╨╛╨╢╨╡╨╜╨╕╨╣, ╤В╨░╨║╨╕╨╡ ╨║╨░╨║ Smart App Control ╨╕╨╗╨╕ AppLocker, ╨▒╨╗╨╛╨║╨╕╤А╤Г╤О╤В ╨╜╨╡╨┐╨╛╨┤╨┐╨╕╤Б╨░╨╜╨╜╤Л╨╡ ╨┐╤А╨╛╨│╤А╨░╨╝╨╝╤Л; ╤А╨░╨╖╤А╨╡╤И╨╕╤В╨╡ FlClash ╨▓ ╤Н╤В╨╛╨╣ ╨┐╨╛╨╗╨╕╤В╨╕╨║╨╡ ╨╕╨╗╨╕ ╨╛╤В╨║╨╗╤О╤З╨╕╤В╨╡ ╨╡╤С ╨╕ ╨┐╨╛╨▓╤В╨╛╤А╨╕╤В╨╡ ╨┐╨╛╨┐╤Л╤В╨║╤Г.";
@@ -31,7 +32,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m3(name) =>
       "╨Я╤А╨╕╨╗╨╛╨╢╨╡╨╜╨╕╨╡ ╨┤╨▓╨░ ╤А╨░╨╖╨░ ╨┐╨╛╨┤╤А╤П╨┤ ╨╜╨╡ ╤Б╨╝╨╛╨│╨╗╨╛ ╨╖╨░╨▓╨╡╤А╤И╨╕╤В╤М ╨╖╨░╨┐╤Г╤Б╨║. ╨з╤В╨╛╨▒╤Л ╤А╨░╨╖╨╛╤А╨▓╨░╤В╤М ╤Ж╨╕╨║╨╗, ╨┐╤А╨╛╤Д╨╕╨╗╤М ${name} ╤Б╨╜╤П╤В ╤Б ╨▓╤Л╨▒╨╛╤А╨░, ╨░ ╨░╨▓╤В╨╛╨╝╨░╤В╨╕╤З╨╡╤Б╨║╨░╤П ╨╜╨░╤Б╤В╤А╨╛╨╣╨║╨░ ╨┐╤А╨╛╨┐╤Г╤Й╨╡╨╜╨░. ╨Т╤Л ╨╝╨╛╨╢╨╡╤В╨╡ ╨▓╤Л╨▒╤А╨░╤В╤М ╨╡╨│╨╛ ╤Б╨╜╨╛╨▓╨░ ╨▓ ╨╗╤О╨▒╨╛╨╣ ╨╝╨╛╨╝╨╡╨╜╤В.";
 
-  static String m4(url) => "╨б╨╛╨╖╨┤╨░╤В╤М ╨┐╤А╨╛╤Д╨╕╨╗╤М ╨┐╨╛ ╤Б╤Б╤Л╨╗╨║╨╡ ${url}?";
+  static String m4(url) =>
+      "╨б╨╛╨╖╨┤╨░╤В╤М ╨┐╤А╨╛╤Д╨╕╨╗╤М ╨┐╨╛ ╤Б╤Б╤Л╨╗╨║╨╡ ${url}?";
 
   static String m5(count, label) =>
       "${Intl.plural(count, one: '╨Я╨╛╨╗╤М╨╖╨╛╨▓╨░╤В╨╡╨╗╤М╤Б╨║╨╕╨╡ ╨┐╤А╨╛╤Д╨╕╨╗╨╕ ╨╜╨╡ ╨┐╨╛╨┤╨┤╨╡╤А╨╢╨╕╨▓╨░╤О╤В ╨┐╨╛╨┤╨┐╤А╨░╨▓╨╕╨╗╨░, ╨┐╨╛╤Н╤В╨╛╨╝╤Г ╨╛╤В╨▒╤А╨╛╤И╨╡╨╜╨╛ ${label} ╨┐╤А╨░╨▓╨╕╨╗╨╛ SUB-RULE', few: '╨Я╨╛╨╗╤М╨╖╨╛╨▓╨░╤В╨╡╨╗╤М╤Б╨║╨╕╨╡ ╨┐╤А╨╛╤Д╨╕╨╗╨╕ ╨╜╨╡ ╨┐╨╛╨┤╨┤╨╡╤А╨╢╨╕╨▓╨░╤О╤В ╨┐╨╛╨┤╨┐╤А╨░╨▓╨╕╨╗╨░, ╨┐╨╛╤Н╤В╨╛╨╝╤Г ╨╛╤В╨▒╤А╨╛╤И╨╡╨╜╨╛ ${label} ╨┐╤А╨░╨▓╨╕╨╗╨░ SUB-RULE', many: '╨Я╨╛╨╗╤М╨╖╨╛╨▓╨░╤В╨╡╨╗╤М╤Б╨║╨╕╨╡ ╨┐╤А╨╛╤Д╨╕╨╗╨╕ ╨╜╨╡ ╨┐╨╛╨┤╨┤╨╡╤А╨╢╨╕╨▓╨░╤О╤В ╨┐╨╛╨┤╨┐╤А╨░╨▓╨╕╨╗╨░, ╨┐╨╛╤Н╤В╨╛╨╝╤Г ╨╛╤В╨▒╤А╨╛╤И╨╡╨╜╨╛ ${label} ╨┐╤А╨░╨▓╨╕╨╗ SUB-RULE', other: '╨Я╨╛╨╗╤М╨╖╨╛╨▓╨░╤В╨╡╨╗╤М╤Б╨║╨╕╨╡ ╨┐╤А╨╛╤Д╨╕╨╗╨╕ ╨╜╨╡ ╨┐╨╛╨┤╨┤╨╡╤А╨╢╨╕╨▓╨░╤О╤В ╨┐╨╛╨┤╨┐╤А╨░╨▓╨╕╨╗╨░, ╨┐╨╛╤Н╤В╨╛╨╝╤Г ╨╛╤В╨▒╤А╨╛╤И╨╡╨╜╨╛ ${label} ╨┐╤А╨░╨▓╨╕╨╗╨░ SUB-RULE')}";
@@ -54,11 +56,14 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m11(name, message) =>
       "${name}: ╨╜╨╡╨┤╨╛╨┐╤Г╤Б╤В╨╕╨╝╨╛╨╡ ╤А╨╡╨│╤Г╨╗╤П╤А╨╜╨╛╨╡ ╨▓╤Л╤А╨░╨╢╨╡╨╜╨╕╨╡: ${message}";
 
-  static String m12(name) => "╨Я╤А╨╛╨║╤Б╨╕ ╨┤╨╗╤П ╨┐╨╛╨┤╨║╨╗╤О╤З╨╡╨╜╨╕╤П ${name} ╨╜╨╡ ╤Б╤Г╤Й╨╡╤Б╤В╨▓╤Г╨╡╤В";
+  static String m12(name) =>
+      "╨Я╤А╨╛╨║╤Б╨╕ ╨┤╨╗╤П ╨┐╨╛╨┤╨║╨╗╤О╤З╨╡╨╜╨╕╤П ${name} ╨╜╨╡ ╤Б╤Г╤Й╨╡╤Б╤В╨▓╤Г╨╡╤В";
 
-  static String m13(names) => "╨н╤В╨╕ ╨┐╤А╨╛╨▓╨░╨╣╨┤╨╡╤А╤Л ╨┐╤А╨╛╨║╤Б╨╕ ╨╜╨╡ ╤Б╤Г╤Й╨╡╤Б╤В╨▓╤Г╤О╤В: ${names}";
+  static String m13(names) =>
+      "╨н╤В╨╕ ╨┐╤А╨╛╨▓╨░╨╣╨┤╨╡╤А╤Л ╨┐╤А╨╛╨║╤Б╨╕ ╨╜╨╡ ╤Б╤Г╤Й╨╡╤Б╤В╨▓╤Г╤О╤В: ${names}";
 
-  static String m14(names) => "╨н╤В╨╕ ╨┐╤А╨╛╨║╤Б╨╕ ╨╕╨╗╨╕ ╨┐╨╛╨╗╨╕╤В╨╕╨║╨╕ ╨╜╨╡ ╤Б╤Г╤Й╨╡╤Б╤В╨▓╤Г╤О╤В: ${names}";
+  static String m14(names) =>
+      "╨н╤В╨╕ ╨┐╤А╨╛╨║╤Б╨╕ ╨╕╨╗╨╕ ╨┐╨╛╨╗╨╕╤В╨╕╨║╨╕ ╨╜╨╡ ╤Б╤Г╤Й╨╡╤Б╤В╨▓╤Г╤О╤В: ${names}";
 
   static String m15(name) =>
       "${name} тАФ ╨▓╤Б╤В╤А╨╛╨╡╨╜╨╜╨╛╨╡ ╨╕╨╝╤П ╨┐╨╛╨╗╨╕╤В╨╕╨║╨╕, ╨╡╨│╨╛ ╨╜╨╡╨╗╤М╨╖╤П ╨╕╤Б╨┐╨╛╨╗╤М╨╖╨╛╨▓╨░╤В╤М";
@@ -74,14 +79,16 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m19(label) =>
       "╨Т╤Л ╤Г╨▓╨╡╤А╨╡╨╜╤Л, ╤З╤В╨╛ ╤Е╨╛╤В╨╕╤В╨╡ ╤Г╨┤╨░╨╗╨╕╤В╤М ╨▓╤Л╨▒╤А╨░╨╜╨╜╤Л╨╡ ╤Н╨╗╨╡╨╝╨╡╨╜╤В╤Л (${label})?";
 
-  static String m20(label) => "╨Т╤Л ╤Г╨▓╨╡╤А╨╡╨╜╤Л, ╤З╤В╨╛ ╤Е╨╛╤В╨╕╤В╨╡ ╤Г╨┤╨░╨╗╨╕╤В╤М ┬л${label}┬╗?";
+  static String m20(label) =>
+      "╨Т╤Л ╤Г╨▓╨╡╤А╨╡╨╜╤Л, ╤З╤В╨╛ ╤Е╨╛╤В╨╕╤В╨╡ ╤Г╨┤╨░╨╗╨╕╤В╤М ┬л${label}┬╗?";
 
   static String m21(label) => "╨б╨▓╨╡╨┤╨╡╨╜╨╕╤П: ${label}";
 
   static String m22(name) =>
       "╨Я╨╛╨┤╨║╨╗╤О╤З╨╡╨╜╨╕╨╡ ╤З╨╡╤А╨╡╨╖ ${name} ╨▓╨╡╨┤╤С╤В ╨╛╨▒╤А╨░╤В╨╜╨╛ ╨║ ╨┐╤А╨╛╨║╤Б╨╕, ╨║╨╛╤В╨╛╤А╤Л╨╣ ╨╡╨│╨╛ ╨╕╤Б╨┐╨╛╨╗╤М╨╖╤Г╨╡╤В, ╨┐╨╛╤Н╤В╨╛╨╝╤Г ╤Б╨╛╨╡╨┤╨╕╨╜╨╡╨╜╨╕╨╡ ╨╛╤Б╤В╨░╨╜╨╛╨▓╨╗╨╡╨╜╨╛";
 
-  static String m23(label) => "╨Я╨╛╨╗╨╡ ┬л${label}┬╗ ╨╜╨╡ ╨╝╨╛╨╢╨╡╤В ╨▒╤Л╤В╤М ╨┐╤Г╤Б╤В╤Л╨╝";
+  static String m23(label) =>
+      "╨Я╨╛╨╗╨╡ ┬л${label}┬╗ ╨╜╨╡ ╨╝╨╛╨╢╨╡╤В ╨▒╤Л╤В╤М ╨┐╤Г╤Б╤В╤Л╨╝";
 
   static String m24(label) => "┬л${label}┬╗ ╤Г╨╢╨╡ ╤Б╤Г╤Й╨╡╤Б╤В╨▓╤Г╨╡╤В";
 
@@ -108,16 +115,20 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m34(count) => "${count} ╤З ╨╜╨░╨╖╨░╨┤";
 
-  static String m35(target) => "${target} тАФ ╨╜╨╡╨┤╨╛╨┐╤Г╤Б╤В╨╕╨╝╨░╤П ╨┐╨╛╨╗╨╕╤В╨╕╨║╨░";
+  static String m35(target) =>
+      "${target} тАФ ╨╜╨╡╨┤╨╛╨┐╤Г╤Б╤В╨╕╨╝╨░╤П ╨┐╨╛╨╗╨╕╤В╨╕╨║╨░";
 
-  static String m36(proxyName) => "${proxyName} тАФ ╨╜╨╡╨┤╨╛╨┐╤Г╤Б╤В╨╕╨╝╤Л╨╣ ╨┐╤А╨╛╨║╤Б╨╕";
+  static String m36(proxyName) =>
+      "${proxyName} тАФ ╨╜╨╡╨┤╨╛╨┐╤Г╤Б╤В╨╕╨╝╤Л╨╣ ╨┐╤А╨╛╨║╤Б╨╕";
 
   static String m37(providerName) =>
       "${providerName} тАФ ╨╜╨╡╨┤╨╛╨┐╤Г╤Б╤В╨╕╨╝╤Л╨╣ ╨┐╤А╨╛╨▓╨░╨╣╨┤╨╡╤А ╨┐╤А╨╛╨║╤Б╨╕";
 
-  static String m38(ruleSet) => "${ruleSet} тАФ ╨╜╨╡╨┤╨╛╨┐╤Г╤Б╤В╨╕╨╝╤Л╨╣ ╨╜╨░╨▒╨╛╤А ╨┐╤А╨░╨▓╨╕╨╗";
+  static String m38(ruleSet) =>
+      "${ruleSet} тАФ ╨╜╨╡╨┤╨╛╨┐╤Г╤Б╤В╨╕╨╝╤Л╨╣ ╨╜╨░╨▒╨╛╤А ╨┐╤А╨░╨▓╨╕╨╗";
 
-  static String m39(subRule) => "${subRule} тАФ ╨╜╨╡╨┤╨╛╨┐╤Г╤Б╤В╨╕╨╝╤Л╨╣ SUB_RULE";
+  static String m39(subRule) =>
+      "${subRule} тАФ ╨╜╨╡╨┤╨╛╨┐╤Г╤Б╤В╨╕╨╝╤Л╨╣ SUB_RULE";
 
   static String m40(count) =>
       "${Intl.plural(count, one: '${count} ╤Н╨╗╨╡╨╝╨╡╨╜╤В', few: '${count} ╤Н╨╗╨╡╨╝╨╡╨╜╤В╨░', many: '${count} ╤Н╨╗╨╡╨╝╨╡╨╜╤В╨╛╨▓', other: '${count} ╤Н╨╗╨╡╨╝╨╡╨╜╤В╨░')}";
@@ -127,7 +138,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m42(appName) =>
       "1. ╨Ю╤В╨║╤А╨╛╨╣╤В╨╡ ╨б╨╕╤Б╤В╨╡╨╝╨╜╤Л╨╡ ╨╜╨░╤Б╤В╤А╨╛╨╣╨║╨╕ > ╨Ъ╨╛╨╜╤Д╨╕╨┤╨╡╨╜╤Ж╨╕╨░╨╗╤М╨╜╨╛╤Б╤В╤М ╨╕ ╨▒╨╡╨╖╨╛╨┐╨░╤Б╨╜╨╛╤Б╤В╤М\n2. ╨Т╤Л╨▒╨╡╤А╨╕╤В╨╡ ╨б╨╗╤Г╨╢╨▒╤Л ╨│╨╡╨╛╨╗╨╛╨║╨░╤Ж╨╕╨╕\n3. ╨Э╨░╨╣╨┤╨╕╤В╨╡ ╨╕ ╨╛╤В╨╝╨╡╤В╤М╤В╨╡ ${appName} ╨▓ ╤Б╨┐╨╕╤Б╨║╨╡\n\n╨Я╨╛╤Б╨╗╨╡ ╨╜╨░╤Б╤В╤А╨╛╨╣╨║╨╕ ╨▓╨╡╤А╨╜╨╕╤В╨╡╤Б╤М ╨▓ ╨┐╤А╨╕╨╗╨╛╨╢╨╡╨╜╨╕╨╡ ╨╕ ╨┐╤А╨╛╨┤╨╛╨╗╨╢╨░╨╣╤В╨╡ ╤А╨░╨▒╨╛╤В╤Г. ╨б╨┐╨░╤Б╨╕╨▒╨╛ ╨╖╨░ ╤Б╨╛╤В╤А╤Г╨┤╨╜╨╕╤З╨╡╤Б╤В╨▓╨╛.";
 
-  static String m43(label, max) => "┬л${label}┬╗ тАФ ╨╜╨╡ ╨▒╨╛╨╗╨╡╨╡ ${max} ╤Б╨╕╨╝╨▓╨╛╨╗╨╛╨▓";
+  static String m43(label, max) =>
+      "┬л${label}┬╗ тАФ ╨╜╨╡ ╨▒╨╛╨╗╨╡╨╡ ${max} ╤Б╨╕╨╝╨▓╨╛╨╗╨╛╨▓";
 
   static String m44(size) => "╨Ю╤Б╨▓╨╛╨▒╨╛╨╢╨┤╨╡╨╜╨╛ ${size}";
 
@@ -144,12 +156,14 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m49(code) =>
       "╨б╨╡╤А╨▓╨╡╤А ╨╖╨░╨┐╤А╨╡╤В╨╕╨╗ ╨┤╨╛╤Б╤В╤Г╨┐ (HTTP ${code}). ╨Т╨╛╨╖╨╝╨╛╨╢╨╜╨╛, ╤Б╤Б╤Л╨╗╨║╨░ ╤Г╤Б╤В╨░╤А╨╡╨╗╨░ ╨╕╨╗╨╕ ╤Г╤З╤С╤В╨╜╤Л╨╡ ╨┤╨░╨╜╨╜╤Л╨╡ ╨╜╨╡╨▓╨╡╤А╨╜╤Л";
 
-  static String m50(code) => "╨б╨╡╤А╨▓╨╡╤А ╨╛╤В╨║╨╗╨╛╨╜╨╕╨╗ ╨╖╨░╨┐╤А╨╛╤Б (HTTP ${code})";
+  static String m50(code) =>
+      "╨б╨╡╤А╨▓╨╡╤А ╨╛╤В╨║╨╗╨╛╨╜╨╕╨╗ ╨╖╨░╨┐╤А╨╛╤Б (HTTP ${code})";
 
   static String m51(code) =>
       "╨Я╨╛ ╤Н╤В╨╛╨╝╤Г ╨░╨┤╤А╨╡╤Б╤Г ╨╜╨╕╤З╨╡╨│╨╛ ╨╜╨╡ ╨╜╨░╨╣╨┤╨╡╨╜╨╛ (HTTP ${code}). ╨Я╤А╨╛╨▓╨╡╤А╤М╤В╨╡ ╨┐╤А╨░╨▓╨╕╨╗╤М╨╜╨╛╤Б╤В╤М URL";
 
-  static String m52(detail) => "╨б╨╡╤В╨╡╨▓╨╛╨╣ ╨╖╨░╨┐╤А╨╛╤Б ╨╜╨╡ ╨▓╤Л╨┐╨╛╨╗╨╜╨╡╨╜: ${detail}";
+  static String m52(detail) =>
+      "╨б╨╡╤В╨╡╨▓╨╛╨╣ ╨╖╨░╨┐╤А╨╛╤Б ╨╜╨╡ ╨▓╤Л╨┐╨╛╨╗╨╜╨╡╨╜: ${detail}";
 
   static String m53(code) =>
       "╨Э╨░ ╤Б╨╡╤А╨▓╨╡╤А╨╡ ╨┐╤А╨╛╨╕╨╖╨╛╤И╨╗╨░ ╨╛╤И╨╕╨▒╨║╨░ (HTTP ${code}). ╨Я╨╛╨▓╤В╨╛╤А╨╕╤В╨╡ ╨┐╨╛╨┐╤Л╤В╨║╤Г ╨┐╨╛╨╖╨╢╨╡";
@@ -159,7 +173,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m55(label, min, max) =>
       "╨Ч╨╜╨░╤З╨╡╨╜╨╕╨╡ ┬л${label}┬╗ ╨┤╨╛╨╗╨╢╨╜╨╛ ╨▒╤Л╤В╤М ╨╛╤В ${min} ╨┤╨╛ ${max}";
 
-  static String m56(label) => "╨Ч╨╜╨░╤З╨╡╨╜╨╕╨╡ ┬л${label}┬╗ ╨┤╨╛╨╗╨╢╨╜╨╛ ╨▒╤Л╤В╤М ╤З╨╕╤Б╨╗╨╛╨╝";
+  static String m56(label) =>
+      "╨Ч╨╜╨░╤З╨╡╨╜╨╕╨╡ ┬л${label}┬╗ ╨┤╨╛╨╗╨╢╨╜╨╛ ╨▒╤Л╤В╤М ╤З╨╕╤Б╨╗╨╛╨╝";
 
   static String m57(label) =>
       "╨Ч╨╜╨░╤З╨╡╨╜╨╕╨╡ ┬л${label}┬╗ ╨┤╨╛╨╗╨╢╨╜╨╛ ╨▒╤Л╤В╤М ╨╛╤В 1024 ╨┤╨╛ 49151";
@@ -168,7 +183,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m59(days) => "╨Ю╤Б╤В╨░╨╗╨╛╤Б╤М ╨┤╨╜╨╡╨╣: ${days}";
 
-  static String m60(date, days) => "╨Ш╤Б╤В╨╡╨║╨░╨╡╤В ${date}, ╨╛╤Б╤В╨░╨╗╨╛╤Б╤М ╨┤╨╜╨╡╨╣: ${days}";
+  static String m60(date, days) =>
+      "╨Ш╤Б╤В╨╡╨║╨░╨╡╤В ${date}, ╨╛╤Б╤В╨░╨╗╨╛╤Б╤М ╨┤╨╜╨╡╨╣: ${days}";
 
   static String m61(time) => "╨Ю╨▒╨╜╨╛╨▓╨╗╨╡╨╜╨╛ ${time}";
 
@@ -178,7 +194,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m63(count, label) =>
       "${Intl.plural(count, other: '${label} ╨┐╤А╨╛╨║╤Б╨╕')}";
 
-  static String m64(name, count) => "${name} ╨╕ ╨┤╤А╤Г╨│╨╕╨╡ (${count} ╨┐╤А╨╛╨║╤Б╨╕)";
+  static String m64(name, count) =>
+      "${name} ╨╕ ╨┤╤А╤Г╨│╨╕╨╡ (${count} ╨┐╤А╨╛╨║╤Б╨╕)";
 
   static String m65(removed) =>
       "╨С╤Г╨┤╤Г╤В ╤Г╨┤╨░╨╗╨╡╨╜╤Л ╨┐╤А╨╛╨║╤Б╨╕: ${removed}. ╨б╤В╤А╨╛╨║╨░ ╤Б ╨╕╨╖╨╝╨╡╨╜╤С╨╜╨╜╤Л╨╝ ╨╕╨╝╨╡╨╜╨╡╨╝ ╤Б╤З╨╕╤В╨░╨╡╤В╤Б╤П ╨╜╨╛╨▓╤Л╨╝ ╨┐╤А╨╛╨║╤Б╨╕, ╨░ ╨┐╨╛╨╗╤М╨╖╨╛╨▓╨░╤В╨╡╨╗╤М╤Б╨║╨╕╨╡ ╨┐╤А╨╛╤Д╨╕╨╗╨╕, ╤Б╤Б╤Л╨╗╨░╤О╤Й╨╕╨╡╤Б╤П ╨╜╨░ ╤Г╨┤╨░╨╗╤С╨╜╨╜╤Л╨╡, ╨┐╨╛╨╝╨╡╤В╤П╤В ╨╕╤Е ╨║╨░╨║ ╨╛╤В╤Б╤Г╤В╤Б╤В╨▓╤Г╤О╤Й╨╕╨╡. ╨Я╤А╨╕╨╝╨╡╨╜╨╕╤В╤М?";
@@ -209,15 +226,18 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m75(count) =>
       "${Intl.plural(count, one: '${count} ╨╜╨░╤Б╤В╤А╨╛╨╣╨║╨░', few: '${count} ╨╜╨░╤Б╤В╤А╨╛╨╣╨║╨╕', many: '${count} ╨╜╨░╤Б╤В╤А╨╛╨╡╨║', other: '${count} ╨╜╨░╤Б╤В╤А╨╛╨╣╨║╨╕')}";
 
-  static String m76(link) => "╨Э╨╡ ╤Г╨┤╨░╨╗╨╛╤Б╤М ╨┐╤А╨╛╤З╨╕╤В╨░╤В╤М ╨┐╤А╨╛╨║╤Б╨╕ ╨╕╨╖ ${link}";
+  static String m76(link) =>
+      "╨Э╨╡ ╤Г╨┤╨░╨╗╨╛╤Б╤М ╨┐╤А╨╛╤З╨╕╤В╨░╤В╤М ╨┐╤А╨╛╨║╤Б╨╕ ╨╕╨╖ ${link}";
 
-  static String m77(label) => "┬л${label}┬╗ тАФ ╤В╨╛╨╗╤М╨║╨╛ ╨╛╨┤╨╜╨╛ ╨╖╨╜╨░╤З╨╡╨╜╨╕╨╡";
+  static String m77(label) =>
+      "┬л${label}┬╗ тАФ ╤В╨╛╨╗╤М╨║╨╛ ╨╛╨┤╨╜╨╛ ╨╖╨╜╨░╤З╨╡╨╜╨╕╨╡";
 
   static String m78(value) => "╨Я╨╕╨║ ${value}";
 
   static String m79(value) => "╨Т╤Б╨╡╨│╨╛ ${value}";
 
-  static String m80(label) => "╨Ч╨╜╨░╤З╨╡╨╜╨╕╨╡ ┬л${label}┬╗ ╨┤╨╛╨╗╨╢╨╜╨╛ ╨▒╤Л╤В╤М URL";
+  static String m80(label) =>
+      "╨Ч╨╜╨░╤З╨╡╨╜╨╕╨╡ ┬л${label}┬╗ ╨┤╨╛╨╗╨╢╨╜╨╛ ╨▒╤Л╤В╤М URL";
 
   static String m81(count) =>
       "${Intl.plural(count, one: '${count} ╨│╨╛╨┤ ╨╜╨░╨╖╨░╨┤', few: '${count} ╨│╨╛╨┤╨░ ╨╜╨░╨╖╨░╨┤', many: '${count} ╨╗╨╡╤В ╨╜╨░╨╖╨░╨┤', other: '${count} ╨│╨╛╨┤╨░ ╨╜╨░╨╖╨░╨┤')}";
@@ -228,7 +248,9 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "about": MessageLookupByLibrary.simpleMessage("╨Ю ╨┐╤А╨╛╨│╤А╨░╨╝╨╝╨╡"),
-    "accessControl": MessageLookupByLibrary.simpleMessage("╨Ъ╨╛╨╜╤В╤А╨╛╨╗╤М ╨┤╨╛╤Б╤В╤Г╨┐╨░"),
+    "accessControl": MessageLookupByLibrary.simpleMessage(
+      "╨Ъ╨╛╨╜╤В╤А╨╛╨╗╤М ╨┤╨╛╤Б╤В╤Г╨┐╨░",
+    ),
     "accessControlAllowDesc": MessageLookupByLibrary.simpleMessage(
       "╨з╨╡╤А╨╡╨╖ VPN ╨┐╤А╨╛╤Е╨╛╨┤╤П╤В ╤В╨╛╨╗╤М╨║╨╛ ╨▓╤Л╨▒╤А╨░╨╜╨╜╤Л╨╡ ╨┐╤А╨╕╨╗╨╛╨╢╨╡╨╜╨╕╤П",
     ),
@@ -249,43 +271,71 @@ class MessageLookup extends MessageLookupByLibrary {
     "actionDelayTest": MessageLookupByLibrary.simpleMessage(
       "╨Я╤А╨╛╨▓╨╡╤А╨╕╤В╤М ╨▓╤Б╨╡ ╨╖╨░╨┤╨╡╤А╨╢╨║╨╕",
     ),
-    "actionDirectMode": MessageLookupByLibrary.simpleMessage("╨Я╤А╤П╨╝╨╛╨╣ ╤А╨╡╨╢╨╕╨╝"),
+    "actionDirectMode": MessageLookupByLibrary.simpleMessage(
+      "╨Я╤А╤П╨╝╨╛╨╣ ╤А╨╡╨╢╨╕╨╝",
+    ),
     "actionGlobalMode": MessageLookupByLibrary.simpleMessage(
       "╨У╨╗╨╛╨▒╨░╨╗╤М╨╜╤Л╨╣ ╤А╨╡╨╢╨╕╨╝",
     ),
-    "actionMode": MessageLookupByLibrary.simpleMessage("╨Я╨╡╤А╨╡╨║╨╗╤О╤З╨╕╤В╤М ╤А╨╡╨╢╨╕╨╝"),
-    "actionProxy": MessageLookupByLibrary.simpleMessage("╨б╨╕╤Б╤В╨╡╨╝╨╜╤Л╨╣ ╨┐╤А╨╛╨║╤Б╨╕"),
-    "actionRuleMode": MessageLookupByLibrary.simpleMessage("╨а╨╡╨╢╨╕╨╝ ╨┐╤А╨░╨▓╨╕╨╗"),
+    "actionMode": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨╡╤А╨╡╨║╨╗╤О╤З╨╕╤В╤М ╤А╨╡╨╢╨╕╨╝",
+    ),
+    "actionProxy": MessageLookupByLibrary.simpleMessage(
+      "╨б╨╕╤Б╤В╨╡╨╝╨╜╤Л╨╣ ╨┐╤А╨╛╨║╤Б╨╕",
+    ),
+    "actionRuleMode": MessageLookupByLibrary.simpleMessage(
+      "╨а╨╡╨╢╨╕╨╝ ╨┐╤А╨░╨▓╨╕╨╗",
+    ),
     "actionStart": MessageLookupByLibrary.simpleMessage("╨б╤В╨░╤А╤В/╨б╤В╨╛╨┐"),
     "actionTun": MessageLookupByLibrary.simpleMessage("TUN"),
     "actionUpdateProfiles": MessageLookupByLibrary.simpleMessage(
       "╨Ю╨▒╨╜╨╛╨▓╨╕╤В╤М ╨┐╤А╨╛╤Д╨╕╨╗╨╕",
     ),
-    "actionView": MessageLookupByLibrary.simpleMessage("╨Я╨╛╨║╨░╨╖╨░╤В╤М/╨б╨║╤А╤Л╤В╤М"),
+    "actionView": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨╛╨║╨░╨╖╨░╤В╤М/╨б╨║╤А╤Л╤В╤М",
+    ),
     "add": MessageLookupByLibrary.simpleMessage("╨Ф╨╛╨▒╨░╨▓╨╕╤В╤М"),
-    "addCustomProxy": MessageLookupByLibrary.simpleMessage("╨Ф╨╛╨▒╨░╨▓╨╕╤В╤М ╨┐╤А╨╛╨║╤Б╨╕"),
-    "addFilters": MessageLookupByLibrary.simpleMessage("╨Ф╨╛╨▒╨░╨▓╨╕╤В╤М ╤Д╨╕╨╗╤М╤В╤А╤Л"),
-    "addNodes": MessageLookupByLibrary.simpleMessage("╨Ф╨╛╨▒╨░╨▓╨╕╤В╤М ╤Г╨╖╨╗╤Л"),
+    "addCustomProxy": MessageLookupByLibrary.simpleMessage(
+      "╨Ф╨╛╨▒╨░╨▓╨╕╤В╤М ╨┐╤А╨╛╨║╤Б╨╕",
+    ),
+    "addFilters": MessageLookupByLibrary.simpleMessage(
+      "╨Ф╨╛╨▒╨░╨▓╨╕╤В╤М ╤Д╨╕╨╗╤М╤В╤А╤Л",
+    ),
+    "addNodes": MessageLookupByLibrary.simpleMessage(
+      "╨Ф╨╛╨▒╨░╨▓╨╕╤В╤М ╤Г╨╖╨╗╤Л",
+    ),
     "addOverrideEntry": MessageLookupByLibrary.simpleMessage(
       "╨Ф╨╛╨▒╨░╨▓╨╕╤В╤М ╨┐╨░╤А╨░╨╝╨╡╤В╤А",
     ),
-    "addProfile": MessageLookupByLibrary.simpleMessage("╨Ф╨╛╨▒╨░╨▓╨╕╤В╤М ╨┐╤А╨╛╤Д╨╕╨╗╤М"),
+    "addProfile": MessageLookupByLibrary.simpleMessage(
+      "╨Ф╨╛╨▒╨░╨▓╨╕╤В╤М ╨┐╤А╨╛╤Д╨╕╨╗╤М",
+    ),
     "addProxyGroup": MessageLookupByLibrary.simpleMessage(
       "╨Ф╨╛╨▒╨░╨▓╨╕╤В╤М ╨│╤А╤Г╨┐╨┐╤Г ╨┐╤А╨╛╨║╤Б╨╕",
     ),
-    "addRule": MessageLookupByLibrary.simpleMessage("╨Ф╨╛╨▒╨░╨▓╨╕╤В╤М ╨┐╤А╨░╨▓╨╕╨╗╨╛"),
+    "addRule": MessageLookupByLibrary.simpleMessage(
+      "╨Ф╨╛╨▒╨░╨▓╨╕╤В╤М ╨┐╤А╨░╨▓╨╕╨╗╨╛",
+    ),
     "addSettingEntry": MessageLookupByLibrary.simpleMessage(
       "╨Ф╨╛╨▒╨░╨▓╨╕╤В╤М ╨┐╨░╤А╨░╨╝╨╡╤В╤А",
     ),
     "addSsid": MessageLookupByLibrary.simpleMessage("╨Ф╨╛╨▒╨░╨▓╨╕╤В╤М SSID"),
-    "addedRules": MessageLookupByLibrary.simpleMessage("╨Ф╨╛╨▒╨░╨▓╨╗╨╡╨╜╨╜╤Л╨╡ ╨┐╤А╨░╨▓╨╕╨╗╨░"),
+    "addedRules": MessageLookupByLibrary.simpleMessage(
+      "╨Ф╨╛╨▒╨░╨▓╨╗╨╡╨╜╨╜╤Л╨╡ ╨┐╤А╨░╨▓╨╕╨╗╨░",
+    ),
     "additionalParameters": MessageLookupByLibrary.simpleMessage(
       "╨Ф╨╛╨┐╨╛╨╗╨╜╨╕╤В╨╡╨╗╤М╨╜╤Л╨╡ ╨┐╨░╤А╨░╨╝╨╡╤В╤А╤Л",
     ),
-    "additionalPrefix": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╡╤Д╨╕╨║╤Б ╨╕╨╝╨╡╨╜╨╕"),
-    "additionalSuffix": MessageLookupByLibrary.simpleMessage("╨б╤Г╤Д╤Д╨╕╨║╤Б ╨╕╨╝╨╡╨╜╨╕"),
+    "additionalPrefix": MessageLookupByLibrary.simpleMessage(
+      "╨Я╤А╨╡╤Д╨╕╨║╤Б ╨╕╨╝╨╡╨╜╨╕",
+    ),
+    "additionalSuffix": MessageLookupByLibrary.simpleMessage(
+      "╨б╤Г╤Д╤Д╨╕╨║╤Б ╨╕╨╝╨╡╨╜╨╕",
+    ),
     "address": MessageLookupByLibrary.simpleMessage("╨Р╨┤╤А╨╡╤Б"),
-    "addressHelp": MessageLookupByLibrary.simpleMessage("╨Р╨┤╤А╨╡╤Б ╤Б╨╡╤А╨▓╨╡╤А╨░ WebDAV"),
+    "addressHelp": MessageLookupByLibrary.simpleMessage(
+      "╨Р╨┤╤А╨╡╤Б ╤Б╨╡╤А╨▓╨╡╤А╨░ WebDAV",
+    ),
     "addressTip": MessageLookupByLibrary.simpleMessage(
       "╨Т╨▓╨╡╨┤╨╕╤В╨╡ ╨║╨╛╤А╤А╨╡╨║╤В╨╜╤Л╨╣ ╨░╨┤╤А╨╡╤Б WebDAV",
     ),
@@ -298,7 +348,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "ageEncryptedProfile": MessageLookupByLibrary.simpleMessage(
       "╨Ч╨░╤И╨╕╤Д╤А╨╛╨▓╨░╨╜╨╜╤Л╨╣ ╨┐╤А╨╛╤Д╨╕╨╗╤М",
     ),
-    "ageSecretKey": MessageLookupByLibrary.simpleMessage("╨б╨╡╨║╤А╨╡╤В╨╜╤Л╨╣ ╨║╨╗╤О╤З age"),
+    "ageSecretKey": MessageLookupByLibrary.simpleMessage(
+      "╨б╨╡╨║╤А╨╡╤В╨╜╤Л╨╣ ╨║╨╗╤О╤З age",
+    ),
     "ageSecretKeyRequiredTip": MessageLookupByLibrary.simpleMessage(
       "╨Я╤А╨╛╤Д╨╕╨╗╤М ╨╖╨░╤И╨╕╤Д╤А╨╛╨▓╨░╨╜ ╤Б ╨┐╨╛╨╝╨╛╤Й╤М╤О age, ╨┤╨╗╤П ╤А╨░╤Б╤И╨╕╤Д╤А╨╛╨▓╨║╨╕ ╨╜╤Г╨╢╨╡╨╜ ╤Б╨╡╨║╤А╨╡╤В╨╜╤Л╨╣ ╨║╨╗╤О╤З age",
     ),
@@ -313,7 +365,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨а╨░╨╖╤А╨╡╤И╨╕╤В╤М ╨┐╤А╨╕╨╗╨╛╨╢╨╡╨╜╨╕╤П╨╝ ╨╛╨▒╤Е╨╛╨┤╨╕╤В╤М VPN",
     ),
     "allowLan": MessageLookupByLibrary.simpleMessage("╨а╨░╨╖╤А╨╡╤И╨╕╤В╤М LAN"),
-    "allowedIps": MessageLookupByLibrary.simpleMessage("╨а╨░╨╖╤А╨╡╤И╤С╨╜╨╜╤Л╨╡ IP"),
+    "allowedIps": MessageLookupByLibrary.simpleMessage(
+      "╨а╨░╨╖╤А╨╡╤И╤С╨╜╨╜╤Л╨╡ IP",
+    ),
     "answers": MessageLookupByLibrary.simpleMessage("╨Ю╤В╨▓╨╡╤В╤Л"),
     "app": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╕╨╗╨╛╨╢╨╡╨╜╨╕╨╡"),
     "appAccessControl": MessageLookupByLibrary.simpleMessage(
@@ -328,7 +382,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "appendSystemDns": MessageLookupByLibrary.simpleMessage(
       "╨Ф╨╛╨▒╨░╨▓╨╗╤П╤В╤М ╤Б╨╕╤Б╤В╨╡╨╝╨╜╤Л╨╣ DNS",
     ),
-    "authentication": MessageLookupByLibrary.simpleMessage("╨Р╤Г╤В╨╡╨╜╤В╨╕╤Д╨╕╨║╨░╤Ж╨╕╤П"),
+    "authentication": MessageLookupByLibrary.simpleMessage(
+      "╨Р╤Г╤В╨╡╨╜╤В╨╕╤Д╨╕╨║╨░╤Ж╨╕╤П",
+    ),
     "authenticationDesc": MessageLookupByLibrary.simpleMessage(
       "╨Р╤Г╤В╨╡╨╜╤В╨╕╤Д╨╕╨║╨░╤Ж╨╕╤П ╤В╤А╨╡╨▒╤Г╨╡╤В ╨╗╨╛╨│╨╕╨╜ ╨╕ ╨┐╨░╤А╨╛╨╗╤М ╨┤╨╗╤П ╨╗╨╛╨║╨░╨╗╤М╨╜╨╛╨│╨╛ ╨┐╨╛╤А╤В╨░ ╨┐╤А╨╛╨║╤Б╨╕.",
     ),
@@ -351,19 +407,25 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨Р╨▓╤В╨╛╨╝╨░╤В╨╕╤З╨╡╤Б╨║╨╛╨╡ ╨▓╨║╨╗╤О╤З╨╡╨╜╨╕╨╡",
     ),
     "autoLaunch": MessageLookupByLibrary.simpleMessage("╨Р╨▓╤В╨╛╨╖╨░╨┐╤Г╤Б╨║"),
-    "autoRun": MessageLookupByLibrary.simpleMessage("╨Р╨▓╤В╨╛╨▓╨║╨╗╤О╤З╨╡╨╜╨╕╨╡"),
+    "autoRun": MessageLookupByLibrary.simpleMessage(
+      "╨Р╨▓╤В╨╛╨▓╨║╨╗╤О╤З╨╡╨╜╨╕╨╡",
+    ),
     "autoRunDesc": MessageLookupByLibrary.simpleMessage(
       "╨Р╨▓╤В╨╛╨▓╨║╨╗╤О╤З╨╡╨╜╨╕╨╡ ╨╖╨░╨┐╤Г╤Б╨║╨░╨╡╤В ╨┐╤А╨╛╨║╤Б╨╕ ╨┐╤А╨╕ ╨╛╤В╨║╤А╤Л╤В╨╕╨╕ ╨┐╤А╨╕╨╗╨╛╨╢╨╡╨╜╨╕╤П.",
     ),
     "autoSetSystemDns": MessageLookupByLibrary.simpleMessage(
       "╨Р╨▓╤В╨╛╨╜╨░╤Б╤В╤А╨╛╨╣╨║╨░ ╤Б╨╕╤Б╤В╨╡╨╝╨╜╨╛╨│╨╛ DNS",
     ),
-    "autoUpdate": MessageLookupByLibrary.simpleMessage("╨Р╨▓╤В╨╛╨╛╨▒╨╜╨╛╨▓╨╗╨╡╨╜╨╕╨╡"),
+    "autoUpdate": MessageLookupByLibrary.simpleMessage(
+      "╨Р╨▓╤В╨╛╨╛╨▒╨╜╨╛╨▓╨╗╨╡╨╜╨╕╨╡",
+    ),
     "autoUpdateInterval": MessageLookupByLibrary.simpleMessage(
       "╨Ш╨╜╤В╨╡╤А╨▓╨░╨╗ ╨░╨▓╤В╨╛╨╛╨▒╨╜╨╛╨▓╨╗╨╡╨╜╨╕╤П",
     ),
     "back": MessageLookupByLibrary.simpleMessage("╨Э╨░╨╖╨░╨┤"),
-    "backup": MessageLookupByLibrary.simpleMessage("╨а╨╡╨╖╨╡╤А╨▓╨╜╨╛╨╡ ╨║╨╛╨┐╨╕╤А╨╛╨▓╨░╨╜╨╕╨╡"),
+    "backup": MessageLookupByLibrary.simpleMessage(
+      "╨а╨╡╨╖╨╡╤А╨▓╨╜╨╛╨╡ ╨║╨╛╨┐╨╕╤А╨╛╨▓╨░╨╜╨╕╨╡",
+    ),
     "backupAndRestore": MessageLookupByLibrary.simpleMessage(
       "╨а╨╡╨╖╨╡╤А╨▓╨╜╨╛╨╡ ╨║╨╛╨┐╨╕╤А╨╛╨▓╨░╨╜╨╕╨╡ ╨╕ ╨▓╨╛╤Б╤Б╤В╨░╨╜╨╛╨▓╨╗╨╡╨╜╨╕╨╡",
     ),
@@ -373,10 +435,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "backupSuccess": MessageLookupByLibrary.simpleMessage(
       "╨а╨╡╨╖╨╡╤А╨▓╨╜╨░╤П ╨║╨╛╨┐╨╕╤П ╤Б╨╛╨╖╨┤╨░╨╜╨░",
     ),
-    "basicInfo": MessageLookupByLibrary.simpleMessage("╨Ю╤Б╨╜╨╛╨▓╨╜╨░╤П ╨╕╨╜╤Д╨╛╤А╨╝╨░╤Ж╨╕╤П"),
-    "basicStrategy": MessageLookupByLibrary.simpleMessage("╨С╨░╨╖╨╛╨▓╤Л╨╡ ╨┐╨╛╨╗╨╕╤В╨╕╨║╨╕"),
-    "batchAdd": MessageLookupByLibrary.simpleMessage("╨Ь╨░╤Б╤Б╨╛╨▓╨╛╨╡ ╨┤╨╛╨▒╨░╨▓╨╗╨╡╨╜╨╕╨╡"),
-    "batchImport": MessageLookupByLibrary.simpleMessage("╨Ь╨░╤Б╤Б╨╛╨▓╤Л╨╣ ╨╕╨╝╨┐╨╛╤А╤В"),
+    "basicInfo": MessageLookupByLibrary.simpleMessage(
+      "╨Ю╤Б╨╜╨╛╨▓╨╜╨░╤П ╨╕╨╜╤Д╨╛╤А╨╝╨░╤Ж╨╕╤П",
+    ),
+    "basicStrategy": MessageLookupByLibrary.simpleMessage(
+      "╨С╨░╨╖╨╛╨▓╤Л╨╡ ╨┐╨╛╨╗╨╕╤В╨╕╨║╨╕",
+    ),
+    "batchAdd": MessageLookupByLibrary.simpleMessage(
+      "╨Ь╨░╤Б╤Б╨╛╨▓╨╛╨╡ ╨┤╨╛╨▒╨░╨▓╨╗╨╡╨╜╨╕╨╡",
+    ),
+    "batchImport": MessageLookupByLibrary.simpleMessage(
+      "╨Ь╨░╤Б╤Б╨╛╨▓╤Л╨╣ ╨╕╨╝╨┐╨╛╤А╤В",
+    ),
     "batchLinkInputTip": MessageLookupByLibrary.simpleMessage(
       "╨Я╨╛ ╨╛╨┤╨╜╨╛╨╣ ╤Б╤Б╤Л╨╗╨║╨╡ ╨╜╨░ ╤Б╤В╤А╨╛╨║╤Г",
     ),
@@ -401,7 +471,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨Ч╨░╨▒╨╗╨╛╨║╨╕╤А╨╛╨▓╨░╤В╤М ╤Б╨╛╨╡╨┤╨╕╨╜╨╡╨╜╨╕╨╡",
     ),
     "brightness": MessageLookupByLibrary.simpleMessage("╨п╤А╨║╨╛╤Б╤В╤М"),
-    "bypassDomain": MessageLookupByLibrary.simpleMessage("╨Ш╤Б╨║╨╗╤О╤З╤С╨╜╨╜╤Л╨╡ ╨┤╨╛╨╝╨╡╨╜╤Л"),
+    "bypassDomain": MessageLookupByLibrary.simpleMessage(
+      "╨Ш╤Б╨║╨╗╤О╤З╤С╨╜╨╜╤Л╨╡ ╨┤╨╛╨╝╨╡╨╜╤Л",
+    ),
     "bypassDomainDesc": MessageLookupByLibrary.simpleMessage(
       "╨Ш╤Б╨║╨╗╤О╤З╤С╨╜╨╜╤Л╨╡ ╨┤╨╛╨╝╨╡╨╜╤Л ╨┤╨╡╨╣╤Б╤В╨▓╤Г╤О╤В ╤В╨╛╨╗╤М╨║╨╛ ╨┐╤А╨╕ ╨▓╨║╨╗╤О╤З╤С╨╜╨╜╨╛╨╝ ╤Б╨╕╤Б╤В╨╡╨╝╨╜╨╛╨╝ ╨┐╤А╨╛╨║╤Б╨╕.",
     ),
@@ -412,11 +484,15 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨Я╤А╨╕ ╨╛╨▒╤Е╨╛╨┤╨╡ ╤З╨░╤Б╤В╨╜╤Л╤Е ╨░╨┤╤А╨╡╤Б╨╛╨▓ ╨░╨┤╤А╨╡╤Б╨░ LAN, loopback ╨╕ multicast ╨╕╨┤╤Г╤В ╨▓ ╨╛╨▒╤Е╨╛╨┤ TUN.",
     ),
     "cache": MessageLookupByLibrary.simpleMessage("╨Ъ╤Н╤И"),
-    "cacheAlgorithm": MessageLookupByLibrary.simpleMessage("╨Р╨╗╨│╨╛╤А╨╕╤В╨╝ ╨║╤Н╤И╨░"),
+    "cacheAlgorithm": MessageLookupByLibrary.simpleMessage(
+      "╨Р╨╗╨│╨╛╤А╨╕╤В╨╝ ╨║╤Н╤И╨░",
+    ),
     "cacheCorrupt": MessageLookupByLibrary.simpleMessage(
       "╨Ъ╤Н╤И ╨┐╨╛╨▓╤А╨╡╨╢╨┤╤С╨╜. ╨Ю╤З╨╕╤Б╤В╨╕╤В╤М ╨╡╨│╨╛?",
     ),
-    "cacheMaxSize": MessageLookupByLibrary.simpleMessage("╨а╨░╨╖╨╝╨╡╤А ╨║╤Н╤И╨░"),
+    "cacheMaxSize": MessageLookupByLibrary.simpleMessage(
+      "╨а╨░╨╖╨╝╨╡╤А ╨║╤Н╤И╨░",
+    ),
     "cameraPermissionDesc": MessageLookupByLibrary.simpleMessage(
       "╨а╨░╨╖╤А╨╡╤И╨╕╤В╨╡ ╨┤╨╛╤Б╤В╤Г╨┐ ╨║ ╨║╨░╨╝╨╡╤А╨╡ ╨▓ ╤Б╨╕╤Б╤В╨╡╨╝╨╜╤Л╤Е ╨╜╨░╤Б╤В╤А╨╛╨╣╨║╨░╤Е, ╤З╤В╨╛╨▒╤Л ╤Б╨║╨░╨╜╨╕╤А╨╛╨▓╨░╤В╤М QR-╨║╨╛╨┤╤Л, ╨╕╨╗╨╕ ╨▓╤Л╨▒╨╡╤А╨╕╤В╨╡ ╨╕╨╖╨╛╨▒╤А╨░╨╢╨╡╨╜╨╕╨╡ QR-╨║╨╛╨┤╨░ ╨╕╨╖ ╨│╨░╨╗╨╡╤А╨╡╨╕.",
     ),
@@ -427,16 +503,24 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨Ъ╨░╨╝╨╡╤А╨░ ╨╜╨╡╨┤╨╛╤Б╤В╤Г╨┐╨╜╨░",
     ),
     "cancel": MessageLookupByLibrary.simpleMessage("╨Ю╤В╨╝╨╡╨╜╨░"),
-    "cancelSelectAll": MessageLookupByLibrary.simpleMessage("╨б╨╜╤П╤В╤М ╨▓╤Л╨┤╨╡╨╗╨╡╨╜╨╕╨╡"),
-    "cannotSave": MessageLookupByLibrary.simpleMessage("╨Э╨╡ ╤Г╨┤╨░╨╗╨╛╤Б╤М ╤Б╨╛╤Е╤А╨░╨╜╨╕╤В╤М"),
+    "cancelSelectAll": MessageLookupByLibrary.simpleMessage(
+      "╨б╨╜╤П╤В╤М ╨▓╤Л╨┤╨╡╨╗╨╡╨╜╨╕╨╡",
+    ),
+    "cannotSave": MessageLookupByLibrary.simpleMessage(
+      "╨Э╨╡ ╤Г╨┤╨░╨╗╨╛╤Б╤М ╤Б╨╛╤Е╤А╨░╨╜╨╕╤В╤М",
+    ),
     "changeProxyFailedTip": MessageLookupByLibrary.simpleMessage(
       "╨Э╨╡ ╤Г╨┤╨░╨╗╨╛╤Б╤М ╨┐╨╡╤А╨╡╨║╨╗╤О╤З╨╕╤В╤М ╨┐╤А╨╛╨║╤Б╨╕; ╨▓╨╛╤Б╤Б╤В╨░╨╜╨╛╨▓╨╗╨╡╨╜ ╨┐╤А╨╡╨┤╤Л╨┤╤Г╤Й╨╕╨╣ ╨▓╤Л╨▒╨╛╤А",
     ),
     "changelogBreaking": MessageLookupByLibrary.simpleMessage(
       "╨Т╨░╨╢╨╜╤Л╨╡ ╨╕╨╖╨╝╨╡╨╜╨╡╨╜╨╕╤П",
     ),
-    "changelogFeatures": MessageLookupByLibrary.simpleMessage("╨Э╨╛╨▓╤Л╨╡ ╤Д╤Г╨╜╨║╤Ж╨╕╨╕"),
-    "changelogFixes": MessageLookupByLibrary.simpleMessage("╨Ш╤Б╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╤П"),
+    "changelogFeatures": MessageLookupByLibrary.simpleMessage(
+      "╨Э╨╛╨▓╤Л╨╡ ╤Д╤Г╨╜╨║╤Ж╨╕╨╕",
+    ),
+    "changelogFixes": MessageLookupByLibrary.simpleMessage(
+      "╨Ш╤Б╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╤П",
+    ),
     "changelogPerformance": MessageLookupByLibrary.simpleMessage(
       "╨Я╤А╨╛╨╕╨╖╨▓╨╛╨┤╨╕╤В╨╡╨╗╤М╨╜╨╛╤Б╤В╤М",
     ),
@@ -447,17 +531,23 @@ class MessageLookup extends MessageLookupByLibrary {
     "checkCertificateDesc": MessageLookupByLibrary.simpleMessage(
       "╨С╨╡╨╖ ╨┐╤А╨╛╨▓╨╡╤А╨║╨╕ TLS-╤Б╨╡╤А╤В╨╕╤Д╨╕╨║╨░╤В╨╛╨▓ ╨┐╨╛╨┤╨┐╨╕╤Б╨║╨╕ ╨╕ ╤А╨╡╨╖╨╡╤А╨▓╨╜╤Л╨╡ ╨║╨╛╨┐╨╕╨╕ ╤Г╤П╨╖╨▓╨╕╨╝╤Л ╨┤╨╗╤П ╨░╤В╨░╨║╨╕ ┬л╤З╨╡╨╗╨╛╨▓╨╡╨║ ╨┐╨╛╤Б╨╡╤А╨╡╨┤╨╕╨╜╨╡┬╗.",
     ),
-    "checkUpdate": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╛╨▓╨╡╤А╨╕╤В╤М ╨╛╨▒╨╜╨╛╨▓╨╗╨╡╨╜╨╕╤П"),
+    "checkUpdate": MessageLookupByLibrary.simpleMessage(
+      "╨Я╤А╨╛╨▓╨╡╤А╨╕╤В╤М ╨╛╨▒╨╜╨╛╨▓╨╗╨╡╨╜╨╕╤П",
+    ),
     "checkUpdateError": MessageLookupByLibrary.simpleMessage(
       "╨г ╨▓╨░╤Б ╤Г╨╢╨╡ ╨┐╨╛╤Б╨╗╨╡╨┤╨╜╤П╤П ╨▓╨╡╤А╤Б╨╕╤П",
     ),
     "cipher": MessageLookupByLibrary.simpleMessage("╨и╨╕╤Д╤А"),
-    "clearData": MessageLookupByLibrary.simpleMessage("╨Ю╤З╨╕╤Б╤В╨╕╤В╤М ╨┤╨░╨╜╨╜╤Л╨╡"),
+    "clearData": MessageLookupByLibrary.simpleMessage(
+      "╨Ю╤З╨╕╤Б╤В╨╕╤В╤М ╨┤╨░╨╜╨╜╤Л╨╡",
+    ),
     "clearDataAndExitTip": MessageLookupByLibrary.simpleMessage(
       "╨Т╤Б╨╡ ╨┐╤А╨╛╤Д╨╕╨╗╨╕, ╨╜╨░╤Б╤В╤А╨╛╨╣╨║╨╕ ╨╕ ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╡ ╨┤╨░╨╜╨╜╤Л╨╡ ╨▒╤Г╨┤╤Г╤В ╤Г╨┤╨░╨╗╨╡╨╜╤Л, ╨┐╨╛╤Б╨╗╨╡ ╤З╨╡╨│╨╛ ╨┐╤А╨╕╨╗╨╛╨╢╨╡╨╜╨╕╨╡ ╨╖╨░╨║╤А╨╛╨╡╤В╤Б╤П. ╨Ю╤В╨║╤А╨╛╨╣╤В╨╡ ╨╡╨│╨╛ ╤Б╨╜╨╛╨▓╨░, ╤З╤В╨╛╨▒╤Л ╨╜╨░╤З╨░╤В╤М ╨╖╨░╨╜╨╛╨▓╨╛.",
     ),
     "clearDataFailed": m1,
-    "clearSearch": MessageLookupByLibrary.simpleMessage("╨Ю╤З╨╕╤Б╤В╨╕╤В╤М ╨┐╨╛╨╕╤Б╨║"),
+    "clearSearch": MessageLookupByLibrary.simpleMessage(
+      "╨Ю╤З╨╕╤Б╤В╨╕╤В╤М ╨┐╨╛╨╕╤Б╨║",
+    ),
     "clientFingerprint": MessageLookupByLibrary.simpleMessage(
       "╨Ю╤В╨┐╨╡╤З╨░╤В╨╛╨║ ╨║╨╗╨╕╨╡╨╜╤В╨░",
     ),
@@ -475,10 +565,14 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨Ч╨░╨║╤А╤Л╤В╤М ╤Б╨╛╨╡╨┤╨╕╨╜╨╡╨╜╨╕╤П",
     ),
     "color": MessageLookupByLibrary.simpleMessage("╨ж╨▓╨╡╤В"),
-    "colorStyle": MessageLookupByLibrary.simpleMessage("╨б╤В╨╕╨╗╤М ╨┐╨░╨╗╨╕╤В╤А╤Л"),
+    "colorStyle": MessageLookupByLibrary.simpleMessage(
+      "╨б╤В╨╕╨╗╤М ╨┐╨░╨╗╨╕╤В╤А╤Л",
+    ),
     "columns": MessageLookupByLibrary.simpleMessage("╨б╤В╨╛╨╗╨▒╤Ж╤Л"),
     "compact": MessageLookupByLibrary.simpleMessage("╨Ъ╨╛╨╝╨┐╨░╨║╤В╨╜╤Л╨╣"),
-    "compatible": MessageLookupByLibrary.simpleMessage("╨а╨╡╨╢╨╕╨╝ ╤Б╨╛╨▓╨╝╨╡╤Б╤В╨╕╨╝╨╛╤Б╤В╨╕"),
+    "compatible": MessageLookupByLibrary.simpleMessage(
+      "╨а╨╡╨╢╨╕╨╝ ╤Б╨╛╨▓╨╝╨╡╤Б╤В╨╕╨╝╨╛╤Б╤В╨╕",
+    ),
     "confirm": MessageLookupByLibrary.simpleMessage("╨Я╨╛╨┤╤В╨▓╨╡╤А╨┤╨╕╤В╤М"),
     "confirmClearAllData": MessageLookupByLibrary.simpleMessage(
       "╨Т╤Л ╤Г╨▓╨╡╤А╨╡╨╜╤Л, ╤З╤В╨╛ ╤Е╨╛╤В╨╕╤В╨╡ ╤Г╨┤╨░╨╗╨╕╤В╤М ╨▓╤Б╨╡ ╨┤╨░╨╜╨╜╤Л╨╡?",
@@ -502,7 +596,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╡ ╨┐╨╡╤А╨╡╨│╤А╤Г╨╖╨║╨╛╨╣ TCP ╨┤╨╡╨╣╤Б╤В╨▓╤Г╨╡╤В ╤В╨╛╨╗╤М╨║╨╛ ╤Б╨╛ ╤Б╤В╨╡╨║╨╛╨╝ mips.",
     ),
     "connected": MessageLookupByLibrary.simpleMessage("╨Я╨╛╨┤╨║╨╗╤О╤З╨╡╨╜╨╛"),
-    "connecting": MessageLookupByLibrary.simpleMessage("╨Я╨╛╨┤╨║╨╗╤О╤З╨╡╨╜╨╕╨╡тАж"),
+    "connecting": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨╛╨┤╨║╨╗╤О╤З╨╡╨╜╨╕╨╡тАж",
+    ),
     "connection": MessageLookupByLibrary.simpleMessage("╨б╨╛╨╡╨┤╨╕╨╜╨╡╨╜╨╕╨╡"),
     "connectionStats": MessageLookupByLibrary.simpleMessage(
       "╨б╤В╨░╤В╨╕╤Б╤В╨╕╨║╨░ ╨┐╨╛╨┤╨║╨╗╤О╤З╨╡╨╜╨╕╨╣",
@@ -511,7 +607,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨Я╨╛╨┤╨║╨╗╤О╤З╨╡╨╜╨╕╤П, ╨╖╨░╨┐╤А╨╛╤Б╤Л ╨╕ DNS-╨╖╨░╨┐╤А╨╛╤Б╤Л",
     ),
     "connections": MessageLookupByLibrary.simpleMessage("╨б╨╛╨╡╨┤╨╕╨╜╨╡╨╜╨╕╤П"),
-    "connectivity": MessageLookupByLibrary.simpleMessage("╨Я╨╛╨┤╨║╨╗╤О╤З╨╡╨╜╨╕╨╡: "),
+    "connectivity": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨╛╨┤╨║╨╗╤О╤З╨╡╨╜╨╕╨╡: ",
+    ),
     "content": MessageLookupByLibrary.simpleMessage("╨б╨╛╨┤╨╡╤А╨╢╨╕╨╝╨╛╨╡"),
     "contentNotEmpty": MessageLookupByLibrary.simpleMessage(
       "╨б╨╛╨┤╨╡╤А╨╢╨╕╨╝╨╛╨╡ ╨╜╨╡ ╨╝╨╛╨╢╨╡╤В ╨▒╤Л╤В╤М ╨┐╤Г╤Б╤В╤Л╨╝",
@@ -523,8 +621,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "copyEnvVar": MessageLookupByLibrary.simpleMessage(
       "╨Ъ╨╛╨┐╨╕╤А╨╛╨▓╨░╤В╤М ╨┐╨╡╤А╨╡╨╝╨╡╨╜╨╜╤Л╨╡ ╨╛╨║╤А╤Г╨╢╨╡╨╜╨╕╤П",
     ),
-    "copyLink": MessageLookupByLibrary.simpleMessage("╨Ъ╨╛╨┐╨╕╤А╨╛╨▓╨░╤В╤М ╤Б╤Б╤Л╨╗╨║╤Г"),
-    "copySuccess": MessageLookupByLibrary.simpleMessage("╨б╨║╨╛╨┐╨╕╤А╨╛╨▓╨░╨╜╨╛"),
+    "copyLink": MessageLookupByLibrary.simpleMessage(
+      "╨Ъ╨╛╨┐╨╕╤А╨╛╨▓╨░╤В╤М ╤Б╤Б╤Л╨╗╨║╤Г",
+    ),
+    "copySuccess": MessageLookupByLibrary.simpleMessage(
+      "╨б╨║╨╛╨┐╨╕╤А╨╛╨▓╨░╨╜╨╛",
+    ),
     "core": MessageLookupByLibrary.simpleMessage("╨п╨┤╤А╨╛"),
     "coreBlockedByPolicyTip": m2,
     "coreBlockedBySmartAppControlTip": MessageLookupByLibrary.simpleMessage(
@@ -538,12 +640,16 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "coreStatus": MessageLookupByLibrary.simpleMessage("╨б╤В╨░╤В╤Г╤Б ╤П╨┤╤А╨░"),
     "country": MessageLookupByLibrary.simpleMessage("╨а╨╡╨│╨╕╨╛╨╜"),
-    "crashDetected": MessageLookupByLibrary.simpleMessage("╨Ю╨▒╨╜╨░╤А╤Г╨╢╨╡╨╜ ╤Б╨▒╨╛╨╣"),
+    "crashDetected": MessageLookupByLibrary.simpleMessage(
+      "╨Ю╨▒╨╜╨░╤А╤Г╨╢╨╡╨╜ ╤Б╨▒╨╛╨╣",
+    ),
     "crashDetectedTip": m3,
     "crashTest": MessageLookupByLibrary.simpleMessage("╨в╨╡╤Б╤В ╤Б╨▒╨╛╤П"),
     "create": MessageLookupByLibrary.simpleMessage("╨б╨╛╨╖╨┤╨░╤В╤М"),
     "createProfileFromUrlTip": m4,
-    "creationTime": MessageLookupByLibrary.simpleMessage("╨Т╤А╨╡╨╝╤П ╤Б╨╛╨╖╨┤╨░╨╜╨╕╤П"),
+    "creationTime": MessageLookupByLibrary.simpleMessage(
+      "╨Т╤А╨╡╨╝╤П ╤Б╨╛╨╖╨┤╨░╨╜╨╕╤П",
+    ),
     "currentOutboundDesc": MessageLookupByLibrary.simpleMessage(
       "╨б╨╛╨┤╨╡╤А╨╢╨╕╤В ╨║╨╜╨╛╨┐╨║╤Г ╨╖╨░╨┐╤Г╤Б╨║╨░, ╤Г╨┤╨░╨╗╨╕╤В╤М ╨╜╨╡╨╗╤М╨╖╤П",
     ),
@@ -567,7 +673,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "customIssueReservedName": m15,
     "customIssuesSummary": m16,
-    "customProfile": MessageLookupByLibrary.simpleMessage("╨Я╨╛╨╗╤М╨╖╨╛╨▓╨░╤В╨╡╨╗╤М╤Б╨║╨╕╨╣"),
+    "customProfile": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨╛╨╗╤М╨╖╨╛╨▓╨░╤В╨╡╨╗╤М╤Б╨║╨╕╨╣",
+    ),
     "customProfileDesc": MessageLookupByLibrary.simpleMessage(
       "╨У╤А╤Г╨┐╨┐╤Л ╨┐╤А╨╛╨║╤Б╨╕ ╨╕ ╨┐╤А╨░╨▓╨╕╨╗╨░ ╨╕╨╖ ╨┐╤А╨╛╨║╤Б╨╕ ╨┐╤А╨╕╨╗╨╛╨╢╨╡╨╜╨╕╤П ╨╕ ╨┤╤А╤Г╨│╨╕╤Е ╨┐╤А╨╛╤Д╨╕╨╗╨╡╨╣",
     ),
@@ -591,13 +699,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "defaultSelected": MessageLookupByLibrary.simpleMessage(
       "╨Т╤Л╨▒╨╛╤А ╨┐╨╛ ╤Г╨╝╨╛╨╗╤З╨░╨╜╨╕╤О",
     ),
-    "defaultText": MessageLookupByLibrary.simpleMessage("╨Я╨╛ ╤Г╨╝╨╛╨╗╤З╨░╨╜╨╕╤О"),
+    "defaultText": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨╛ ╤Г╨╝╨╛╨╗╤З╨░╨╜╨╕╤О",
+    ),
     "definitionNotMap": MessageLookupByLibrary.simpleMessage(
       "╨Ъ╨╛╨╜╤Д╨╕╨│╤Г╤А╨░╤Ж╨╕╤П ╨┤╨╛╨╗╨╢╨╜╨░ ╨▒╤Л╤В╤М YAML-╤Б╨╗╨╛╨▓╨░╤А╤С╨╝ ╤Б ╨┐╨╛╨╗╤П╨╝╨╕ name ╨╕ type",
     ),
     "delay": MessageLookupByLibrary.simpleMessage("╨Ч╨░╨┤╨╡╤А╨╢╨║╨░"),
     "delayFailed": MessageLookupByLibrary.simpleMessage("╨б╨▒╨╛╨╣"),
-    "delayTest": MessageLookupByLibrary.simpleMessage("╨в╨╡╤Б╤В ╨╖╨░╨┤╨╡╤А╨╢╨║╨╕"),
+    "delayTest": MessageLookupByLibrary.simpleMessage(
+      "╨в╨╡╤Б╤В ╨╖╨░╨┤╨╡╤А╨╢╨║╨╕",
+    ),
     "delete": MessageLookupByLibrary.simpleMessage("╨г╨┤╨░╨╗╨╕╤В╤М"),
     "deleteMultipTip": m19,
     "deleteTip": m20,
@@ -615,7 +727,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "detectionTip": MessageLookupByLibrary.simpleMessage(
       "╨Ш╤Б╨┐╨╛╨╗╤М╨╖╤Г╨╡╤В ╤Б╤В╨╛╤А╨╛╨╜╨╜╨╕╨╣ API; ╤В╨╛╨╗╤М╨║╨╛ ╨┤╨╗╤П ╤Б╨┐╤А╨░╨▓╨║╨╕",
     ),
-    "developerMode": MessageLookupByLibrary.simpleMessage("╨а╨╡╨╢╨╕╨╝ ╤А╨░╨╖╤А╨░╨▒╨╛╤В╤З╨╕╨║╨░"),
+    "developerMode": MessageLookupByLibrary.simpleMessage(
+      "╨а╨╡╨╢╨╕╨╝ ╤А╨░╨╖╤А╨░╨▒╨╛╤В╤З╨╕╨║╨░",
+    ),
     "developerModeEnableTip": MessageLookupByLibrary.simpleMessage(
       "╨а╨╡╨╢╨╕╨╝ ╤А╨░╨╖╤А╨░╨▒╨╛╤В╤З╨╕╨║╨░ ╨▓╨║╨╗╤О╤З╤С╨╜.",
     ),
@@ -636,7 +750,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "disableKeepAlive": MessageLookupByLibrary.simpleMessage(
       "╨Ю╤В╨║╨╗╤О╤З╨╕╤В╤М TCP keep-alive",
     ),
-    "disableUDP": MessageLookupByLibrary.simpleMessage("╨Ю╤В╨║╨╗╤О╤З╨╕╤В╤М UDP"),
+    "disableUDP": MessageLookupByLibrary.simpleMessage(
+      "╨Ю╤В╨║╨╗╤О╤З╨╕╤В╤М UDP",
+    ),
     "disabled": MessageLookupByLibrary.simpleMessage("╨Т╤Л╨║╨╗╤О╤З╨╡╨╜╨╛"),
     "discardChanges": MessageLookupByLibrary.simpleMessage(
       "╨Ю╤В╨╝╨╡╨╜╨╕╤В╤М ╨╕╨╖╨╝╨╡╨╜╨╡╨╜╨╕╤П?",
@@ -738,7 +854,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "dnsHijackDesc": MessageLookupByLibrary.simpleMessage(
       "╨С╨╡╨╖ ╤Н╤В╨╛╨│╨╛ ╨┐╨░╤А╨░╨╝╨╡╤В╤А╨░ TUN ╨┐╨╡╤А╨╡╤Е╨▓╨░╤В╤Л╨▓╨░╨╡╤В ╨▓╤Б╨╡ DNS-╨╖╨░╨┐╤А╨╛╤Б╤Л ╨╜╨░ ╨┐╨╛╤А╤В 53 (any:53).",
     ),
-    "dnsHijacking": MessageLookupByLibrary.simpleMessage("╨Я╨╡╤А╨╡╤Е╨▓╨░╤В DNS"),
+    "dnsHijacking": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨╡╤А╨╡╤Е╨▓╨░╤В DNS",
+    ),
     "dnsMode": MessageLookupByLibrary.simpleMessage("╨а╨╡╨╢╨╕╨╝ DNS"),
     "dnsOverrideDesc": MessageLookupByLibrary.simpleMessage(
       "╨Ф╨╛╨▒╨░╨▓╨╗╨╡╨╜╨╜╤Л╨╡ ╨╖╨┤╨╡╤Б╤М ╨┐╨░╤А╨░╨╝╨╡╤В╤А╤Л ╨╖╨░╨╝╨╡╨╜╤П╤О╤В DNS ╨▓╤Б╨╡╤Е ╨┐╤А╨╛╤Д╨╕╨╗╨╡╨╣ ╨╕╨╖ URL ╨╕ ╤Д╨░╨╣╨╗╨╛╨▓; ╨╛╤Б╤В╨░╨╗╤М╨╜╤Л╨╡ ╨╛╤Б╤В╨░╤О╤В╤Б╤П ╤В╨░╨║╨╕╨╝╨╕, ╨║╨░╨║ ╨▓ ╨┐╤А╨╛╤Д╨╕╨╗╨╡. DNS ╨┐╨╛╨╗╤М╨╖╨╛╨▓╨░╤В╨╡╨╗╤М╤Б╨║╨╛╨│╨╛ ╨┐╤А╨╛╤Д╨╕╨╗╤П ╨╖╨░╨┤╨░╤С╤В╤Б╤П ╨▓ ╨╡╨│╨╛ ╤Б╨╛╨┤╨╡╤А╨╢╨╕╨╝╨╛╨╝.",
@@ -751,17 +869,25 @@ class MessageLookup extends MessageLookupByLibrary {
     "downloadBandwidth": MessageLookupByLibrary.simpleMessage(
       "╨б╨║╨╛╤А╨╛╤Б╤В╤М ╨╖╨░╨│╤А╤Г╨╖╨║╨╕",
     ),
-    "duration": MessageLookupByLibrary.simpleMessage("╨Ф╨╗╨╕╤В╨╡╨╗╤М╨╜╨╛╤Б╤В╤М"),
+    "duration": MessageLookupByLibrary.simpleMessage(
+      "╨Ф╨╗╨╕╤В╨╡╨╗╤М╨╜╨╛╤Б╤В╤М",
+    ),
     "edit": MessageLookupByLibrary.simpleMessage("╨а╨╡╨┤╨░╨║╤В╨╕╤А╨╛╨▓╨░╤В╤М"),
-    "editDashboard": MessageLookupByLibrary.simpleMessage("╨Ш╨╖╨╝╨╡╨╜╨╕╤В╤М ╨┐╨░╨╜╨╡╨╗╤М"),
+    "editDashboard": MessageLookupByLibrary.simpleMessage(
+      "╨Ш╨╖╨╝╨╡╨╜╨╕╤В╤М ╨┐╨░╨╜╨╡╨╗╤М",
+    ),
     "editGlobalRules": MessageLookupByLibrary.simpleMessage(
       "╨а╨╡╨┤╨░╨║╤В╨╕╤А╨╛╨▓╨░╤В╤М ╨│╨╗╨╛╨▒╨░╨╗╤М╨╜╤Л╨╡ ╨┐╤А╨░╨▓╨╕╨╗╨░",
     ),
-    "editProxy": MessageLookupByLibrary.simpleMessage("╨а╨╡╨┤╨░╨║╤В╨╕╤А╨╛╨▓╨░╤В╤М ╨┐╤А╨╛╨║╤Б╨╕"),
+    "editProxy": MessageLookupByLibrary.simpleMessage(
+      "╨а╨╡╨┤╨░╨║╤В╨╕╤А╨╛╨▓╨░╤В╤М ╨┐╤А╨╛╨║╤Б╨╕",
+    ),
     "editProxyGroup": MessageLookupByLibrary.simpleMessage(
       "╨а╨╡╨┤╨░╨║╤В╨╕╤А╨╛╨▓╨░╤В╤М ╨│╤А╤Г╨┐╨┐╤Г ╨┐╤А╨╛╨║╤Б╨╕",
     ),
-    "editRule": MessageLookupByLibrary.simpleMessage("╨а╨╡╨┤╨░╨║╤В╨╕╤А╨╛╨▓╨░╤В╤М ╨┐╤А╨░╨▓╨╕╨╗╨╛"),
+    "editRule": MessageLookupByLibrary.simpleMessage(
+      "╨а╨╡╨┤╨░╨║╤В╨╕╤А╨╛╨▓╨░╤В╤М ╨┐╤А╨░╨▓╨╕╨╗╨╛",
+    ),
     "editSsid": MessageLookupByLibrary.simpleMessage("╨Ш╨╖╨╝╨╡╨╜╨╕╤В╤М SSID"),
     "editorUnavailable": MessageLookupByLibrary.simpleMessage(
       "╨а╨╡╨┤╨░╨║╤В╨╛╤А ╨╜╨╡╨┤╨╛╤Б╤В╤Г╨┐╨╡╨╜",
@@ -775,16 +901,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "enabled": MessageLookupByLibrary.simpleMessage("╨Т╨║╨╗╤О╤З╨╡╨╜╨╛"),
     "entries": MessageLookupByLibrary.simpleMessage(" ╨╖╨░╨┐╨╕╤Б╨╡╨╣"),
     "error": MessageLookupByLibrary.simpleMessage("╨Ю╤И╨╕╨▒╨║╨░"),
-    "errorDetails": MessageLookupByLibrary.simpleMessage("╨Я╨╛╨┤╤А╨╛╨▒╨╜╨╛╤Б╤В╨╕ ╨╛╤И╨╕╨▒╨║╨╕"),
+    "errorDetails": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨╛╨┤╤А╨╛╨▒╨╜╨╛╤Б╤В╨╕ ╨╛╤И╨╕╨▒╨║╨╕",
+    ),
     "es": MessageLookupByLibrary.simpleMessage("╨Ш╤Б╨┐╨░╨╜╤Б╨║╨╕╨╣"),
-    "exclude": MessageLookupByLibrary.simpleMessage("╨б╨║╤А╤Л╤В╤М ╨╕╨╖ ╨╜╨╡╨┤╨░╨▓╨╜╨╕╤Е ╨╖╨░╨┤╨░╤З"),
+    "exclude": MessageLookupByLibrary.simpleMessage(
+      "╨б╨║╤А╤Л╤В╤М ╨╕╨╖ ╨╜╨╡╨┤╨░╨▓╨╜╨╕╤Е ╨╖╨░╨┤╨░╤З",
+    ),
     "excludeDstPort": MessageLookupByLibrary.simpleMessage(
       "╨Ш╤Б╨║╨╗╤О╤З╤С╨╜╨╜╤Л╨╡ ╨┐╨╛╤А╤В╤Л ╨╜╨░╨╖╨╜╨░╤З╨╡╨╜╨╕╤П",
     ),
     "excludeDstPortDesc": MessageLookupByLibrary.simpleMessage(
       "╨в╤А╨░╤Д╨╕╨║ ╨╜╨░ ╨╕╤Б╨║╨╗╤О╤З╤С╨╜╨╜╤Л╨╡ ╨┐╨╛╤А╤В╤Л ╨╜╨░╨╖╨╜╨░╤З╨╡╨╜╨╕╤П ╨╕╨┤╤С╤В ╨▓ ╨╛╨▒╤Е╨╛╨┤ TUN.",
     ),
-    "excludeFilter": MessageLookupByLibrary.simpleMessage("╨д╨╕╨╗╤М╤В╤А ╨╕╤Б╨║╨╗╤О╤З╨╡╨╜╨╕╤П"),
+    "excludeFilter": MessageLookupByLibrary.simpleMessage(
+      "╨д╨╕╨╗╤М╤В╤А ╨╕╤Б╨║╨╗╤О╤З╨╡╨╜╨╕╤П",
+    ),
     "excludeInterface": MessageLookupByLibrary.simpleMessage(
       "╨Ш╤Б╨║╨╗╤О╤З╤С╨╜╨╜╤Л╨╡ ╨╕╨╜╤В╨╡╤А╤Д╨╡╨╣╤Б╤Л",
     ),
@@ -797,7 +929,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "excludeSrcPortDesc": MessageLookupByLibrary.simpleMessage(
       "╨в╤А╨░╤Д╨╕╨║ ╤Б ╨╕╤Б╨║╨╗╤О╤З╤С╨╜╨╜╤Л╤Е ╨╕╤Б╤Е╨╛╨┤╨╜╤Л╤Е ╨┐╨╛╤А╤В╨╛╨▓ ╨╕╨┤╤С╤В ╨▓ ╨╛╨▒╤Е╨╛╨┤ TUN.",
     ),
-    "excludeSsids": MessageLookupByLibrary.simpleMessage("╨Ш╤Б╨║╨╗╤О╤З╤С╨╜╨╜╤Л╨╡ SSID"),
+    "excludeSsids": MessageLookupByLibrary.simpleMessage(
+      "╨Ш╤Б╨║╨╗╤О╤З╤С╨╜╨╜╤Л╨╡ SSID",
+    ),
     "excludeSsidsDesc": MessageLookupByLibrary.simpleMessage(
       "╨Я╤А╨╕ ╨┐╨╛╨┤╨║╨╗╤О╤З╨╡╨╜╨╕╨╕ ╨║ Wi-Fi ╤Б ╨╕╤Б╨║╨╗╤О╤З╤С╨╜╨╜╤Л╨╝ SSID ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╨╡ ╤А╨░╨▒╨╛╤В╤Л ╨┐╤А╨╕╨╗╨╛╨╢╨╡╨╜╨╕╤П ╨┐╨╡╤А╨╡╨║╨╗╤О╤З╨░╨╡╤В╤Б╤П ╨░╨▓╤В╨╛╨╝╨░╤В╨╕╤З╨╡╤Б╨║╨╕.",
     ),
@@ -812,15 +946,31 @@ class MessageLookup extends MessageLookupByLibrary {
     "exitFullScreen": MessageLookupByLibrary.simpleMessage(
       "╨Т╤Л╨╣╤В╨╕ ╨╕╨╖ ╨┐╨╛╨╗╨╜╨╛╤Н╨║╤А╨░╨╜╨╜╨╛╨│╨╛ ╤А╨╡╨╢╨╕╨╝╨░",
     ),
-    "exitNodes": MessageLookupByLibrary.simpleMessage("╨Т╤Л╤Е╨╛╨┤╨╜╤Л╨╡ ╤Г╨╖╨╗╤Л"),
-    "expectedStatus": MessageLookupByLibrary.simpleMessage("╨Ю╨╢╨╕╨┤╨░╨╡╨╝╤Л╨╣ ╤Б╤В╨░╤В╤Г╤Б"),
-    "expireTime": MessageLookupByLibrary.simpleMessage("╨б╤А╨╛╨║ ╨┤╨╡╨╣╤Б╤В╨▓╨╕╤П"),
-    "exportFile": MessageLookupByLibrary.simpleMessage("╨н╨║╤Б╨┐╨╛╤А╤В ╤Д╨░╨╣╨╗╨░"),
-    "exportLogs": MessageLookupByLibrary.simpleMessage("╨н╨║╤Б╨┐╨╛╤А╤В ╨╗╨╛╨│╨╛╨▓"),
-    "exportSuccess": MessageLookupByLibrary.simpleMessage("╨н╨║╤Б╨┐╨╛╤А╤В ╨▓╤Л╨┐╨╛╨╗╨╜╨╡╨╜"),
+    "exitNodes": MessageLookupByLibrary.simpleMessage(
+      "╨Т╤Л╤Е╨╛╨┤╨╜╤Л╨╡ ╤Г╨╖╨╗╤Л",
+    ),
+    "expectedStatus": MessageLookupByLibrary.simpleMessage(
+      "╨Ю╨╢╨╕╨┤╨░╨╡╨╝╤Л╨╣ ╤Б╤В╨░╤В╤Г╤Б",
+    ),
+    "expireTime": MessageLookupByLibrary.simpleMessage(
+      "╨б╤А╨╛╨║ ╨┤╨╡╨╣╤Б╤В╨▓╨╕╤П",
+    ),
+    "exportFile": MessageLookupByLibrary.simpleMessage(
+      "╨н╨║╤Б╨┐╨╛╤А╤В ╤Д╨░╨╣╨╗╨░",
+    ),
+    "exportLogs": MessageLookupByLibrary.simpleMessage(
+      "╨н╨║╤Б╨┐╨╛╤А╤В ╨╗╨╛╨│╨╛╨▓",
+    ),
+    "exportSuccess": MessageLookupByLibrary.simpleMessage(
+      "╨н╨║╤Б╨┐╨╛╤А╤В ╨▓╤Л╨┐╨╛╨╗╨╜╨╡╨╜",
+    ),
     "extend": MessageLookupByLibrary.simpleMessage("╨а╨░╤Б╤И╨╕╤А╨╡╨╜╨╕╨╡"),
-    "extendMode": MessageLookupByLibrary.simpleMessage("╨а╨╡╨╢╨╕╨╝ ╤А╨░╤Б╤И╨╕╤А╨╡╨╜╨╕╤П"),
-    "extendScript": MessageLookupByLibrary.simpleMessage("╨б╨║╤А╨╕╨┐╤В ╤А╨░╤Б╤И╨╕╤А╨╡╨╜╨╕╤П"),
+    "extendMode": MessageLookupByLibrary.simpleMessage(
+      "╨а╨╡╨╢╨╕╨╝ ╤А╨░╤Б╤И╨╕╤А╨╡╨╜╨╕╤П",
+    ),
+    "extendScript": MessageLookupByLibrary.simpleMessage(
+      "╨б╨║╤А╨╕╨┐╤В ╤А╨░╤Б╤И╨╕╤А╨╡╨╜╨╕╤П",
+    ),
     "externalController": MessageLookupByLibrary.simpleMessage(
       "╨Т╨╜╨╡╤И╨╜╨╕╨╣ ╨║╨╛╨╜╤В╤А╨╛╨╗╨╗╨╡╤А",
     ),
@@ -830,24 +980,34 @@ class MessageLookup extends MessageLookupByLibrary {
     "externalControllerSecret": MessageLookupByLibrary.simpleMessage(
       "╨б╨╡╨║╤А╨╡╤В ╨▓╨╜╨╡╤И╨╜╨╡╨│╨╛ ╨║╨╛╨╜╤В╤А╨╛╨╗╨╗╨╡╤А╨░",
     ),
-    "externalLink": MessageLookupByLibrary.simpleMessage("╨Т╨╜╨╡╤И╨╜╤П╤П ╤Б╤Б╤Л╨╗╨║╨░"),
-    "extraLarge": MessageLookupByLibrary.simpleMessage("╨Ю╤З╨╡╨╜╤М ╨║╤А╤Г╨┐╨╜╤Л╨╣"),
+    "externalLink": MessageLookupByLibrary.simpleMessage(
+      "╨Т╨╜╨╡╤И╨╜╤П╤П ╤Б╤Б╤Л╨╗╨║╨░",
+    ),
+    "extraLarge": MessageLookupByLibrary.simpleMessage(
+      "╨Ю╤З╨╡╨╜╤М ╨║╤А╤Г╨┐╨╜╤Л╨╣",
+    ),
     "fade": MessageLookupByLibrary.simpleMessage("╨а╨░╤Б╤В╨▓╨╛╤А╨╡╨╜╨╕╨╡"),
     "failedCount": m25,
     "failedItem": m26,
-    "fakeipFilter": MessageLookupByLibrary.simpleMessage("╨д╨╕╨╗╤М╤В╤А Fake-IP"),
+    "fakeipFilter": MessageLookupByLibrary.simpleMessage(
+      "╨д╨╕╨╗╤М╤В╤А Fake-IP",
+    ),
     "fakeipFilterMode": MessageLookupByLibrary.simpleMessage(
       "╨а╨╡╨╢╨╕╨╝ ╤Д╨╕╨╗╤М╤В╤А╨░ Fake-IP",
     ),
     "fakeipFilterModeDesc": MessageLookupByLibrary.simpleMessage(
       "╨Т ╤А╨╡╨╢╨╕╨╝╨╡ ╤Д╨╕╨╗╤М╤В╤А╨░ Fake-IP blacklist ╨╕╤Б╨║╨╗╤О╤З╨░╨╡╤В ╤Б╨╛╨▓╨┐╨░╨┤╨╡╨╜╨╕╤П, whitelist ╨┐╤А╨╕╨╝╨╡╨╜╤П╨╡╤В╤Б╤П ╤В╨╛╨╗╤М╨║╨╛ ╨║ ╨╜╨╕╨╝, rule тАФ ╨┐╨╛ ╨┐╤А╨░╨▓╨╕╨╗╨░╨╝.",
     ),
-    "fakeipRange": MessageLookupByLibrary.simpleMessage("╨Ф╨╕╨░╨┐╨░╨╖╨╛╨╜ Fake-IP"),
+    "fakeipRange": MessageLookupByLibrary.simpleMessage(
+      "╨Ф╨╕╨░╨┐╨░╨╖╨╛╨╜ Fake-IP",
+    ),
     "fakeipRange6": MessageLookupByLibrary.simpleMessage(
       "╨Ф╨╕╨░╨┐╨░╨╖╨╛╨╜ Fake-IP (IPv6)",
     ),
     "fakeipTtl": MessageLookupByLibrary.simpleMessage("TTL Fake-IP"),
-    "fallbackFilter": MessageLookupByLibrary.simpleMessage("╨д╨╕╨╗╤М╤В╤А fallback"),
+    "fallbackFilter": MessageLookupByLibrary.simpleMessage(
+      "╨д╨╕╨╗╤М╤В╤А fallback",
+    ),
     "file": MessageLookupByLibrary.simpleMessage("╨д╨░╨╣╨╗"),
     "fileDesc": MessageLookupByLibrary.simpleMessage(
       "╨Ч╨░╨│╤А╤Г╨╖╨╕╤В╤М ╤Д╨░╨╣╨╗ ╨┐╤А╨╛╤Д╨╕╨╗╤П ╨╜╨░╨┐╤А╤П╨╝╤Г╤О",
@@ -857,10 +1017,16 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "filter": MessageLookupByLibrary.simpleMessage("╨д╨╕╨╗╤М╤В╤А"),
     "filters": MessageLookupByLibrary.simpleMessage("╨д╨╕╨╗╤М╤В╤А╤Л"),
-    "findProcessMode": MessageLookupByLibrary.simpleMessage("╨Я╨╛╨╕╤Б╨║ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░"),
+    "findProcessMode": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨╛╨╕╤Б╨║ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░",
+    ),
     "floating": MessageLookupByLibrary.simpleMessage("╨Я╨╗╨░╨▓╨░╤О╤Й╨░╤П"),
-    "followProfile": MessageLookupByLibrary.simpleMessage("╨Ъ╨░╨║ ╨▓ ╨┐╤А╨╛╤Д╨╕╨╗╨╡"),
-    "followSystem": MessageLookupByLibrary.simpleMessage("╨Ъ╨░╨║ ╨▓ ╤Б╨╕╤Б╤В╨╡╨╝╨╡"),
+    "followProfile": MessageLookupByLibrary.simpleMessage(
+      "╨Ъ╨░╨║ ╨▓ ╨┐╤А╨╛╤Д╨╕╨╗╨╡",
+    ),
+    "followSystem": MessageLookupByLibrary.simpleMessage(
+      "╨Ъ╨░╨║ ╨▓ ╤Б╨╕╤Б╤В╨╡╨╝╨╡",
+    ),
     "fontFamily": MessageLookupByLibrary.simpleMessage("╨и╤А╨╕╤Д╤В"),
     "fontSize": MessageLookupByLibrary.simpleMessage("╨а╨░╨╖╨╝╨╡╤А"),
     "forceDnsMapping": MessageLookupByLibrary.simpleMessage(
@@ -905,28 +1071,38 @@ class MessageLookup extends MessageLookupByLibrary {
     "hashByInUser": MessageLookupByLibrary.simpleMessage(
       "╨е╨╡╤И╨╕╤А╨╛╨▓╨░╤В╤М ╨┐╨╛ ╨┐╨╛╨╗╤М╨╖╨╛╨▓╨░╤В╨╡╨╗╤О ╨▓╤Е╨╛╨┤╤П╤Й╨╡╨│╨╛ ╨┐╨╛╨┤╨║╨╗╤О╤З╨╡╨╜╨╕╤П",
     ),
-    "healthCheck": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╛╨▓╨╡╤А╨║╨░ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╤П"),
+    "healthCheck": MessageLookupByLibrary.simpleMessage(
+      "╨Я╤А╨╛╨▓╨╡╤А╨║╨░ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╤П",
+    ),
     "helperCorruptTip": MessageLookupByLibrary.simpleMessage(
       "╨б╨╗╤Г╨╢╨▒╨░ Helper ╨╜╨╡╨┤╨╛╤Б╤В╤Г╨┐╨╜╨░, ╨┐╨╛╤Н╤В╨╛╨╝╤Г TUN-╤А╨╡╨╢╨╕╨╝ ╨▓╨║╨╗╤О╤З╨╕╤В╤М ╨╜╨╡╨╗╤М╨╖╤П. ╨Я╨╡╤А╨╡╤Г╤Б╤В╨░╨╜╨╛╨▓╨╕╤В╨╡ FlClash.",
     ),
     "hex": MessageLookupByLibrary.simpleMessage("Hex"),
-    "hideFromList": MessageLookupByLibrary.simpleMessage("╨б╨║╤А╤Л╤В╤М ╨╕╨╖ ╤Б╨┐╨╕╤Б╨║╨░"),
+    "hideFromList": MessageLookupByLibrary.simpleMessage(
+      "╨б╨║╤А╤Л╤В╤М ╨╕╨╖ ╤Б╨┐╨╕╤Б╨║╨░",
+    ),
     "hideIp": MessageLookupByLibrary.simpleMessage("╨б╨║╤А╤Л╤В╤М IP"),
-    "hidePassword": MessageLookupByLibrary.simpleMessage("╨б╨║╤А╤Л╤В╤М ╨┐╨░╤А╨╛╨╗╤М"),
+    "hidePassword": MessageLookupByLibrary.simpleMessage(
+      "╨б╨║╤А╤Л╤В╤М ╨┐╨░╤А╨╛╨╗╤М",
+    ),
     "hideTimeoutProxies": MessageLookupByLibrary.simpleMessage(
       "╨б╨║╤А╤Л╨▓╨░╤В╤М ╨┐╤А╨╛╨║╤Б╨╕ ╤Б ╤В╨░╨╣╨╝╨░╤Г╤В╨╛╨╝",
     ),
     "hideTimeoutProxiesDesc": MessageLookupByLibrary.simpleMessage(
       "╨Э╨╡ ╨┐╨╛╨║╨░╨╖╤Л╨▓╨░╤В╤М ╨┐╤А╨╛╨║╤Б╨╕, ╤Г ╨║╨╛╤В╨╛╤А╤Л╤Е ╨┐╨╛╤Б╨╗╨╡╨┤╨╜╨╕╨╣ ╤В╨╡╤Б╤В ╨╖╨░╨┤╨╡╤А╨╢╨║╨╕ ╨╖╨░╨▓╨╡╤А╤И╨╕╨╗╤Б╤П ╤В╨░╨╣╨╝╨░╤Г╤В╨╛╨╝",
     ),
-    "hopInterval": MessageLookupByLibrary.simpleMessage("╨Ш╨╜╤В╨╡╤А╨▓╨░╨╗ ╨┐╨╡╤А╨╡╤Б╨║╨╛╨║╨░"),
+    "hopInterval": MessageLookupByLibrary.simpleMessage(
+      "╨Ш╨╜╤В╨╡╤А╨▓╨░╨╗ ╨┐╨╡╤А╨╡╤Б╨║╨╛╨║╨░",
+    ),
     "host": MessageLookupByLibrary.simpleMessage("╨е╨╛╤Б╤В"),
     "hostname": MessageLookupByLibrary.simpleMessage("╨Ш╨╝╤П ╤Е╨╛╤Б╤В╨░"),
     "hotkeyConflictWith": m31,
     "hotkeyDesc": MessageLookupByLibrary.simpleMessage(
       "╨У╨╗╨╛╨▒╨░╨╗╤М╨╜╤Л╨╡ ╨│╨╛╤А╤П╤З╨╕╨╡ ╨║╨╗╨░╨▓╨╕╤И╨╕ ╤А╨░╨▒╨╛╤В╨░╤О╤В, ╨┤╨░╨╢╨╡ ╨║╨╛╨│╨┤╨░ ╨╛╨║╨╜╨╛ ╤Б╨║╤А╤Л╤В╨╛. ╨Э╨░╨╢╨╝╨╕╤В╨╡ ╨╜╨░ ╨┤╨╡╨╣╤Б╤В╨▓╨╕╨╡, ╤З╤В╨╛╨▒╤Л ╨╖╨░╨┐╨╕╤Б╨░╤В╤М ╤Б╨╛╤З╨╡╤В╨░╨╜╨╕╨╡ ╨║╨╗╨░╨▓╨╕╤И.",
     ),
-    "hotkeyManagement": MessageLookupByLibrary.simpleMessage("╨У╨╛╤А╤П╤З╨╕╨╡ ╨║╨╗╨░╨▓╨╕╤И╨╕"),
+    "hotkeyManagement": MessageLookupByLibrary.simpleMessage(
+      "╨У╨╛╤А╤П╤З╨╕╨╡ ╨║╨╗╨░╨▓╨╕╤И╨╕",
+    ),
     "hotkeyNeedsModifier": m32,
     "hotkeyNotSet": MessageLookupByLibrary.simpleMessage("╨Э╨╡ ╨╖╨░╨┤╨░╨╜╨╛"),
     "hotkeyUnavailable": MessageLookupByLibrary.simpleMessage(
@@ -937,15 +1113,25 @@ class MessageLookup extends MessageLookupByLibrary {
     "hoursAgoShort": m34,
     "hue": MessageLookupByLibrary.simpleMessage("╨Ю╤В╤В╨╡╨╜╨╛╨║"),
     "icon": MessageLookupByLibrary.simpleMessage("╨Ч╨╜╨░╤З╨╛╨║"),
-    "iconRecords": MessageLookupByLibrary.simpleMessage("╨Ш╤Б╤В╨╛╤А╨╕╤П ╨╖╨╜╨░╤З╨║╨╛╨▓"),
-    "iconSets": MessageLookupByLibrary.simpleMessage("╨Э╨░╨▒╨╛╤А╤Л ╨╖╨╜╨░╤З╨║╨╛╨▓"),
+    "iconRecords": MessageLookupByLibrary.simpleMessage(
+      "╨Ш╤Б╤В╨╛╤А╨╕╤П ╨╖╨╜╨░╤З╨║╨╛╨▓",
+    ),
+    "iconSets": MessageLookupByLibrary.simpleMessage(
+      "╨Э╨░╨▒╨╛╤А╤Л ╨╖╨╜╨░╤З╨║╨╛╨▓",
+    ),
     "iconSetsEmptyTip": MessageLookupByLibrary.simpleMessage(
       "╨Э╨░╨▒╨╛╤А╨╛╨▓ ╨╖╨╜╨░╤З╨║╨╛╨▓ ╨┐╨╛╨║╨░ ╨╜╨╡╤В. ╨Ф╨╛╨▒╨░╨▓╤М╤В╨╡ ╨╕╤Е ╨▓ ╤А╨░╨╖╨┤╨╡╨╗╨╡ ┬л╨а╨╡╤Б╤Г╤А╤Б╤Л ╨┐╨╛╨╗╤М╨╖╨╛╨▓╨░╤В╨╡╨╗╤М╤Б╨║╨╕╤Е ╨┐╤А╨╛╤Д╨╕╨╗╨╡╨╣ тЖТ ╨Э╨░╨▒╨╛╤А╤Л ╨╖╨╜╨░╤З╨║╨╛╨▓┬╗",
     ),
-    "iconStyle": MessageLookupByLibrary.simpleMessage("╨б╤В╨╕╨╗╤М ╨╖╨╜╨░╤З╨║╨╛╨▓"),
-    "iconStyleFilled": MessageLookupByLibrary.simpleMessage("╨б ╨┐╨╛╨┤╨╗╨╛╨╢╨║╨╛╨╣"),
+    "iconStyle": MessageLookupByLibrary.simpleMessage(
+      "╨б╤В╨╕╨╗╤М ╨╖╨╜╨░╤З╨║╨╛╨▓",
+    ),
+    "iconStyleFilled": MessageLookupByLibrary.simpleMessage(
+      "╨б ╨┐╨╛╨┤╨╗╨╛╨╢╨║╨╛╨╣",
+    ),
     "iconStyleHidden": MessageLookupByLibrary.simpleMessage("╨б╨║╤А╤Л╤В╨╛"),
-    "iconStylePlain": MessageLookupByLibrary.simpleMessage("╨С╨╡╨╖ ╨┐╨╛╨┤╨╗╨╛╨╢╨║╨╕"),
+    "iconStylePlain": MessageLookupByLibrary.simpleMessage(
+      "╨С╨╡╨╖ ╨┐╨╛╨┤╨╗╨╛╨╢╨║╨╕",
+    ),
     "iconUrl": MessageLookupByLibrary.simpleMessage("URL ╨╖╨╜╨░╤З╨║╨░"),
     "ignoreBatteryOptimization": MessageLookupByLibrary.simpleMessage(
       "╨Ш╨│╨╜╨╛╤А╨╕╤А╨╛╨▓╨░╤В╤М ╨╛╨┐╤В╨╕╨╝╨╕╨╖╨░╤Ж╨╕╤О ╨▒╨░╤В╨░╤А╨╡╨╕",
@@ -957,8 +1143,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "importConfigReplaceTip": MessageLookupByLibrary.simpleMessage(
       "╨Ш╨╝╨┐╨╛╤А╤В ╨╖╨░╨╝╨╡╨╜╨╕╤В ╤В╨╡╨║╤Г╤Й╨╕╨╡ ╨│╤А╤Г╨┐╨┐╤Л ╨┐╤А╨╛╨║╤Б╨╕, ╨┐╤А╨░╨▓╨╕╨╗╨░ ╨╕ ╨╜╨░╤Б╤В╤А╨╛╨╣╨║╨╕ ╤Н╤В╨╛╨│╨╛ ╨┐╤А╨╛╤Д╨╕╨╗╤П",
     ),
-    "importFile": MessageLookupByLibrary.simpleMessage("╨Ш╨╝╨┐╨╛╤А╤В ╨╕╨╖ ╤Д╨░╨╣╨╗╨░"),
-    "importFromLink": MessageLookupByLibrary.simpleMessage("╨Ш╨╝╨┐╨╛╤А╤В ╨┐╨╛ ╤Б╤Б╤Л╨╗╨║╨╡"),
+    "importFile": MessageLookupByLibrary.simpleMessage(
+      "╨Ш╨╝╨┐╨╛╤А╤В ╨╕╨╖ ╤Д╨░╨╣╨╗╨░",
+    ),
+    "importFromLink": MessageLookupByLibrary.simpleMessage(
+      "╨Ш╨╝╨┐╨╛╤А╤В ╨┐╨╛ ╤Б╤Б╤Л╨╗╨║╨╡",
+    ),
     "importUrl": MessageLookupByLibrary.simpleMessage("╨Ш╨╝╨┐╨╛╤А╤В ╨┐╨╛ URL"),
     "inbound": MessageLookupByLibrary.simpleMessage("╨Т╤Е╨╛╨┤╤П╤Й╨╕╨╡"),
     "includeInterface": MessageLookupByLibrary.simpleMessage(
@@ -975,7 +1165,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "infiniteTime": MessageLookupByLibrary.simpleMessage("╨С╨╡╤Б╤Б╤А╨╛╤З╨╜╨╛"),
     "init": MessageLookupByLibrary.simpleMessage("╨Ш╨╜╨╕╤Ж╨╕╨░╨╗╨╕╨╖╨░╤Ж╨╕╤П"),
-    "initFailed": MessageLookupByLibrary.simpleMessage("╨Э╨╡ ╤Г╨┤╨░╨╗╨╛╤Б╤М ╨╖╨░╨┐╤Г╤Б╤В╨╕╤В╤М"),
+    "initFailed": MessageLookupByLibrary.simpleMessage(
+      "╨Э╨╡ ╤Г╨┤╨░╨╗╨╛╤Б╤М ╨╖╨░╨┐╤Г╤Б╤В╨╕╤В╤М",
+    ),
     "initFailedTip": MessageLookupByLibrary.simpleMessage(
       "╨Я╤А╨╕ ╨╖╨░╨┐╤Г╤Б╨║╨╡ FlClash ╨┐╤А╨╛╨╕╨╖╨╛╤И╨╗╨░ ╨╛╤И╨╕╨▒╨║╨░, ╨╕ ╤А╨░╨▒╨╛╤В╨░ ╨╜╨╡ ╨╝╨╛╨╢╨╡╤В ╨▒╤Л╤В╤М ╨┐╤А╨╛╨┤╨╛╨╗╨╢╨╡╨╜╨░. ╨б╨║╨╛╨┐╨╕╤А╤Г╨╣╤В╨╡ ╨┐╨╛╨┤╤А╨╛╨▒╨╜╨╛╤Б╤В╨╕, ╤З╤В╨╛╨▒╤Л ╤Б╨╛╨╛╨▒╤Й╨╕╤В╤М ╨╛ ╨┐╤А╨╛╨▒╨╗╨╡╨╝╨╡. ╨Х╤Б╨╗╨╕ ╨╛╤И╨╕╨▒╨║╨░ ╨┐╨╛╨▓╤В╨╛╤А╤П╨╡╤В╤Б╤П, ╨╛╤З╨╕╤Б╤В╨║╨░ ╨┤╨░╨╜╨╜╤Л╤Е ╨╛╨▒╤Л╤З╨╜╨╛ ╨┐╨╛╨╖╨▓╨╛╨╗╤П╨╡╤В ╤Б╨╜╨╛╨▓╨░ ╨╖╨░╨┐╤Г╤Б╤В╨╕╤В╤М ╨┐╤А╨╕╨╗╨╛╨╢╨╡╨╜╨╕╨╡.",
     ),
@@ -999,22 +1191,32 @@ class MessageLookup extends MessageLookupByLibrary {
     "installedFonts": MessageLookupByLibrary.simpleMessage(
       "╨г╤Б╤В╨░╨╜╨╛╨▓╨╗╨╡╨╜╨╜╤Л╨╡ ╤И╤А╨╕╤Д╤В╤Л",
     ),
-    "intelligentSelected": MessageLookupByLibrary.simpleMessage("╨г╨╝╨╜╤Л╨╣ ╨▓╤Л╨▒╨╛╤А"),
-    "interfaceName": MessageLookupByLibrary.simpleMessage("╨Ш╨╝╤П ╨╕╨╜╤В╨╡╤А╤Д╨╡╨╣╤Б╨░"),
+    "intelligentSelected": MessageLookupByLibrary.simpleMessage(
+      "╨г╨╝╨╜╤Л╨╣ ╨▓╤Л╨▒╨╛╤А",
+    ),
+    "interfaceName": MessageLookupByLibrary.simpleMessage(
+      "╨Ш╨╝╤П ╨╕╨╜╤В╨╡╤А╤Д╨╡╨╣╤Б╨░",
+    ),
     "interfaceNameDesc": MessageLookupByLibrary.simpleMessage(
       "╨Ш╨╝╤П ╨╕╨╜╤В╨╡╤А╤Д╨╡╨╣╤Б╨░ ╨╖╨░╨┤╨░╤С╤В ╤Б╨╡╤В╨╡╨▓╨╛╨╣ ╨╕╨╜╤В╨╡╤А╤Д╨╡╨╣╤Б ╨┤╨╗╤П ╨╕╤Б╤Е╨╛╨┤╤П╤Й╨╕╤Е ╤Б╨╛╨╡╨┤╨╕╨╜╨╡╨╜╨╕╨╣.",
     ),
     "interfaceNameMode": MessageLookupByLibrary.simpleMessage(
       "╨Ш╤Б╤Е╨╛╨┤╤П╤Й╨╕╨╣ ╨╕╨╜╤В╨╡╤А╤Д╨╡╨╣╤Б",
     ),
-    "interfaceNameModeClear": MessageLookupByLibrary.simpleMessage("╨Ю╤З╨╕╤Б╤В╨╕╤В╤М"),
-    "interfaceNameModeCustom": MessageLookupByLibrary.simpleMessage("╨Т╤А╤Г╤З╨╜╤Г╤О"),
+    "interfaceNameModeClear": MessageLookupByLibrary.simpleMessage(
+      "╨Ю╤З╨╕╤Б╤В╨╕╤В╤М",
+    ),
+    "interfaceNameModeCustom": MessageLookupByLibrary.simpleMessage(
+      "╨Т╤А╤Г╤З╨╜╤Г╤О",
+    ),
     "interfaceNameModeFollow": MessageLookupByLibrary.simpleMessage(
       "╨Ъ╨░╨║ ╨▓ ╨║╨╛╨╜╤Д╨╕╨│╤Г╤А╨░╤Ж╨╕╨╕",
     ),
     "internet": MessageLookupByLibrary.simpleMessage("╨Ш╨╜╤В╨╡╤А╨╜╨╡╤В"),
     "interval": MessageLookupByLibrary.simpleMessage("╨Ш╨╜╤В╨╡╤А╨▓╨░╨╗"),
-    "intranetIP": MessageLookupByLibrary.simpleMessage("╨Т╨╜╤Г╤В╤А╨╡╨╜╨╜╨╕╨╣ IP"),
+    "intranetIP": MessageLookupByLibrary.simpleMessage(
+      "╨Т╨╜╤Г╤В╤А╨╡╨╜╨╜╨╕╨╣ IP",
+    ),
     "invalidBackupFile": MessageLookupByLibrary.simpleMessage(
       "╨Э╨╡╨┤╨╛╨┐╤Г╤Б╤В╨╕╨╝╤Л╨╣ ╤Д╨░╨╣╨╗ ╤А╨╡╨╖╨╡╤А╨▓╨╜╨╛╨╣ ╨║╨╛╨┐╨╕╨╕",
     ),
@@ -1055,36 +1257,58 @@ class MessageLookup extends MessageLookupByLibrary {
     "invalidSubRule": m39,
     "ipAddress": MessageLookupByLibrary.simpleMessage("IP-╨░╨┤╤А╨╡╤Б"),
     "ipAsn": MessageLookupByLibrary.simpleMessage("ASN"),
-    "ipFlagAbuser": MessageLookupByLibrary.simpleMessage("╨Ч╨╗╨╛╤Г╨┐╨╛╤В╤А╨╡╨▒╨╗╨╡╨╜╨╕╤П"),
+    "ipFlagAbuser": MessageLookupByLibrary.simpleMessage(
+      "╨Ч╨╗╨╛╤Г╨┐╨╛╤В╤А╨╡╨▒╨╗╨╡╨╜╨╕╤П",
+    ),
     "ipFlagProxy": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╛╨║╤Б╨╕"),
     "ipFlagTor": MessageLookupByLibrary.simpleMessage("Tor"),
     "ipFlagVpn": MessageLookupByLibrary.simpleMessage("VPN"),
     "ipFlags": MessageLookupByLibrary.simpleMessage("╨Ь╨╡╤В╨║╨╕"),
-    "ipOrganization": MessageLookupByLibrary.simpleMessage("╨Ю╤А╨│╨░╨╜╨╕╨╖╨░╤Ж╨╕╤П"),
+    "ipOrganization": MessageLookupByLibrary.simpleMessage(
+      "╨Ю╤А╨│╨░╨╜╨╕╨╖╨░╤Ж╨╕╤П",
+    ),
     "ipQualityFailed": MessageLookupByLibrary.simpleMessage(
       "╨Э╨╡ ╤Г╨┤╨░╨╗╨╛╤Б╤М ╨╛╨┐╤А╨╡╨┤╨╡╨╗╨╕╤В╤М ╤В╨╕╨┐ IP",
     ),
     "ipQualityGood": MessageLookupByLibrary.simpleMessage("╨е╨╛╤А╨╛╤И╨╕╨╣"),
     "ipQualityLevel": MessageLookupByLibrary.simpleMessage("╨г╤А╨╛╨▓╨╡╨╜╤М"),
     "ipQualityNormal": MessageLookupByLibrary.simpleMessage("╨Ю╨▒╤Л╤З╨╜╤Л╨╣"),
-    "ipQualityRetry": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╛╨▓╨╡╤А╨╕╤В╤М ╤Б╨╜╨╛╨▓╨░"),
-    "ipQualityRisky": MessageLookupByLibrary.simpleMessage("╨а╨╕╤Б╨║╨╛╨▓╨░╨╜╨╜╤Л╨╣"),
+    "ipQualityRetry": MessageLookupByLibrary.simpleMessage(
+      "╨Я╤А╨╛╨▓╨╡╤А╨╕╤В╤М ╤Б╨╜╨╛╨▓╨░",
+    ),
+    "ipQualityRisky": MessageLookupByLibrary.simpleMessage(
+      "╨а╨╕╤Б╨║╨╛╨▓╨░╨╜╨╜╤Л╨╣",
+    ),
     "ipQualityShort": MessageLookupByLibrary.simpleMessage("╨Ъ╨░╤З╨╡╤Б╤В╨▓╨╛"),
-    "ipQualitySource": MessageLookupByLibrary.simpleMessage("╨Ш╤Б╤В╨╛╤З╨╜╨╕╨║ ╨╛╤В╨▓╨╡╤В╨░"),
-    "ipQualitySources": MessageLookupByLibrary.simpleMessage("╨Ш╤Б╤В╨╛╤З╨╜╨╕╨║╨╕"),
+    "ipQualitySource": MessageLookupByLibrary.simpleMessage(
+      "╨Ш╤Б╤В╨╛╤З╨╜╨╕╨║ ╨╛╤В╨▓╨╡╤В╨░",
+    ),
+    "ipQualitySources": MessageLookupByLibrary.simpleMessage(
+      "╨Ш╤Б╤В╨╛╤З╨╜╨╕╨║╨╕",
+    ),
     "ipSourceIpMismatch": MessageLookupByLibrary.simpleMessage(
       "╨Ф╤А╤Г╨│╨╛╨╣ ╨╕╤Б╤Е╨╛╨┤╤П╤Й╨╕╨╣ IP",
     ),
-    "ipSourceNoType": MessageLookupByLibrary.simpleMessage("╨в╨╕╨┐ ╨╜╨╡ ╨╛╨┐╤А╨╡╨┤╨╡╨╗╤С╨╜"),
+    "ipSourceNoType": MessageLookupByLibrary.simpleMessage(
+      "╨в╨╕╨┐ ╨╜╨╡ ╨╛╨┐╤А╨╡╨┤╨╡╨╗╤С╨╜",
+    ),
     "ipSourceRateLimited": MessageLookupByLibrary.simpleMessage(
       "╨Ы╨╕╨╝╨╕╤В ╨╖╨░╨┐╤А╨╛╤Б╨╛╨▓",
     ),
     "ipType": MessageLookupByLibrary.simpleMessage("╨в╨╕╨┐"),
     "ipTypeBusiness": MessageLookupByLibrary.simpleMessage("╨С╨╕╨╖╨╜╨╡╤Б"),
-    "ipTypeHosting": MessageLookupByLibrary.simpleMessage("╨Ф╨░╤В╨░-╤Ж╨╡╨╜╤В╤А"),
-    "ipTypeMobile": MessageLookupByLibrary.simpleMessage("╨Ь╨╛╨▒╨╕╨╗╤М╨╜╨░╤П ╤Б╨╡╤В╤М"),
-    "ipTypeResidential": MessageLookupByLibrary.simpleMessage("╨Ф╨╛╨╝╨░╤И╨╜╨╕╨╣"),
-    "ipTypeUnknown": MessageLookupByLibrary.simpleMessage("╨в╨╕╨┐ ╨╜╨╡╨╕╨╖╨▓╨╡╤Б╤В╨╡╨╜"),
+    "ipTypeHosting": MessageLookupByLibrary.simpleMessage(
+      "╨Ф╨░╤В╨░-╤Ж╨╡╨╜╤В╤А",
+    ),
+    "ipTypeMobile": MessageLookupByLibrary.simpleMessage(
+      "╨Ь╨╛╨▒╨╕╨╗╤М╨╜╨░╤П ╤Б╨╡╤В╤М",
+    ),
+    "ipTypeResidential": MessageLookupByLibrary.simpleMessage(
+      "╨Ф╨╛╨╝╨░╤И╨╜╨╕╨╣",
+    ),
+    "ipTypeUnknown": MessageLookupByLibrary.simpleMessage(
+      "╨в╨╕╨┐ ╨╜╨╡╨╕╨╖╨▓╨╡╤Б╤В╨╡╨╜",
+    ),
     "ipVersion": MessageLookupByLibrary.simpleMessage("╨Т╨╡╤А╤Б╨╕╤П IP"),
     "ipv6Desc": MessageLookupByLibrary.simpleMessage(
       "╨в╤А╨░╤Д╨╕╨║ IPv6 ╨┐╤А╨╕╨╜╨╕╨╝╨░╨╡╤В╤Б╤П, ╤В╨╛╨╗╤М╨║╨╛ ╨║╨╛╨│╨┤╨░ IPv6 ╨▓╨║╨╗╤О╤З╤С╨╜.",
@@ -1092,7 +1316,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "ipv6InboundDesc": MessageLookupByLibrary.simpleMessage(
       "╨Я╤А╨╕ ╨▓╨║╨╗╤О╤З╤С╨╜╨╜╨╛╨╝ IPv6 VPN ╨┐╤А╨╕╨╜╨╕╨╝╨░╨╡╤В ╨▓╤Е╨╛╨┤╤П╤Й╨╕╨╣ IPv6.",
     ),
-    "ipv6Timeout": MessageLookupByLibrary.simpleMessage("╨в╨░╨╣╨╝-╨░╤Г╤В IPv6 (╨╝╤Б)"),
+    "ipv6Timeout": MessageLookupByLibrary.simpleMessage(
+      "╨в╨░╨╣╨╝-╨░╤Г╤В IPv6 (╨╝╤Б)",
+    ),
     "itemsCount": m40,
     "ja": MessageLookupByLibrary.simpleMessage("╨п╨┐╨╛╨╜╤Б╨║╨╕╨╣"),
     "justNow": MessageLookupByLibrary.simpleMessage("╨в╨╛╨╗╤М╨║╨╛ ╤З╤В╨╛"),
@@ -1107,7 +1333,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "label": MessageLookupByLibrary.simpleMessage("╨Ь╨╡╤В╨║╨░"),
     "language": MessageLookupByLibrary.simpleMessage("╨п╨╖╤Л╨║"),
     "large": MessageLookupByLibrary.simpleMessage("╨Ъ╤А╤Г╨┐╨╜╤Л╨╣"),
-    "lastUpdated": MessageLookupByLibrary.simpleMessage("╨Я╨╛╤Б╨╗╨╡╨┤╨╜╨╡╨╡ ╨╛╨▒╨╜╨╛╨▓╨╗╨╡╨╜╨╕╨╡"),
+    "lastUpdated": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨╛╤Б╨╗╨╡╨┤╨╜╨╡╨╡ ╨╛╨▒╨╜╨╛╨▓╨╗╨╡╨╜╨╕╨╡",
+    ),
     "launchInterrupted": MessageLookupByLibrary.simpleMessage(
       "╨Ч╨░╨┐╤Г╤Б╨║ ╨╜╨╡ ╨╖╨░╨▓╨╡╤А╤И╤С╨╜",
     ),
@@ -1117,14 +1345,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "layout": MessageLookupByLibrary.simpleMessage("╨Ь╨░╨║╨╡╤В"),
     "light": MessageLookupByLibrary.simpleMessage("╨б╨▓╨╡╤В╨╗╨░╤П"),
     "lineIssueTip": m41,
-    "lineWrap": MessageLookupByLibrary.simpleMessage("╨Я╨╡╤А╨╡╨╜╨╛╤Б ╤Б╤В╤А╨╛╨║"),
+    "lineWrap": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨╡╤А╨╡╨╜╨╛╤Б ╤Б╤В╤А╨╛╨║",
+    ),
     "link": MessageLookupByLibrary.simpleMessage("╨б╤Б╤Л╨╗╨║╨░"),
     "linkDesc": MessageLookupByLibrary.simpleMessage(
       "╨Я╨╛╨╗╤Г╤З╨╕╤В╤М ╨┐╤А╨╛╤Д╨╕╨╗╤М ╨┐╨╛ ╤Б╤Б╤Л╨╗╨║╨╡ ╨╜╨░ ╨┐╨╛╨┤╨┐╨╕╤Б╨║╤Г ╨╕╨╗╨╕ ╨╜╨░ ╨┐╤А╨╛╨║╤Б╨╕",
     ),
-    "liquidGlass": MessageLookupByLibrary.simpleMessage("╨Ц╨╕╨┤╨║╨╛╨╡ ╤Б╤В╨╡╨║╨╗╨╛"),
+    "liquidGlass": MessageLookupByLibrary.simpleMessage(
+      "╨Ц╨╕╨┤╨║╨╛╨╡ ╤Б╤В╨╡╨║╨╗╨╛",
+    ),
     "list": MessageLookupByLibrary.simpleMessage("╨б╨┐╨╕╤Б╨╛╨║"),
-    "listen": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╛╤Б╨╗╤Г╤И╨╕╨▓╨░╨╜╨╕╨╡"),
+    "listen": MessageLookupByLibrary.simpleMessage(
+      "╨Я╤А╨╛╤Б╨╗╤Г╤И╨╕╨▓╨░╨╜╨╕╨╡",
+    ),
     "listenRoutingMark": MessageLookupByLibrary.simpleMessage(
       "╨Ь╨╡╤В╨║╨░ ╨╝╨░╤А╤И╤А╤Г╤В╨╕╨╖╨░╤Ж╨╕╨╕",
     ),
@@ -1136,11 +1370,15 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "loading": MessageLookupByLibrary.simpleMessage("╨Ч╨░╨│╤А╤Г╨╖╨║╨░тАж"),
     "local": MessageLookupByLibrary.simpleMessage("╨Ы╨╛╨║╨░╨╗╤М╨╜╨╛"),
-    "localImage": MessageLookupByLibrary.simpleMessage("╨Ы╨╛╨║╨░╨╗╤М╨╜╨╛╨╡ ╨╕╨╖╨╛╨▒╤А╨░╨╢╨╡╨╜╨╕╨╡"),
+    "localImage": MessageLookupByLibrary.simpleMessage(
+      "╨Ы╨╛╨║╨░╨╗╤М╨╜╨╛╨╡ ╨╕╨╖╨╛╨▒╤А╨░╨╢╨╡╨╜╨╕╨╡",
+    ),
     "localNetworkDeniedTip": MessageLookupByLibrary.simpleMessage(
       "╨Ф╨╛╤Б╤В╤Г╨┐ ╨║ ╨╗╨╛╨║╨░╨╗╤М╨╜╨╛╨╣ ╤Б╨╡╤В╨╕ ╨╖╨░╨┐╤А╨╡╤Й╤С╨╜: ╨╕╤Б╨┐╨╛╨╗╤М╨╖╤Г╨╡╤В╤Б╤П ╤Б╤В╨╡╨║ gvisor, ╨╗╨╛╨║╨░╨╗╤М╨╜╨░╤П ╤Б╨╡╤В╤М ╨╜╨╡╨┤╨╛╤Б╤В╤Г╨┐╨╜╨░.",
     ),
-    "localProxies": MessageLookupByLibrary.simpleMessage("╨Ы╨╛╨║╨░╨╗╤М╨╜╤Л╨╡ ╨┐╤А╨╛╨║╤Б╨╕"),
+    "localProxies": MessageLookupByLibrary.simpleMessage(
+      "╨Ы╨╛╨║╨░╨╗╤М╨╜╤Л╨╡ ╨┐╤А╨╛╨║╤Б╨╕",
+    ),
     "locationPermission": MessageLookupByLibrary.simpleMessage(
       "╨а╨░╨╖╤А╨╡╤И╨╡╨╜╨╕╨╡ ╨╜╨░ ╨│╨╡╨╛╨╗╨╛╨║╨░╤Ж╨╕╤О",
     ),
@@ -1155,7 +1393,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨в╤А╨╡╨▒╤Г╨╡╤В╤Б╤П ╤А╨░╨╖╤А╨╡╤И╨╡╨╜╨╕╨╡ ╨╜╨░ ╨│╨╡╨╛╨╗╨╛╨║╨░╤Ж╨╕╤О",
     ),
     "log": MessageLookupByLibrary.simpleMessage("╨Ы╨╛╨│"),
-    "logLevel": MessageLookupByLibrary.simpleMessage("╨г╤А╨╛╨▓╨╡╨╜╤М ╨╗╨╛╨│╨╛╨▓"),
+    "logLevel": MessageLookupByLibrary.simpleMessage(
+      "╨г╤А╨╛╨▓╨╡╨╜╤М ╨╗╨╛╨│╨╛╨▓",
+    ),
     "logcat": MessageLookupByLibrary.simpleMessage("╨Ч╨░╤Е╨▓╨░╤В ╨╗╨╛╨│╨╛╨▓"),
     "logcatDesc": MessageLookupByLibrary.simpleMessage(
       "╨Я╤А╨╕ ╨╛╤В╨║╨╗╤О╤З╨╡╨╜╨╕╨╕ ╨╖╨░╤Е╨▓╨░╤В╨░ ╨╗╨╛╨│╨╛╨▓ ╤А╨░╨╖╨┤╨╡╨╗ ╨╗╨╛╨│╨╛╨▓ ╤Б╨║╤А╤Л╨▓╨░╨╡╤В╤Б╤П.",
@@ -1169,7 +1409,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨б╨╜╤П╤В╨╕╨╡ ╨╛╨│╤А╨░╨╜╨╕╤З╨╡╨╜╨╕╤П loopback ╨┤╨╗╤П UWP",
     ),
     "loose": MessageLookupByLibrary.simpleMessage("╨б╨▓╨╛╨▒╨╛╨┤╨╜╤Л╨╣"),
-    "matchCase": MessageLookupByLibrary.simpleMessage("╨г╤З╨╕╤В╤Л╨▓╨░╤В╤М ╤А╨╡╨│╨╕╤Б╤В╤А"),
+    "matchCase": MessageLookupByLibrary.simpleMessage(
+      "╨г╤З╨╕╤В╤Л╨▓╨░╤В╤М ╤А╨╡╨│╨╕╤Б╤В╤А",
+    ),
     "matchSourceIp": MessageLookupByLibrary.simpleMessage(
       "╨б╨╛╨┐╨╛╤Б╤В╨░╨▓╨╗╤П╤В╤М IP ╨╕╤Б╤В╨╛╤З╨╜╨╕╨║╨░",
     ),
@@ -1197,7 +1439,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "memoryCoreRuntime": MessageLookupByLibrary.simpleMessage(
       "╨Э╨░╨║╨╗╨░╨┤╨╜╤Л╨╡ ╤А╨░╤Б╤Е╨╛╨┤╤Л ╤Б╤А╨╡╨┤╤Л",
     ),
-    "memoryCoreStack": MessageLookupByLibrary.simpleMessage("╨б╤В╨╡╨║╨╕ ╨│╨╛╤А╤Г╤В╨╕╨╜"),
+    "memoryCoreStack": MessageLookupByLibrary.simpleMessage(
+      "╨б╤В╨╡╨║╨╕ ╨│╨╛╤А╤Г╤В╨╕╨╜",
+    ),
     "memoryEstimateDesc": MessageLookupByLibrary.simpleMessage(
       "╨Ю╤Ж╨╡╨╜╨║╨░ ╨┐╨╛ ╤А╨╡╨╖╨╕╨┤╨╡╨╜╤В╨╜╨╛╨╣ ╨┐╨░╨╝╤П╤В╨╕ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨╛╨▓; ╨╝╨╛╨╢╨╡╤В ╨╛╤В╨╗╨╕╤З╨░╤В╤М╤Б╤П ╨╛╤В ╨┤╨░╨╜╨╜╤Л╤Е ╤Б╨╕╤Б╤В╨╡╨╝╤Л.",
     ),
@@ -1212,8 +1456,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨Я╨░╨╝╤П╤В╤М ╨╛╤Б╨▓╨╛╨▒╨╛╨╢╨┤╨╡╨╜╨░",
     ),
     "memoryReleasedSize": m44,
-    "messageTest": MessageLookupByLibrary.simpleMessage("╨в╨╡╤Б╤В ╤Б╨╛╨╛╨▒╤Й╨╡╨╜╨╕╤П"),
-    "messageTestTip": MessageLookupByLibrary.simpleMessage("╨н╤В╨╛ ╤Б╨╛╨╛╨▒╤Й╨╡╨╜╨╕╨╡."),
+    "messageTest": MessageLookupByLibrary.simpleMessage(
+      "╨в╨╡╤Б╤В ╤Б╨╛╨╛╨▒╤Й╨╡╨╜╨╕╤П",
+    ),
+    "messageTestTip": MessageLookupByLibrary.simpleMessage(
+      "╨н╤В╨╛ ╤Б╨╛╨╛╨▒╤Й╨╡╨╜╨╕╨╡.",
+    ),
     "minimize": MessageLookupByLibrary.simpleMessage("╨б╨▓╨╡╤А╨╜╤Г╤В╤М"),
     "minimizeOnExit": MessageLookupByLibrary.simpleMessage(
       "╨б╨▓╨╛╤А╨░╤З╨╕╨▓╨░╤В╤М ╨┐╤А╨╕ ╨▓╤Л╤Е╨╛╨┤╨╡",
@@ -1221,14 +1469,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "minutes": MessageLookupByLibrary.simpleMessage("╨╝╨╕╨╜╤Г╤В"),
     "minutesAgo": m45,
     "minutesAgoShort": m46,
-    "mixedPort": MessageLookupByLibrary.simpleMessage("╨б╨╝╨╡╤И╨░╨╜╨╜╤Л╨╣ ╨┐╨╛╤А╤В"),
+    "mixedPort": MessageLookupByLibrary.simpleMessage(
+      "╨б╨╝╨╡╤И╨░╨╜╨╜╤Л╨╣ ╨┐╨╛╤А╤В",
+    ),
     "mode": MessageLookupByLibrary.simpleMessage("╨а╨╡╨╢╨╕╨╝"),
-    "monochromeScheme": MessageLookupByLibrary.simpleMessage("╨Ь╨╛╨╜╨╛╤Е╤А╨╛╨╝"),
+    "monochromeScheme": MessageLookupByLibrary.simpleMessage(
+      "╨Ь╨╛╨╜╨╛╤Е╤А╨╛╨╝",
+    ),
     "monthsAgo": m47,
     "monthsAgoShort": m48,
     "more": MessageLookupByLibrary.simpleMessage("╨Х╤Й╤С"),
     "name": MessageLookupByLibrary.simpleMessage("╨Э╨░╨╖╨▓╨░╨╜╨╕╨╡"),
-    "navigationBarStyle": MessageLookupByLibrary.simpleMessage("╨Э╨╕╨╢╨╜╤П╤П ╨┐╨░╨╜╨╡╨╗╤М"),
+    "navigationBarStyle": MessageLookupByLibrary.simpleMessage(
+      "╨Э╨╕╨╢╨╜╤П╤П ╨┐╨░╨╜╨╡╨╗╤М",
+    ),
     "network": MessageLookupByLibrary.simpleMessage("╨б╨╡╤В╤М"),
     "networkAccessDeniedError": m49,
     "networkBadResponseError": m50,
@@ -1247,10 +1501,16 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨б╨╗╨╕╤И╨║╨╛╨╝ ╨╝╨╜╨╛╨│╨╛ ╨╖╨░╨┐╤А╨╛╤Б╨╛╨▓ (HTTP 429). ╨Я╨╛╨┤╨╛╨╢╨┤╨╕╤В╨╡ ╨╜╨╡╨╝╨╜╨╛╨│╨╛ ╨╕ ╨┐╨╛╨▓╤В╨╛╤А╨╕╤В╨╡ ╨┐╨╛╨┐╤Л╤В╨║╤Г",
     ),
     "networkRequestFailed": m52,
-    "networkSecret": MessageLookupByLibrary.simpleMessage("╨б╨╡╨║╤А╨╡╤В ╤Б╨╡╤В╨╕"),
+    "networkSecret": MessageLookupByLibrary.simpleMessage(
+      "╨б╨╡╨║╤А╨╡╤В ╤Б╨╡╤В╨╕",
+    ),
     "networkServerError": m53,
-    "networkSpeed": MessageLookupByLibrary.simpleMessage("╨б╨║╨╛╤А╨╛╤Б╤В╤М ╤Б╨╡╤В╨╕"),
-    "networkTakeover": MessageLookupByLibrary.simpleMessage("╨Я╨╡╤А╨╡╤Е╨▓╨░╤В ╤В╤А╨░╤Д╨╕╨║╨░"),
+    "networkSpeed": MessageLookupByLibrary.simpleMessage(
+      "╨б╨║╨╛╤А╨╛╤Б╤В╤М ╤Б╨╡╤В╨╕",
+    ),
+    "networkTakeover": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨╡╤А╨╡╤Е╨▓╨░╤В ╤В╤А╨░╤Д╨╕╨║╨░",
+    ),
     "networkTimeoutError": MessageLookupByLibrary.simpleMessage(
       "╨Т╤А╨╡╨╝╤П ╨╛╨╢╨╕╨┤╨░╨╜╨╕╤П ╨╖╨░╨┐╤А╨╛╤Б╨░ ╨╕╤Б╤В╨╡╨║╨╗╨╛. ╨Я╤А╨╛╨▓╨╡╤А╤М╤В╨╡ ╤Б╨╡╤В╤М ╨╕╨╗╨╕ ╨┐╤А╨╛╨║╤Б╨╕ ╨╕ ╨┐╨╛╨▓╤В╨╛╤А╨╕╤В╨╡ ╨┐╨╛╨┐╤Л╤В╨║╤Г",
     ),
@@ -1258,16 +1518,24 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨Э╨╡ ╤Г╨┤╨░╨╗╨╛╤Б╤М ╤Г╤Б╤В╨░╨╜╨╛╨▓╨╕╤В╤М ╨╖╨░╤Й╨╕╤Й╤С╨╜╨╜╨╛╨╡ ╤Б╨╛╨╡╨┤╨╕╨╜╨╡╨╜╨╕╨╡. ╨б╨╡╤А╤В╨╕╤Д╨╕╨║╨░╤В ╤Б╨╡╤А╨▓╨╡╤А╨░ ╨╝╨╛╨╢╨╡╤В ╨▒╤Л╤В╤М ╨╜╨╡╨┤╨╡╨╣╤Б╤В╨▓╨╕╤В╨╡╨╗╨╡╨╜, ╨╕╨╗╨╕ ╤Б╨╛╨╡╨┤╨╕╨╜╨╡╨╜╨╕╨╡ ╨┐╨╡╤А╨╡╤Е╨▓╨░╤В╤Л╨▓╨░╨╡╤В╤Б╤П",
     ),
     "networkType": MessageLookupByLibrary.simpleMessage("╨в╨╕╨┐ ╤Б╨╡╤В╨╕"),
-    "nextMatch": MessageLookupByLibrary.simpleMessage("╨б╨╗╨╡╨┤╤Г╤О╤Й╨╡╨╡ ╤Б╨╛╨▓╨┐╨░╨┤╨╡╨╜╨╕╨╡"),
+    "nextMatch": MessageLookupByLibrary.simpleMessage(
+      "╨б╨╗╨╡╨┤╤Г╤О╤Й╨╡╨╡ ╤Б╨╛╨▓╨┐╨░╨┤╨╡╨╜╨╕╨╡",
+    ),
     "no": MessageLookupByLibrary.simpleMessage("╨Э╨╡╤В"),
     "noData": MessageLookupByLibrary.simpleMessage("╨Э╨╡╤В ╨┤╨░╨╜╨╜╤Л╤Е"),
-    "noInfo": MessageLookupByLibrary.simpleMessage("╨Э╨╡╤В ╨╕╨╜╤Д╨╛╤А╨╝╨░╤Ж╨╕╨╕"),
+    "noInfo": MessageLookupByLibrary.simpleMessage(
+      "╨Э╨╡╤В ╨╕╨╜╤Д╨╛╤А╨╝╨░╤Ж╨╕╨╕",
+    ),
     "noLongerRemind": MessageLookupByLibrary.simpleMessage(
       "╨С╨╛╨╗╤М╤И╨╡ ╨╜╨╡ ╨╜╨░╨┐╨╛╨╝╨╕╨╜╨░╤В╤М",
     ),
     "noNetwork": MessageLookupByLibrary.simpleMessage("╨Э╨╡╤В ╤Б╨╡╤В╨╕"),
-    "noNetworkApp": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╕╨╗╨╛╨╢╨╡╨╜╨╕╤П ╨▒╨╡╨╖ ╤Б╨╡╤В╨╕"),
-    "noResolve": MessageLookupByLibrary.simpleMessage("╨Э╨╡ ╤А╨░╨╖╤А╨╡╤И╨░╤В╤М IP"),
+    "noNetworkApp": MessageLookupByLibrary.simpleMessage(
+      "╨Я╤А╨╕╨╗╨╛╨╢╨╡╨╜╨╕╤П ╨▒╨╡╨╖ ╤Б╨╡╤В╨╕",
+    ),
+    "noResolve": MessageLookupByLibrary.simpleMessage(
+      "╨Э╨╡ ╤А╨░╨╖╤А╨╡╤И╨░╤В╤М IP",
+    ),
     "noResolveHostname": MessageLookupByLibrary.simpleMessage(
       "╨Э╨╡ ╤А╨░╨╖╤А╨╡╤И╨░╤В╤М ╨╕╨╝╤П ╤Е╨╛╤Б╤В╨░",
     ),
@@ -1296,10 +1564,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "numberRangeTip": m55,
     "numberTip": m56,
     "obfs": MessageLookupByLibrary.simpleMessage("╨Ю╨▒╤Д╤Г╤Б╨║╨░╤Ж╨╕╤П"),
-    "obfsHost": MessageLookupByLibrary.simpleMessage("╨е╨╛╤Б╤В ╨╛╨▒╤Д╤Г╤Б╨║╨░╤Ж╨╕╨╕"),
-    "obfsMode": MessageLookupByLibrary.simpleMessage("╨а╨╡╨╢╨╕╨╝ ╨╛╨▒╤Д╤Г╤Б╨║╨░╤Ж╨╕╨╕"),
-    "obfsParam": MessageLookupByLibrary.simpleMessage("╨Я╨░╤А╨░╨╝╨╡╤В╤А ╨╛╨▒╤Д╤Г╤Б╨║╨░╤Ж╨╕╨╕"),
-    "obfsPassword": MessageLookupByLibrary.simpleMessage("╨Я╨░╤А╨╛╨╗╤М ╨╛╨▒╤Д╤Г╤Б╨║╨░╤Ж╨╕╨╕"),
+    "obfsHost": MessageLookupByLibrary.simpleMessage(
+      "╨е╨╛╤Б╤В ╨╛╨▒╤Д╤Г╤Б╨║╨░╤Ж╨╕╨╕",
+    ),
+    "obfsMode": MessageLookupByLibrary.simpleMessage(
+      "╨а╨╡╨╢╨╕╨╝ ╨╛╨▒╤Д╤Г╤Б╨║╨░╤Ж╨╕╨╕",
+    ),
+    "obfsParam": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨░╤А╨░╨╝╨╡╤В╤А ╨╛╨▒╤Д╤Г╤Б╨║╨░╤Ж╨╕╨╕",
+    ),
+    "obfsPassword": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨░╤А╨╛╨╗╤М ╨╛╨▒╤Д╤Г╤Б╨║╨░╤Ж╨╕╨╕",
+    ),
     "onDemand": MessageLookupByLibrary.simpleMessage("╨Я╨╛ ╤Г╤Б╨╗╨╛╨▓╨╕╤О"),
     "onDemandDesc": MessageLookupByLibrary.simpleMessage(
       "┬л╨Я╨╛ ╤Г╤Б╨╗╨╛╨▓╨╕╤О┬╗ ╨┐╤А╨╕╨╛╤Б╤В╨░╨╜╨░╨▓╨╗╨╕╨▓╨░╨╡╤В ╨┐╤А╨╛╨║╤Б╨╕ ╨▓ ╨╕╤Б╨║╨╗╤О╤З╤С╨╜╨╜╤Л╤Е ╤Б╨╡╤В╤П╤Е Wi-Fi.",
@@ -1307,7 +1583,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "onlyStatisticsProxy": MessageLookupByLibrary.simpleMessage(
       "╨г╤З╨╕╤В╤Л╨▓╨░╤В╤М ╤В╨╛╨╗╤М╨║╨╛ ╤В╤А╨░╤Д╨╕╨║ ╨┐╤А╨╛╨║╤Б╨╕",
     ),
-    "optional": MessageLookupByLibrary.simpleMessage("╨Э╨╡╨╛╨▒╤П╨╖╨░╤В╨╡╨╗╤М╨╜╨╛"),
+    "optional": MessageLookupByLibrary.simpleMessage(
+      "╨Э╨╡╨╛╨▒╤П╨╖╨░╤В╨╡╨╗╤М╨╜╨╛",
+    ),
     "options": MessageLookupByLibrary.simpleMessage("╨Ю╨┐╤Ж╨╕╨╕"),
     "other": MessageLookupByLibrary.simpleMessage("╨Ф╤А╤Г╨│╨╛╨╡"),
     "otherContributors": MessageLookupByLibrary.simpleMessage(
@@ -1328,14 +1606,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "overrideEntries": MessageLookupByLibrary.simpleMessage(
       "╨Я╨╡╤А╨╡╨╛╨┐╤А╨╡╨┤╨╡╨╗╤П╨╡╨╝╤Л╨╡ ╨┐╨░╤А╨░╨╝╨╡╤В╤А╤Л",
     ),
-    "parsePureIp": MessageLookupByLibrary.simpleMessage("╨а╨░╨╖╨▒╨╕╤А╨░╤В╤М ╤З╨╕╤Б╤В╤Л╨╡ IP"),
+    "parsePureIp": MessageLookupByLibrary.simpleMessage(
+      "╨а╨░╨╖╨▒╨╕╤А╨░╤В╤М ╤З╨╕╤Б╤В╤Л╨╡ IP",
+    ),
     "parsePureIpDesc": MessageLookupByLibrary.simpleMessage(
       "┬л╨а╨░╨╖╨▒╨╕╤А╨░╤В╤М ╤З╨╕╤Б╤В╤Л╨╡ IP┬╗ ╨░╨╜╨░╨╗╨╕╨╖╨╕╤А╤Г╨╡╤В ╤Б╨╛╨╡╨┤╨╕╨╜╨╡╨╜╨╕╤П, ╤Г ╨║╨╛╤В╨╛╤А╤Л╤Е ╨╡╤Б╤В╤М ╤В╨╛╨╗╤М╨║╨╛ IP-╨░╨┤╤А╨╡╤Б.",
     ),
     "password": MessageLookupByLibrary.simpleMessage("╨Я╨░╤А╨╛╨╗╤М"),
     "paste": MessageLookupByLibrary.simpleMessage("╨Т╤Б╤В╨░╨▓╨╕╤В╤М"),
     "peers": MessageLookupByLibrary.simpleMessage("╨Я╨╕╤А╤Л"),
-    "pickFromAlbum": MessageLookupByLibrary.simpleMessage("╨Т╤Л╨▒╤А╨░╤В╤М ╨╕╨╖ ╨│╨░╨╗╨╡╤А╨╡╨╕"),
+    "pickFromAlbum": MessageLookupByLibrary.simpleMessage(
+      "╨Т╤Л╨▒╤А╨░╤В╤М ╨╕╨╖ ╨│╨░╨╗╨╡╤А╨╡╨╕",
+    ),
     "pinWindow": MessageLookupByLibrary.simpleMessage(
       "╨Ч╨░╨║╤А╨╡╨┐╨╕╤В╤М ╨┐╨╛╨▓╨╡╤А╤Е ╨▓╤Б╨╡╤Е ╨╛╨║╨╛╨╜",
     ),
@@ -1349,13 +1631,19 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨Ч╨░╨│╤А╤Г╨╖╨╕╤В╨╡ ╨║╨╛╤А╤А╨╡╨║╤В╨╜╤Л╨╣ QR-╨║╨╛╨┤",
     ),
     "plugin": MessageLookupByLibrary.simpleMessage("╨Я╨╗╨░╨│╨╕╨╜"),
-    "pluginHost": MessageLookupByLibrary.simpleMessage("╨е╨╛╤Б╤В ╨┐╨╗╨░╨│╨╕╨╜╨░"),
-    "pluginMode": MessageLookupByLibrary.simpleMessage("╨а╨╡╨╢╨╕╨╝ ╨┐╨╗╨░╨│╨╕╨╜╨░"),
+    "pluginHost": MessageLookupByLibrary.simpleMessage(
+      "╨е╨╛╤Б╤В ╨┐╨╗╨░╨│╨╕╨╜╨░",
+    ),
+    "pluginMode": MessageLookupByLibrary.simpleMessage(
+      "╨а╨╡╨╢╨╕╨╝ ╨┐╨╗╨░╨│╨╕╨╜╨░",
+    ),
     "port": MessageLookupByLibrary.simpleMessage("╨Я╨╛╤А╤В"),
     "portConflictTip": MessageLookupByLibrary.simpleMessage(
       "╨Т╨▓╨╡╨┤╨╕╤В╨╡ ╨┤╤А╤Г╨│╨╛╨╣ ╨┐╨╛╤А╤В",
     ),
-    "portHopping": MessageLookupByLibrary.simpleMessage("╨Я╨╡╤А╨╡╤Б╨║╨╛╨║ ╨┐╨╛╤А╤В╨╛╨▓"),
+    "portHopping": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨╡╤А╨╡╤Б╨║╨╛╨║ ╨┐╨╛╤А╤В╨╛╨▓",
+    ),
     "portTip": m57,
     "portValue": m58,
     "ports": MessageLookupByLibrary.simpleMessage("╨Я╨╛╤А╤В╤Л"),
@@ -1370,16 +1658,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "previousMatch": MessageLookupByLibrary.simpleMessage(
       "╨Я╤А╨╡╨┤╤Л╨┤╤Г╤Й╨╡╨╡ ╤Б╨╛╨▓╨┐╨░╨┤╨╡╨╜╨╕╨╡",
     ),
-    "privateKey": MessageLookupByLibrary.simpleMessage("╨Ч╨░╨║╤А╤Л╤В╤Л╨╣ ╨║╨╗╤О╤З"),
+    "privateKey": MessageLookupByLibrary.simpleMessage(
+      "╨Ч╨░╨║╤А╤Л╤В╤Л╨╣ ╨║╨╗╤О╤З",
+    ),
     "privateKeyPassphrase": MessageLookupByLibrary.simpleMessage(
       "╨Я╨░╤А╨╛╨╗╤М ╨╖╨░╨║╤А╤Л╤В╨╛╨│╨╛ ╨║╨╗╤О╤З╨░",
     ),
     "process": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╛╤Ж╨╡╤Б╤Б"),
     "profile": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╛╤Д╨╕╨╗╤М"),
     "profileAutoUpdateIntervalInvalidValidationDesc":
-        MessageLookupByLibrary.simpleMessage("╨Т╨▓╨╡╨┤╨╕╤В╨╡ ╨║╨╛╤А╤А╨╡╨║╤В╨╜╤Л╨╣ ╨╕╨╜╤В╨╡╤А╨▓╨░╨╗"),
+        MessageLookupByLibrary.simpleMessage(
+          "╨Т╨▓╨╡╨┤╨╕╤В╨╡ ╨║╨╛╤А╤А╨╡╨║╤В╨╜╤Л╨╣ ╨╕╨╜╤В╨╡╤А╨▓╨░╨╗",
+        ),
     "profileAutoUpdateIntervalNullValidationDesc":
-        MessageLookupByLibrary.simpleMessage("╨Т╨▓╨╡╨┤╨╕╤В╨╡ ╨╕╨╜╤В╨╡╤А╨▓╨░╨╗ ╨░╨▓╤В╨╛╨╛╨▒╨╜╨╛╨▓╨╗╨╡╨╜╨╕╤П"),
+        MessageLookupByLibrary.simpleMessage(
+          "╨Т╨▓╨╡╨┤╨╕╤В╨╡ ╨╕╨╜╤В╨╡╤А╨▓╨░╨╗ ╨░╨▓╤В╨╛╨╛╨▒╨╜╨╛╨▓╨╗╨╡╨╜╨╕╤П",
+        ),
     "profileDaysLeft": m59,
     "profileExpiresIn": m60,
     "profileHasUpdate": MessageLookupByLibrary.simpleMessage(
@@ -1402,23 +1696,35 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨Т╨▓╨╡╨┤╨╕╤В╨╡ URL ╨┐╤А╨╛╤Д╨╕╨╗╤П",
     ),
     "profiles": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╛╤Д╨╕╨╗╨╕"),
-    "profilesSort": MessageLookupByLibrary.simpleMessage("╨б╨╛╤А╤В╨╕╤А╨╛╨▓╨║╨░ ╨┐╤А╨╛╤Д╨╕╨╗╨╡╨╣"),
+    "profilesSort": MessageLookupByLibrary.simpleMessage(
+      "╨б╨╛╤А╤В╨╕╤А╨╛╨▓╨║╨░ ╨┐╤А╨╛╤Д╨╕╨╗╨╡╨╣",
+    ),
     "project": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╛╨╡╨║╤В"),
     "protocol": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╛╤В╨╛╨║╨╛╨╗"),
-    "protocolParam": MessageLookupByLibrary.simpleMessage("╨Я╨░╤А╨░╨╝╨╡╤В╤А ╨┐╤А╨╛╤В╨╛╨║╨╛╨╗╨░"),
-    "protocolVersion": MessageLookupByLibrary.simpleMessage("╨Т╨╡╤А╤Б╨╕╤П ╨┐╤А╨╛╤В╨╛╨║╨╛╨╗╨░"),
+    "protocolParam": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨░╤А╨░╨╝╨╡╤В╤А ╨┐╤А╨╛╤В╨╛╨║╨╛╨╗╨░",
+    ),
+    "protocolVersion": MessageLookupByLibrary.simpleMessage(
+      "╨Т╨╡╤А╤Б╨╕╤П ╨┐╤А╨╛╤В╨╛╨║╨╛╨╗╨░",
+    ),
     "providerInUse": m62,
     "providerUrlTip": MessageLookupByLibrary.simpleMessage(
       "╨Я╨╛╨┤╨┤╨╡╤А╨╢╨╕╨▓╨░╤О╤В╤Б╤П ╤В╨╛╨╗╤М╨║╨╛ ╤Г╨┤╨░╨╗╤С╨╜╨╜╤Л╨╡ ╤А╨╡╤Б╤Г╤А╤Б╤Л",
     ),
-    "providers": MessageLookupByLibrary.simpleMessage("╨Т╨╜╨╡╤И╨╜╨╕╨╡ ╤А╨╡╤Б╤Г╤А╤Б╤Л"),
+    "providers": MessageLookupByLibrary.simpleMessage(
+      "╨Т╨╜╨╡╤И╨╜╨╕╨╡ ╤А╨╡╤Б╤Г╤А╤Б╤Л",
+    ),
     "proxies": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╛╨║╤Б╨╕"),
     "proxiesCount": m63,
     "proxiesProfileLabel": m64,
     "proxiesRemovedTip": m65,
     "proxiesReplacedTip": m66,
-    "proxyChains": MessageLookupByLibrary.simpleMessage("╨ж╨╡╨┐╨╛╤З╨║╨░ ╨┐╤А╨╛╨║╤Б╨╕"),
-    "proxyGroup": MessageLookupByLibrary.simpleMessage("╨У╤А╤Г╨┐╨┐╨░ ╨┐╤А╨╛╨║╤Б╨╕"),
+    "proxyChains": MessageLookupByLibrary.simpleMessage(
+      "╨ж╨╡╨┐╨╛╤З╨║╨░ ╨┐╤А╨╛╨║╤Б╨╕",
+    ),
+    "proxyGroup": MessageLookupByLibrary.simpleMessage(
+      "╨У╤А╤Г╨┐╨┐╨░ ╨┐╤А╨╛╨║╤Б╨╕",
+    ),
     "proxyGroupEmpty": MessageLookupByLibrary.simpleMessage(
       "╨У╤А╤Г╨┐╨┐╨░ ╨┐╤А╨╛╨║╤Б╨╕ ╨┐╤Г╤Б╤В╨░",
     ),
@@ -1427,25 +1733,47 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨У╤А╤Г╨┐╨┐╤Л ╨┐╨╛╤П╨▓╤П╤В╤Б╤П ╨╖╨┤╨╡╤Б╤М ╨┐╨╛╤Б╨╗╨╡ ╨╖╨░╨┐╤Г╤Б╨║╨░ ╤П╨┤╤А╨░",
     ),
     "proxyGroupsCount": m68,
-    "proxyProviders": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╛╨▓╨░╨╣╨┤╨╡╤А╤Л ╨┐╤А╨╛╨║╤Б╨╕"),
+    "proxyProviders": MessageLookupByLibrary.simpleMessage(
+      "╨Я╤А╨╛╨▓╨░╨╣╨┤╨╡╤А╤Л ╨┐╤А╨╛╨║╤Б╨╕",
+    ),
     "proxyType": MessageLookupByLibrary.simpleMessage("╨в╨╕╨┐ ╨┐╤А╨╛╨║╤Б╨╕"),
-    "pruneCache": MessageLookupByLibrary.simpleMessage("╨Ю╤З╨╕╤Б╤В╨╕╤В╤М ╨║╤Н╤И"),
-    "publicKey": MessageLookupByLibrary.simpleMessage("╨Ю╤В╨║╤А╤Л╤В╤Л╨╣ ╨║╨╗╤О╤З"),
-    "pureBlack": MessageLookupByLibrary.simpleMessage("╨з╨╕╤Б╤В╨╛ ╤З╤С╤А╨╜╤Л╨╣"),
-    "pureBlackMode": MessageLookupByLibrary.simpleMessage("╨з╨╕╤Б╤В╨╛ ╤З╤С╤А╨╜╤Л╨╣ ╤А╨╡╨╢╨╕╨╝"),
+    "pruneCache": MessageLookupByLibrary.simpleMessage(
+      "╨Ю╤З╨╕╤Б╤В╨╕╤В╤М ╨║╤Н╤И",
+    ),
+    "publicKey": MessageLookupByLibrary.simpleMessage(
+      "╨Ю╤В╨║╤А╤Л╤В╤Л╨╣ ╨║╨╗╤О╤З",
+    ),
+    "pureBlack": MessageLookupByLibrary.simpleMessage(
+      "╨з╨╕╤Б╤В╨╛ ╤З╤С╤А╨╜╤Л╨╣",
+    ),
+    "pureBlackMode": MessageLookupByLibrary.simpleMessage(
+      "╨з╨╕╤Б╤В╨╛ ╤З╤С╤А╨╜╤Л╨╣ ╤А╨╡╨╢╨╕╨╝",
+    ),
     "qrcode": MessageLookupByLibrary.simpleMessage("QR-╨║╨╛╨┤"),
     "qrcodeDesc": MessageLookupByLibrary.simpleMessage(
       "╨б╨║╨░╨╜╨╕╤А╤Г╨╣╤В╨╡ QR-╨║╨╛╨┤, ╤З╤В╨╛╨▒╤Л ╨┐╨╛╨╗╤Г╤З╨╕╤В╤М ╨┐╤А╨╛╤Д╨╕╨╗╤М",
     ),
-    "quickActions": MessageLookupByLibrary.simpleMessage("╨С╤Л╤Б╤В╤А╤Л╨╡ ╨┤╨╡╨╣╤Б╤В╨▓╨╕╤П"),
-    "quickEdit": MessageLookupByLibrary.simpleMessage("╨С╤Л╤Б╤В╤А╨╛╨╡ ╤А╨╡╨┤╨░╨║╤В╨╕╤А╨╛╨▓╨░╨╜╨╕╨╡"),
-    "recentRequests": MessageLookupByLibrary.simpleMessage("╨Я╨╛╤Б╨╗╨╡╨┤╨╜╨╕╨╡ ╨╖╨░╨┐╤А╨╛╤Б╤Л"),
-    "recommendedIcons": MessageLookupByLibrary.simpleMessage("╨а╨╡╨║╨╛╨╝╨╡╨╜╨┤╤Г╨╡╨╝╤Л╨╡"),
+    "quickActions": MessageLookupByLibrary.simpleMessage(
+      "╨С╤Л╤Б╤В╤А╤Л╨╡ ╨┤╨╡╨╣╤Б╤В╨▓╨╕╤П",
+    ),
+    "quickEdit": MessageLookupByLibrary.simpleMessage(
+      "╨С╤Л╤Б╤В╤А╨╛╨╡ ╤А╨╡╨┤╨░╨║╤В╨╕╤А╨╛╨▓╨░╨╜╨╕╨╡",
+    ),
+    "recentRequests": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨╛╤Б╨╗╨╡╨┤╨╜╨╕╨╡ ╨╖╨░╨┐╤А╨╛╤Б╤Л",
+    ),
+    "recommendedIcons": MessageLookupByLibrary.simpleMessage(
+      "╨а╨╡╨║╨╛╨╝╨╡╨╜╨┤╤Г╨╡╨╝╤Л╨╡",
+    ),
     "recordType": MessageLookupByLibrary.simpleMessage("╨в╨╕╨┐ ╨╖╨░╨┐╨╕╤Б╨╕"),
     "redirPort": MessageLookupByLibrary.simpleMessage("╨Я╨╛╤А╤В Redir"),
     "redo": MessageLookupByLibrary.simpleMessage("╨Я╨╛╨▓╤В╨╛╤А╨╕╤В╤М"),
-    "regex": MessageLookupByLibrary.simpleMessage("╨а╨╡╨│╤Г╨╗╤П╤А╨╜╨╛╨╡ ╨▓╤Л╤А╨░╨╢╨╡╨╜╨╕╨╡"),
-    "releaseMemory": MessageLookupByLibrary.simpleMessage("╨Ю╤Б╨▓╨╛╨▒╨╛╨┤╨╕╤В╤М ╨┐╨░╨╝╤П╤В╤М"),
+    "regex": MessageLookupByLibrary.simpleMessage(
+      "╨а╨╡╨│╤Г╨╗╤П╤А╨╜╨╛╨╡ ╨▓╤Л╤А╨░╨╢╨╡╨╜╨╕╨╡",
+    ),
+    "releaseMemory": MessageLookupByLibrary.simpleMessage(
+      "╨Ю╤Б╨▓╨╛╨▒╨╛╨┤╨╕╤В╤М ╨┐╨░╨╝╤П╤В╤М",
+    ),
     "releaseMemoryFailed": MessageLookupByLibrary.simpleMessage(
       "╨Э╨╡ ╤Г╨┤╨░╨╗╨╛╤Б╤М ╨╛╤Б╨▓╨╛╨▒╨╛╨┤╨╕╤В╤М ╨┐╨░╨╝╤П╤В╤М",
     ),
@@ -1457,9 +1785,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨г╨┤╨░╨╗╤С╨╜╨╜╨╛╨╡ ╤А╨░╨╖╤А╨╡╤И╨╡╨╜╨╕╨╡ DNS",
     ),
     "remove": MessageLookupByLibrary.simpleMessage("╨г╨▒╤А╨░╤В╤М"),
-    "rename": MessageLookupByLibrary.simpleMessage("╨Я╨╡╤А╨╡╨╕╨╝╨╡╨╜╨╛╨▓╨░╤В╤М"),
+    "rename": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨╡╤А╨╡╨╕╨╝╨╡╨╜╨╛╨▓╨░╤В╤М",
+    ),
     "replace": MessageLookupByLibrary.simpleMessage("╨Ч╨░╨╝╨╡╨╜╨╕╤В╤М"),
-    "replaceAll": MessageLookupByLibrary.simpleMessage("╨Ч╨░╨╝╨╡╨╜╨╕╤В╤М ╨▓╤Б╨╡"),
+    "replaceAll": MessageLookupByLibrary.simpleMessage(
+      "╨Ч╨░╨╝╨╡╨╜╨╕╤В╤М ╨▓╤Б╨╡",
+    ),
     "request": MessageLookupByLibrary.simpleMessage("╨Ч╨░╨┐╤А╨╛╤Б"),
     "requests": MessageLookupByLibrary.simpleMessage("╨Ч╨░╨┐╤А╨╛╤Б╤Л"),
     "requestsAndUpdates": MessageLookupByLibrary.simpleMessage(
@@ -1480,12 +1812,16 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨Ш╨╜╤В╨╡╤А╨▓╨░╨╗ ╨░╨▓╤В╨╛╨╛╨▒╨╜╨╛╨▓╨╗╨╡╨╜╨╕╤П ╨┤╨╛╨╗╨╢╨╡╨╜ ╨▒╤Л╤В╤М ╨▒╨╛╨╗╤М╤И╨╡ 0",
     ),
     "resources": MessageLookupByLibrary.simpleMessage("╨а╨╡╤Б╤Г╤А╤Б╤Л"),
-    "respectRules": MessageLookupByLibrary.simpleMessage("╨б╨╛╨▒╨╗╤О╨┤╨░╤В╤М ╨┐╤А╨░╨▓╨╕╨╗╨░"),
+    "respectRules": MessageLookupByLibrary.simpleMessage(
+      "╨б╨╛╨▒╨╗╤О╨┤╨░╤В╤М ╨┐╤А╨░╨▓╨╕╨╗╨░",
+    ),
     "respectRulesDesc": MessageLookupByLibrary.simpleMessage(
       "┬л╨б╨╛╨▒╨╗╤О╨┤╨░╤В╤М ╨┐╤А╨░╨▓╨╕╨╗╨░┬╗ ╨╜╨░╨┐╤А╨░╨▓╨╗╤П╨╡╤В DNS-╤Б╨╛╨╡╨┤╨╕╨╜╨╡╨╜╨╕╤П ╨┐╨╛ ╨┐╤А╨░╨▓╨╕╨╗╨░╨╝; ╨╜╤Г╨╢╨╡╨╜ Proxy Server Nameserver.",
     ),
     "responseCode": MessageLookupByLibrary.simpleMessage("╨Ъ╨╛╨┤ ╨╛╤В╨▓╨╡╤В╨░"),
-    "restart": MessageLookupByLibrary.simpleMessage("╨Я╨╡╤А╨╡╨╖╨░╨┐╤Г╤Б╤В╨╕╤В╤М"),
+    "restart": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨╡╤А╨╡╨╖╨░╨┐╤Г╤Б╤В╨╕╤В╤М",
+    ),
     "restartCoreTip": MessageLookupByLibrary.simpleMessage(
       "╨Т╤Л ╤Г╨▓╨╡╤А╨╡╨╜╤Л, ╤З╤В╨╛ ╤Е╨╛╤В╨╕╤В╨╡ ╨┐╨╡╤А╨╡╨╖╨░╨┐╤Г╤Б╤В╨╕╤В╤М ╤П╨┤╤А╨╛?",
     ),
@@ -1510,11 +1846,15 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "result": MessageLookupByLibrary.simpleMessage("╨а╨╡╨╖╤Г╨╗╤М╤В╨░╤В"),
     "retry": MessageLookupByLibrary.simpleMessage("╨Я╨╛╨▓╤В╨╛╤А╨╕╤В╤М"),
-    "routeAddress": MessageLookupByLibrary.simpleMessage("╨Р╨┤╤А╨╡╤Б╨░ ╨╝╨░╤А╤И╤А╤Г╤В╨╛╨▓"),
+    "routeAddress": MessageLookupByLibrary.simpleMessage(
+      "╨Р╨┤╤А╨╡╤Б╨░ ╨╝╨░╤А╤И╤А╤Г╤В╨╛╨▓",
+    ),
     "routeExcludeAddress": MessageLookupByLibrary.simpleMessage(
       "╨Ш╤Б╨║╨╗╤О╤З╤С╨╜╨╜╤Л╨╡ ╨░╨┤╤А╨╡╤Б╨░ ╨╝╨░╤А╤И╤А╤Г╤В╨╛╨▓",
     ),
-    "routingMark": MessageLookupByLibrary.simpleMessage("╨Ь╨╡╤В╨║╨░ ╨╝╨░╤А╤И╤А╤Г╤В╨╕╨╖╨░╤Ж╨╕╨╕"),
+    "routingMark": MessageLookupByLibrary.simpleMessage(
+      "╨Ь╨╡╤В╨║╨░ ╨╝╨░╤А╤И╤А╤Г╤В╨╕╨╖╨░╤Ж╨╕╨╕",
+    ),
     "ru": MessageLookupByLibrary.simpleMessage("╨а╤Г╤Б╤Б╨║╨╕╨╣"),
     "rule": MessageLookupByLibrary.simpleMessage("╨Я╤А╨░╨▓╨╕╨╗╨╛"),
     "ruleActionAndDesc": MessageLookupByLibrary.simpleMessage(
@@ -1628,7 +1968,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "ruleActionUidDesc": MessageLookupByLibrary.simpleMessage(
       "╨б╨╛╨┐╨╛╤Б╤В╨░╨▓╨╕╤В╤М Linux USER ID",
     ),
-    "ruleEmpty": MessageLookupByLibrary.simpleMessage("╨Я╤А╨░╨▓╨╕╨╗╨╛ ╨┐╤Г╤Б╤В╨╛"),
+    "ruleEmpty": MessageLookupByLibrary.simpleMessage(
+      "╨Я╤А╨░╨▓╨╕╨╗╨╛ ╨┐╤Г╤Б╤В╨╛",
+    ),
     "ruleListInvalid": MessageLookupByLibrary.simpleMessage(
       "╨Я╤А╨░╨▓╨╕╨╗╨░ ╨┤╨╛╨╗╨╢╨╜╤Л ╨▒╤Л╤В╤М YAML-╤Б╨┐╨╕╤Б╨║╨╛╨╝, ╨┐╨╛ ╨╛╨┤╨╜╨╛╨╝╤Г ╨┐╤А╨░╨▓╨╕╨╗╤Г ╨▓ ╤Н╨╗╨╡╨╝╨╡╨╜╤В╨╡, ╨╜╨░╨┐╤А╨╕╨╝╨╡╤А - DOMAIN,example.com,DIRECT",
     ),
@@ -1653,7 +1995,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "rulePresetSystemServicesDirect": MessageLookupByLibrary.simpleMessage(
       "Apple ╨╕ Microsoft ╨╜╨░╨┐╤А╤П╨╝╤Г╤О",
     ),
-    "ruleProviders": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╛╨▓╨░╨╣╨┤╨╡╤А╤Л ╨┐╤А╨░╨▓╨╕╨╗"),
+    "ruleProviders": MessageLookupByLibrary.simpleMessage(
+      "╨Я╤А╨╛╨▓╨░╨╣╨┤╨╡╤А╤Л ╨┐╤А╨░╨▓╨╕╨╗",
+    ),
     "ruleSet": MessageLookupByLibrary.simpleMessage("╨Э╨░╨▒╨╛╤А ╨┐╤А╨░╨▓╨╕╨╗"),
     "ruleSetEmptyTip": MessageLookupByLibrary.simpleMessage(
       "╨Т ╨╜╨░╨▒╨╛╤А╨╡ ╨┐╤А╨░╨▓╨╕╨╗ ╨╜╨╡╤В ╨┐╤А╨╕╨│╨╛╨┤╨╜╤Л╤Е ╨╖╨░╨┐╨╕╤Б╨╡╨╣",
@@ -1664,7 +2008,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "ruleSetMixedTip": MessageLookupByLibrary.simpleMessage(
       "╨Э╨░╨▒╨╛╤А ╨┐╤А╨░╨▓╨╕╨╗ ╤Б╨╝╨╡╤И╨╕╨▓╨░╨╡╤В ╨┤╨╛╨╝╨╡╨╜╤Л ╨╕ ╨┤╨╕╨░╨┐╨░╨╖╨╛╨╜╤Л IP, ╨┐╨╛╤Н╤В╨╛╨╝╤Г ╨╡╨│╨╛ ╤В╨╕╨┐ ╨╜╨╡ ╨╛╨┐╤А╨╡╨┤╨╡╨╗╨╕╤В╤М",
     ),
-    "ruleTarget": MessageLookupByLibrary.simpleMessage("╨ж╨╡╨╗╤М ╨┐╤А╨░╨▓╨╕╨╗╨░"),
+    "ruleTarget": MessageLookupByLibrary.simpleMessage(
+      "╨ж╨╡╨╗╤М ╨┐╤А╨░╨▓╨╕╨╗╨░",
+    ),
     "ruleTextInvalid": MessageLookupByLibrary.simpleMessage(
       "╨Я╤А╨░╨▓╨╕╨╗╨╛ ╨┤╨╛╨╗╨╢╨╜╨╛ ╨╜╨░╤З╨╕╨╜╨░╤В╤М╤Б╤П ╤Б ╨┐╨╛╨┤╨┤╨╡╤А╨╢╨╕╨▓╨░╨╡╨╝╨╛╨│╨╛ ╤В╨╕╨┐╨░, ╨╜╨░╨┐╤А╨╕╨╝╨╡╤А DOMAIN,example.com,DIRECT",
     ),
@@ -1675,11 +2021,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "runtimeConfig": MessageLookupByLibrary.simpleMessage(
       "╨Ъ╨╛╨╜╤Д╨╕╨│╤Г╤А╨░╤Ж╨╕╤П ╨▓╤Л╨┐╨╛╨╗╨╜╨╡╨╜╨╕╤П",
     ),
-    "safeMode": MessageLookupByLibrary.simpleMessage("╨С╨╡╨╖╨╛╨┐╨░╤Б╨╜╤Л╨╣ ╤А╨╡╨╢╨╕╨╝"),
+    "safeMode": MessageLookupByLibrary.simpleMessage(
+      "╨С╨╡╨╖╨╛╨┐╨░╤Б╨╜╤Л╨╣ ╤А╨╡╨╢╨╕╨╝",
+    ),
     "safeModeAppTitle": m70,
-    "saturation": MessageLookupByLibrary.simpleMessage("╨Э╨░╤Б╤Л╤Й╨╡╨╜╨╜╨╛╤Б╤В╤М"),
+    "saturation": MessageLookupByLibrary.simpleMessage(
+      "╨Э╨░╤Б╤Л╤Й╨╡╨╜╨╜╨╛╤Б╤В╤М",
+    ),
     "save": MessageLookupByLibrary.simpleMessage("╨б╨╛╤Е╤А╨░╨╜╨╕╤В╤М"),
-    "saveChanges": MessageLookupByLibrary.simpleMessage("╨б╨╛╤Е╤А╨░╨╜╨╕╤В╤М ╨╕╨╖╨╝╨╡╨╜╨╡╨╜╨╕╤П?"),
+    "saveChanges": MessageLookupByLibrary.simpleMessage(
+      "╨б╨╛╤Е╤А╨░╨╜╨╕╤В╤М ╨╕╨╖╨╝╨╡╨╜╨╡╨╜╨╕╤П?",
+    ),
     "script": MessageLookupByLibrary.simpleMessage("╨б╨║╤А╨╕╨┐╤В"),
     "scriptModeDesc": MessageLookupByLibrary.simpleMessage(
       "╨а╨╡╨╢╨╕╨╝ ╤Б╨║╤А╨╕╨┐╤В╨░: ╨┐╨╡╤А╨╡╨┐╨╕╤Б╤Л╨▓╨░╨╡╤В ╨▓╨╡╤Б╤М ╨┐╤А╨╛╤Д╨╕╨╗╤М ╤Б╨║╤А╨╕╨┐╤В╨╛╨╝ ╤А╨░╤Б╤И╨╕╤А╨╡╨╜╨╕╤П",
@@ -1702,36 +2054,56 @@ class MessageLookup extends MessageLookupByLibrary {
     "selected": MessageLookupByLibrary.simpleMessage("╨Т╤Л╨▒╤А╨░╨╜╨╛"),
     "server": MessageLookupByLibrary.simpleMessage("╨б╨╡╤А╨▓╨╡╤А"),
     "serviceAbnormalCount": m73,
-    "serviceAllAvailable": MessageLookupByLibrary.simpleMessage("╨Т╤Б╨╡ ╨┤╨╛╤Б╤В╤Г╨┐╨╜╤Л"),
-    "serviceAvailable": MessageLookupByLibrary.simpleMessage("╨Ф╨╛╤Б╤В╤Г╨┐╨╡╨╜"),
-    "serviceBlocked": MessageLookupByLibrary.simpleMessage("╨Ч╨░╨▒╨╗╨╛╨║╨╕╤А╨╛╨▓╨░╨╜╨╛"),
+    "serviceAllAvailable": MessageLookupByLibrary.simpleMessage(
+      "╨Т╤Б╨╡ ╨┤╨╛╤Б╤В╤Г╨┐╨╜╤Л",
+    ),
+    "serviceAvailable": MessageLookupByLibrary.simpleMessage(
+      "╨Ф╨╛╤Б╤В╤Г╨┐╨╡╨╜",
+    ),
+    "serviceBlocked": MessageLookupByLibrary.simpleMessage(
+      "╨Ч╨░╨▒╨╗╨╛╨║╨╕╤А╨╛╨▓╨░╨╜╨╛",
+    ),
     "serviceCheck": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╛╨▓╨╡╤А╨╕╤В╤М"),
-    "serviceCheckAll": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╛╨▓╨╡╤А╨╕╤В╤М ╨▓╤Б╨╡"),
+    "serviceCheckAll": MessageLookupByLibrary.simpleMessage(
+      "╨Я╤А╨╛╨▓╨╡╤А╨╕╤В╤М ╨▓╤Б╨╡",
+    ),
     "serviceCheckedAt": m74,
-    "serviceComingSoon": MessageLookupByLibrary.simpleMessage("╨б╨║╨╛╤А╨╛ ╨┐╨╛╤П╨▓╨╕╤В╤Б╤П"),
+    "serviceComingSoon": MessageLookupByLibrary.simpleMessage(
+      "╨б╨║╨╛╤А╨╛ ╨┐╨╛╤П╨▓╨╕╤В╤Б╤П",
+    ),
     "serviceDisallowedIsp": MessageLookupByLibrary.simpleMessage(
       "╨Э╨╡╨┤╨╛╨┐╤Г╤Б╤В╨╕╨╝╤Л╨╣ ╨┐╤А╨╛╨▓╨░╨╣╨┤╨╡╤А",
     ),
-    "serviceFailed": MessageLookupByLibrary.simpleMessage("╨Ю╤И╨╕╨▒╨║╨░ ╨┐╤А╨╛╨▓╨╡╤А╨║╨╕"),
+    "serviceFailed": MessageLookupByLibrary.simpleMessage(
+      "╨Ю╤И╨╕╨▒╨║╨░ ╨┐╤А╨╛╨▓╨╡╤А╨║╨╕",
+    ),
     "serviceManage": MessageLookupByLibrary.simpleMessage(
       "╨г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╡ ╤Б╨╡╤А╨▓╨╕╤Б╨░╨╝╨╕",
     ),
     "serviceOriginalsOnly": MessageLookupByLibrary.simpleMessage(
       "╨в╨╛╨╗╤М╨║╨╛ ╨╛╤А╨╕╨│╨╕╨╜╨░╨╗╤Л",
     ),
-    "servicePending": MessageLookupByLibrary.simpleMessage("╨Э╨╡ ╨┐╤А╨╛╨▓╨╡╤А╨╡╨╜╨╛"),
+    "servicePending": MessageLookupByLibrary.simpleMessage(
+      "╨Э╨╡ ╨┐╤А╨╛╨▓╨╡╤А╨╡╨╜╨╛",
+    ),
     "serviceRestricted": MessageLookupByLibrary.simpleMessage(
       "╨Ф╨╛╤Б╤В╤Г╨┐ ╨╛╨│╤А╨░╨╜╨╕╤З╨╡╨╜",
     ),
     "serviceShownOnDashboard": MessageLookupByLibrary.simpleMessage(
       "╨Я╨╛╨║╨░╨╖╨░╨╜ ╨╜╨░ ╨┐╨░╨╜╨╡╨╗╨╕",
     ),
-    "serviceStatus": MessageLookupByLibrary.simpleMessage("╨б╨╛╤Б╤В╨╛╤П╨╜╨╕╨╡ ╤Б╨╡╤А╨▓╨╕╤Б╨╛╨▓"),
-    "serviceUnavailable": MessageLookupByLibrary.simpleMessage("╨Э╨╡╨┤╨╛╤Б╤В╤Г╨┐╨╡╨╜"),
+    "serviceStatus": MessageLookupByLibrary.simpleMessage(
+      "╨б╨╛╤Б╤В╨╛╤П╨╜╨╕╨╡ ╤Б╨╡╤А╨▓╨╕╤Б╨╛╨▓",
+    ),
+    "serviceUnavailable": MessageLookupByLibrary.simpleMessage(
+      "╨Э╨╡╨┤╨╛╤Б╤В╤Г╨┐╨╡╨╜",
+    ),
     "serviceUnsupportedRegion": MessageLookupByLibrary.simpleMessage(
       "╨а╨╡╨│╨╕╨╛╨╜ ╨╜╨╡ ╨┐╨╛╨┤╨┤╨╡╤А╨╢╨╕╨▓╨░╨╡╤В╤Б╤П",
     ),
-    "settingEntries": MessageLookupByLibrary.simpleMessage("╨┐╨░╤А╨░╨╝╨╡╤В╤А╤Л"),
+    "settingEntries": MessageLookupByLibrary.simpleMessage(
+      "╨┐╨░╤А╨░╨╝╨╡╤В╤А╤Л",
+    ),
     "settings": MessageLookupByLibrary.simpleMessage("╨Э╨░╤Б╤В╤А╨╛╨╣╨║╨╕"),
     "settingsCount": m75,
     "shareLinkUnreadable": m76,
@@ -1744,14 +2116,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "showNotificationStopAction": MessageLookupByLibrary.simpleMessage(
       "╨Ъ╨╜╨╛╨┐╨║╨░ ╨╛╤Б╤В╨░╨╜╨╛╨▓╨║╨╕ ╨▓ ╤Г╨▓╨╡╨┤╨╛╨╝╨╗╨╡╨╜╨╕╨╕",
     ),
-    "showPassword": MessageLookupByLibrary.simpleMessage("╨Я╨╛╨║╨░╨╖╨░╤В╤М ╨┐╨░╤А╨╛╨╗╤М"),
+    "showPassword": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨╛╨║╨░╨╖╨░╤В╤М ╨┐╨░╤А╨╛╨╗╤М",
+    ),
     "sidebarBlur": MessageLookupByLibrary.simpleMessage(
       "╨а╨░╨╖╨╝╤Л╤В╨╕╨╡ ╨▒╨╛╨║╨╛╨▓╨╛╨╣ ╨┐╨░╨╜╨╡╨╗╨╕",
     ),
     "sidebarBlurDesc": MessageLookupByLibrary.simpleMessage(
       "╨Я╨╛╨║╨░╨╖╤Л╨▓╨░╤В╤М ╤Б╨║╨▓╨╛╨╖╤М ╨▒╨╛╨║╨╛╨▓╤Г╤О ╨┐╨░╨╜╨╡╨╗╤М ╤А╨░╨╖╨╝╤Л╤В╤Л╨╣ ╤А╨░╨▒╨╛╤З╨╕╨╣ ╤Б╤В╨╛╨╗ ╨╖╨░ ╨╛╨║╨╜╨╛╨╝",
     ),
-    "silentLaunch": MessageLookupByLibrary.simpleMessage("╨в╨╕╤Е╨╕╨╣ ╨╖╨░╨┐╤Г╤Б╨║"),
+    "silentLaunch": MessageLookupByLibrary.simpleMessage(
+      "╨в╨╕╤Е╨╕╨╣ ╨╖╨░╨┐╤Г╤Б╨║",
+    ),
     "silentLaunchDesc": MessageLookupByLibrary.simpleMessage(
       "╨в╨╕╤Е╨╕╨╣ ╨╖╨░╨┐╤Г╤Б╨║ ╨╜╨╡ ╨┐╨╛╨║╨░╨╖╤Л╨▓╨░╨╡╤В ╨╛╨║╨╜╨╛.",
     ),
@@ -1765,7 +2141,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "skipCertVerify": MessageLookupByLibrary.simpleMessage(
       "╨Я╤А╨╛╨┐╤Г╤Б╨║╨░╤В╤М ╨┐╤А╨╛╨▓╨╡╤А╨║╤Г ╤Б╨╡╤А╤В╨╕╤Д╨╕╨║╨░╤В╨░",
     ),
-    "skipDomain": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝╤Л╨╡ ╨┤╨╛╨╝╨╡╨╜╤Л"),
+    "skipDomain": MessageLookupByLibrary.simpleMessage(
+      "╨Я╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝╤Л╨╡ ╨┤╨╛╨╝╨╡╨╜╤Л",
+    ),
     "skipDomainDesc": MessageLookupByLibrary.simpleMessage(
       "╨Ю╨▒╨╜╨░╤А╤Г╨╢╨╡╨╜╨╜╤Л╨╣ ╨┤╨╛╨╝╨╡╨╜ ╨╕╨╖ ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝╤Л╤Е ╨┤╨╛╨╝╨╡╨╜╨╛╨▓ ╨╜╨╡ ╨╕╤Б╨┐╨╛╨╗╤М╨╖╤Г╨╡╤В╤Б╤П.",
     ),
@@ -1777,7 +2155,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "slide": MessageLookupByLibrary.simpleMessage("╨б╨┤╨▓╨╕╨│"),
     "sliders": MessageLookupByLibrary.simpleMessage("╨Я╨╛╨╗╨╖╤Г╨╜╨║╨╕"),
-    "smartAutomatic": MessageLookupByLibrary.simpleMessage("╨Р╨▓╤В╨╛╨╝╨░╤В╨╕╤З╨╡╤Б╨║╨╕"),
+    "smartAutomatic": MessageLookupByLibrary.simpleMessage(
+      "╨Р╨▓╤В╨╛╨╝╨░╤В╨╕╤З╨╡╤Б╨║╨╕",
+    ),
     "smartAutomaticRouting": MessageLookupByLibrary.simpleMessage(
       "╨Р╨▓╤В╨╛╨╝╨░╤В╨╕╤З╨╡╤Б╨║╨╕╨╣ ╨▓╤Л╨▒╨╛╤А ╨┤╨╗╤П ╨║╨░╨╢╨┤╨╛╨│╨╛ ╨╜╨░╨╖╨╜╨░╤З╨╡╨╜╨╕╤П",
     ),
@@ -1787,15 +2167,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "smartCoreStopped": MessageLookupByLibrary.simpleMessage(
       "╨Ч╨░╨┐╤Г╤Б╤В╨╕╤В╨╡ ╤Б╨╡╤А╨▓╨╕╤Б, ╤З╤В╨╛╨▒╤Л ╤Г╨▓╨╕╨┤╨╡╤В╤М ╤А╨╡╨╣╤В╨╕╨╜╨│ Smart.",
     ),
-    "smartCurrentNode": MessageLookupByLibrary.simpleMessage("╨в╨╡╨║╤Г╤Й╨╕╨╣ ╤Г╨╖╨╡╨╗"),
+    "smartCurrentNode": MessageLookupByLibrary.simpleMessage(
+      "╨в╨╡╨║╤Г╤Й╨╕╨╣ ╤Г╨╖╨╡╨╗",
+    ),
     "smartCurrentNodeUnavailable": MessageLookupByLibrary.simpleMessage(
       "╨г╨╖╨╡╨╗ ╨╜╨╡ ╨▓╤Л╨▒╤А╨░╨╜",
     ),
-    "smartDetails": MessageLookupByLibrary.simpleMessage("╨г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╡ Smart"),
+    "smartDetails": MessageLookupByLibrary.simpleMessage(
+      "╨г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╡ Smart",
+    ),
     "smartLoadFailed": MessageLookupByLibrary.simpleMessage(
       "╨Э╨╡ ╤Г╨┤╨░╨╗╨╛╤Б╤М ╨╖╨░╨│╤А╤Г╨╖╨╕╤В╤М ╤А╨╡╨╣╤В╨╕╨╜╨│ Smart.",
     ),
-    "smartMostUsed": MessageLookupByLibrary.simpleMessage("╨з╨░╤Б╤В╨╛ ╨╕╤Б╨┐╨╛╨╗╤М╨╖╤Г╨╡╤В╤Б╤П"),
+    "smartMostUsed": MessageLookupByLibrary.simpleMessage(
+      "╨з╨░╤Б╤В╨╛ ╨╕╤Б╨┐╨╛╨╗╤М╨╖╤Г╨╡╤В╤Б╤П",
+    ),
     "smartNoMatchingNodes": MessageLookupByLibrary.simpleMessage(
       "╨Я╨╛╨┤╤Е╨╛╨┤╤П╤Й╨╕╤Е ╤Г╨╖╨╗╨╛╨▓ ╨╜╨╡╤В",
     ),
@@ -1808,7 +2194,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "smartOccasionallyUsed": MessageLookupByLibrary.simpleMessage(
       "╨Ш╤Б╨┐╨╛╨╗╤М╨╖╤Г╨╡╤В╤Б╤П ╨╕╨╜╨╛╨│╨┤╨░",
     ),
-    "smartPinNode": MessageLookupByLibrary.simpleMessage("╨Ч╨░╨║╤А╨╡╨┐╨╕╤В╤М ╤Г╨╖╨╡╨╗"),
+    "smartPinNode": MessageLookupByLibrary.simpleMessage(
+      "╨Ч╨░╨║╤А╨╡╨┐╨╕╤В╤М ╤Г╨╖╨╡╨╗",
+    ),
     "smartPinned": MessageLookupByLibrary.simpleMessage("╨Ч╨░╨║╤А╨╡╨┐╨╗╤С╨╜"),
     "smartPolicyPriority": MessageLookupByLibrary.simpleMessage(
       "╨Я╤А╨╕╨╛╤А╨╕╤В╨╡╤В ╨┐╨╛╨╗╨╕╤В╨╕╨║",
@@ -1819,7 +2207,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "smartRarelyUsed": MessageLookupByLibrary.simpleMessage(
       "╨а╨╡╨┤╨║╨╛ ╨╕╤Б╨┐╨╛╨╗╤М╨╖╤Г╨╡╤В╤Б╤П",
     ),
-    "smartRefresh": MessageLookupByLibrary.simpleMessage("╨Ю╨▒╨╜╨╛╨▓╨╕╤В╤М ╤А╨╡╨╣╤В╨╕╨╜╨│"),
+    "smartRefresh": MessageLookupByLibrary.simpleMessage(
+      "╨Ю╨▒╨╜╨╛╨▓╨╕╤В╤М ╤А╨╡╨╣╤В╨╕╨╜╨│",
+    ),
     "smartRestoreAutomatic": MessageLookupByLibrary.simpleMessage(
       "╨Т╨╡╤А╨╜╤Г╤В╤М ╨░╨▓╤В╨╛╨╝╨░╤В╨╕╤З╨╡╤Б╨║╨╕╨╣ ╨▓╤Л╨▒╨╛╤А",
     ),
@@ -1831,12 +2221,18 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨Ю╤Ж╨╡╨╜╨║╨╕ ╨╕ ╨║╨░╤В╨╡╨│╨╛╤А╨╕╨╕ ╨╕╤Б╨┐╨╛╨╗╤М╨╖╨╛╨▓╨░╨╜╨╕╤П ╨┐╨╛╨╗╤Г╤З╨╡╨╜╤Л ╨╕╨╖ ╤П╨┤╤А╨░. ╨Ю╤Ж╨╡╨╜╨║╨░ ╨╜╨╡ ╤П╨▓╨╗╤П╨╡╤В╤Б╤П ╨┐╤А╨╛╤Ж╨╡╨╜╤В╨╛╨╝.",
     ),
     "smartTitle": MessageLookupByLibrary.simpleMessage("Smart"),
-    "smartUnknownUsage": MessageLookupByLibrary.simpleMessage("╨Э╨╡╨╕╨╖╨▓╨╡╤Б╤В╨╜╨╛"),
-    "smartUsage": MessageLookupByLibrary.simpleMessage("╨Ш╤Б╨┐╨╛╨╗╤М╨╖╨╛╨▓╨░╨╜╨╕╨╡"),
+    "smartUnknownUsage": MessageLookupByLibrary.simpleMessage(
+      "╨Э╨╡╨╕╨╖╨▓╨╡╤Б╤В╨╜╨╛",
+    ),
+    "smartUsage": MessageLookupByLibrary.simpleMessage(
+      "╨Ш╤Б╨┐╨╛╨╗╤М╨╖╨╛╨▓╨░╨╜╨╕╨╡",
+    ),
     "smartUseLightGbm": MessageLookupByLibrary.simpleMessage(
       "╨Ш╤Б╨┐╨╛╨╗╤М╨╖╨╛╨▓╨░╤В╤М LightGBM",
     ),
-    "sniffProtocols": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╛╤В╨╛╨║╨╛╨╗╤Л"),
+    "sniffProtocols": MessageLookupByLibrary.simpleMessage(
+      "╨Я╤А╨╛╤В╨╛╨║╨╛╨╗╤Л",
+    ),
     "sniffer": MessageLookupByLibrary.simpleMessage("╨б╨╜╨╕╤Д╤Д╨╡╤А"),
     "snifferStatusDesc": MessageLookupByLibrary.simpleMessage(
       "╨б╨╜╨╕╤Д╤Д╨╡╤А ╨╛╨┐╤А╨╡╨┤╨╡╨╗╤П╨╡╤В ╨┤╨╛╨╝╨╡╨╜ ╨┐╨╛ ╤В╤А╨░╤Д╨╕╨║╤Г TLS, HTTP ╨╕ QUIC, ╤З╤В╨╛╨▒╤Л ╨┐╤А╨░╨▓╨╕╨╗╨░ ╨╝╨╛╨│╨╗╨╕ ╨╡╨│╨╛ ╤Б╨╛╨┐╨╛╤Б╤В╨░╨▓╨╕╤В╤М.",
@@ -1846,8 +2242,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "sort": MessageLookupByLibrary.simpleMessage("╨б╨╛╤А╤В╨╕╤А╨╛╨▓╨║╨░"),
     "source": MessageLookupByLibrary.simpleMessage("╨Ш╤Б╤В╨╛╤З╨╜╨╕╨║"),
     "sourceIp": MessageLookupByLibrary.simpleMessage("IP ╨╕╤Б╤В╨╛╤З╨╜╨╕╨║╨░"),
-    "specialProxy": MessageLookupByLibrary.simpleMessage("╨б╨┐╨╡╤Ж╨╕╨░╨╗╤М╨╜╤Л╨╣ ╨┐╤А╨╛╨║╤Б╨╕"),
-    "specialRules": MessageLookupByLibrary.simpleMessage("╨б╨┐╨╡╤Ж╨╕╨░╨╗╤М╨╜╤Л╨╡ ╨┐╤А╨░╨▓╨╕╨╗╨░"),
+    "specialProxy": MessageLookupByLibrary.simpleMessage(
+      "╨б╨┐╨╡╤Ж╨╕╨░╨╗╤М╨╜╤Л╨╣ ╨┐╤А╨╛╨║╤Б╨╕",
+    ),
+    "specialRules": MessageLookupByLibrary.simpleMessage(
+      "╨б╨┐╨╡╤Ж╨╕╨░╨╗╤М╨╜╤Л╨╡ ╨┐╤А╨░╨▓╨╕╨╗╨░",
+    ),
     "spectrum": MessageLookupByLibrary.simpleMessage("╨б╨┐╨╡╨║╤В╤А"),
     "speedStatistics": MessageLookupByLibrary.simpleMessage(
       "╨б╤В╨░╤В╨╕╤Б╤В╨╕╨║╨░ ╤Б╨║╨╛╤А╨╛╤Б╤В╨╕",
@@ -1858,9 +2258,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "splitStrategyNotEmpty": MessageLookupByLibrary.simpleMessage(
       "╨б╤В╤А╨░╤В╨╡╨│╨╕╤П ╤А╨░╤Б╨┐╤А╨╡╨┤╨╡╨╗╨╡╨╜╨╕╤П ╨╜╨╡ ╨╝╨╛╨╢╨╡╤В ╨▒╤Л╤В╤М ╨┐╤Г╤Б╤В╨╛╨╣",
     ),
-    "ssidsEmpty": MessageLookupByLibrary.simpleMessage("╨б╨┐╨╕╤Б╨╛╨║ SSID ╨┐╤Г╤Б╤В"),
+    "ssidsEmpty": MessageLookupByLibrary.simpleMessage(
+      "╨б╨┐╨╕╤Б╨╛╨║ SSID ╨┐╤Г╤Б╤В",
+    ),
     "stackMode": MessageLookupByLibrary.simpleMessage("╨а╨╡╨╢╨╕╨╝ ╤Б╤В╨╡╨║╨░"),
-    "stackTrace": MessageLookupByLibrary.simpleMessage("╨в╤А╨░╤Б╤Б╨╕╤А╨╛╨▓╨║╨░ ╤Б╤В╨╡╨║╨░"),
+    "stackTrace": MessageLookupByLibrary.simpleMessage(
+      "╨в╤А╨░╤Б╤Б╨╕╤А╨╛╨▓╨║╨░ ╤Б╤В╨╡╨║╨░",
+    ),
     "standard": MessageLookupByLibrary.simpleMessage("╨б╤В╨░╨╜╨┤╨░╤А╤В╨╜╤Л╨╣"),
     "standardModeDesc": MessageLookupByLibrary.simpleMessage(
       "╨б╤В╨░╨╜╨┤╨░╤А╤В╨╜╤Л╨╣ ╤А╨╡╨╢╨╕╨╝: ╨┤╨╛╨▒╨░╨▓╨╗╤П╨╡╤В ╨┐╤А╨░╨▓╨╕╨╗╨░ ╨┐╨╛╨▓╨╡╤А╤Е ╨┐╤А╨╛╤Д╨╕╨╗╤П",
@@ -1876,7 +2280,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨Я╤А╨╕ ╨╛╤В╨║╨╗╤О╤З╤С╨╜╨╜╨╛╨╝ DNS ╨╕╤Б╨┐╨╛╨╗╤М╨╖╤Г╨╡╤В╤Б╤П ╤Б╨╕╤Б╤В╨╡╨╝╨╜╤Л╨╣ DNS.",
     ),
     "stop": MessageLookupByLibrary.simpleMessage("╨б╤В╨╛╨┐"),
-    "stopVpn": MessageLookupByLibrary.simpleMessage("╨Ю╤Б╤В╨░╨╜╨╛╨▓╨║╨░ VPNтАж"),
+    "stopVpn": MessageLookupByLibrary.simpleMessage(
+      "╨Ю╤Б╤В╨░╨╜╨╛╨▓╨║╨░ VPNтАж",
+    ),
     "strategy": MessageLookupByLibrary.simpleMessage("╨б╤В╤А╨░╤В╨╡╨│╨╕╤П"),
     "strictRoute": MessageLookupByLibrary.simpleMessage(
       "╨б╤В╤А╨╛╨│╨░╤П ╨╝╨░╤А╤И╤А╤Г╤В╨╕╨╖╨░╤Ж╨╕╤П",
@@ -1892,14 +2298,24 @@ class MessageLookup extends MessageLookupByLibrary {
     "sudoPasswordTitle": MessageLookupByLibrary.simpleMessage(
       "╨Т╨▓╨╡╨┤╨╕╤В╨╡ ╨┐╨░╤А╨╛╨╗╤М ╨┤╨╗╤П sudo",
     ),
-    "suspended": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╕╨╛╤Б╤В╨░╨╜╨╛╨▓╨╗╨╡╨╜╨╛тАж"),
-    "switchProfile": MessageLookupByLibrary.simpleMessage("╨б╨╝╨╡╨╜╨╕╤В╤М ╨┐╤А╨╛╤Д╨╕╨╗╤М"),
+    "suspended": MessageLookupByLibrary.simpleMessage(
+      "╨Я╤А╨╕╨╛╤Б╤В╨░╨╜╨╛╨▓╨╗╨╡╨╜╨╛тАж",
+    ),
+    "switchProfile": MessageLookupByLibrary.simpleMessage(
+      "╨б╨╝╨╡╨╜╨╕╤В╤М ╨┐╤А╨╛╤Д╨╕╨╗╤М",
+    ),
     "sync": MessageLookupByLibrary.simpleMessage("╨б╨╕╨╜╤Е╤А╨╛╨╜╨╕╨╖╨░╤Ж╨╕╤П"),
     "system": MessageLookupByLibrary.simpleMessage("╨б╨╕╤Б╤В╨╡╨╝╨░"),
-    "systemApp": MessageLookupByLibrary.simpleMessage("╨б╨╕╤Б╤В╨╡╨╝╨╜╤Л╨╡ ╨┐╤А╨╕╨╗╨╛╨╢╨╡╨╜╨╕╤П"),
-    "systemProxy": MessageLookupByLibrary.simpleMessage("╨б╨╕╤Б╤В╨╡╨╝╨╜╤Л╨╣ ╨┐╤А╨╛╨║╤Б╨╕"),
+    "systemApp": MessageLookupByLibrary.simpleMessage(
+      "╨б╨╕╤Б╤В╨╡╨╝╨╜╤Л╨╡ ╨┐╤А╨╕╨╗╨╛╨╢╨╡╨╜╨╕╤П",
+    ),
+    "systemProxy": MessageLookupByLibrary.simpleMessage(
+      "╨б╨╕╤Б╤В╨╡╨╝╨╜╤Л╨╣ ╨┐╤А╨╛╨║╤Б╨╕",
+    ),
     "tab": MessageLookupByLibrary.simpleMessage("╨Т╨║╨╗╨░╨┤╨║╨╕"),
-    "tabAnimation": MessageLookupByLibrary.simpleMessage("╨Р╨╜╨╕╨╝╨░╤Ж╨╕╤П ╨▓╨║╨╗╨░╨┤╨╛╨║"),
+    "tabAnimation": MessageLookupByLibrary.simpleMessage(
+      "╨Р╨╜╨╕╨╝╨░╤Ж╨╕╤П ╨▓╨║╨╗╨░╨┤╨╛╨║",
+    ),
     "tapIconToRetry": MessageLookupByLibrary.simpleMessage(
       "╨Э╨░╨╢╨╝╨╕╤В╨╡ ╨╜╨░ ╨╖╨╜╨░╤З╨╛╨║, ╤З╤В╨╛╨▒╤Л ╨┐╨╛╨▓╤В╨╛╤А╨╕╤В╤М",
     ),
@@ -1907,7 +2323,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "╨Э╨░╨╢╨╝╨╕╤В╨╡, ╤З╤В╨╛╨▒╤Л ╤А╨░╨╖╤А╨╡╤И╨╕╤В╤М",
     ),
     "target": MessageLookupByLibrary.simpleMessage("╨ж╨╡╨╗╤М"),
-    "tcpConcurrent": MessageLookupByLibrary.simpleMessage("╨Я╨░╤А╨░╨╗╨╗╨╡╨╗╤М╨╜╤Л╨╣ TCP"),
+    "tcpConcurrent": MessageLookupByLibrary.simpleMessage(
+      "╨Я╨░╤А╨░╨╗╨╗╨╡╨╗╤М╨╜╤Л╨╣ TCP",
+    ),
     "testInterval": MessageLookupByLibrary.simpleMessage(
       "╨Ш╨╜╤В╨╡╤А╨▓╨░╨╗ ╤В╨╡╤Б╤В╨╕╤А╨╛╨▓╨░╨╜╨╕╤П",
     ),
@@ -1915,7 +2333,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "testWhenUsed": MessageLookupByLibrary.simpleMessage(
       "╨в╨╡╤Б╤В╨╕╤А╨╛╨▓╨░╤В╤М ╨┐╤А╨╕ ╨╕╤Б╨┐╨╛╨╗╤М╨╖╨╛╨▓╨░╨╜╨╕╨╕",
     ),
-    "textScale": MessageLookupByLibrary.simpleMessage("╨Ь╨░╤Б╤И╤В╨░╨▒ ╤В╨╡╨║╤Б╤В╨░"),
+    "textScale": MessageLookupByLibrary.simpleMessage(
+      "╨Ь╨░╤Б╤И╤В╨░╨▒ ╤В╨╡╨║╤Б╤В╨░",
+    ),
     "textScalePreview": MessageLookupByLibrary.simpleMessage(
       "╨в╨░╨║ ╨▒╤Г╨┤╨╡╤В ╨▓╤Л╨│╨╗╤П╨┤╨╡╤В╤М ╤В╨╡╨║╤Б╤В ╨▓ ╨┐╤А╨╕╨╗╨╛╨╢╨╡╨╜╨╕╨╕",
     ),
@@ -1925,7 +2345,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "tight": MessageLookupByLibrary.simpleMessage("╨Я╨╗╨╛╤В╨╜╤Л╨╣"),
     "time": MessageLookupByLibrary.simpleMessage("╨Т╤А╨╡╨╝╤П"),
     "timeout": MessageLookupByLibrary.simpleMessage("╨в╨░╨╣╨╝-╨░╤Г╤В"),
-    "tintedStyle": MessageLookupByLibrary.simpleMessage("╨в╨╛╨╜╨╕╤А╨╛╨▓╨░╨╜╨╜╤Л╨╣"),
+    "tintedStyle": MessageLookupByLibrary.simpleMessage(
+      "╨в╨╛╨╜╨╕╤А╨╛╨▓╨░╨╜╨╜╤Л╨╣",
+    ),
     "tip": MessageLookupByLibrary.simpleMessage("╨Я╨╛╨┤╤Б╨║╨░╨╖╨║╨░"),
     "toggle": MessageLookupByLibrary.simpleMessage("╨Я╨╡╤А╨╡╨║╨╗╤О╤З╨╕╤В╤М"),
     "tolerance": MessageLookupByLibrary.simpleMessage("╨Ф╨╛╨┐╤Г╤Б╨║"),
@@ -1933,13 +2355,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "torch": MessageLookupByLibrary.simpleMessage("╨д╨╛╨╜╨░╤А╨╕╨║"),
     "total": MessageLookupByLibrary.simpleMessage("╨Т╤Б╨╡╨│╨╛"),
     "totalDownload": MessageLookupByLibrary.simpleMessage("╨Ч╨░╨│╤А╤Г╨╢╨╡╨╜╨╛"),
-    "totalTraffic": MessageLookupByLibrary.simpleMessage("╨Ю╨▒╤Й╨╕╨╣ ╤В╤А╨░╤Д╨╕╨║"),
+    "totalTraffic": MessageLookupByLibrary.simpleMessage(
+      "╨Ю╨▒╤Й╨╕╨╣ ╤В╤А╨░╤Д╨╕╨║",
+    ),
     "totalUpload": MessageLookupByLibrary.simpleMessage("╨Ю╤В╨┤╨░╨╜╨╛"),
     "tproxyPort": MessageLookupByLibrary.simpleMessage("╨Я╨╛╤А╤В TProxy"),
     "traffic": MessageLookupByLibrary.simpleMessage("╨в╤А╨░╤Д╨╕╨║"),
     "trafficPeak": m78,
     "trafficTotal": m79,
-    "trafficUsage": MessageLookupByLibrary.simpleMessage("╨б╤В╨░╤В╨╕╤Б╤В╨╕╨║╨░ ╤В╤А╨░╤Д╨╕╨║╨░"),
+    "trafficUsage": MessageLookupByLibrary.simpleMessage(
+      "╨б╤В╨░╤В╨╕╤Б╤В╨╕╨║╨░ ╤В╤А╨░╤Д╨╕╨║╨░",
+    ),
     "transport": MessageLookupByLibrary.simpleMessage("╨в╤А╨░╨╜╤Б╨┐╨╛╤А╤В"),
     "tun": MessageLookupByLibrary.simpleMessage("TUN"),
     "tunAuthorizationFailed": MessageLookupByLibrary.simpleMessage(
@@ -1962,32 +2388,48 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "ultra": MessageLookupByLibrary.simpleMessage("╨Ь╨░╨║╤Б╨╕╨╝╤Г╨╝"),
     "undo": MessageLookupByLibrary.simpleMessage("╨Ю╤В╨╝╨╡╨╜╨╕╤В╤М"),
-    "unifiedDelay": MessageLookupByLibrary.simpleMessage("╨Х╨┤╨╕╨╜╨░╤П ╨╖╨░╨┤╨╡╤А╨╢╨║╨░"),
+    "unifiedDelay": MessageLookupByLibrary.simpleMessage(
+      "╨Х╨┤╨╕╨╜╨░╤П ╨╖╨░╨┤╨╡╤А╨╢╨║╨░",
+    ),
     "unknown": MessageLookupByLibrary.simpleMessage("╨Э╨╡╨╕╨╖╨▓╨╡╤Б╤В╨╜╨╛"),
     "unknownNetworkError": MessageLookupByLibrary.simpleMessage(
       "╨Э╨╡╨╕╨╖╨▓╨╡╤Б╤В╨╜╨░╤П ╤Б╨╡╤В╨╡╨▓╨░╤П ╨╛╤И╨╕╨▒╨║╨░",
     ),
-    "unmaximize": MessageLookupByLibrary.simpleMessage("╨б╨▓╨╡╤А╨╜╤Г╤В╤М ╨▓ ╨╛╨║╨╜╨╛"),
+    "unmaximize": MessageLookupByLibrary.simpleMessage(
+      "╨б╨▓╨╡╤А╨╜╤Г╤В╤М ╨▓ ╨╛╨║╨╜╨╛",
+    ),
     "unnamed": MessageLookupByLibrary.simpleMessage("╨С╨╡╨╖ ╨╜╨░╨╖╨▓╨░╨╜╨╕╤П"),
-    "unpinWindow": MessageLookupByLibrary.simpleMessage("╨Ю╤В╨║╤А╨╡╨┐╨╕╤В╤М ╨╛╨║╨╜╨╛"),
+    "unpinWindow": MessageLookupByLibrary.simpleMessage(
+      "╨Ю╤В╨║╤А╨╡╨┐╨╕╤В╤М ╨╛╨║╨╜╨╛",
+    ),
     "update": MessageLookupByLibrary.simpleMessage("╨Ю╨▒╨╜╨╛╨▓╨╕╤В╤М"),
     "upload": MessageLookupByLibrary.simpleMessage("╨Ю╤В╨┤╨░╤З╨░"),
-    "uploadBandwidth": MessageLookupByLibrary.simpleMessage("╨б╨║╨╛╤А╨╛╤Б╤В╤М ╨╛╤В╨┤╨░╤З╨╕"),
+    "uploadBandwidth": MessageLookupByLibrary.simpleMessage(
+      "╨б╨║╨╛╤А╨╛╤Б╤В╤М ╨╛╤В╨┤╨░╤З╨╕",
+    ),
     "url": MessageLookupByLibrary.simpleMessage("URL"),
     "urlTip": m80,
-    "useHosts": MessageLookupByLibrary.simpleMessage("╨Ш╤Б╨┐╨╛╨╗╤М╨╖╨╛╨▓╨░╤В╤М hosts"),
+    "useHosts": MessageLookupByLibrary.simpleMessage(
+      "╨Ш╤Б╨┐╨╛╨╗╤М╨╖╨╛╨▓╨░╤В╤М hosts",
+    ),
     "useSystemHosts": MessageLookupByLibrary.simpleMessage(
       "╨Ш╤Б╨┐╨╛╨╗╤М╨╖╨╛╨▓╨░╤В╤М ╤Б╨╕╤Б╤В╨╡╨╝╨╜╤Л╨╣ hosts",
     ),
-    "usedShort": MessageLookupByLibrary.simpleMessage("╨╕╤Б╨┐╨╛╨╗╤М╨╖╨╛╨▓╨░╨╜╨╛"),
+    "usedShort": MessageLookupByLibrary.simpleMessage(
+      "╨╕╤Б╨┐╨╛╨╗╤М╨╖╨╛╨▓╨░╨╜╨╛",
+    ),
     "usedTraffic": MessageLookupByLibrary.simpleMessage(
       "╨Ш╤Б╨┐╨╛╨╗╤М╨╖╨╛╨▓╨░╨╜╨╜╤Л╨╣ ╤В╤А╨░╤Д╨╕╨║",
     ),
     "userAgent": MessageLookupByLibrary.simpleMessage("User-Agent"),
-    "username": MessageLookupByLibrary.simpleMessage("╨Ш╨╝╤П ╨┐╨╛╨╗╤М╨╖╨╛╨▓╨░╤В╨╡╨╗╤П"),
+    "username": MessageLookupByLibrary.simpleMessage(
+      "╨Ш╨╝╤П ╨┐╨╛╨╗╤М╨╖╨╛╨▓╨░╤В╨╡╨╗╤П",
+    ),
     "value": MessageLookupByLibrary.simpleMessage("╨Ч╨╜╨░╤З╨╡╨╜╨╕╨╡"),
     "view": MessageLookupByLibrary.simpleMessage("╨Я╤А╨╛╤Б╨╝╨╛╤В╤А"),
-    "virtualIpv4": MessageLookupByLibrary.simpleMessage("╨Т╨╕╤А╤В╤Г╨░╨╗╤М╨╜╤Л╨╣ IPv4"),
+    "virtualIpv4": MessageLookupByLibrary.simpleMessage(
+      "╨Т╨╕╤А╤В╤Г╨░╨╗╤М╨╜╤Л╨╣ IPv4",
+    ),
     "vividStyle": MessageLookupByLibrary.simpleMessage("╨п╤А╨║╨╕╨╣"),
     "vpnConfigChangeDetected": MessageLookupByLibrary.simpleMessage(
       "╨Ю╨▒╨╜╨░╤А╤Г╨╢╨╡╨╜╨╛ ╨╕╨╖╨╝╨╡╨╜╨╡╨╜╨╕╨╡ ╨╜╨░╤Б╤В╤А╨╛╨╡╨║ VPN",
@@ -2010,6 +2452,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "yearsAgo": m81,
     "yearsAgoShort": m82,
     "yes": MessageLookupByLibrary.simpleMessage("╨Ф╨░"),
-    "zhCN": MessageLookupByLibrary.simpleMessage("╨г╨┐╤А╨╛╤Й╤С╨╜╨╜╤Л╨╣ ╨║╨╕╤В╨░╨╣╤Б╨║╨╕╨╣"),
+    "zhCN": MessageLookupByLibrary.simpleMessage(
+      "╨г╨┐╤А╨╛╤Й╤С╨╜╨╜╤Л╨╣ ╨║╨╕╤В╨░╨╣╤Б╨║╨╕╨╣",
+    ),
   };
 }

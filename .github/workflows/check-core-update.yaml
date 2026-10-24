@@ -1,0 +1,163 @@
+name: check-core-update
+
+# Watches legiz-ru/Prizrak-Core for a newer tag than the one pinned in
+# core/go.mod and opens (or refreshes) a pull request that bumps the pin and
+# refreshes go.sum. Building is still a deliberate step: build.yaml only
+# triggers on a v* tag, so opening a PR never publishes anything.
+
+on:
+  schedule:
+    # Daily at 06:17 UTC. Deliberately off the hour - the top of the hour is
+    # the most contended slot on GitHub's scheduler.
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+    inputs:
+      force_tag:
+        description: "Check this specific tag instead of the latest (e.g. v1.19.33-r1)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: check-core-update
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - id: pinned
+        name: Read pinned core version
+        run: |
+          set -euo pipefail
+          pinned=$(grep -E '^\s*replace\s+github\.com/metacubex/mihomo\s*=>' core/go.mod \
+                  | grep -oE 'v[0-9][^[:space:]]*' | tail -1)
+          if [ -z "$pinned" ]; then
+            echo "::error::Could not find the Prizrak-Core replace line in core/go.mod"
+            exit 1
+          fi
+          echo "version=$pinned" >> "$GITHUB_OUTPUT"
+          echo "pinned in core/go.mod: $pinned"
+
+      - id: latest
+        name: Query latest upstream tag
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FORCE_TAG: ${{ inputs.force_tag }}
+        run: |
+          set -euo pipefail
+          if [ -n "$FORCE_TAG" ]; then
+            latest="$FORCE_TAG"
+          else
+            latest=$(gh api repos/legiz-ru/Prizrak-Core/tags --jq '.[].name' | sort -V | tail -1)
+          fi
+          if [ -z "$latest" ]; then
+            echo "::warning::Could not read tags from legiz-ru/Prizrak-Core"
+            echo "version=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "version=$latest" >> "$GITHUB_OUTPUT"
+          echo "latest upstream:      $latest"
+
+      - name: Compare
+        id: compare
+        env:
+          PINNED: ${{ steps.pinned.outputs.version }}
+          LATEST: ${{ steps.latest.outputs.version }}
+        run: |
+          set -euo pipefail
+          echo "pinned=$PINNED"
+          echo "latest=$LATEST"
+          if [ -z "$LATEST" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          elif [ "$LATEST" = "$PINNED" ]; then
+            echo "already up to date"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "update available: $PINNED -> $LATEST"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "branch=core-update/$LATEST" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Bump the pin and refresh go.sum
+        if: steps.compare.outputs.changed == 'true'
+        env:
+          LATEST: ${{ steps.latest.outputs.version }}
+          PINNED: ${{ steps.pinned.outputs.version }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "${{ steps.compare.outputs.branch }}"
+
+          # Replace only the version on the mihomo replace line.
+          sed -i -E "s#^(replace github\.com/metacubex/mihomo => github\.com/legiz-ru/Prizrak-Core ).*#\1$LATEST#" core/go.mod
+          grep -E '^\s*replace' core/go.mod
+
+      - name: Resolve dependencies
+        if: steps.compare.outputs.changed == 'true'
+        uses: actions/setup-go@v6
+        with:
+          go-version: "1.26.0"
+          cache-dependency-path: core/go.sum
+
+      - name: go mod tidy
+        if: steps.compare.outputs.changed == 'true'
+        working-directory: core
+        run: go mod tidy
+
+      - name: Commit
+        if: steps.compare.outputs.changed == 'true'
+        env:
+          PINNED: ${{ steps.pinned.outputs.version }}
+          LATEST: ${{ steps.latest.outputs.version }}
+        run: |
+          set -euo pipefail
+          if git diff --quiet; then
+            echo "no changes produced - nothing to open"
+            exit 0
+          fi
+          git add core/go.mod core/go.sum
+          git commit -m "chore(core): update Prizrak-Core $PINNED -> $LATEST"
+          git push -f origin "${{ steps.compare.outputs.branch }}"
+
+      - name: Open or refresh the pull request
+        if: steps.compare.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PINNED: ${{ steps.pinned.outputs.version }}
+          LATEST: ${{ steps.latest.outputs.version }}
+          BRANCH: ${{ steps.compare.outputs.branch }}
+        run: |
+          set -euo pipefail
+          body=$(cat <<EOF
+          Automated core bump detected by \`check-core-update\`.
+
+          | | version |
+          |---|---|
+          | pinned | \`$PINNED\` |
+          | latest | \`$LATEST\` |
+
+          \`go mod tidy\` was re-run, so \`core/go.sum\` is refreshed.
+
+          Merging this does **not** publish anything - \`build.yaml\` only
+          triggers on a \`v*\` tag. Review the go.mod diff, then tag a release
+          when you are happy with it.
+          EOF
+          )
+          existing=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            echo "PR #$existing already open for $BRANCH - refreshing body"
+            gh pr edit "$existing" --body "$body"
+          else
+            gh pr create \
+              --base main \
+              --head "$BRANCH" \
+              --title "chore(core): update Prizrak-Core $PINNED -> $LATEST" \
+              --body "$body"
+          fi

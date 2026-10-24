@@ -23,7 +23,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m0(count, skipped) =>
       "${count} ├а ajouter, ${skipped} ignor├йs car d├йj├а pr├йsents";
 
-  static String m1(detail) => "Impossible dтАЩeffacer les donn├йes┬а: ${detail}";
+  static String m1(detail) =>
+      "Impossible dтАЩeffacer les donn├йes┬а: ${detail}";
 
   static String m2(code) =>
       "Windows a refus├й dтАЩex├йcuter FlClashCore.exe (erreur ${code}). Une strat├йgie de contr├┤le des applications, telle que Smart App Control ou AppLocker, bloque les programmes non sign├йs┬а; autorisez FlClash dans cette strat├йgie ou d├йsactivez-la, puis r├йessayez.";
@@ -121,7 +122,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m37(providerName) =>
       "${providerName} nтАЩest pas un fournisseur de proxys valide";
 
-  static String m38(ruleSet) => "${ruleSet} nтАЩest pas un jeu de r├иgles valide";
+  static String m38(ruleSet) =>
+      "${ruleSet} nтАЩest pas un jeu de r├иgles valide";
 
   static String m39(subRule) => "${subRule} nтАЩest pas un SUB_RULE valide";
 
@@ -239,7 +241,9 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "about": MessageLookupByLibrary.simpleMessage("├А propos"),
-    "accessControl": MessageLookupByLibrary.simpleMessage("Contr├┤le dтАЩacc├иs"),
+    "accessControl": MessageLookupByLibrary.simpleMessage(
+      "Contr├┤le dтАЩacc├иs",
+    ),
     "accessControlAllowDesc": MessageLookupByLibrary.simpleMessage(
       "Seules les apps s├йlectionn├йes passent par le VPN",
     ),
@@ -383,9 +387,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "backupFromNewerVersion": MessageLookupByLibrary.simpleMessage(
       "Cette sauvegarde provient dтАЩune version plus r├йcente de lтАЩapp. Mettez lтАЩapp ├а jour avant de la restaurer",
     ),
-    "backupSuccess": MessageLookupByLibrary.simpleMessage("Sauvegarde r├йussie"),
+    "backupSuccess": MessageLookupByLibrary.simpleMessage(
+      "Sauvegarde r├йussie",
+    ),
     "basicInfo": MessageLookupByLibrary.simpleMessage("Infos de base"),
-    "basicStrategy": MessageLookupByLibrary.simpleMessage("Strat├йgies de base"),
+    "basicStrategy": MessageLookupByLibrary.simpleMessage(
+      "Strat├йgies de base",
+    ),
     "batchAdd": MessageLookupByLibrary.simpleMessage("Ajout group├й"),
     "batchImport": MessageLookupByLibrary.simpleMessage("Importation group├йe"),
     "batchLinkInputTip": MessageLookupByLibrary.simpleMessage(
@@ -410,7 +418,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Bloquer la connexion",
     ),
     "brightness": MessageLookupByLibrary.simpleMessage("Luminosit├й"),
-    "bypassDomain": MessageLookupByLibrary.simpleMessage("Domaines contourn├йs"),
+    "bypassDomain": MessageLookupByLibrary.simpleMessage(
+      "Domaines contourn├йs",
+    ),
     "bypassDomainDesc": MessageLookupByLibrary.simpleMessage(
       "Les domaines contourn├йs ne sтАЩappliquent que si le proxy syst├иme est activ├й.",
     ),
@@ -497,7 +507,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "colorStyle": MessageLookupByLibrary.simpleMessage("Style de couleur"),
     "columns": MessageLookupByLibrary.simpleMessage("Colonnes"),
     "compact": MessageLookupByLibrary.simpleMessage("Compact"),
-    "compatible": MessageLookupByLibrary.simpleMessage("Mode de compatibilit├й"),
+    "compatible": MessageLookupByLibrary.simpleMessage(
+      "Mode de compatibilit├й",
+    ),
     "confirm": MessageLookupByLibrary.simpleMessage("Confirmer"),
     "confirmClearAllData": MessageLookupByLibrary.simpleMessage(
       "Voulez-vous vraiment effacer toutes les donn├йes┬а?",
@@ -792,7 +804,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "enabled": MessageLookupByLibrary.simpleMessage("Activ├й"),
     "entries": MessageLookupByLibrary.simpleMessage(" entr├йes"),
     "error": MessageLookupByLibrary.simpleMessage("Erreur"),
-    "errorDetails": MessageLookupByLibrary.simpleMessage("D├йtails de lтАЩerreur"),
+    "errorDetails": MessageLookupByLibrary.simpleMessage(
+      "D├йtails de lтАЩerreur",
+    ),
     "es": MessageLookupByLibrary.simpleMessage("Espagnol"),
     "exclude": MessageLookupByLibrary.simpleMessage(
       "Masquer des t├вches r├йcentes",
@@ -803,7 +817,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "excludeDstPortDesc": MessageLookupByLibrary.simpleMessage(
       "Le trafic vers les ports de destination exclus ne passe pas par TUN.",
     ),
-    "excludeFilter": MessageLookupByLibrary.simpleMessage("Filtre dтАЩexclusion"),
+    "excludeFilter": MessageLookupByLibrary.simpleMessage(
+      "Filtre dтАЩexclusion",
+    ),
     "excludeInterface": MessageLookupByLibrary.simpleMessage(
       "Interfaces exclues",
     ),
@@ -839,7 +855,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "extend": MessageLookupByLibrary.simpleMessage("Extension"),
     "extendMode": MessageLookupByLibrary.simpleMessage("Mode dтАЩextension"),
-    "extendScript": MessageLookupByLibrary.simpleMessage("Script dтАЩextension"),
+    "extendScript": MessageLookupByLibrary.simpleMessage(
+      "Script dтАЩextension",
+    ),
     "externalController": MessageLookupByLibrary.simpleMessage(
       "Contr├┤leur externe",
     ),
@@ -1031,7 +1049,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "intelligentSelected": MessageLookupByLibrary.simpleMessage(
       "S├йlection intelligente",
     ),
-    "interfaceName": MessageLookupByLibrary.simpleMessage("Nom de lтАЩinterface"),
+    "interfaceName": MessageLookupByLibrary.simpleMessage(
+      "Nom de lтАЩinterface",
+    ),
     "interfaceNameDesc": MessageLookupByLibrary.simpleMessage(
       "Le nom de lтАЩinterface est lтАЩinterface r├йseau utilis├йe par les connexions sortantes.",
     ),
@@ -1088,7 +1108,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "invalidSubRule": m39,
     "ipAddress": MessageLookupByLibrary.simpleMessage("Adresse IP"),
     "ipAsn": MessageLookupByLibrary.simpleMessage("ASN"),
-    "ipFlagAbuser": MessageLookupByLibrary.simpleMessage("Ant├йc├йdents dтАЩabus"),
+    "ipFlagAbuser": MessageLookupByLibrary.simpleMessage(
+      "Ant├йc├йdents dтАЩabus",
+    ),
     "ipFlagProxy": MessageLookupByLibrary.simpleMessage("Proxy"),
     "ipFlagTor": MessageLookupByLibrary.simpleMessage("Tor"),
     "ipFlagVpn": MessageLookupByLibrary.simpleMessage("VPN"),
@@ -1144,7 +1166,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "label": MessageLookupByLibrary.simpleMessage("Libell├й"),
     "language": MessageLookupByLibrary.simpleMessage("Langue"),
     "large": MessageLookupByLibrary.simpleMessage("Grande"),
-    "lastUpdated": MessageLookupByLibrary.simpleMessage("Derni├иre mise ├а jour"),
+    "lastUpdated": MessageLookupByLibrary.simpleMessage(
+      "Derni├иre mise ├а jour",
+    ),
     "launchInterrupted": MessageLookupByLibrary.simpleMessage(
       "D├йmarrage inachev├й",
     ),
@@ -1241,7 +1265,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "memoryInfoDesc": MessageLookupByLibrary.simpleMessage(
       "M├йmoire utilis├йe par lтАЩapp et le c┼Уur",
     ),
-    "memoryReleased": MessageLookupByLibrary.simpleMessage("M├йmoire lib├йr├йe"),
+    "memoryReleased": MessageLookupByLibrary.simpleMessage(
+      "M├йmoire lib├йr├йe",
+    ),
     "memoryReleasedSize": m44,
     "messageTest": MessageLookupByLibrary.simpleMessage("Test de message"),
     "messageTestTip": MessageLookupByLibrary.simpleMessage(
@@ -1304,7 +1330,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "noNetwork": MessageLookupByLibrary.simpleMessage("Aucun r├йseau"),
     "noNetworkApp": MessageLookupByLibrary.simpleMessage("Apps sans r├йseau"),
-    "noResolve": MessageLookupByLibrary.simpleMessage("Ne pas r├йsoudre lтАЩIP"),
+    "noResolve": MessageLookupByLibrary.simpleMessage(
+      "Ne pas r├йsoudre lтАЩIP",
+    ),
     "noResolveHostname": MessageLookupByLibrary.simpleMessage(
       "Ne pas r├йsoudre le nom dтАЩh├┤te",
     ),
@@ -1404,7 +1432,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Appuyez sur une combinaison de touches",
     ),
     "preview": MessageLookupByLibrary.simpleMessage("Aper├зu"),
-    "previousMatch": MessageLookupByLibrary.simpleMessage("R├йsultat pr├йc├йdent"),
+    "previousMatch": MessageLookupByLibrary.simpleMessage(
+      "R├йsultat pr├йc├йdent",
+    ),
     "privateKey": MessageLookupByLibrary.simpleMessage("Cl├й priv├йe"),
     "privateKeyPassphrase": MessageLookupByLibrary.simpleMessage(
       "Phrase secr├иte de la cl├й priv├йe",
@@ -1484,13 +1514,19 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "quickActions": MessageLookupByLibrary.simpleMessage("Actions rapides"),
     "quickEdit": MessageLookupByLibrary.simpleMessage("Modification rapide"),
-    "recentRequests": MessageLookupByLibrary.simpleMessage("Requ├кtes r├йcentes"),
+    "recentRequests": MessageLookupByLibrary.simpleMessage(
+      "Requ├кtes r├йcentes",
+    ),
     "recommendedIcons": MessageLookupByLibrary.simpleMessage("Suggestions"),
-    "recordType": MessageLookupByLibrary.simpleMessage("Type dтАЩenregistrement"),
+    "recordType": MessageLookupByLibrary.simpleMessage(
+      "Type dтАЩenregistrement",
+    ),
     "redirPort": MessageLookupByLibrary.simpleMessage("Port Redir"),
     "redo": MessageLookupByLibrary.simpleMessage("R├йtablir"),
     "regex": MessageLookupByLibrary.simpleMessage("Regex"),
-    "releaseMemory": MessageLookupByLibrary.simpleMessage("Lib├йrer la m├йmoire"),
+    "releaseMemory": MessageLookupByLibrary.simpleMessage(
+      "Lib├йrer la m├йmoire",
+    ),
     "releaseMemoryFailed": MessageLookupByLibrary.simpleMessage(
       "├Йchec de la lib├йration de la m├йmoire",
     ),
@@ -1764,7 +1800,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "serviceFailed": MessageLookupByLibrary.simpleMessage(
       "├Йchec de la v├йrification",
     ),
-    "serviceManage": MessageLookupByLibrary.simpleMessage("G├йrer les services"),
+    "serviceManage": MessageLookupByLibrary.simpleMessage(
+      "G├йrer les services",
+    ),
     "serviceOriginalsOnly": MessageLookupByLibrary.simpleMessage(
       "Contenus originaux uniquement",
     ),

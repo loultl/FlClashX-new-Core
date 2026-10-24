@@ -118,7 +118,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m37(providerName) =>
       "${providerName} no es un proveedor de proxies v├бlido";
 
-  static String m38(ruleSet) => "${ruleSet} no es un conjunto de reglas v├бlido";
+  static String m38(ruleSet) =>
+      "${ruleSet} no es un conjunto de reglas v├бlido";
 
   static String m39(subRule) => "${subRule} no es una SUB_RULE v├бlida";
 
@@ -663,7 +664,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "disclaimerAcceptContent": MessageLookupByLibrary.simpleMessage(
       "Al instalar, copiar o usar el Software, se considera que has le├нdo y aceptado esta declaraci├│n en su totalidad. Si no est├бs de acuerdo con alguno de sus t├йrminos, deja de usar el Software y desinst├бlalo de inmediato.",
     ),
-    "disclaimerAcceptTitle": MessageLookupByLibrary.simpleMessage("Aceptaci├│n"),
+    "disclaimerAcceptTitle": MessageLookupByLibrary.simpleMessage(
+      "Aceptaci├│n",
+    ),
     "disclaimerAcknowledgeLabel": MessageLookupByLibrary.simpleMessage(
       "He le├нdo y entiendo esta declaraci├│n",
     ),
@@ -840,7 +843,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "extend": MessageLookupByLibrary.simpleMessage("Extensi├│n"),
     "extendMode": MessageLookupByLibrary.simpleMessage("Modo de extensi├│n"),
-    "extendScript": MessageLookupByLibrary.simpleMessage("Script de extensi├│n"),
+    "extendScript": MessageLookupByLibrary.simpleMessage(
+      "Script de extensi├│n",
+    ),
     "externalController": MessageLookupByLibrary.simpleMessage(
       "Controlador externo",
     ),
@@ -1141,7 +1146,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "label": MessageLookupByLibrary.simpleMessage("Etiqueta"),
     "language": MessageLookupByLibrary.simpleMessage("Idioma"),
     "large": MessageLookupByLibrary.simpleMessage("Grande"),
-    "lastUpdated": MessageLookupByLibrary.simpleMessage("├Ъltima actualizaci├│n"),
+    "lastUpdated": MessageLookupByLibrary.simpleMessage(
+      "├Ъltima actualizaci├│n",
+    ),
     "launchInterrupted": MessageLookupByLibrary.simpleMessage(
       "El inicio no se complet├│",
     ),
@@ -1524,7 +1531,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "respectRulesDesc": MessageLookupByLibrary.simpleMessage(
       "Respetar reglas enruta las conexiones DNS seg├║n las reglas y requiere un Proxy Server Nameserver.",
     ),
-    "responseCode": MessageLookupByLibrary.simpleMessage("C├│digo de respuesta"),
+    "responseCode": MessageLookupByLibrary.simpleMessage(
+      "C├│digo de respuesta",
+    ),
     "restart": MessageLookupByLibrary.simpleMessage("Reiniciar"),
     "restartCoreTip": MessageLookupByLibrary.simpleMessage(
       "┬┐Seguro que quieres reiniciar el n├║cleo?",
@@ -1622,7 +1631,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "ruleActionNotDesc": MessageLookupByLibrary.simpleMessage(
       "Regla l├│gica NOT",
     ),
-    "ruleActionOrDesc": MessageLookupByLibrary.simpleMessage("Regla l├│gica OR"),
+    "ruleActionOrDesc": MessageLookupByLibrary.simpleMessage(
+      "Regla l├│gica OR",
+    ),
     "ruleActionProcessNameDesc": MessageLookupByLibrary.simpleMessage(
       "Coincide con el nombre del proceso; en Android coincide con el nombre del paquete",
     ),
