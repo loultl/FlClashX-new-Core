@@ -29,6 +29,7 @@ const (
 	decodeShareLinksMethod         CoreMethod = "decodeShareLinks"
 	updateConfigMethod             CoreMethod = "updateConfig"
 	getProxiesMethod               CoreMethod = "getProxies"
+	getSmartWeightsMethod          CoreMethod = "getSmartWeights"
 	changeProxyMethod              CoreMethod = "changeProxy"
 	getTrafficMethod               CoreMethod = "getTraffic"
 	getTotalTrafficMethod          CoreMethod = "getTotalTraffic"
@@ -269,3 +270,4 @@ type GeoUpdateStatus struct {
 	Skipped  bool   `json:"skipped,omitempty"`
 	Error    string `json:"error,omitempty"`
 }
+

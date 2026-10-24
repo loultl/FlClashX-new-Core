@@ -123,3 +123,5 @@ flutter_intl:
   class_name: AppLocalizations
   arb_dir: arb
   output_dir: lib/l10n
+
+
