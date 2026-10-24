@@ -135,12 +135,9 @@ PatchClashConfig syncProfileSettings(
       },
     );
   }
-  List<String>? strings(String key, bool Function(String) valid) =>
-      read<List>(key)
-          ?.whereType<String>()
-          .map((item) => item.trim())
-          .where(valid)
-          .toList();
+  List<String>? strings(String key, bool Function(String) valid) => read<List>(
+    key,
+  )?.whereType<String>().map((item) => item.trim()).where(valid).toList();
 
   final tunDevice = read<String>('tun.device');
   next = next.copyWith(
