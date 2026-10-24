@@ -65,6 +65,8 @@ mixin CoreInterface {
 
   Future<ProxiesData> getProxies();
 
+  Future<List<SmartWeight>> getSmartWeights(String groupName);
+
   Future<ChangeProxyResult> changeProxy(ChangeProxyParams changeProxyParams);
 
   Future<RouteSnapshot?> watchRoute(bool watch);
@@ -405,6 +407,24 @@ abstract class CoreHandlerInterface with CoreInterface {
   }
 
   @override
+  Future<List<SmartWeight>> getSmartWeights(String groupName) async {
+    final data = await _invokeMethod<List<dynamic>>(
+      method: CoreMethod.getSmartWeights,
+      arguments: groupName,
+    );
+    if (data == null) {
+      throw CoreMethodException(
+        code: 'no_response',
+        message: 'Core did not answer ${CoreMethod.getSmartWeights.name}',
+      );
+    }
+    return List.unmodifiable(
+      data.map(
+        (item) => SmartWeight.fromJson(Map<String, Object?>.from(item as Map)),
+      ),
+    );
+  }
+  @override
   Future<ChangeProxyResult> changeProxy(
     ChangeProxyParams changeProxyParams,
   ) async {
@@ -639,3 +659,4 @@ abstract class CoreHandlerInterface with CoreInterface {
     return await _invokeMethod<String>(method: CoreMethod.getCoreVersion) ?? '';
   }
 }
+

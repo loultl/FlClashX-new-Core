@@ -8,6 +8,8 @@ import 'package:fl_clash/widgets/widgets.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'smart.dart';
+
 void selectGroupProxy(
   WidgetRef ref, {
   required String groupName,
@@ -16,7 +18,15 @@ void selectGroupProxy(
 }) {
   final isComputedSelected = groupType.isComputedSelected;
   if (isComputedSelected || groupType == GroupType.Selector) {
-    final currentProxyName = ref.read(proxyNameProvider(groupName));
+    final savedProxyName = ref.read(proxyNameProvider(groupName));
+    final group = groupType == GroupType.Smart
+        ? ref.read(groupsProvider).getGroup(groupName)
+        : null;
+    final currentProxyName = group == null
+        ? savedProxyName
+        : group.fixed == true
+        ? group.now
+        : null;
     final nextProxyName = switch (isComputedSelected) {
       true => currentProxyName == proxyName ? '' : proxyName,
       false => proxyName,
@@ -96,7 +106,12 @@ class ProxyCard extends ConsumerWidget {
             children: [
               SizedBox(
                 height: measure.textHeight(AppTextStyle.footnote),
-                child: _ProxyDesc(proxy: proxy, style: typeStyle),
+                child: proxy.type == GroupType.Smart.name
+                    ? SmartDetailsButton(
+                        groupName: proxy.name,
+                        style: typeStyle,
+                      )
+                    : _ProxyDesc(proxy: proxy, style: typeStyle),
               ),
               const SizedBox(height: 6),
               delayText,
@@ -110,13 +125,14 @@ class ProxyCard extends ConsumerWidget {
               children: [
                 Flexible(
                   flex: 1,
-                  child: TooltipText(
-                    text: Text(
-                      proxy.description,
-                      maxLines: 1,
-                      style: typeStyle,
-                    ),
-                  ),
+                  child: proxy.type == GroupType.Smart.name
+                      ? SmartDetailsButton(
+                          groupName: proxy.name,
+                          style: typeStyle,
+                        )
+                      : TooltipText(
+                          text: Text(proxy.type, maxLines: 1, style: typeStyle),
+                        ),
                 ),
                 delayText,
               ],
@@ -129,11 +145,19 @@ class ProxyCard extends ConsumerWidget {
             groupName,
           ).select((name) => name == proxy.name),
         );
-        final pinned =
-            groupType.isComputedSelected &&
-            ref.watch(
-              proxyNameProvider(groupName).select((name) => name == proxy.name),
-            );
+        final pinned = groupType == GroupType.Smart
+            ? inUse &&
+                  ref.watch(
+                    groupsProvider.select(
+                      (groups) => groups.getGroup(groupName)?.fixed == true,
+                    ),
+                  )
+            : groupType.isComputedSelected &&
+                  ref.watch(
+                    proxyNameProvider(
+                      groupName,
+                    ).select((name) => name == proxy.name),
+                  );
         return CommonCard(
           radius: AppCorner.lg,
           enterActionsOnRight: true,
@@ -193,9 +217,7 @@ class _ProxyDesc extends ConsumerWidget {
           )
         : proxy.name;
     return EmojiText(
-      nodeName == proxy.name
-          ? proxy.description
-          : '${proxy.description}($nodeName)',
+      nodeName == proxy.name ? proxy.type : '${proxy.type}($nodeName)',
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: style,

@@ -23,6 +23,7 @@ enum CoreMethod {
   dumpRuleSet,
   compileRuleSet,
   getProxies,
+  getSmartWeights,
   changeProxy,
   getTraffic,
   getTotalTraffic,
@@ -174,3 +175,4 @@ LogLevel coreFailureLogLevel(Object? error) {
   }
   return error.isCoreUnavailable ? LogLevel.debug : LogLevel.warning;
 }
+

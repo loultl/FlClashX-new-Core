@@ -10,4 +10,6 @@ export 'managed_settings.dart';
 export 'profile_settings.dart';
 export 'provider_headers.dart';
 export 'references.dart';
+export 'smart.dart';
 export 'state.dart';
+

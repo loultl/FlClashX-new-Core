@@ -1,5 +1,6 @@
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/enum/enum.dart';
+import 'package:fl_clash/models/models.dart';
 import 'package:fl_clash/providers/providers.dart';
 import 'package:fl_clash/ui/icons/icons.dart';
 import 'package:fl_clash/views/proxies/list.dart';
@@ -8,6 +9,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'setting.dart';
+import 'smart.dart';
 import 'tab.dart';
 
 class ProxiesView extends ConsumerStatefulWidget {
@@ -117,6 +119,16 @@ class _ProxiesViewState extends ConsumerState<ProxiesView> {
     final isLoading = ref.watch(loadingProvider(LoadingTag.proxies));
     final picker = widget.picker;
     final primaryAction = _buildPrimaryAction();
+    final currentGroupName = ref.watch(
+      proxiesTabControllerStateProvider.select(
+        (state) => state.currentGroupName,
+      ),
+    );
+    final currentGroup = ref.watch(
+      groupsProvider.select(
+        (groups) => groups.getGroup(currentGroupName ?? ''),
+      ),
+    );
     final mode = ref.watch(
       patchClashConfigProvider.select((state) => state.mode),
     );
@@ -160,6 +172,12 @@ class _ProxiesViewState extends ConsumerState<ProxiesView> {
         searchActions: [?primaryAction],
         iconActions: [
           if (!picker) ...barActions,
+          if (_isTab && currentGroup?.type == GroupType.Smart)
+            IconButtonData(
+              glyph: AppGlyphs.sparkle,
+              tooltip: context.appLocalizations.smartDetails,
+              onPressed: () => showSmartDetails(context, currentGroup!.name),
+            ),
           if (_isTab && !picker)
             IconButtonData(
               glyph: AppGlyphs.locate,
@@ -181,3 +199,5 @@ class _ProxiesViewState extends ConsumerState<ProxiesView> {
     );
   }
 }
+
+

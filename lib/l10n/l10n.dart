@@ -90,24 +90,14 @@ class AppLocalizations {
     return Intl.message('Profile', name: 'profile', desc: '', args: []);
   }
 
-  /// `Announcement`
-  String get announcement {
-    return Intl.message(
-      'Announcement',
-      name: 'announcement',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Profiles`
   String get profiles {
     return Intl.message('Profiles', name: 'profiles', desc: '', args: []);
   }
 
-  /// `Settings`
+  /// `Tools`
   String get tools {
-    return Intl.message('Settings', name: 'tools', desc: '', args: []);
+    return Intl.message('Tools', name: 'tools', desc: '', args: []);
   }
 
   /// `Logs`
@@ -480,26 +470,6 @@ class AppLocalizations {
     );
   }
 
-  /// `Pin to menu bar`
-  String get menuBarMode {
-    return Intl.message(
-      'Pin to menu bar',
-      name: 'menuBarMode',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `The app lives in the menu bar: the window opens as a popover from its icon and there is no Dock icon. The zoom button pins it too.`
-  String get menuBarModeDesc {
-    return Intl.message(
-      'The app lives in the menu bar: the window opens as a popover from its icon and there is no Dock icon. The zoom button pins it too.',
-      name: 'menuBarModeDesc',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Auto run`
   String get autoRun {
     return Intl.message('Auto run', name: 'autoRun', desc: '', args: []);
@@ -510,96 +480,6 @@ class AppLocalizations {
     return Intl.message(
       'Auto run starts the proxy when the app opens.',
       name: 'autoRunDesc',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Open logs folder`
-  String get openLogsFolder {
-    return Intl.message(
-      'Open logs folder',
-      name: 'openLogsFolder',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Reset app`
-  String get resetApp {
-    return Intl.message('Reset app', name: 'resetApp', desc: '', args: []);
-  }
-
-  /// `Every profile, setting and the app's working folder will be deleted, then the app closes. Continue?`
-  String get resetAppTip {
-    return Intl.message(
-      'Every profile, setting and the app\'s working folder will be deleted, then the app closes. Continue?',
-      name: 'resetAppTip',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Managed by your provider`
-  String get managedByProvider {
-    return Intl.message(
-      'Managed by your provider',
-      name: 'managedByProvider',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `This value comes from your subscription. If you change it yourself, subscription updates will leave it alone. Right-click or long-press the row to hand it back to the provider.`
-  String get managedByProviderTip {
-    return Intl.message(
-      'This value comes from your subscription. If you change it yourself, subscription updates will leave it alone. Right-click or long-press the row to hand it back to the provider.',
-      name: 'managedByProviderTip',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Change`
-  String get takeOver {
-    return Intl.message('Change', name: 'takeOver', desc: '', args: []);
-  }
-
-  /// `Hand back to provider`
-  String get returnToProvider {
-    return Intl.message(
-      'Hand back to provider',
-      name: 'returnToProvider',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Hand settings back to provider`
-  String get returnAllToProvider {
-    return Intl.message(
-      'Hand settings back to provider',
-      name: 'returnAllToProvider',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Every setting you changed yourself will follow the subscription again.`
-  String get returnAllToProviderTip {
-    return Intl.message(
-      'Every setting you changed yourself will follow the subscription again.',
-      name: 'returnAllToProviderTip',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Dimmed settings are set by your subscription. Tap one to change it yourself.`
-  String get managedSettingsHint {
-    return Intl.message(
-      'Dimmed settings are set by your subscription. Tap one to change it yourself.',
-      name: 'managedSettingsHint',
       desc: '',
       args: [],
     );
@@ -830,54 +710,9 @@ class AppLocalizations {
     );
   }
 
-  /// `Appearance`
-  String get themeMode {
-    return Intl.message('Appearance', name: 'themeMode', desc: '', args: []);
-  }
-
   /// `Theme mode`
-  String get themeStyle {
-    return Intl.message('Theme mode', name: 'themeStyle', desc: '', args: []);
-  }
-
-  /// `Original`
-  String get themeStyleOriginal {
-    return Intl.message(
-      'Original',
-      name: 'themeStyleOriginal',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Enhanced`
-  String get themeStyleEnhanced {
-    return Intl.message(
-      'Enhanced',
-      name: 'themeStyleEnhanced',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Enhanced puts the service logo, plan, server and a connect button on the home page in place of the widget grid.`
-  String get themeStyleDesc {
-    return Intl.message(
-      'Enhanced puts the service logo, plan, server and a connect button on the home page in place of the widget grid.',
-      name: 'themeStyleDesc',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Website`
-  String get website {
-    return Intl.message('Website', name: 'website', desc: '', args: []);
-  }
-
-  /// `Support`
-  String get support {
-    return Intl.message('Support', name: 'support', desc: '', args: []);
+  String get themeMode {
+    return Intl.message('Theme mode', name: 'themeMode', desc: '', args: []);
   }
 
   /// `Theme color`
@@ -1090,24 +925,24 @@ class AppLocalizations {
     );
   }
 
-  /// `A multi-platform proxy client based on Mihomo, simple and easy to use, open-source and ad-free.`
+  /// `A multi-platform proxy client based on ClashMeta, simple and easy to use, open-source and ad-free.`
   String get desc {
     return Intl.message(
-      'A multi-platform proxy client based on Mihomo, simple and easy to use, open-source and ad-free.',
+      'A multi-platform proxy client based on ClashMeta, simple and easy to use, open-source and ad-free.',
       name: 'desc',
       desc: '',
       args: [],
     );
   }
 
-  /// `Starting VPN…`
+  /// `Starting VPNтАж`
   String get startVpn {
-    return Intl.message('Starting VPN…', name: 'startVpn', desc: '', args: []);
+    return Intl.message('Starting VPNтАж', name: 'startVpn', desc: '', args: []);
   }
 
-  /// `Stopping VPN…`
+  /// `Stopping VPNтАж`
   String get stopVpn {
-    return Intl.message('Stopping VPN…', name: 'stopVpn', desc: '', args: []);
+    return Intl.message('Stopping VPNтАж', name: 'stopVpn', desc: '', args: []);
   }
 
   /// `Local network permission denied: using the gvisor stack, LAN is unreachable.`
@@ -1355,13 +1190,13 @@ class AppLocalizations {
     );
   }
 
-  /// `The external controller lets you control the core at {address}.`
-  String externalControllerDesc(Object address) {
+  /// `The external controller lets you control the core on port 9090.`
+  String get externalControllerDesc {
     return Intl.message(
-      'The external controller lets you control the core at $address.',
+      'The external controller lets you control the core on port 9090.',
       name: 'externalControllerDesc',
       desc: '',
-      args: [address],
+      args: [],
     );
   }
 
@@ -1423,6 +1258,11 @@ class AppLocalizations {
       desc: '',
       args: [],
     );
+  }
+
+  /// `User-Agent`
+  String get userAgent {
+    return Intl.message('User-Agent', name: 'userAgent', desc: '', args: []);
   }
 
   /// `Unified delay`
@@ -1640,31 +1480,6 @@ class AppLocalizations {
     );
   }
 
-  /// `Original repository`
-  String get originalRepository {
-    return Intl.message(
-      'Original repository',
-      name: 'originalRepository',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Thanks for contribution`
-  String get thanks {
-    return Intl.message(
-      'Thanks for contribution',
-      name: 'thanks',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Gratitude`
-  String get gratitude {
-    return Intl.message('Gratitude', name: 'gratitude', desc: '', args: []);
-  }
-
   /// `App icon design`
   String get appIconDesign {
     return Intl.message(
@@ -1800,21 +1615,21 @@ class AppLocalizations {
     return Intl.message('Action', name: 'action', desc: '', args: []);
   }
 
-  /// `Import from clipboard`
-  String get clipboardImport {
+  /// `Smart selection`
+  String get intelligentSelected {
     return Intl.message(
-      'Import from clipboard',
-      name: 'clipboardImport',
+      'Smart selection',
+      name: 'intelligentSelected',
       desc: '',
       args: [],
     );
   }
 
-  /// `Add profile from clipboard`
-  String get addProfileFromClipboard {
+  /// `Import from clipboard`
+  String get clipboardImport {
     return Intl.message(
-      'Add profile from clipboard',
-      name: 'addProfileFromClipboard',
+      'Import from clipboard',
+      name: 'clipboardImport',
       desc: '',
       args: [],
     );
@@ -2555,99 +2370,299 @@ class AppLocalizations {
     return Intl.message('Disclaimer', name: 'disclaimer', desc: '', args: []);
   }
 
-  /// `FlClashX is a free, open-source client built on the Mihomo core. Here is a short note on what it does, what it does not do and what data it collects. By tapping “I agree” you accept these terms.`
+  /// `Before using FlClash ("the Software"), please read this statement carefully and make sure you understand all of it. Tapping "Agree" means you have read, understood, and accept every term below. If you do not agree, tap "Exit" and stop using the Software.`
   String get disclaimerDesc {
     return Intl.message(
-      'FlClashX is a free, open-source client built on the Mihomo core. Here is a short note on what it does, what it does not do and what data it collects. By tapping “I agree” you accept these terms.',
+      'Before using FlClash ("the Software"), please read this statement carefully and make sure you understand all of it. Tapping "Agree" means you have read, understood, and accept every term below. If you do not agree, tap "Exit" and stop using the Software.',
       name: 'disclaimerDesc',
       desc: '',
       args: [],
     );
   }
 
-  /// `What it is and what it is not`
+  /// `Nature of the software`
   String get disclaimerSoftwareTitle {
     return Intl.message(
-      'What it is and what it is not',
+      'Nature of the software',
       name: 'disclaimerSoftwareTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `The app only manages configurations and routes traffic by rules on your device.\n\nWe sell nothing and provide no proxy servers, nodes, subscriptions or network access. Every server and subscription comes from a third-party provider, and their legality, safety and quality are between you and that provider. The app is not affiliated with such providers and is not responsible for them.`
+  /// `The Software is an open-source network proxy client built on the Clash.Meta (mihomo) core. It only provides local tooling such as configuration management, rule-based routing, and traffic forwarding.`
   String get disclaimerSoftwareContent {
     return Intl.message(
-      'The app only manages configurations and routes traffic by rules on your device.\n\nWe sell nothing and provide no proxy servers, nodes, subscriptions or network access. Every server and subscription comes from a third-party provider, and their legality, safety and quality are between you and that provider. The app is not affiliated with such providers and is not responsible for them.',
+      'The Software is an open-source network proxy client built on the Clash.Meta (mihomo) core. It only provides local tooling such as configuration management, rule-based routing, and traffic forwarding.',
       name: 'disclaimerSoftwareContent',
       desc: '',
       args: [],
     );
   }
 
-  /// `Responsibility`
+  /// `The Software itself does not provide any proxy server, node, subscription, or network access service, and has no partnership, agency, or guarantee relationship with any provider of such services.`
+  String get disclaimerNoServiceStatement {
+    return Intl.message(
+      'The Software itself does not provide any proxy server, node, subscription, or network access service, and has no partnership, agency, or guarantee relationship with any provider of such services.',
+      name: 'disclaimerNoServiceStatement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Restrictions on use`
+  String get disclaimerUsageTitle {
+    return Intl.message(
+      'Restrictions on use',
+      name: 'disclaimerUsageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The Software is intended only for non-commercial uses such as learning, exchange, and technical research. Using it for any commercial purpose is strictly prohibited, including but not limited to paid distribution, bundled sales, use as part of a commercial service, or doing business in the name of the Software. Any commercial activity is unrelated to the Software and its developers.\n\nUsing the Software for anything that violates the laws and regulations of your country or region is strictly prohibited, including but not limited to bypassing lawfully imposed network access restrictions, spreading illegal content, launching network attacks, or infringing the lawful rights of others.`
+  String get disclaimerUsageContent {
+    return Intl.message(
+      'The Software is intended only for non-commercial uses such as learning, exchange, and technical research. Using it for any commercial purpose is strictly prohibited, including but not limited to paid distribution, bundled sales, use as part of a commercial service, or doing business in the name of the Software. Any commercial activity is unrelated to the Software and its developers.\n\nUsing the Software for anything that violates the laws and regulations of your country or region is strictly prohibited, including but not limited to bypassing lawfully imposed network access restrictions, spreading illegal content, launching network attacks, or infringing the lawful rights of others.',
+      name: 'disclaimerUsageContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your responsibility`
   String get disclaimerResponsibilityTitle {
     return Intl.message(
-      'Responsibility',
+      'Your responsibility',
       name: 'disclaimerResponsibilityTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Whether using the app is legal in your country is for you to judge, and you are responsible for what you do with it.\n\nThe app is provided “as is”, without any warranty. The developers are not liable for damage from using or being unable to use it, nor for third-party subscriptions, configurations and links.`
+  /// `You are responsible for making sure that using the Software is lawful where you live, and you alone bear the legal responsibility for everything you do with it and its consequences.\n\nThe subscriptions, nodes, and configurations you import are your own choice. Whether their source is lawful, their content is safe, and their service is reliable is a matter between you and their providers.`
   String get disclaimerResponsibilityContent {
     return Intl.message(
-      'Whether using the app is legal in your country is for you to judge, and you are responsible for what you do with it.\n\nThe app is provided “as is”, without any warranty. The developers are not liable for damage from using or being unable to use it, nor for third-party subscriptions, configurations and links.',
+      'You are responsible for making sure that using the Software is lawful where you live, and you alone bear the legal responsibility for everything you do with it and its consequences.\n\nThe subscriptions, nodes, and configurations you import are your own choice. Whether their source is lawful, their content is safe, and their service is reliable is a matter between you and their providers.',
       name: 'disclaimerResponsibilityContent',
       desc: '',
       args: [],
     );
   }
 
-  /// `Your data`
+  /// `Third-party content`
+  String get disclaimerThirdPartyTitle {
+    return Intl.message(
+      'Third-party content',
+      name: 'disclaimerThirdPartyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscription links, configuration files, rule sets, scripts, external resources, and external links are all provided by third parties. The developers cannot and do not review or guarantee their legality, accuracy, security, or availability.\n\nAny data leak, financial loss, account ban, or other loss caused by third-party content is to be settled between you and the third party; the developers bear no responsibility for it.`
+  String get disclaimerThirdPartyContent {
+    return Intl.message(
+      'Subscription links, configuration files, rule sets, scripts, external resources, and external links are all provided by third parties. The developers cannot and do not review or guarantee their legality, accuracy, security, or availability.\n\nAny data leak, financial loss, account ban, or other loss caused by third-party content is to be settled between you and the third party; the developers bear no responsibility for it.',
+      name: 'disclaimerThirdPartyContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No warranty`
+  String get disclaimerWarrantyTitle {
+    return Intl.message(
+      'No warranty',
+      name: 'disclaimerWarrantyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The Software is provided "as is" and "as available", without warranty of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, non-infringement, uninterrupted availability, freedom from errors, or freedom from security vulnerabilities.\n\nThe developers do not guarantee that the Software will meet your needs or that it will run without interruption or error.`
+  String get disclaimerWarrantyContent {
+    return Intl.message(
+      'The Software is provided "as is" and "as available", without warranty of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, non-infringement, uninterrupted availability, freedom from errors, or freedom from security vulnerabilities.\n\nThe developers do not guarantee that the Software will meet your needs or that it will run without interruption or error.',
+      name: 'disclaimerWarrantyContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Limitation of liability`
+  String get disclaimerLiabilityTitle {
+    return Intl.message(
+      'Limitation of liability',
+      name: 'disclaimerLiabilityTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To the maximum extent permitted by applicable law, neither the developers nor any contributor shall be liable for any direct, indirect, incidental, special, punitive, or consequential damages arising from the use of or inability to use the Software, including but not limited to data loss, device damage, network failures, business interruption, lost profits, or any resulting legal dispute, even if advised of the possibility of such damages.`
+  String get disclaimerLiabilityContent {
+    return Intl.message(
+      'To the maximum extent permitted by applicable law, neither the developers nor any contributor shall be liable for any direct, indirect, incidental, special, punitive, or consequential damages arising from the use of or inability to use the Software, including but not limited to data loss, device damage, network failures, business interruption, lost profits, or any resulting legal dispute, even if advised of the possibility of such damages.',
+      name: 'disclaimerLiabilityContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Data collection and privacy`
   String get disclaimerPrivacyTitle {
     return Intl.message(
-      'Your data',
+      'Data collection and privacy',
       name: 'disclaimerPrivacyTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `To find bugs the app collects technical data through Google Firebase: crash reports, the app and system versions, the device model and anonymised statistics on feature use.\n\nSubscription links, configuration contents, servers, visited sites, connections, traffic and logs are never collected or sent anywhere. They stay on your device only.`
+  /// `The Software does not collect or upload your subscription URLs, node details, configuration content, visited websites, connection records, traffic content, or logs. This data stays on your device and the developers have no access to it.\n\nThe Software only reaches the network when you use a feature that needs it, such as fetching the subscription URL you provided when updating a profile, or contacting GitHub when checking for updates.\n\nThe Software includes no analytics or crash reporting service on any platform.`
   String get disclaimerPrivacyContent {
     return Intl.message(
-      'To find bugs the app collects technical data through Google Firebase: crash reports, the app and system versions, the device model and anonymised statistics on feature use.\n\nSubscription links, configuration contents, servers, visited sites, connections, traffic and logs are never collected or sent anywhere. They stay on your device only.',
+      'The Software does not collect or upload your subscription URLs, node details, configuration content, visited websites, connection records, traffic content, or logs. This data stays on your device and the developers have no access to it.\n\nThe Software only reaches the network when you use a feature that needs it, such as fetching the subscription URL you provided when updating a profile, or contacting GitHub when checking for updates.\n\nThe Software includes no analytics or crash reporting service on any platform.',
       name: 'disclaimerPrivacyContent',
       desc: '',
       args: [],
     );
   }
 
-  /// `License`
+  /// `Open-source license`
   String get disclaimerLicenseTitle {
     return Intl.message(
-      'License',
+      'Open-source license',
       name: 'disclaimerLicenseTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `The source code is open under the GPL-3.0 license. The Mihomo core and other third-party components carry their own licenses. The authors are not responsible for modified builds or builds distributed by third parties.`
+  /// `The Software is open source under the GPL-3.0 license. You may use, modify, and distribute it freely as long as you comply with that license, which requires derivative works to be released under GPL-3.0 as well and the original copyright notices to be kept.\n\nThird-party components in the Software, including the Clash.Meta core, follow their own licenses. The original authors are not responsible for any issue arising from modified or redistributed versions.`
   String get disclaimerLicenseContent {
     return Intl.message(
-      'The source code is open under the GPL-3.0 license. The Mihomo core and other third-party components carry their own licenses. The authors are not responsible for modified builds or builds distributed by third parties.',
+      'The Software is open source under the GPL-3.0 license. You may use, modify, and distribute it freely as long as you comply with that license, which requires derivative works to be released under GPL-3.0 as well and the original copyright notices to be kept.\n\nThird-party components in the Software, including the Clash.Meta core, follow their own licenses. The original authors are not responsible for any issue arising from modified or redistributed versions.',
       name: 'disclaimerLicenseContent',
       desc: '',
       args: [],
     );
   }
 
-  /// `I agree`
+  /// `Changes to this statement`
+  String get disclaimerChangesTitle {
+    return Intl.message(
+      'Changes to this statement',
+      name: 'disclaimerChangesTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The developers may revise this statement with any release, and the revision takes effect when that release is published. Continuing to use the Software after updating means you accept the revised statement.`
+  String get disclaimerChangesContent {
+    return Intl.message(
+      'The developers may revise this statement with any release, and the revision takes effect when that release is published. Continuing to use the Software after updating means you accept the revised statement.',
+      name: 'disclaimerChangesContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Acceptance`
+  String get disclaimerAcceptTitle {
+    return Intl.message(
+      'Acceptance',
+      name: 'disclaimerAcceptTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `By installing, copying, or using the Software, you are deemed to have read and agreed to this entire statement. If you disagree with any of its terms, stop using and uninstall the Software immediately.`
+  String get disclaimerAcceptContent {
+    return Intl.message(
+      'By installing, copying, or using the Software, you are deemed to have read and agreed to this entire statement. If you disagree with any of its terms, stop using and uninstall the Software immediately.',
+      name: 'disclaimerAcceptContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Restate the statement`
+  String get disclaimerRestateTitle {
+    return Intl.message(
+      'Restate the statement',
+      name: 'disclaimerRestateTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To confirm you understand, enter the following statement in full in the field below:`
+  String get disclaimerRestateTip {
+    return Intl.message(
+      'To confirm you understand, enter the following statement in full in the field below:',
+      name: 'disclaimerRestateTip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the statement above`
+  String get disclaimerRestateHint {
+    return Intl.message(
+      'Enter the statement above',
+      name: 'disclaimerRestateHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Does not match the statement`
+  String get disclaimerRestateMismatch {
+    return Intl.message(
+      'Does not match the statement',
+      name: 'disclaimerRestateMismatch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm the statement`
+  String get disclaimerAcknowledgeTitle {
+    return Intl.message(
+      'Confirm the statement',
+      name: 'disclaimerAcknowledgeTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To confirm you understand, read the following statement and check the box below:`
+  String get disclaimerAcknowledgeTip {
+    return Intl.message(
+      'To confirm you understand, read the following statement and check the box below:',
+      name: 'disclaimerAcknowledgeTip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I have read and understand this statement`
+  String get disclaimerAcknowledgeLabel {
+    return Intl.message(
+      'I have read and understand this statement',
+      name: 'disclaimerAcknowledgeLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Agree`
   String get agree {
-    return Intl.message('I agree', name: 'agree', desc: '', args: []);
+    return Intl.message('Agree', name: 'agree', desc: '', args: []);
   }
 
   /// `Hotkey management`
@@ -2695,10 +2710,10 @@ class AppLocalizations {
     );
   }
 
-  /// `Already used by “{action}”. Saving moves it here.`
+  /// `Already used by тАЬ{action}тАЭ. Saving moves it here.`
   String hotkeyConflictWith(Object action) {
     return Intl.message(
-      'Already used by “$action”. Saving moves it here.',
+      'Already used by тАЬ$actionтАЭ. Saving moves it here.',
       name: 'hotkeyConflictWith',
       desc: '',
       args: [action],
@@ -3155,10 +3170,10 @@ class AppLocalizations {
     );
   }
 
-  /// `Uses a third-party API: ipinfo.io`
+  /// `Relies on a third-party API; for reference only`
   String get detectionTip {
     return Intl.message(
-      'Uses a third-party API: ipinfo.io',
+      'Relies on a third-party API; for reference only',
       name: 'detectionTip',
       desc: '',
       args: [],
@@ -4000,9 +4015,9 @@ class AppLocalizations {
     );
   }
 
-  /// `Connecting…`
+  /// `ConnectingтАж`
   String get connecting {
-    return Intl.message('Connecting…', name: 'connecting', desc: '', args: []);
+    return Intl.message('ConnectingтАж', name: 'connecting', desc: '', args: []);
   }
 
   /// `Are you sure you want to restart the core?`
@@ -4235,9 +4250,9 @@ class AppLocalizations {
     );
   }
 
-  /// `Loading…`
+  /// `LoadingтАж`
   String get loading {
-    return Intl.message('Loading…', name: 'loading', desc: '', args: []);
+    return Intl.message('LoadingтАж', name: 'loading', desc: '', args: []);
   }
 
   /// `{count, plural, =1{1 year ago} other{{count} years ago}}`
@@ -4420,31 +4435,6 @@ class AppLocalizations {
     return Intl.message(
       'This page has changes. Are you sure you want to reset?',
       name: 'resetPageChangesTip',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Subscription`
-  String get profileTypeSubscription {
-    return Intl.message(
-      'Subscription',
-      name: 'profileTypeSubscription',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `File`
-  String get profileTypeFile {
-    return Intl.message('File', name: 'profileTypeFile', desc: '', args: []);
-  }
-
-  /// `Custom`
-  String get profileTypeCustom {
-    return Intl.message(
-      'Custom',
-      name: 'profileTypeCustom',
       desc: '',
       args: [],
     );
@@ -4685,16 +4675,6 @@ class AppLocalizations {
     return Intl.message('Delay test', name: 'delayTest', desc: '', args: []);
   }
 
-  /// `Test every delay`
-  String get delayTestAll {
-    return Intl.message(
-      'Test every delay',
-      name: 'delayTestAll',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Proxy group is empty`
   String get proxyGroupEmpty {
     return Intl.message(
@@ -4780,10 +4760,10 @@ class AppLocalizations {
     );
   }
 
-  /// `Helper service unavailable; TUN mode cannot be enabled. Reinstall FlClashX to restore it.`
+  /// `Helper service unavailable; TUN mode cannot be enabled. Reinstall FlClash to restore it.`
   String get helperCorruptTip {
     return Intl.message(
-      'Helper service unavailable; TUN mode cannot be enabled. Reinstall FlClashX to restore it.',
+      'Helper service unavailable; TUN mode cannot be enabled. Reinstall FlClash to restore it.',
       name: 'helperCorruptTip',
       desc: '',
       args: [],
@@ -4810,20 +4790,20 @@ class AppLocalizations {
     );
   }
 
-  /// `Windows refused to run FlClashCore.exe (error {code}). An app control policy such as Smart App Control or AppLocker blocks unsigned programs; allow FlClashX in that policy or turn it off, then try again.`
+  /// `Windows refused to run FlClashCore.exe (error {code}). An app control policy such as Smart App Control or AppLocker blocks unsigned programs; allow FlClash in that policy or turn it off, then try again.`
   String coreBlockedByPolicyTip(Object code) {
     return Intl.message(
-      'Windows refused to run FlClashCore.exe (error $code). An app control policy such as Smart App Control or AppLocker blocks unsigned programs; allow FlClashX in that policy or turn it off, then try again.',
+      'Windows refused to run FlClashCore.exe (error $code). An app control policy such as Smart App Control or AppLocker blocks unsigned programs; allow FlClash in that policy or turn it off, then try again.',
       name: 'coreBlockedByPolicyTip',
       desc: '',
       args: [code],
     );
   }
 
-  /// `Windows Smart App Control blocked FlClashCore.exe because it is not signed. Open Windows Security → App & browser control → Smart App Control settings, choose Off, then start FlClashX again. Smart App Control cannot be turned back on without reinstalling Windows.`
+  /// `Windows Smart App Control blocked FlClashCore.exe because it is not signed. Open Windows Security тЖТ App & browser control тЖТ Smart App Control settings, choose Off, then start FlClash again. Smart App Control cannot be turned back on without reinstalling Windows.`
   String get coreBlockedBySmartAppControlTip {
     return Intl.message(
-      'Windows Smart App Control blocked FlClashCore.exe because it is not signed. Open Windows Security → App & browser control → Smart App Control settings, choose Off, then start FlClashX again. Smart App Control cannot be turned back on without reinstalling Windows.',
+      'Windows Smart App Control blocked FlClashCore.exe because it is not signed. Open Windows Security тЖТ App & browser control тЖТ Smart App Control settings, choose Off, then start FlClash again. Smart App Control cannot be turned back on without reinstalling Windows.',
       name: 'coreBlockedBySmartAppControlTip',
       desc: '',
       args: [],
@@ -5685,9 +5665,9 @@ class AppLocalizations {
     );
   }
 
-  /// `Suspended…`
+  /// `SuspendedтАж`
   String get suspended {
-    return Intl.message('Suspended…', name: 'suspended', desc: '', args: []);
+    return Intl.message('SuspendedтАж', name: 'suspended', desc: '', args: []);
   }
 
   /// `Auto-update interval`
@@ -5933,26 +5913,6 @@ class AppLocalizations {
     return Intl.message(
       'Scroll to selected',
       name: 'scrollToSelected',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Expand all groups`
-  String get unfoldAllGroups {
-    return Intl.message(
-      'Expand all groups',
-      name: 'unfoldAllGroups',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Collapse all groups`
-  String get foldAllGroups {
-    return Intl.message(
-      'Collapse all groups',
-      name: 'foldAllGroups',
       desc: '',
       args: [],
     );
@@ -6713,16 +6673,6 @@ class AppLocalizations {
     );
   }
 
-  /// `Change server`
-  String get changeServer {
-    return Intl.message(
-      'Change server',
-      name: 'changeServer',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Last updated`
   String get lastUpdated {
     return Intl.message(
@@ -6783,10 +6733,10 @@ class AppLocalizations {
     return Intl.message('Local image', name: 'localImage', desc: '', args: []);
   }
 
-  /// `No icon sets yet. Add them in Custom profile resources → Icon sets`
+  /// `No icon sets yet. Add them in Custom profile resources тЖТ Icon sets`
   String get iconSetsEmptyTip {
     return Intl.message(
-      'No icon sets yet. Add them in Custom profile resources → Icon sets',
+      'No icon sets yet. Add them in Custom profile resources тЖТ Icon sets',
       name: 'iconSetsEmptyTip',
       desc: '',
       args: [],
@@ -6888,10 +6838,10 @@ class AppLocalizations {
     );
   }
 
-  /// `FlClashX ran into an error while starting and can't continue. Copy the details to report the problem. If it keeps happening, clearing the data usually lets the app start again.`
+  /// `FlClash ran into an error while starting and can't continue. Copy the details to report the problem. If it keeps happening, clearing the data usually lets the app start again.`
   String get initFailedTip {
     return Intl.message(
-      'FlClashX ran into an error while starting and can\'t continue. Copy the details to report the problem. If it keeps happening, clearing the data usually lets the app start again.',
+      'FlClash ran into an error while starting and can\'t continue. Copy the details to report the problem. If it keeps happening, clearing the data usually lets the app start again.',
       name: 'initFailedTip',
       desc: '',
       args: [],
@@ -7527,56 +7477,6 @@ class AppLocalizations {
     );
   }
 
-  /// `Send HWID`
-  String get sendDeviceHeaders {
-    return Intl.message(
-      'Send HWID',
-      name: 'sendDeviceHeaders',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Device limit reached`
-  String get deviceLimitReached {
-    return Intl.message(
-      'Device limit reached',
-      name: 'deviceLimitReached',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `The subscription requires a HWID, but this platform cannot provide one.`
-  String get deviceIdUnsupported {
-    return Intl.message(
-      'The subscription requires a HWID, but this platform cannot provide one.',
-      name: 'deviceIdUnsupported',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `HWID not supported`
-  String get deviceIdUnsupportedTitle {
-    return Intl.message(
-      'HWID not supported',
-      name: 'deviceIdUnsupportedTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `The subscription requires a HWID, but the app did not send one. Turn on sending HWID in the profile settings.`
-  String get deviceIdNotSent {
-    return Intl.message(
-      'The subscription requires a HWID, but the app did not send one. Turn on sending HWID in the profile settings.',
-      name: 'deviceIdNotSent',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Encrypted profile`
   String get ageEncryptedProfile {
     return Intl.message(
@@ -7788,147 +7688,6 @@ class AppLocalizations {
     );
   }
 
-  /// `{days, plural, =1{1 day} other{{days} days}}`
-  String profileDaysFigure(num days) {
-    return Intl.plural(
-      days,
-      one: '1 day',
-      other: '$days days',
-      name: 'profileDaysFigure',
-      desc: '',
-      args: [days],
-    );
-  }
-
-  /// `{hours, plural, =1{1 hour} other{{hours} hours}}`
-  String profileHoursFigure(num hours) {
-    return Intl.plural(
-      hours,
-      one: '1 hour',
-      other: '$hours hours',
-      name: 'profileHoursFigure',
-      desc: '',
-      args: [hours],
-    );
-  }
-
-  /// `{minutes, plural, =1{1 minute} other{{minutes} minutes}}`
-  String profileMinutesFigure(num minutes) {
-    return Intl.plural(
-      minutes,
-      one: '1 minute',
-      other: '$minutes minutes',
-      name: 'profileMinutesFigure',
-      desc: '',
-      args: [minutes],
-    );
-  }
-
-  /// `Subscription expires soon`
-  String get subscriptionExpiresSoon {
-    return Intl.message(
-      'Subscription expires soon',
-      name: 'subscriptionExpiresSoon',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Your subscription expires in {days, plural, =1{1 day} other{{days} days}}`
-  String subscriptionExpiresInDays(num days) {
-    return Intl.message(
-      'Your subscription expires in ${Intl.plural(days, one: '1 day', other: '$days days')}',
-      name: 'subscriptionExpiresInDays',
-      desc: '',
-      args: [days],
-    );
-  }
-
-  /// `Your subscription expires today`
-  String get subscriptionExpiresToday {
-    return Intl.message(
-      'Your subscription expires today',
-      name: 'subscriptionExpiresToday',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Your subscription has expired`
-  String get subscriptionExpired {
-    return Intl.message(
-      'Your subscription has expired',
-      name: 'subscriptionExpired',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Renew`
-  String get renew {
-    return Intl.message('Renew', name: 'renew', desc: '', args: []);
-  }
-
-  /// `Expired`
-  String get profileExpired {
-    return Intl.message('Expired', name: 'profileExpired', desc: '', args: []);
-  }
-
-  /// `No expiry`
-  String get profileNoExpiry {
-    return Intl.message(
-      'No expiry',
-      name: 'profileNoExpiry',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `until {date}`
-  String profileUntil(Object date) {
-    return Intl.message(
-      'until $date',
-      name: 'profileUntil',
-      desc: '',
-      args: [date],
-    );
-  }
-
-  /// `Unlimited`
-  String get profileTrafficUnlimited {
-    return Intl.message(
-      'Unlimited',
-      name: 'profileTrafficUnlimited',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `left of {total}`
-  String profileLeftOfTotal(Object total) {
-    return Intl.message(
-      'left of $total',
-      name: 'profileLeftOfTotal',
-      desc: '',
-      args: [total],
-    );
-  }
-
-  /// `Renew subscription`
-  String get buyPlan {
-    return Intl.message(
-      'Renew subscription',
-      name: 'buyPlan',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Buy traffic`
-  String get buyTraffic {
-    return Intl.message('Buy traffic', name: 'buyTraffic', desc: '', args: []);
-  }
-
   /// `Target`
   String get target {
     return Intl.message('Target', name: 'target', desc: '', args: []);
@@ -8073,6 +7832,271 @@ class AppLocalizations {
     return Intl.message(
       'All referenced proxy providers',
       name: 'allReferencedProxyProviders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Smart`
+  String get smartTitle {
+    return Intl.message('Smart', name: 'smartTitle', desc: '', args: []);
+  }
+
+  /// `Smart details`
+  String get smartDetails {
+    return Intl.message(
+      'Smart details',
+      name: 'smartDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Automatic`
+  String get smartAutomatic {
+    return Intl.message(
+      'Automatic',
+      name: 'smartAutomatic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pinned`
+  String get smartPinned {
+    return Intl.message('Pinned', name: 'smartPinned', desc: '', args: []);
+  }
+
+  /// `Use automatic selection`
+  String get smartRestoreAutomatic {
+    return Intl.message(
+      'Use automatic selection',
+      name: 'smartRestoreAutomatic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current node`
+  String get smartCurrentNode {
+    return Intl.message(
+      'Current node',
+      name: 'smartCurrentNode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Score`
+  String get smartScore {
+    return Intl.message('Score', name: 'smartScore', desc: '', args: []);
+  }
+
+  /// `Usage`
+  String get smartUsage {
+    return Intl.message('Usage', name: 'smartUsage', desc: '', args: []);
+  }
+
+  /// `Pin node`
+  String get smartPinNode {
+    return Intl.message('Pin node', name: 'smartPinNode', desc: '', args: []);
+  }
+
+  /// `No Smart rankings yet`
+  String get smartNoWeights {
+    return Intl.message(
+      'No Smart rankings yet',
+      name: 'smartNoWeights',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rankings appear after Smart observes traffic.`
+  String get smartNoWeightsTip {
+    return Intl.message(
+      'Rankings appear after Smart observes traffic.',
+      name: 'smartNoWeightsTip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start the service to view Smart rankings.`
+  String get smartCoreStopped {
+    return Intl.message(
+      'Start the service to view Smart rankings.',
+      name: 'smartCoreStopped',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Could not load Smart rankings.`
+  String get smartLoadFailed {
+    return Intl.message(
+      'Could not load Smart rankings.',
+      name: 'smartLoadFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Scores and usage classes are reported by the core. A score is not a percentage.`
+  String get smartScoreExplanation {
+    return Intl.message(
+      'Scores and usage classes are reported by the core. A score is not a percentage.',
+      name: 'smartScoreExplanation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No node selected`
+  String get smartCurrentNodeUnavailable {
+    return Intl.message(
+      'No node selected',
+      name: 'smartCurrentNodeUnavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No matching nodes`
+  String get smartNoMatchingNodes {
+    return Intl.message(
+      'No matching nodes',
+      name: 'smartNoMatchingNodes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refresh rankings`
+  String get smartRefresh {
+    return Intl.message(
+      'Refresh rankings',
+      name: 'smartRefresh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Frequently used`
+  String get smartMostUsed {
+    return Intl.message(
+      'Frequently used',
+      name: 'smartMostUsed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Occasionally used`
+  String get smartOccasionallyUsed {
+    return Intl.message(
+      'Occasionally used',
+      name: 'smartOccasionallyUsed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rarely used`
+  String get smartRarelyUsed {
+    return Intl.message(
+      'Rarely used',
+      name: 'smartRarelyUsed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown`
+  String get smartUnknownUsage {
+    return Intl.message(
+      'Unknown',
+      name: 'smartUnknownUsage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chosen automatically for each destination`
+  String get smartAutomaticRouting {
+    return Intl.message(
+      'Chosen automatically for each destination',
+      name: 'smartAutomaticRouting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Use LightGBM`
+  String get smartUseLightGbm {
+    return Intl.message(
+      'Use LightGBM',
+      name: 'smartUseLightGbm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Collect training data`
+  String get smartCollectData {
+    return Intl.message(
+      'Collect training data',
+      name: 'smartCollectData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Training sample rate`
+  String get smartSampleRate {
+    return Intl.message(
+      'Training sample rate',
+      name: 'smartSampleRate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Prefer ASN history`
+  String get smartPreferAsn {
+    return Intl.message(
+      'Prefer ASN history',
+      name: 'smartPreferAsn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Policy priority`
+  String get smartPolicyPriority {
+    return Intl.message(
+      'Policy priority',
+      name: 'smartPolicyPriority',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This feature is not supported by the current core.`
+  String get coreFeatureUnavailable {
+    return Intl.message(
+      'This feature is not supported by the current core.',
+      name: 'coreFeatureUnavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Core downloads always verify certificates. This setting applies to app downloads.`
+  String get coreCertificateChecksAlwaysEnabled {
+    return Intl.message(
+      'Core downloads always verify certificates. This setting applies to app downloads.',
+      name: 'coreCertificateChecksAlwaysEnabled',
       desc: '',
       args: [],
     );

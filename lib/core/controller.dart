@@ -203,6 +203,9 @@ class CoreController {
     );
   }
 
+  Future<List<SmartWeight>> getSmartWeights(String groupName) {
+    return _interface.getSmartWeights(groupName);
+  }
   Future<ChangeProxyResult> changeProxy(ChangeProxyParams changeProxyParams) {
     return _interface.changeProxy(changeProxyParams);
   }
@@ -363,3 +366,4 @@ class CoreController {
 }
 
 final coreController = CoreController();
+

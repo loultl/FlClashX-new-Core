@@ -51,6 +51,11 @@ _AppSettingProps _$AppSettingPropsFromJson(
       RestoreStrategy.compatible,
   showTrayTitle: json['showTrayTitle'] as bool? ?? true,
   checkCertificate: json['checkCertificate'] as bool? ?? true,
+  userAgents:
+      (_readUserAgents(json, 'userAgents') as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList() ??
+      defaultUserAgents,
   filters:
       (json['filters'] as List<dynamic>?)
           ?.map((e) => Filter.fromJson(e as Map<String, dynamic>))
@@ -119,6 +124,7 @@ Map<String, dynamic> _$AppSettingPropsToJson(_AppSettingProps instance) =>
       'restoreStrategy': _$RestoreStrategyEnumMap[instance.restoreStrategy]!,
       'showTrayTitle': instance.showTrayTitle,
       'checkCertificate': instance.checkCertificate,
+      'userAgents': instance.userAgents,
       'filters': instance.filters,
       'hideIp': instance.hideIp,
       'editorLineWrap': instance.editorLineWrap,

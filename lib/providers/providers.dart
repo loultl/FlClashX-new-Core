@@ -4,5 +4,7 @@ export 'config.dart';
 export 'core.dart';
 export 'database.dart';
 export 'on_demand.dart';
+export 'smart.dart';
 export 'route_state.dart';
 export 'state.dart';
+

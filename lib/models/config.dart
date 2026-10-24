@@ -25,6 +25,8 @@ const defaultBypassDomain = [
   '192.168.*',
 ];
 
+const defaultUserAgents = ['FlClashX', 'FlClashXprizrak/'];
+
 const defaultFilters = [
   Filter(
     label: 'Hong Kong',
@@ -203,6 +205,21 @@ abstract class Filter with _$Filter {
   factory Filter.fromJson(Map<String, Object?> json) => _$FilterFromJson(json);
 }
 
+Object? _readUserAgents(Map<dynamic, dynamic> json, String key) {
+  if (json.containsKey(key)) {
+    return json[key];
+  }
+  final legacy = json['customUserAgent'];
+  if (legacy is! String) {
+    return null;
+  }
+  final custom = legacy.trim();
+  if (custom.isEmpty || defaultUserAgents.contains(custom)) {
+    return null;
+  }
+  return [...defaultUserAgents, custom];
+}
+
 @freezed
 abstract class AppSettingProps with _$AppSettingProps {
   const factory AppSettingProps({
@@ -234,6 +251,9 @@ abstract class AppSettingProps with _$AppSettingProps {
     @Default(RestoreStrategy.compatible) RestoreStrategy restoreStrategy,
     @Default(true) bool showTrayTitle,
     @Default(true) bool checkCertificate,
+    @Default(defaultUserAgents)
+    @JsonKey(readValue: _readUserAgents)
+    List<String> userAgents,
     @Default(defaultFilters) List<Filter> filters,
     @Default(false) bool hideIp,
     @Default(false) bool editorLineWrap,
@@ -576,3 +596,5 @@ Map<String, Object?> _withLegacyRouteMode(Map<String, Object?> json) {
       },
   };
 }
+
+

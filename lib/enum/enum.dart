@@ -46,6 +46,8 @@ enum GroupType {
   URLTest('url-test'),
   @JsonValue('fallback')
   Fallback('fallback'),
+  @JsonValue('smart')
+  Smart('smart'),
   @JsonValue('load-balance')
   LoadBalance('load-balance'),
   @JsonValue('relay')
@@ -60,6 +62,7 @@ enum GroupType {
       'url-test' || 'urltest' => URLTest,
       'select' || 'selector' => Selector,
       'fallback' => Fallback,
+      'smart' => Smart,
       'load-balance' || 'loadbalance' => LoadBalance,
       'relay' => Relay,
       String() => throw UnimplementedError(),
@@ -103,7 +106,7 @@ extension GroupTypeExtension on GroupType {
       GroupType.values.map((e) => e.toString().split('.').last).toList();
 
   bool get isComputedSelected {
-    return [GroupType.URLTest, GroupType.Fallback].contains(this);
+    return [GroupType.URLTest, GroupType.Fallback, GroupType.Smart].contains(this);
   }
 
   static GroupType? getGroupType(String value) {
@@ -817,3 +820,5 @@ enum LoadingTag {
 enum CoreStatus { connecting, connected, disconnected }
 
 enum UpdatingScope { core, local }
+
+
