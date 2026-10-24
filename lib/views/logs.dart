@@ -43,7 +43,9 @@ class LogListController extends ValueNotifier<LogsState> {
 }
 
 class LogsView extends ConsumerStatefulWidget {
-  const LogsView({super.key});
+  const LogsView({super.key, this.smartOnly = false});
+
+  final bool smartOnly;
 
   @override
   ConsumerState<LogsView> createState() => _LogsViewState();
@@ -64,13 +66,21 @@ class _LogsViewState extends ConsumerState<LogsView>
       context,
       initialScrollOffset: double.maxFinite,
     );
-    _listController.setLogs(ref.read(logsProvider).list);
+    _listController.setLogs(_visibleLogs(ref.read(logsProvider).list));
     ref.listenManual(logsProvider.select((state) => state.revision), (_, _) {
       updateLogsThrottler();
     });
   }
 
+  List<Log> _visibleLogs(List<Log> logs) {
+    if (!widget.smartOnly) return logs;
+    return logs
+        .where((log) => log.payload.toLowerCase().contains('[smart'))
+        .toList(growable: false);
+  }
+
   List<IconButtonData> _buildActions() {
+    if (widget.smartOnly) return const [];
     return [
       IconButtonData(
         glyph: AppGlyphs.export,
@@ -107,7 +117,8 @@ class _LogsViewState extends ConsumerState<LogsView>
         return;
       }
       updateWhenRouteSettled(
-        () => _listController.setLogs(ref.read(logsProvider).list),
+        () =>
+            _listController.setLogs(_visibleLogs(ref.read(logsProvider).list)),
       );
     }, duration: renderThrottleDuration);
   }
@@ -119,7 +130,9 @@ class _LogsViewState extends ConsumerState<LogsView>
       iconActions: _buildActions(),
       onKeywordsUpdate: _listController.updateKeywords,
       searchState: AppBarSearchState(onSearch: _listController.search),
-      title: appLocalizations.logs,
+      title: widget.smartOnly
+          ? appLocalizations.smartLogs
+          : appLocalizations.logs,
       body: ValueListenableBuilder<LogsState>(
         valueListenable: _listController,
         builder: (context, state, _) {
@@ -129,7 +142,11 @@ class _LogsViewState extends ConsumerState<LogsView>
             isSearching: state.isSearching,
             nullStatus: NullStatus(
               illustration: NullStatusIllustration.logs,
-              label: appLocalizations.nullTip(appLocalizations.logs),
+              label: appLocalizations.nullTip(
+                widget.smartOnly
+                    ? appLocalizations.smartLogs
+                    : appLocalizations.logs,
+              ),
             ),
             child: Align(
               alignment: Alignment.topCenter,
@@ -145,7 +162,7 @@ class _LogsViewState extends ConsumerState<LogsView>
                   },
                   onResumeToEnd: () {
                     _listController.resumeAutoScrollToEnd(
-                      ref.read(logsProvider).list,
+                      _visibleLogs(ref.read(logsProvider).list),
                     );
                   },
                   controller: _scrollController,

@@ -4,6 +4,7 @@ import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/models/models.dart';
 import 'package:fl_clash/providers/providers.dart';
 import 'package:fl_clash/ui/icons/icons.dart';
+import 'package:fl_clash/views/logs.dart';
 import 'package:fl_clash/widgets/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
@@ -33,7 +34,7 @@ class SmartDetailsButton extends StatelessWidget {
           textStyle: style ?? AppTextStyle.footnote.of(context),
         ),
         onPressed: () => showSmartDetails(context, groupName),
-        child: Text(context.appLocalizations.smart),
+        child: Text(context.appLocalizations.smartLabel),
       ),
     );
   }
@@ -117,14 +118,6 @@ class _SmartDetailsViewState extends ConsumerState<SmartDetailsView>
     required double bottomInset,
   }) {
     final weights = state.value;
-    final smartLogs = ref
-        .watch(logsProvider)
-        .list
-        .where((log) => log.payload.toLowerCase().contains('[smart'))
-        .toList(growable: false)
-        .reversed
-        .take(30)
-        .toList(growable: false);
     if (state.hasError && weights == null) {
       return NullStatus(
         label: context.appLocalizations.failedToLoad,
@@ -161,7 +154,7 @@ class _SmartDetailsViewState extends ConsumerState<SmartDetailsView>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _SmartGroupStatus(groupName: widget.groupName),
+                    _SmartGroupHeader(groupName: widget.groupName),
                     if (state.hasError) ...[
                       const SizedBox(height: 12),
                       Text(
@@ -211,38 +204,13 @@ class _SmartDetailsViewState extends ConsumerState<SmartDetailsView>
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: ExpansionTile(
-                  tilePadding: EdgeInsets.zero,
-                  title: Text(
-                    '${context.appLocalizations.smartLogs} (${smartLogs.length})',
+                child: FilledButton.icon(
+                  onPressed: () => showSheet(
+                    context: context,
+                    builder: (_) => const LogsView(smartOnly: true),
                   ),
-                  children: smartLogs.isEmpty
-                      ? [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 12),
-                            child: Text(
-                              context.appLocalizations.smartLogsDebugHint,
-                              style: AppTextStyle.footnote.of(context).toLight,
-                            ),
-                          ),
-                        ]
-                      : [
-                          for (final log in smartLogs)
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 8),
-                                child: Text(
-                                  '${log.dateTime}  ${log.payload}',
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: AppTextStyle.caption1
-                                      .of(context)
-                                      .toLight,
-                                ),
-                              ),
-                            ),
-                        ],
+                  icon: const GlyphIcon(AppGlyphs.logs),
+                  label: Text(context.appLocalizations.smartLogs),
                 ),
               ),
             ),
@@ -254,8 +222,8 @@ class _SmartDetailsViewState extends ConsumerState<SmartDetailsView>
   }
 }
 
-class _SmartGroupStatus extends StatelessWidget {
-  const _SmartGroupStatus({required this.groupName});
+class _SmartGroupHeader extends StatelessWidget {
+  const _SmartGroupHeader({required this.groupName});
 
   final String groupName;
 
@@ -296,8 +264,6 @@ class _SmartWeightRow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selected = ref.watch(selectedProxyNameProvider(groupName)) ?? '';
-    final inUse = selected == weight.name;
     final usage = switch (weight.rank) {
       'MostUsed' => context.appLocalizations.mostUsed,
       'OccasionalUsed' => context.appLocalizations.occasionallyUsed,
@@ -305,7 +271,6 @@ class _SmartWeightRow extends ConsumerWidget {
       _ => context.appLocalizations.unknown,
     };
     return CommonCard(
-      isSelected: inUse,
       radius: AppCorner.xl,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -326,7 +291,6 @@ class _SmartWeightRow extends ConsumerWidget {
                           style: AppTextStyle.callout.of(context),
                         ),
                       ),
-                      if (inUse) const SelectionBadge(),
                     ],
                   ),
                   const SizedBox(height: 6),
