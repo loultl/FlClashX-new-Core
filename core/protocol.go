@@ -270,4 +270,3 @@ type GeoUpdateStatus struct {
 	Skipped  bool   `json:"skipped,omitempty"`
 	Error    string `json:"error,omitempty"`
 }
-

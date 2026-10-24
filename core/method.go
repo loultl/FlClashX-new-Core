@@ -203,7 +203,7 @@ var methodHandlers = map[CoreMethod]methodHandler{
 	encodeShareLinksMethod:         withArguments(handleEncodeShareLinks),
 	decodeShareLinksMethod:         withArguments(handleDecodeShareLinks),
 	getProxiesMethod:               withoutArguments(handleGetProxies),
-	getSmartWeightsMethod:        withoutArguments(handleGetSmartWeights),
+	getSmartWeightsMethod:          withoutArguments(handleGetSmartWeights),
 	changeProxyMethod:              withArguments(handleChangeProxy),
 	asyncTestDelayMethod:           withArguments(handleTestDelay),
 	watchRouteMethod:               watchRouteHandler,

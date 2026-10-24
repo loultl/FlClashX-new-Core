@@ -38,6 +38,7 @@
   "settings": "設定",
   "language": "言語",
   "defaultText": "デフォルト",
+  "userAgent": "ユーザーエージェント",
   "more": "その他",
   "other": "その他",
   "about": "アプリについて",

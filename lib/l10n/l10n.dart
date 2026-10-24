@@ -355,6 +355,11 @@ class AppLocalizations {
     return Intl.message('Default', name: 'defaultText', desc: '', args: []);
   }
 
+  /// `User-Agent`
+  String get userAgent {
+    return Intl.message('User-Agent', name: 'userAgent', desc: '', args: []);
+  }
+
   /// `More`
   String get more {
     return Intl.message('More', name: 'more', desc: '', args: []);
@@ -8038,8 +8043,7 @@ class AppLocalizations {
   String customImportDroppedSubRules(num count, Object label) {
     return Intl.plural(
       count,
-      one:
-          '1 SUB-RULE rule was dropped, since custom profiles do not support sub-rules',
+      one: '1 SUB-RULE rule was dropped, since custom profiles do not support sub-rules',
       other:
           '$label SUB-RULE rules were dropped, since custom profiles do not support sub-rules',
       name: 'customImportDroppedSubRules',

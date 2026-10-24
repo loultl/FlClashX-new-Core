@@ -615,6 +615,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Выбор по умолчанию",
     ),
     "defaultText": MessageLookupByLibrary.simpleMessage("По умолчанию"),
+    "userAgent": MessageLookupByLibrary.simpleMessage("User-Agent"),
     "definitionNotMap": MessageLookupByLibrary.simpleMessage(
       "Конфигурация должна быть YAML-словарём с полями name и type",
     ),
@@ -963,9 +964,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "inputRuleContent": MessageLookupByLibrary.simpleMessage(
       "Введите содержимое правила",
     ),
-    "installedAppsPermissionDeniedMessage": MessageLookupByLibrary.simpleMessage(
-      "Разрешение на список приложений отклонено, поэтому установленные приложения недоступны. Предоставьте его вручную в системных настройках.",
-    ),
+    "installedAppsPermissionDeniedMessage":
+        MessageLookupByLibrary.simpleMessage(
+          "Разрешение на список приложений отклонено, поэтому установленные приложения недоступны. Предоставьте его вручную в системных настройках.",
+        ),
     "installedAppsPermissionDesc": MessageLookupByLibrary.simpleMessage(
       "Эта система не выдаёт список установленных приложений без разрешения. Предоставьте его, чтобы настроить прокси для отдельных приложений.",
     ),

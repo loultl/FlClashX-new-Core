@@ -38,6 +38,7 @@
   "settings": "Settings",
   "language": "Language",
   "defaultText": "Default",
+  "userAgent": "User-Agent",
   "more": "More",
   "other": "Other",
   "about": "About",

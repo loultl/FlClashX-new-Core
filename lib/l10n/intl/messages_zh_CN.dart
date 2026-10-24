@@ -464,6 +464,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "daysAgoShort": m18,
     "defaultSelected": MessageLookupByLibrary.simpleMessage("默认选中"),
     "defaultText": MessageLookupByLibrary.simpleMessage("默认"),
+    "userAgent": MessageLookupByLibrary.simpleMessage("用户代理"),
     "definitionNotMap": MessageLookupByLibrary.simpleMessage(
       "配置必须是包含 name 和 type 的 YAML 映射",
     ),

@@ -503,6 +503,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "daysAgoShort": m18,
     "defaultSelected": MessageLookupByLibrary.simpleMessage("デフォルトの選択"),
     "defaultText": MessageLookupByLibrary.simpleMessage("デフォルト"),
+    "userAgent": MessageLookupByLibrary.simpleMessage("ユーザーエージェント"),
     "definitionNotMap": MessageLookupByLibrary.simpleMessage(
       "設定は name と type を含む YAML マッピングである必要があります",
     ),

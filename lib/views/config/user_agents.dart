@@ -25,9 +25,8 @@ class UserAgentsView extends ConsumerWidget {
     return CommonScaffold(
       title: 'User agent',
       body: ListView(
-        padding: const EdgeInsets.all(16).copyWith(
-          top: context.contentTopPadding,
-        ),
+        padding: const EdgeInsets.all(16)
+            .copyWith(top: context.contentTopPadding),
         children: [
           _UserAgentItem(
             label: appLocalizations.defaultText,

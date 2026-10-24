@@ -490,6 +490,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "daysAgoShort": m18,
     "defaultSelected": MessageLookupByLibrary.simpleMessage("기본 선택"),
     "defaultText": MessageLookupByLibrary.simpleMessage("기본값"),
+    "userAgent": MessageLookupByLibrary.simpleMessage("사용자 에이전트"),
     "definitionNotMap": MessageLookupByLibrary.simpleMessage(
       "구성은 이름과 유형이 있는 YAML 매핑이어야 합니다",
     ),
