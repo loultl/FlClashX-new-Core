@@ -66,4 +66,3 @@ String scopeReleaseNotes(String body) {
   final end = body.indexOf(releaseNotesEndMarker, start);
   return end < 0 ? body.substring(start) : body.substring(start, end);
 }
-
