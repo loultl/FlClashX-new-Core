@@ -199,4 +199,3 @@ class _ProxiesViewState extends ConsumerState<ProxiesView> {
     );
   }
 }
-
