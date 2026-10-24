@@ -4,10 +4,8 @@ import 'package:fl_clash/features/form/form.dart';
 import 'package:fl_clash/l10n/l10n.dart';
 import 'package:fl_clash/models/models.dart';
 import 'package:fl_clash/providers/providers.dart';
-import 'package:fl_clash/state.dart';
 import 'package:fl_clash/ui/icons/icons.dart';
 import 'package:fl_clash/views/config/on_demand.dart';
-import 'package:fl_clash/views/config/user_agents.dart';
 import 'package:fl_clash/widgets/widgets.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -74,17 +72,16 @@ class UaItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appLocalizations = context.appLocalizations;
-    final globalUa = ref.watch(
-      patchClashConfigProvider.select((state) => state.globalUa),
-    );
-    final label = globalUa == prizrakUserAgentMarker
-        ? globalState.prizrakUa
-        : appLocalizations.defaultText;
-    return ListItem.open(
-      title: Text(appLocalizations.userAgent),
-      subtitle: Text(label),
-      widget: const UserAgentsView(),
+    return ConfigOptionsItem<String?>(
+      title: (l) => l.userAgent,
+      options: const [null, prizrakUserAgentMarker],
+      textBuilder: (value) => value == null
+          ? context.appLocalizations.defaultText
+          : 'FlClashXprizrak',
+      selector: patchClashConfigProvider.select((state) => state.globalUa),
+      onChanged: (ref, value) => ref
+          .read(patchClashConfigProvider.notifier)
+          .update((state) => state.copyWith(globalUa: value)),
     );
   }
 }
