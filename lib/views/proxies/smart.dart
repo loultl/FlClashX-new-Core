@@ -209,7 +209,7 @@ class _SmartDetailsViewState extends ConsumerState<SmartDetailsView>
                     context: context,
                     builder: (_) => const LogsView(smartOnly: true),
                   ),
-                  icon: const GlyphIcon(AppGlyphs.logs),
+                  icon: const GlyphIcon(AppGlyphs.logs, fill: 1),
                   label: Text(context.appLocalizations.smartLogs),
                 ),
               ),
