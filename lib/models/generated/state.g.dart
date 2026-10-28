@@ -19,7 +19,6 @@ _SharedState _$SharedStateFromJson(Map<String, dynamic> json) => _SharedState(
   currentProfileName: json['currentProfileName'] as String,
   stopText: json['stopText'] as String,
   showStopAction: json['showStopAction'] as bool? ?? true,
-  appVisible: json['appVisible'] as bool? ?? true,
 );
 
 Map<String, dynamic> _$SharedStateToJson(_SharedState instance) =>
@@ -32,5 +31,4 @@ Map<String, dynamic> _$SharedStateToJson(_SharedState instance) =>
       'currentProfileName': instance.currentProfileName,
       'stopText': instance.stopText,
       'showStopAction': instance.showStopAction,
-      'appVisible': instance.appVisible,
     };

@@ -191,15 +191,17 @@ class ProxyCard extends ConsumerWidget {
     return Consumer(
       builder: (context, ref, _) {
         final inUse = ref.watch(
-          selectedProxyNameProvider(groupName)
-              .select((name) => name == proxy.name),
+          selectedProxyNameProvider(
+            groupName,
+          ).select((name) => name == proxy.name),
         );
         final pinned = groupType == GroupType.Smart
             ? inUse && (ref.read(proxyNameProvider(groupName)) ?? '').isNotEmpty
             : groupType.isComputedSelected &&
                   ref.watch(
-                    proxyNameProvider(groupName)
-                        .select((name) => name == proxy.name),
+                    proxyNameProvider(
+                      groupName,
+                    ).select((name) => name == proxy.name),
                   );
         final isCustomProfile = ref.watch(
           currentProfileProvider.select(
@@ -261,8 +263,9 @@ class _ProxyDesc extends ConsumerWidget {
     final isGroup = GroupType.values.any((type) => type.name == proxy.type);
     final nodeName = isGroup
         ? ref.watch(
-            realSelectedProxyStateProvider(proxy.name)
-                .select((state) => state.proxyName),
+            realSelectedProxyStateProvider(
+              proxy.name,
+            ).select((state) => state.proxyName),
           )
         : proxy.name;
     return EmojiText(

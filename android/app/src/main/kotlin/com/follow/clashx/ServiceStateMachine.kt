@@ -393,7 +393,6 @@ internal class ServiceStateMachine(private val host: ServiceStateHost) {
             title = state.currentProfileName,
             stopText = state.stopText,
             showStopAction = state.showStopAction,
-            appVisible = state.appVisible,
         )
     }
 }
