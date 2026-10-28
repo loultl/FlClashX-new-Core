@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:android/service/src/main/java/com/follow/clashx/service/modules/NetworkObserveModule.kt
-package com.follow.clashx.service.modules
-========
 package com.follow.clashx.service
->>>>>>>> 89a29c15f070e6347b32c6b4f37705d880e1c5db:android/service/src/main/java/com/follow/clashx/service/NetworkObserver.kt
 
 import android.net.ConnectivityManager
 import android.net.LinkProperties
@@ -15,10 +11,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
 import androidx.core.content.getSystemService
-<<<<<<<< HEAD:android/service/src/main/java/com/follow/clashx/service/modules/NetworkObserveModule.kt
-========
 import com.follow.clashx.common.GlobalState
->>>>>>>> 89a29c15f070e6347b32c6b4f37705d880e1c5db:android/service/src/main/java/com/follow/clashx/service/NetworkObserver.kt
 import com.follow.clashx.core.Core
 import java.net.Inet4Address
 import java.net.Inet6Address
