@@ -353,7 +353,10 @@ void main() {
     const sub = Group(
       type: GroupType.Selector,
       name: 'Sub',
-      all: [Proxy(name: 'Host A', type: 'ss'), Proxy(name: 'Host B', type: 'ss')],
+      all: [
+        Proxy(name: 'Host A', type: 'ss'),
+        Proxy(name: 'Host B', type: 'ss'),
+      ],
     );
     const parent = Group(
       type: GroupType.Selector,
