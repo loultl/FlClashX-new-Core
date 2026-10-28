@@ -22,44 +22,53 @@ class ThemeView extends StatelessWidget {
     return BaseScaffold(
       title: appLocalizations.theme,
       body: ListView(
-        padding: EdgeInsets.only(top: context.appBarInset, bottom: 32),
-        children: const [
-          ThemeLivePreview(),
-          SizedBox(height: 16),
-          ManagedSettingsHint(keys: themePageKeys),
-          ManagedSetting(
+        padding: EdgeInsets.only(
+          top: context.appBarInset,
+          bottom: 32 + context.bottomInset,
+        ),
+        children: [
+          const ThemeLivePreview(),
+          const SizedBox(height: 16),
+          const ManagedSettingsHint(keys: themePageKeys),
+          const ManagedSetting(
             settingKey: 'view.app.board',
             child: _ThemeStyleItem(),
           ),
-          SizedBox(height: 16),
-          _ThemeModeItem(),
-          SizedBox(height: 16),
-          ManagedSetting(settingKey: 'view.app.black', child: _PureBlackItem()),
-          SizedBox(height: 16),
-          ManagedSetting(
+          const SizedBox(height: 16),
+          const _ThemeModeItem(),
+          const SizedBox(height: 16),
+          const ManagedSetting(
+            settingKey: 'view.app.black',
+            child: _PureBlackItem(),
+          ),
+          const SizedBox(height: 16),
+          const ManagedSetting(
             settingKey: 'view.app.color',
             child: _PrimaryColorItem(),
           ),
-          SizedBox(height: 16),
-          ManagedSetting(
+          const SizedBox(height: 16),
+          const ManagedSetting(
             settingKey: 'view.app.navbar',
             child: _NavigationBarItem(),
           ),
-          SizedBox(height: 16),
-          ManagedSetting(
+          const SizedBox(height: 16),
+          const ManagedSetting(
             settingKey: 'view.app.tabs',
             child: _TabAnimationItem(),
           ),
-          SizedBox(height: 16),
-          ManagedSetting(
+          const SizedBox(height: 16),
+          const ManagedSetting(
             settingKey: 'view.app.glass',
             child: _LiquidGlassItem(),
           ),
-          SizedBox(height: 16),
-          _SidebarBlurItem(),
-          _FontFamilyItem(),
-          SizedBox(height: 16),
-          _TextScaleFactorItem(),
+          const SizedBox(height: 16),
+          if (system.isMacOS || system.isWindows) ...const [
+            _SidebarBlurItem(),
+            SizedBox(height: 16),
+          ],
+          const _FontFamilyItem(),
+          const SizedBox(height: 16),
+          const _TextScaleFactorItem(),
         ],
       ),
     );
@@ -895,9 +904,6 @@ class _SidebarBlurItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (!feature.sidebarBlur || (!system.isMacOS && !system.isWindows)) {
-      return const SizedBox.shrink();
-    }
     final appLocalizations = context.appLocalizations;
     final sidebarBlur = ref.watch(
       themeSettingProvider.select((state) => state.sidebarBlur),
@@ -906,7 +912,7 @@ class _SidebarBlurItem extends ConsumerWidget {
       leading: const GlyphIcon(AppGlyphs.blur),
       horizontalTitleGap: 12,
       title: Text(
-        appLocalizations.sidebarBlur,
+        appLocalizations.backgroundBlur,
         style: AppTextStyle.subheadline
             .of(context, emphasized: true)
             .copyWith(color: context.colorScheme.onSurfaceVariant),
@@ -1261,7 +1267,7 @@ class _CustomColorSheetState extends State<_CustomColorSheet> {
           max(16, gestureInsets.left),
           context.contentTopPadding,
           max(16, gestureInsets.right),
-          20,
+          20 + context.bottomInset,
         ),
         children: [
           ValueListenableBuilder(

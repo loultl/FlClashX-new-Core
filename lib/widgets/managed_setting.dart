@@ -51,35 +51,39 @@ class ManagedSetting extends ConsumerWidget {
     required this.settingKey,
     required this.child,
     this.onTakenOver,
+    this.dimsWhenLocked = true,
   });
 
   final String settingKey;
   final Widget child;
   final VoidCallback? onTakenOver;
 
-  Future<void> _takeOver(BuildContext context, WidgetRef ref) async {
-    final appLocalizations = context.appLocalizations;
-    final agreed = await dialogs.showMessage(
-      title: appLocalizations.managedByProvider,
-      message: TextSpan(text: appLocalizations.managedByProviderTip),
-      confirmText: appLocalizations.takeOver,
-    );
-    if (agreed != true) {
-      return;
+  /// False for a control that asks before its own change, so a tap both
+  /// takes the setting over and makes the change.
+  final bool dimsWhenLocked;
+
+  Future<void> _takeOver(WidgetRef ref) async {
+    final taken = await ref
+        .read(managedSettingsActionProvider.notifier)
+        .confirmTakeOver(settingKey);
+    if (taken) {
+      onTakenOver?.call();
     }
-    ref.read(managedSettingsActionProvider.notifier).takeOver(settingKey);
-    onTakenOver?.call();
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (ref.watch(settingLockedProvider(settingKey))) {
+    final locked = ref.watch(settingLockedProvider(settingKey));
+    if (locked && !dimsWhenLocked) {
+      return child;
+    }
+    if (locked) {
       return Semantics(
         button: true,
         label: context.appLocalizations.managedByProvider,
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
-          onTap: () => _takeOver(context, ref),
+          onTap: () => _takeOver(ref),
           child: Opacity(opacity: 0.5, child: IgnorePointer(child: child)),
         ),
       );

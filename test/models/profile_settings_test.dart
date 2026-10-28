@@ -41,11 +41,7 @@ void main() {
       expect(synced.tun.enable, isTrue);
       expect(synced.secret, isEmpty);
       expect(synced.externalController, isEmpty);
-      expect(synced.globalUa, 'mine');
-      expect(
-        synced.copyWith(mode: Mode.rule),
-        const PatchClashConfig(globalUa: 'mine'),
-      );
+      expect(synced.copyWith(mode: Mode.rule), const PatchClashConfig());
     },
   );
 
@@ -127,21 +123,10 @@ void main() {
     expect(synced.geoUpdateInterval, 48);
     expect(synced.geoXUrl[GeoResource.GEOIP], 'https://geo.example/geoip.dat');
     expect(synced.geoXUrl[GeoResource.MMDB], defaultGeoXUrl[GeoResource.MMDB]);
-    expect(synced.globalUa, isNull);
+    expect(synced.globalUa, 'clash.meta');
     expect(synced.tun.enable, isTrue);
     expect(synced.tun.device, 'utun5');
     expect(synced.tun.stack, TunStack.gvisor);
-  });
-
-  test('the selected user agent remains an app preference across profiles', () {
-    final selected = _tuned.copyWith(globalUa: 'FlClashXprizrak');
-    final synced = syncProfileSettings(
-      selected,
-      const {'global-ua': 'profile-agent'},
-      const ['global-ua'],
-    );
-
-    expect(synced.globalUa, 'FlClashXprizrak');
   });
 
   test('a key named with a value nothing answers to counts as absent', () {
@@ -199,14 +184,12 @@ void main() {
     final tuned = _tuned.copyWith(
       dnsOverrideKeys: {DnsOverrideKey.nameserver},
       hosts: {'a.example': '10.0.0.1'},
-      tun: _tuned.tun.copyWith(mtu: 1500),
     );
 
     final synced = syncProfileSettings(tuned, const {}, const []);
 
     expect(synced.dnsOverrideKeys, {DnsOverrideKey.nameserver});
     expect(synced.hosts, {'a.example': '10.0.0.1'});
-    expect(synced.tun.mtu, 1500);
   });
 
   test(
@@ -251,5 +234,29 @@ void main() {
     final dropped = syncProfileSettings(synced, const {}, const []);
     expect(dropped.tun.routeAddress, isEmpty);
     expect(dropped.tun.routeExcludeAddress, isEmpty);
+  });
+
+  test('the file sets the tun mtu and congestion control it names', () {
+    final synced = syncProfileSettings(
+      _tuned,
+      const {
+        'tun': {'mtu': 1500, 'congestion-controller': 'BBR'},
+      },
+      const ['tun', 'tun.mtu', 'tun.congestion-controller'],
+    );
+
+    expect(synced.tun.mtu, 1500);
+    expect(synced.tun.congestionController, 'bbr');
+
+    final invalid = syncProfileSettings(
+      _tuned,
+      const {
+        'tun': {'mtu': 100, 'congestion-controller': 'vegas'},
+      },
+      const ['tun', 'tun.mtu', 'tun.congestion-controller'],
+    );
+
+    expect(invalid.tun.mtu, defaultTunMtu);
+    expect(invalid.tun.congestionController, defaultCongestionController);
   });
 }

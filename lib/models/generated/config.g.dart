@@ -30,12 +30,14 @@ _AppSettingProps _$AppSettingPropsFromJson(
   openLogs: json['openLogs'] as bool? ?? false,
   closeConnections: json['closeConnections'] as bool? ?? true,
   testUrl: json['testUrl'] as String? ?? defaultTestUrl,
+  delayTestTimeout:
+      (json['delayTestTimeout'] as num?)?.toInt() ?? defaultDelayTestTimeout,
   tabAnimation:
       $enumDecodeNullable(
         _$TabAnimationEnumMap,
         _readTabAnimation(json, 'tabAnimation'),
       ) ??
-      TabAnimation.slide,
+      TabAnimation.fade,
   floatingNavigationBar: json['floatingNavigationBar'] as bool? ?? true,
   autoCheckUpdate: json['autoCheckUpdate'] as bool? ?? false,
   sidebarExpanded:
@@ -50,12 +52,8 @@ _AppSettingProps _$AppSettingPropsFromJson(
       $enumDecodeNullable(_$RestoreStrategyEnumMap, json['restoreStrategy']) ??
       RestoreStrategy.compatible,
   showTrayTitle: json['showTrayTitle'] as bool? ?? true,
+  monochromeTrayIcon: json['monochromeTrayIcon'] as bool? ?? true,
   checkCertificate: json['checkCertificate'] as bool? ?? true,
-  userAgents:
-      (_readUserAgents(json, 'userAgents') as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList() ??
-      defaultUserAgents,
   filters:
       (json['filters'] as List<dynamic>?)
           ?.map((e) => Filter.fromJson(e as Map<String, dynamic>))
@@ -96,6 +94,7 @@ _AppSettingProps _$AppSettingPropsFromJson(
           ?.map((e) => e as String)
           .toSet() ??
       const {},
+  appliedHeadersUpdate: json['appliedHeadersUpdate'] as String?,
 );
 
 Map<String, dynamic> _$AppSettingPropsToJson(_AppSettingProps instance) =>
@@ -112,6 +111,7 @@ Map<String, dynamic> _$AppSettingPropsToJson(_AppSettingProps instance) =>
       'openLogs': instance.openLogs,
       'closeConnections': instance.closeConnections,
       'testUrl': instance.testUrl,
+      'delayTestTimeout': instance.delayTestTimeout,
       'tabAnimation': _$TabAnimationEnumMap[instance.tabAnimation]!,
       'floatingNavigationBar': instance.floatingNavigationBar,
       'autoCheckUpdate': instance.autoCheckUpdate,
@@ -123,8 +123,8 @@ Map<String, dynamic> _$AppSettingPropsToJson(_AppSettingProps instance) =>
       'developerMode': instance.developerMode,
       'restoreStrategy': _$RestoreStrategyEnumMap[instance.restoreStrategy]!,
       'showTrayTitle': instance.showTrayTitle,
+      'monochromeTrayIcon': instance.monochromeTrayIcon,
       'checkCertificate': instance.checkCertificate,
-      'userAgents': instance.userAgents,
       'filters': instance.filters,
       'hideIp': instance.hideIp,
       'editorLineWrap': instance.editorLineWrap,
@@ -134,6 +134,7 @@ Map<String, dynamic> _$AppSettingPropsToJson(_AppSettingProps instance) =>
       'tableColumnWidths': instance.tableColumnWidths,
       'subscriptionNotices': instance.subscriptionNotices,
       'ownedSettings': instance.ownedSettings.toList(),
+      'appliedHeadersUpdate': instance.appliedHeadersUpdate,
     };
 
 const _$TabAnimationEnumMap = {
@@ -378,7 +379,7 @@ _ThemeProps _$ThemePropsFromJson(Map<String, dynamic> json) => _ThemeProps(
       ) ??
       ColorStyle.vivid,
   pureBlack: json['pureBlack'] as bool? ?? false,
-  sidebarBlur: json['sidebarBlur'] as bool? ?? true,
+  sidebarBlur: json['sidebarBlur'] as bool? ?? false,
   liquidGlass:
       $enumDecodeNullable(
         _$LiquidGlassModeEnumMap,

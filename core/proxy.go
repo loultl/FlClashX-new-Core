@@ -104,6 +104,7 @@ func proxyView(proxy constant.Proxy) any {
 		Name:              proxy.Name(),
 		Type:              proxy.Type().String(),
 		ServerDescription: descriptionOf(proxy.Name()),
+		ProviderName:      proxy.ProxyInfo().ProviderName,
 	}
 	if !isProxyGroupType(proxy.Type()) {
 		return node
@@ -173,7 +174,7 @@ func handleChangeProxy(params *ChangeProxyParams) *ChangeProxyResult {
 		return &ChangeProxyResult{Message: err.Error()}
 	}
 	changed := selector.Now() != before
-	refreshRouteLocked(false)
+	refreshRouteLocked(routeUnchanged)
 	return &ChangeProxyResult{Changed: changed}
 }
 
@@ -222,10 +223,4 @@ func handleConvertProxies(path string) ([]map[string]any, error) {
 		return nil, err
 	}
 	return convert.ConvertsV2Ray(buf)
-}
-
-// handleGetSmartWeights remains as an empty IPC response for older clients.
-// The current Dart host reads rankings from the external controller API.
-func handleGetSmartWeights() []any {
-	return []any{}
 }

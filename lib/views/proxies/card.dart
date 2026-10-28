@@ -40,6 +40,14 @@ void selectGroupProxy(
   );
 }
 
+/// Built-ins and groups have no definition, and a custom profile's own proxies
+/// are the local proxies already.
+bool _isAddableToLocal(Proxy proxy, {required bool isCustomProfile}) {
+  return (proxy.providerName != null || !isCustomProfile) &&
+      !reservedCustomProxyNames.contains(proxy.name) &&
+      GroupTypeExtension.getGroupType(proxy.type) == null;
+}
+
 class ProxyCard extends ConsumerWidget {
   final String groupName;
   final Proxy proxy;
@@ -80,6 +88,52 @@ class ProxyCard extends ConsumerWidget {
         ),
       );
     }
+  }
+
+  void _handleSelect(WidgetRef ref) {
+    selectGroupProxy(
+      ref,
+      groupName: groupName,
+      groupType: groupType,
+      proxyName: proxy.name,
+    );
+  }
+
+  void _handleAddToLocalProxies(WidgetRef ref) {
+    final proxiesAction = ref.read(proxiesActionProvider.notifier);
+    globalState.safeRun(() => proxiesAction.addToLocalProxies(proxy.name));
+  }
+
+  List<CommonPopupMenuItem> _menuItems(
+    BuildContext context,
+    WidgetRef ref, {
+    required bool inUse,
+    required bool pinned,
+    required bool addable,
+  }) {
+    final appLocalizations = context.appLocalizations;
+    return [
+      if (groupType == GroupType.Selector)
+        CommonPopupMenuItem(
+          glyph: AppGlyphs.checkCircle,
+          label: appLocalizations.select,
+          checked: inUse,
+          onPressed: () => _handleSelect(ref),
+        )
+      else if (groupType.isComputedSelected)
+        CommonPopupMenuItem(
+          glyph: AppGlyphs.pin,
+          label: appLocalizations.preferred,
+          checked: pinned,
+          onPressed: () => _handleSelect(ref),
+        ),
+      if (addable)
+        CommonPopupMenuItem(
+          glyph: AppGlyphs.listAdd,
+          label: appLocalizations.addToLocalProxies,
+          onPressed: () => _handleAddToLocalProxies(ref),
+        ),
+    ];
   }
 
   @override
@@ -128,9 +182,7 @@ class ProxyCard extends ConsumerWidget {
                           groupName: proxy.name,
                           style: typeStyle,
                         )
-                      : TooltipText(
-                          text: Text(proxy.type, maxLines: 1, style: typeStyle),
-                        ),
+                      : _ProxyDesc(proxy: proxy, style: typeStyle),
                 ),
                 delayText,
               ],
@@ -139,52 +191,57 @@ class ProxyCard extends ConsumerWidget {
     return Consumer(
       builder: (context, ref, _) {
         final inUse = ref.watch(
-          selectedProxyNameProvider(
-            groupName,
-          ).select((name) => name == proxy.name),
+          selectedProxyNameProvider(groupName)
+              .select((name) => name == proxy.name),
         );
         final pinned = groupType == GroupType.Smart
             ? inUse && (ref.read(proxyNameProvider(groupName)) ?? '').isNotEmpty
             : groupType.isComputedSelected &&
                   ref.watch(
-                    proxyNameProvider(
-                      groupName,
-                    ).select((name) => name == proxy.name),
+                    proxyNameProvider(groupName)
+                        .select((name) => name == proxy.name),
                   );
-        return CommonCard(
-          radius: AppCorner.lg,
-          enterActionsOnRight: true,
-          key: key,
-          onPressed: () {
-            selectGroupProxy(
-              ref,
-              groupName: groupName,
-              groupType: groupType,
-              proxyName: proxy.name,
-            );
-          },
-          isSelected: inUse,
-          child: Container(
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 4,
-                  children: [
-                    Expanded(child: proxyNameText),
-                    if (pinned)
-                      SelectionBadge.preferred(inUse: inUse)
-                    else if (inUse)
-                      const SelectionBadge(),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                details,
-              ],
+        final isCustomProfile = ref.watch(
+          currentProfileProvider.select(
+            (profile) => profile?.type == ProfileType.custom,
+          ),
+        );
+        return ContextMenuRegion(
+          menuItems: _menuItems(
+            context,
+            ref,
+            inUse: inUse,
+            pinned: pinned,
+            addable: _isAddableToLocal(proxy, isCustomProfile: isCustomProfile),
+          ),
+          child: CommonCard(
+            radius: AppCorner.lg,
+            enterActionsOnRight: true,
+            key: key,
+            onPressed: () => _handleSelect(ref),
+            isSelected: inUse,
+            child: Container(
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 4,
+                    children: [
+                      Expanded(child: proxyNameText),
+                      if (pinned)
+                        SelectionBadge.preferred(inUse: inUse)
+                      else if (inUse)
+                        const SelectionBadge(),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  details,
+                ],
+              ),
             ),
           ),
         );
@@ -204,17 +261,27 @@ class _ProxyDesc extends ConsumerWidget {
     final isGroup = GroupType.values.any((type) => type.name == proxy.type);
     final nodeName = isGroup
         ? ref.watch(
-            realSelectedProxyStateProvider(
-              proxy.name,
-            ).select((state) => state.proxyName),
+            realSelectedProxyStateProvider(proxy.name)
+                .select((state) => state.proxyName),
           )
         : proxy.name;
     return EmojiText(
-      nodeName == proxy.name ? proxy.type : '${proxy.type}($nodeName)',
+      _describe(nodeName, isGroup: isGroup),
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: style,
     );
+  }
+
+  // A nested group with no `groupDescription` of its own reads as the host it
+  // resolves to, not its bare type; with one, the description still wins.
+  String _describe(String nodeName, {required bool isGroup}) {
+    if (isGroup && proxy.serverDescription == null) {
+      return nodeName == proxy.name ? proxy.type : nodeName;
+    }
+    return nodeName == proxy.name
+        ? proxy.description
+        : '${proxy.description}($nodeName)';
   }
 }
 

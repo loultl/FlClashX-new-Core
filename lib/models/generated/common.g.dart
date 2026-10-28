@@ -219,6 +219,7 @@ const _$GroupTypeEnumMap = {
   GroupType.Selector: 'select',
   GroupType.URLTest: 'url-test',
   GroupType.Fallback: 'fallback',
+  GroupType.Smart: 'smart',
   GroupType.LoadBalance: 'load-balance',
   GroupType.Relay: 'relay',
 };

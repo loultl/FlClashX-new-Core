@@ -214,7 +214,7 @@ class CommonCard extends StatelessWidget {
       fill: Colors.transparent,
       builder: (context, states, child) => LiquidGlass(
         style: LiquidGlassStyle.frost(background, quality),
-        corners: corners,
+        borderRadius: corners,
         pressed: states.contains(WidgetState.pressed),
         child: FrostScope(
           surface: background,

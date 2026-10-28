@@ -45,15 +45,15 @@ mixin CoreInterface {
 
   Future<Map<String, dynamic>> getProfileOutbounds(String path);
 
+  Future<Map<String, dynamic>?> getProxyDefinition(String name);
+
   Future<String> buildProfile(SetupBase base);
 
   Future<String> dumpRuleSet(String path);
 
   Future<RuleSetInfo> compileRuleSet(String name, {String url = ''});
 
-  Future<Delay?> asyncTestDelay(String url, String proxyName);
-
-  Future<ProbeResult?> probe(ProbeParams params);
+  Future<Delay?> asyncTestDelay(String url, String proxyName, Duration timeout);
 
   Future<OutboundIpResult?> outboundIp(OutboundIpParams params);
 
@@ -71,9 +71,13 @@ mixin CoreInterface {
 
   Future<RouteSnapshot?> watchRoute(bool watch);
 
+  Future<RouteCheck?> checkRoutes(CheckRoutesParams params);
+
   Future<bool> startListener();
 
   Future<bool> stopListener();
+
+  Future<bool> restartListener();
 
   Future<List<ExternalProvider>> getExternalProviders();
 
@@ -117,6 +121,8 @@ mixin CoreInterface {
   FutureOr<bool> closeConnections();
 
   FutureOr<bool> resetConnections();
+
+  FutureOr<bool> clearDnsCache();
 }
 
 abstract class CoreHandlerInterface with CoreInterface {
@@ -346,6 +352,14 @@ abstract class CoreHandlerInterface with CoreInterface {
   }
 
   @override
+  Future<Map<String, dynamic>?> getProxyDefinition(String name) {
+    return _invokeMethod<Map<String, dynamic>>(
+      method: CoreMethod.getProxyDefinition,
+      arguments: name,
+    );
+  }
+
+  @override
   Future<String> buildProfile(SetupBase base) async {
     final result = await _invokeMethod<String>(
       method: CoreMethod.buildProfile,
@@ -452,6 +466,16 @@ abstract class CoreHandlerInterface with CoreInterface {
   }
 
   @override
+  Future<RouteCheck?> checkRoutes(CheckRoutesParams params) async {
+    final data = await _invokeMethod<Map<String, dynamic>>(
+      method: CoreMethod.checkRoutes,
+      arguments: params.toJson(),
+      timeout: coreGuardFor(probeTimeoutDuration.inMilliseconds),
+    );
+    return data == null ? null : RouteCheck.fromJson(data);
+  }
+
+  @override
   Future<List<ExternalProvider>> getExternalProviders() async {
     final data = await _invokeMethod<List<dynamic>>(
       method: CoreMethod.getExternalProviders,
@@ -525,6 +549,11 @@ abstract class CoreHandlerInterface with CoreInterface {
   }
 
   @override
+  Future<bool> clearDnsCache() async {
+    return await _invokeMethod<bool>(method: CoreMethod.clearDnsCache) ?? false;
+  }
+
+  @override
   Future<bool> closeConnection(String id) async {
     return await _invokeMethod<bool>(
           method: CoreMethod.closeConnection,
@@ -593,10 +622,19 @@ abstract class CoreHandlerInterface with CoreInterface {
   }
 
   @override
-  Future<Delay?> asyncTestDelay(String url, String proxyName) async {
+  Future<bool> restartListener() async {
+    return await stopListener() && await startListener();
+  }
+
+  @override
+  Future<Delay?> asyncTestDelay(
+    String url,
+    String proxyName,
+    Duration timeout,
+  ) async {
     final delayParams = {
       'proxy-name': proxyName,
-      'timeout': delayTestTimeoutDuration.inMilliseconds,
+      'timeout': timeout.inMilliseconds,
       'test-url': url,
     };
     final data = await _invokeMethod<Map<String, dynamic>>(
@@ -605,16 +643,6 @@ abstract class CoreHandlerInterface with CoreInterface {
       timeout: delayTestGuardDuration,
     );
     return data == null ? null : Delay.fromJson(data);
-  }
-
-  @override
-  Future<ProbeResult?> probe(ProbeParams params) async {
-    final data = await _invokeMethod<Map<String, dynamic>>(
-      method: CoreMethod.probe,
-      arguments: params.toJson(),
-      timeout: probeGuardDuration(params),
-    );
-    return data == null ? null : ProbeResult.fromJson(data);
   }
 
   @override

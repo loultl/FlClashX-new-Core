@@ -1,8 +1,15 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:dio/dio.dart';
+import 'package:fl_clash/common/constant.dart';
+import 'package:fl_clash/common/path.dart';
 import 'package:fl_clash/core/controller.dart';
 import 'package:fl_clash/core/desktop/model.dart';
 import 'package:fl_clash/core/interface.dart';
+import 'package:fl_clash/core/method.dart';
 import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/l10n/l10n.dart';
 import 'package:fl_clash/models/models.dart';
@@ -17,9 +24,84 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:riverpod/riverpod.dart';
 
+import '../helpers/app_paths.dart';
+import '../helpers/setup_actions.dart';
 import '../helpers/test_profiles.dart';
 
 class _MockCoreHandlerInterface extends Mock implements CoreHandlerInterface {}
+
+const _oldUrl = 'https://sub.example.com/old';
+const _newUrl = 'https://sub.example.com/new';
+
+/// Answers [_newUrl] at once and [_oldUrl] only when [answer] is called.
+class _HeldFetch {
+  final started = Completer<void>();
+  final _response = Completer<Response<Uint8List>>();
+
+  Future<Response<Uint8List>> call(
+    String url, {
+    Duration timeout = downloadTimeoutDuration,
+    Map<String, String> headers = const {},
+  }) {
+    if (url != _oldUrl) {
+      return Future.value(_answer(url, 'proxies: [] # new'));
+    }
+    started.complete();
+    return _response.future;
+  }
+
+  void answer(String body) => _response.complete(_answer(_oldUrl, body));
+
+  static Response<Uint8List> _answer(String url, String body) => Response(
+    requestOptions: RequestOptions(path: url),
+    statusCode: 200,
+    data: Uint8List.fromList(utf8.encode(body)),
+  );
+}
+
+typedef _HeldDownload = ({
+  Profile profile,
+  _HeldFetch fetch,
+  ProviderContainer container,
+  ProfilesAction action,
+  ApplyRecordingSetupAction setupAction,
+});
+
+Future<_HeldDownload> _holdDownload() async {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  await AppLocalizations.load(const Locale('en'));
+  final root = await Directory.systemTemp.createTemp('profiles_action_');
+  addTearDown(() => root.delete(recursive: true));
+  await useAppPaths(root);
+  final profile = Profile.normal(
+    label: 'Sub',
+    url: _oldUrl,
+    sendDeviceHeaders: false,
+  );
+  final core = _MockCoreHandlerInterface();
+  when(() => core.validateConfig(any())).thenAnswer((_) async => '');
+  when(() => core.clearEffect(any())).thenAnswer((_) async => '');
+  final setupAction = ApplyRecordingSetupAction();
+  final container = ProviderContainer(
+    overrides: [
+      currentProfileIdProvider.overrideWithBuild((_, _) => profile.id),
+      profilesProvider.overrideWith(() => TestProfiles([profile])),
+      coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+      setupActionProvider.overrideWith(() => setupAction),
+    ],
+  );
+  addTearDown(container.dispose);
+  final fetch = _HeldFetch();
+  final action = container.read(profilesActionProvider.notifier)
+    ..fetch = fetch.call;
+  return (
+    profile: profile,
+    fetch: fetch,
+    container: container,
+    action: action,
+    setupAction: setupAction,
+  );
+}
 
 void main() {
   group('ProfilesAction', () {
@@ -50,6 +132,142 @@ void main() {
       final profile = container.read(profilesProvider).getProfile(original.id);
       expect(profile?.label, edited.label);
       expect(profile?.url, edited.url);
+    });
+
+    group('a download held open while', () {
+      late _HeldDownload held;
+
+      Future<List<String>> profileFiles() async {
+        final directory = Directory(await appPath.profilesPath);
+        if (!await directory.exists()) {
+          return const [];
+        }
+        return [
+          await for (final entity in directory.list())
+            entity.path.split(Platform.pathSeparator).last,
+        ];
+      }
+
+      Future<String> saved() async => (await held.profile.file).readAsString();
+
+      setUp(() async {
+        held = await _holdDownload();
+      });
+
+      test('a request for a new source leaves the file to it', () async {
+        final next = held.profile.copyWith(url: _newUrl);
+
+        final stale = held.action.updateProfile(held.profile);
+        await held.fetch.started.future;
+        await held.action.updateProfile(next);
+        expect(held.setupAction.applyCount, 1);
+
+        held.fetch.answer('proxies: [] # old');
+        await stale;
+
+        final profile = held.container.read(profilesProvider).single;
+        expect(profile.url, next.url);
+        expect(await saved(), 'proxies: [] # new');
+        expect(held.setupAction.applyCount, 1);
+        expect(await profileFiles(), ['${held.profile.id}.yaml']);
+      });
+
+      test('a file saved by hand is kept with its settings', () async {
+        final pending = held.action.updateProfile(held.profile);
+        await held.fetch.started.future;
+        final edited = await held.profile
+            .copyWith(autoUpdate: false)
+            .saveFile(
+              Uint8List.fromList(utf8.encode('proxies: [] # by hand')),
+              validate: (_, _) async => '',
+            );
+        held.container.read(profilesProvider.notifier).put(edited);
+
+        held.fetch.answer('proxies: [] # stale');
+        await pending;
+
+        final profile = held.container.read(profilesProvider).single;
+        expect(profile.autoUpdate, isFalse);
+        expect(profile.lastUpdateDate, edited.lastUpdateDate);
+        expect(profile.subscriptionInfo, isNull);
+        expect(await saved(), 'proxies: [] # by hand');
+        expect(held.setupAction.applyCount, 0);
+      });
+
+      test('a source edit retires it but a label edit does not', () async {
+        final pending = held.action.updateProfile(held.profile);
+        await held.fetch.started.future;
+        held.container
+            .read(profilesProvider.notifier)
+            .put(
+              held.profile.copyWith(
+                label: 'Renamed',
+                ageSecretKey: 'AGE-SECRET-KEY-1FAKE',
+              ),
+            );
+
+        held.fetch.answer('proxies: [] # stale');
+        await pending;
+
+        final profile = held.container.read(profilesProvider).single;
+        expect(profile.label, 'Renamed');
+        expect(profile.lastUpdateDate, isNull);
+        expect(await profileFiles(), isEmpty);
+        expect(held.setupAction.applyCount, 0);
+      });
+
+      test('a label edit alone lets it land', () async {
+        final pending = held.action.updateProfile(held.profile);
+        await held.fetch.started.future;
+        held.container
+            .read(profilesProvider.notifier)
+            .put(held.profile.copyWith(label: 'Renamed'));
+
+        held.fetch.answer('proxies: [] # landed');
+        await pending;
+
+        final profile = held.container.read(profilesProvider).single;
+        expect(profile.label, 'Renamed');
+        expect(profile.lastUpdateDate, isNotNull);
+        expect(await saved(), 'proxies: [] # landed');
+        expect(held.setupAction.applyCount, 1);
+      });
+
+      test('its date read back to the second lets it land', () async {
+        final pending = held.action.updateProfile(
+          held.profile.copyWith(
+            lastUpdateDate: DateTime(2026, 10, 27, 12, 0, 0, 345, 678),
+          ),
+        );
+        await held.fetch.started.future;
+        held.container
+            .read(profilesProvider.notifier)
+            .put(
+              held.profile.copyWith(lastUpdateDate: DateTime(2026, 10, 27, 12)),
+            );
+
+        held.fetch.answer('proxies: [] # landed');
+        await pending;
+
+        expect(await saved(), 'proxies: [] # landed');
+        expect(held.setupAction.applyCount, 1);
+      });
+
+      test('its deletion leaves no file behind', () async {
+        held.container.listen(currentProfileIdProvider, (_, _) {});
+        held.container.read(currentProfileIdProvider.notifier).value = null;
+
+        final pending = held.action.updateProfile(held.profile);
+        await held.fetch.started.future;
+        await held.action.deleteProfile(held.profile.id);
+
+        held.fetch.answer('proxies: [] # stale');
+        await pending;
+
+        expect(held.container.read(profilesProvider), isEmpty);
+        expect(await profileFiles(), isEmpty);
+        expect(held.setupAction.applyCount, 0);
+      });
     });
 
     test('updates selection and inserts the first profile', () {
@@ -111,7 +329,7 @@ void main() {
   group('ScriptsAction', () {
     ProviderContainer scriptsContainer(
       Profile profile,
-      _ApplyRecordingSetupAction setupAction,
+      ApplyRecordingSetupAction setupAction,
     ) {
       final container = ProviderContainer(
         overrides: [
@@ -138,7 +356,7 @@ void main() {
         extendType: ExtendType.script,
         scriptId: 1,
       );
-      final setupAction = _ApplyRecordingSetupAction();
+      final setupAction = ApplyRecordingSetupAction();
       final container = scriptsContainer(profile, setupAction);
       final action = container.read(scriptsActionProvider.notifier);
 
@@ -166,7 +384,7 @@ void main() {
           extendType: ExtendType.script,
           scriptId: 1,
         );
-        final setupAction = _ApplyRecordingSetupAction();
+        final setupAction = ApplyRecordingSetupAction();
         final container = scriptsContainer(profile, setupAction);
         final remote = script(1, url: 'bad-url');
 
@@ -289,6 +507,68 @@ void main() {
       expect(setupAction.applyProfileCount, 0);
     });
 
+    test(
+      'a stop made while an embedded core shuts down keeps it off',
+      () async {
+        final core = _MockCoreHandlerInterface();
+        final shutdown = Completer<bool>();
+        when(() => core.shutdown()).thenAnswer((_) => shutdown.future);
+        final container = ProviderContainer(
+          overrides: [
+            initProvider.overrideWithBuild((_, _) => true),
+            commonActionProvider.overrideWith(_RaceCommonAction.new),
+            coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+            coreActionProvider.overrideWith(
+              () => _TestCoreAction()..embedded = true,
+            ),
+            setupActionProvider.overrideWith(_RestartSetupAction.new),
+          ],
+        );
+        addTearDown(container.dispose);
+        final coreAction =
+            container.read(coreActionProvider.notifier) as _TestCoreAction;
+        final setupAction =
+            container.read(setupActionProvider.notifier) as _RestartSetupAction;
+        await setupAction.setRunning(true);
+
+        final restart = coreAction.restartCore();
+        await Future<void>.delayed(Duration.zero);
+        await setupAction.setRunning(false);
+        shutdown.complete(true);
+        await restart;
+
+        expect(container.read(isStartProvider), isFalse);
+        expect(setupAction.transitions.last, isFalse);
+        expect(setupAction.applyProfileCount, 1);
+      },
+    );
+
+    test(
+      'clears the DNS cache on a network change only while connected',
+      () async {
+        final core = _MockCoreHandlerInterface();
+        when(core.clearDnsCache).thenAnswer((_) async => true);
+        final container = ProviderContainer(
+          overrides: [
+            coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+          ],
+        );
+        addTearDown(container.dispose);
+        final action = container.read(coreActionProvider.notifier);
+
+        await action.clearDnsCacheOnNetworkChange();
+        verifyNever(core.clearDnsCache);
+
+        container.read(coreStatusProvider.notifier).value =
+            CoreStatus.connected;
+        await action.clearDnsCacheOnNetworkChange();
+        verify(core.clearDnsCache).called(1);
+
+        when(core.clearDnsCache).thenThrow(StateError('disconnected'));
+        await expectLater(action.clearDnsCacheOnNetworkChange(), completes);
+      },
+    );
+
     test('applies the profile after restarting a stopped core', () async {
       final container = ProviderContainer(
         overrides: [
@@ -332,6 +612,76 @@ void main() {
         expect(setupAction.applyProfileCount, 0);
       },
     );
+
+    test('a stop confirmed mid-restart keeps the proxy off', () async {
+      final container = ProviderContainer(
+        overrides: [
+          initProvider.overrideWithBuild((_, _) => true),
+          commonActionProvider.overrideWith(_RaceCommonAction.new),
+          coreActionProvider.overrideWith(_TestCoreAction.new),
+          setupActionProvider.overrideWith(_RestartSetupAction.new),
+        ],
+      );
+      addTearDown(container.dispose);
+      final coreAction =
+          container.read(coreActionProvider.notifier) as _TestCoreAction;
+      final setupAction =
+          container.read(setupActionProvider.notifier) as _RestartSetupAction;
+      await setupAction.setRunning(true);
+      final restartCompleter = Completer<CoreLifecycleResult>();
+      coreAction.restartCompleter = restartCompleter;
+
+      final restart = coreAction.restartCore();
+      await Future<void>.delayed(Duration.zero);
+      await setupAction.setRunning(false);
+      expect(container.read(isStartProvider), isFalse);
+
+      restartCompleter.complete(_restartResult);
+      await restart;
+
+      expect(setupAction.transitions, [true, false]);
+      expect(container.read(isStartProvider), isFalse);
+      expect(setupAction.applyProfileCount, 1);
+    });
+
+    test('a stop rolled back mid-restart keeps the proxy off', () async {
+      final container = ProviderContainer(
+        overrides: [
+          initProvider.overrideWithBuild((_, _) => true),
+          commonActionProvider.overrideWith(_RaceCommonAction.new),
+          coreActionProvider.overrideWith(_TestCoreAction.new),
+          setupActionProvider.overrideWith(_RestartSetupAction.new),
+        ],
+      );
+      addTearDown(container.dispose);
+      final coreAction =
+          container.read(coreActionProvider.notifier) as _TestCoreAction;
+      final setupAction =
+          container.read(setupActionProvider.notifier) as _RestartSetupAction;
+      await setupAction.setRunning(true);
+      final restartCompleter = Completer<CoreLifecycleResult>();
+      coreAction.restartCompleter = restartCompleter;
+
+      final restart = coreAction.restartCore();
+      await Future<void>.delayed(Duration.zero);
+      setupAction.coreRunningError = const CoreMethodException(
+        code: 'transport_disconnected',
+        message: 'Core transport disconnected',
+      );
+      await expectLater(
+        setupAction.setRunning(false),
+        throwsA(isA<CoreMethodException>()),
+      );
+      expect(container.read(isStartProvider), isTrue);
+      setupAction.coreRunningError = null;
+
+      restartCompleter.complete(_restartResult);
+      await restart;
+
+      expect(setupAction.transitions, [true, false, false]);
+      expect(container.read(isStartProvider), isFalse);
+      expect(setupAction.applyProfileCount, 1);
+    });
 
     test(
       'a rejected setup while running reports restartCore as unsuccessful',
@@ -914,15 +1264,6 @@ class _TestCoreAction extends CoreAction {
   }
 }
 
-class _ApplyRecordingSetupAction extends SetupAction {
-  int applyCount = 0;
-
-  @override
-  void applyProfileDebounce({bool silence = false, bool force = false}) {
-    applyCount++;
-  }
-}
-
 class _MemoryScripts extends Scripts {
   @override
   Stream<List<Script>> build() => Stream.value(const []);
@@ -1060,5 +1401,38 @@ class _RaceCommonAction extends CommonAction {
   @override
   Future<void> updateTraffic() async {
     updateTrafficCount++;
+  }
+}
+
+class _RestartSetupAction extends SetupAction {
+  final transitions = <bool>[];
+  int applyProfileCount = 0;
+  Exception? coreRunningError;
+
+  @override
+  void applyProfileDebounce({bool silence = false, bool force = false}) {}
+
+  @override
+  Future<bool> setCoreRunning(bool running) async {
+    transitions.add(running);
+    final error = coreRunningError;
+    if (error != null) {
+      throw error;
+    }
+    return true;
+  }
+
+  @override
+  void resetCoreTraffic() {}
+
+  @override
+  Future<bool> applyProfile({
+    bool silence = false,
+    bool force = false,
+    Future<void> Function()? preloadInvoke,
+  }) async {
+    applyProfileCount++;
+    await preloadInvoke?.call();
+    return true;
   }
 }

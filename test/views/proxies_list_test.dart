@@ -4,7 +4,7 @@ import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/models/models.dart';
 import 'package:fl_clash/providers/providers.dart';
 import 'package:fl_clash/state.dart';
-import 'package:fl_clash/ui/ui.dart' show TonalButtonGroup;
+import 'package:fl_clash/ui/context.dart';
 import 'package:fl_clash/views/proxies/card.dart';
 import 'package:fl_clash/views/proxies/list.dart';
 import 'package:fl_clash/views/views.dart';
@@ -17,6 +17,7 @@ import '../helpers/test_app.dart';
 import '../helpers/test_profiles.dart';
 
 void main() {
+  setUpAll(() => registerFallbackValue(Duration.zero));
   proxiesBarTests();
   proxyDescriptionTests();
   testWidgets('a folded group shows its description, never its type', (
@@ -126,12 +127,15 @@ void main() {
     await tester.pump();
 
     final barBottom = tester.getRect(find.byType(AppBar)).bottom;
-    expect(tester.getRect(find.byType(ListHeader)).top, barBottom + 8);
+    final contentTop = tester
+        .element(find.byType(ListHeader))
+        .contentTopPadding;
+    expect(tester.getRect(find.byType(ListHeader)).top, contentTop);
 
     await tester.drag(find.byType(ProxyCard).first, const Offset(0, -300));
     await tester.pump();
 
-    expect(tester.getRect(find.byType(ListHeader)).top, barBottom + 8);
+    expect(tester.getRect(find.byType(ListHeader)).top, contentTop);
     expect(
       find
           .byType(ProxyCard)
@@ -206,12 +210,11 @@ void main() {
     position.jumpTo(position.maxScrollExtent - 1000);
     await tester.pump();
 
-    final barBottom = tester.getRect(find.byType(AppBar)).bottom;
     final far = find.ancestor(
       of: find.text('Far'),
       matching: find.byType(ListHeader),
     );
-    expect(tester.getRect(far).top, barBottom + 8);
+    expect(tester.getRect(far).top, tester.element(far).contentTopPadding);
     expect(find.text('G0', skipOffstage: false), findsNothing);
     expect(tester.takeException(), isNull);
   });
@@ -284,7 +287,7 @@ void proxiesBarTests() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
     final core = _MockCore();
-    when(() => core.asyncTestDelay(any(), any())).thenAnswer(
+    when(() => core.asyncTestDelay(any(), any(), any())).thenAnswer(
       (invocation) async => Delay(
         url: invocation.positionalArguments[0] as String,
         name: invocation.positionalArguments[1] as String,
@@ -352,8 +355,8 @@ void proxiesBarTests() {
     await tester.pump();
     await tester.pump(const Duration(seconds: 2));
 
-    verify(() => core.asyncTestDelay(any(), 'P1')).called(1);
-    verify(() => core.asyncTestDelay(any(), 'P2')).called(1);
+    verify(() => core.asyncTestDelay(any(), 'P1', any())).called(1);
+    verify(() => core.asyncTestDelay(any(), 'P2', any())).called(1);
     expect(tester.takeException(), isNull);
   });
 
@@ -412,8 +415,6 @@ void proxiesBarTests() {
     );
     await tester.pump();
 
-    expect(find.byType(TonalButtonGroup), findsOneWidget);
-    expect(find.byTooltip('More'), findsOneWidget);
     await tester.tap(find.byTooltip('Expand all groups'));
     await tester.pumpAndSettle();
     expect(container.read(unfoldSetProvider), {'Hidden', 'Selector', 'Auto'});

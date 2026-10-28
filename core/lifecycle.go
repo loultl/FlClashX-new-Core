@@ -51,7 +51,9 @@ func handleStartListener() bool {
 	isRunning.Store(true)
 	updateListeners(currentConfig)
 	resolver.ResetConnection()
-	refreshRoute()
+	// A probe already out left before the TUN routes and over the DNS
+	// connections just dropped, so its answer must not stand for this route.
+	bumpRouteEpoch()
 	return true
 }
 

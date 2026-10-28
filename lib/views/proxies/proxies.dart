@@ -34,6 +34,12 @@ class _ProxiesViewState extends ConsumerState<ProxiesView> {
   List<CommonPopupMenuItem> _buildMenuItems(BuildContext context) {
     final appLocalizations = context.appLocalizations;
     return [
+      if (_isTab)
+        CommonPopupMenuItem(
+          glyph: AppGlyphs.locate,
+          label: appLocalizations.scrollToSelected,
+          onPressed: () => _proxiesTabKey.currentState?.scrollToGroupSelected(),
+        ),
       CommonPopupMenuItem(
         glyph: AppGlyphs.sliders,
         label: appLocalizations.settings,
@@ -146,7 +152,7 @@ class _ProxiesViewState extends ConsumerState<ProxiesView> {
                 '${mode == Mode.global ? appLocalizations.global : appLocalizations.rule}',
             onPressed: () => ref
                 .read(setupActionProvider.notifier)
-                .changeMode(mode == Mode.global ? Mode.rule : Mode.global),
+                .pickMode(mode == Mode.global ? Mode.rule : Mode.global),
           ),
         IconButtonData(
           glyph: AppGlyphs.bolt,
@@ -159,7 +165,6 @@ class _ProxiesViewState extends ConsumerState<ProxiesView> {
                     .delayTestAllGroups(),
         ),
       ],
-      ?primaryAction,
     ];
     return LiquidGlassScope(
       enabled: false,
@@ -171,20 +176,12 @@ class _ProxiesViewState extends ConsumerState<ProxiesView> {
         groupActions: !picker,
         searchActions: [?primaryAction],
         iconActions: [
-          if (!picker) ...barActions,
+          ...barActions,
           if (_isTab && currentGroup?.type == GroupType.Smart)
             IconButtonData(
               glyph: AppGlyphs.sparkle,
               tooltip: 'Smart details',
               onPressed: () => showSmartDetails(context, currentGroup!.name),
-            ),
-          if (_isTab && !picker)
-            IconButtonData(
-              glyph: AppGlyphs.locate,
-              onPressed: () {
-                _proxiesTabKey.currentState?.scrollToGroupSelected();
-              },
-              tooltip: context.appLocalizations.scrollToSelected,
             ),
           if (!_isTab && !picker) _buildFoldAllAction(),
         ],

@@ -154,6 +154,74 @@ void main() {
     expect(style(), ThemeStyle.enhanced);
   });
 
+  test('a change between updates leaves the edited dashboard alone', () async {
+    final first = DateTime(2026, 10, 19, 10);
+    final profile = _profile(
+      1,
+      widgets: 'announcement,outboundMode',
+      updatedAt: first,
+    );
+    await select(profile);
+    container
+        .read(appSettingProvider.notifier)
+        .update(
+          (state) =>
+              state.copyWith(dashboardWidgets: [DashboardWidget.outboundMode]),
+        );
+
+    await put(profile.copyWith(currentGroupName: GroupName.GLOBAL.name));
+    expect(container.read(appSettingProvider).dashboardWidgets, [
+      DashboardWidget.outboundMode,
+    ]);
+
+    await put(
+      profile.copyWith(lastUpdateDate: first.add(const Duration(hours: 1))),
+    );
+    expect(container.read(appSettingProvider).dashboardWidgets, [
+      DashboardWidget.announcement,
+      DashboardWidget.outboundMode,
+    ]);
+  });
+
+  test('an update applied before a restart is not applied again', () async {
+    final updatedAt = DateTime(2026, 10, 19, 10, 0, 0, 750);
+    container
+        .read(appSettingProvider.notifier)
+        .update(
+          (state) => state.copyWith(
+            appliedHeadersUpdate: profileHeadersUpdateOf(
+              _profile(1, updatedAt: updatedAt),
+            ),
+          ),
+        );
+
+    await select(
+      _profile(
+        1,
+        view: 'app.board:extended',
+        updatedAt: DateTime(2026, 10, 19, 10),
+      ),
+    );
+
+    expect(style(), ThemeStyle.original);
+  });
+
+  test('a profile restored after the last was deleted applies again', () async {
+    final profile = _profile(
+      1,
+      view: 'app.board:extended',
+      updatedAt: DateTime(2026, 10, 19, 10),
+    );
+    await select(profile);
+    container.read(currentProfileIdProvider.notifier).value = null;
+    await settle();
+    setStyle(ThemeStyle.original);
+
+    await select(profile);
+
+    expect(style(), ThemeStyle.enhanced);
+  });
+
   test(
     'the colour keys paint the theme and keeps the colour on offer',
     () async {

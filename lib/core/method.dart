@@ -19,6 +19,7 @@ enum CoreMethod {
   getConfig,
   getProfileBase,
   getProfileOutbounds,
+  getProxyDefinition,
   buildProfile,
   dumpRuleSet,
   compileRuleSet,
@@ -29,13 +30,13 @@ enum CoreMethod {
   getTotalTraffic,
   resetTraffic,
   asyncTestDelay,
-  probe,
   outboundIp,
   serviceCheck,
   getConnections,
   getConnectionCount,
   closeConnections,
   resetConnections,
+  clearDnsCache,
   closeConnection,
   getExternalProviders,
   getExternalProvider,
@@ -54,6 +55,7 @@ enum CoreMethod {
   clearEffect,
   updateDns,
   watchRoute,
+  checkRoutes,
 }
 
 class CoreMethodCall {

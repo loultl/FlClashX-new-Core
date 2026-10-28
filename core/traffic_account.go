@@ -70,7 +70,10 @@ const (
 
 // The tracker that knows the chain is registered once the dial succeeds;
 // bytes seen before then wait in the account until it is.
-const routeLookupAttempts = 64
+const (
+	routeLookupBurst = 64
+	routeLookupGap   = 100 * time.Millisecond
+)
 
 type trafficAccount struct {
 	mu        sync.Mutex
@@ -79,6 +82,7 @@ type trafficAccount struct {
 	route     routeKind
 	trackerID string
 	lookups   int
+	lookedUp  time.Time
 	up, down  int64
 	verified  time.Time
 }
@@ -86,8 +90,7 @@ type trafficAccount struct {
 func (a *trafficAccount) add(up, down int64) {
 	a.mu.Lock()
 	defer a.mu.Unlock()
-	if a.route == routeUnknown && a.lookups < routeLookupAttempts {
-		a.lookups++
+	if a.route == routeUnknown && a.lookupDue() {
 		if tracker := findTracker(a.matches); tracker != nil {
 			a.settle(tracker)
 		}
@@ -99,6 +102,19 @@ func (a *trafficAccount) add(up, down int64) {
 		a.up += up
 		a.down += down
 	}
+}
+
+func (a *trafficAccount) lookupDue() bool {
+	if a.lookups < routeLookupBurst {
+		a.lookups++
+		return true
+	}
+	now := time.Now()
+	if now.Sub(a.lookedUp) < routeLookupGap {
+		return false
+	}
+	a.lookedUp = now
+	return true
 }
 
 func (a *trafficAccount) matches(info *statistic.TrackerInfo) bool {
@@ -248,7 +264,7 @@ func (r *udpRoute) recheck(now time.Time) {
 	}
 	tracker := findTracker(r.matches)
 	if tracker == nil {
-		r.route, r.lookups = routeUnknown, 0
+		r.route, r.lookups, r.lookedUp = routeUnknown, 0, time.Time{}
 		return
 	}
 	r.verified = now

@@ -14,6 +14,7 @@ import 'package:fl_clash/ui/measure.dart';
 import 'package:fl_clash/ui/metrics.dart';
 import 'package:fl_clash/ui/models.dart';
 import 'package:fl_clash/ui/shape.dart';
+import 'package:fl_clash/ui/switch.dart';
 import 'package:fl_clash/ui/typography.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
@@ -64,12 +65,6 @@ final class _OpenAction extends _ListItemAction {
     this.onChanged,
     required this.forceFull,
   });
-}
-
-final class _NextAction extends _ListItemAction {
-  final Widget widget;
-
-  const _NextAction({required this.widget});
 }
 
 final class _OptionsAction<T> extends _ListItemAction {
@@ -157,22 +152,6 @@ class ListItem<T> extends StatelessWidget {
          onChanged: onChanged,
          forceFull: forceFull,
        ),
-       onTap = null;
-
-  ListItem.next({
-    super.key,
-    required this.title,
-    this.subtitle,
-    this.leading,
-    this.padding = const EdgeInsets.symmetric(horizontal: 16),
-    this.trailing,
-    required Widget widget,
-    this.horizontalTitleGap,
-    this.color,
-    this.minTileHeight,
-    this.minVerticalPadding = listRowVerticalPadding,
-    this.tileTitleAlignment = ListTileTitleAlignment.center,
-  }) : _action = _NextAction(widget: widget),
        onTap = null;
 
   ListItem.options({
@@ -345,22 +324,7 @@ class ListItem<T> extends StatelessWidget {
             return child;
           },
         );
-      case final _NextAction nextDelegate:
-        final child = nextDelegate.widget;
 
-        return _buildListTile(
-          context,
-          position: position,
-          trailing: _pageTrailing,
-          onTap: () {
-            showExtend(
-              context,
-              builder: (_) {
-                return child;
-              },
-            );
-          },
-        );
       case final _OptionsAction options:
         final optionsDelegate = options as _OptionsAction<T>;
         PopupOpen? openMenu;
@@ -435,7 +399,7 @@ class ListItem<T> extends StatelessWidget {
               : () {
                   toggleAction.onChanged!(!toggleAction.value);
                 },
-          trailing: Switch(
+          trailing: CommonSwitch(
             value: toggleAction.value,
             onChanged: toggleAction.onChanged,
           ),
@@ -529,7 +493,7 @@ class ListHeader extends StatelessWidget {
     final padding = this.padding ?? listHeaderPaddingOf(context);
     final lineHeight = MeasureScope.of(
       context,
-    ).textHeight(AppTextStyle.footnote);
+    ).textHeight(AppTextStyle.headline);
     final overhang = (_actionSize.button - lineHeight) / 2;
     return Padding(
       padding: EdgeInsets.fromLTRB(
@@ -548,7 +512,9 @@ class ListHeader extends StatelessWidget {
                 title,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: context.listCaptionStyle,
+                style: AppTextStyle.headline
+                    .of(context)
+                    .copyWith(color: context.colorScheme.onSurfaceVariant),
               ),
             ),
             ?trailing,
