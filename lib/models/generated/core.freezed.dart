@@ -598,7 +598,8 @@ as String,
 /// @nodoc
 mixin _$ProfileBase {
 
- Map<String, dynamic> get config; String get digest;@JsonKey(name: 'match-rules') List<String> get matchRules; int get proxies;@JsonKey(name: 'proxy-groups') int get proxyGroups; int get rules;
+ Map<String, dynamic> get config; String get digest;@JsonKey(name: 'match-rules') List<String> get matchRules; int get proxies;@JsonKey(name: 'proxy-groups') int get proxyGroups; int get rules;/// The keys the file names itself, top level and `tun.*`.
+ List<String> get present;@JsonKey(name: 'global-override') bool get globalOverride;
 /// Create a copy of ProfileBase
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -612,20 +613,20 @@ $ProfileBaseCopyWith<ProfileBase> get copyWith => _$ProfileBaseCopyWithImpl<Prof
 @override
 bool operator ==(Object other) {
   final _this = this as ProfileBase;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileBase&&const DeepCollectionEquality().equals(other.config, _this.config)&&(identical(other.digest, _this.digest) || other.digest == _this.digest)&&const DeepCollectionEquality().equals(other.matchRules, _this.matchRules)&&(identical(other.proxies, _this.proxies) || other.proxies == _this.proxies)&&(identical(other.proxyGroups, _this.proxyGroups) || other.proxyGroups == _this.proxyGroups)&&(identical(other.rules, _this.rules) || other.rules == _this.rules));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileBase&&const DeepCollectionEquality().equals(other.config, _this.config)&&(identical(other.digest, _this.digest) || other.digest == _this.digest)&&const DeepCollectionEquality().equals(other.matchRules, _this.matchRules)&&(identical(other.proxies, _this.proxies) || other.proxies == _this.proxies)&&(identical(other.proxyGroups, _this.proxyGroups) || other.proxyGroups == _this.proxyGroups)&&(identical(other.rules, _this.rules) || other.rules == _this.rules)&&const DeepCollectionEquality().equals(other.present, _this.present)&&(identical(other.globalOverride, _this.globalOverride) || other.globalOverride == _this.globalOverride));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as ProfileBase;
-  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.config),_this.digest,const DeepCollectionEquality().hash(_this.matchRules),_this.proxies,_this.proxyGroups,_this.rules);
+  return Object.hash(runtimeType,const DeepCollectionEquality().hash(_this.config),_this.digest,const DeepCollectionEquality().hash(_this.matchRules),_this.proxies,_this.proxyGroups,_this.rules,const DeepCollectionEquality().hash(_this.present),_this.globalOverride);
 }
 
 @override
 String toString() {
   final _this = this as ProfileBase;
-  return 'ProfileBase(config: ${_this.config}, digest: ${_this.digest}, matchRules: ${_this.matchRules}, proxies: ${_this.proxies}, proxyGroups: ${_this.proxyGroups}, rules: ${_this.rules})';
+  return 'ProfileBase(config: ${_this.config}, digest: ${_this.digest}, matchRules: ${_this.matchRules}, proxies: ${_this.proxies}, proxyGroups: ${_this.proxyGroups}, rules: ${_this.rules}, present: ${_this.present}, globalOverride: ${_this.globalOverride})';
 }
 
 
@@ -636,7 +637,7 @@ abstract mixin class $ProfileBaseCopyWith<$Res>  {
   factory $ProfileBaseCopyWith(ProfileBase value, $Res Function(ProfileBase) _then) = _$ProfileBaseCopyWithImpl;
 @useResult
 $Res call({
- Map<String, dynamic> config, String digest,@JsonKey(name: 'match-rules') List<String> matchRules, int proxies,@JsonKey(name: 'proxy-groups') int proxyGroups, int rules
+ Map<String, dynamic> config, String digest,@JsonKey(name: 'match-rules') List<String> matchRules, int proxies,@JsonKey(name: 'proxy-groups') int proxyGroups, int rules, List<String> present,@JsonKey(name: 'global-override') bool globalOverride
 });
 
 
@@ -653,7 +654,7 @@ class _$ProfileBaseCopyWithImpl<$Res>
 
 /// Create a copy of ProfileBase
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? config = null,Object? digest = null,Object? matchRules = null,Object? proxies = null,Object? proxyGroups = null,Object? rules = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? config = null,Object? digest = null,Object? matchRules = null,Object? proxies = null,Object? proxyGroups = null,Object? rules = null,Object? present = null,Object? globalOverride = null,}) {
   return _then(ProfileBase(
 config: null == config ? _self.config : config // ignore: cast_nullable_to_non_nullable
 as Map<String, dynamic>,digest: null == digest ? _self.digest : digest // ignore: cast_nullable_to_non_nullable
@@ -661,7 +662,9 @@ as String,matchRules: null == matchRules ? _self.matchRules : matchRules // igno
 as List<String>,proxies: null == proxies ? _self.proxies : proxies // ignore: cast_nullable_to_non_nullable
 as int,proxyGroups: null == proxyGroups ? _self.proxyGroups : proxyGroups // ignore: cast_nullable_to_non_nullable
 as int,rules: null == rules ? _self.rules : rules // ignore: cast_nullable_to_non_nullable
-as int,
+as int,present: null == present ? _self.present : present // ignore: cast_nullable_to_non_nullable
+as List<String>,globalOverride: null == globalOverride ? _self.globalOverride : globalOverride // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -746,10 +749,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Map<String, dynamic> config,  String digest, @JsonKey(name: 'match-rules')  List<String> matchRules,  int proxies, @JsonKey(name: 'proxy-groups')  int proxyGroups,  int rules)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( Map<String, dynamic> config,  String digest, @JsonKey(name: 'match-rules')  List<String> matchRules,  int proxies, @JsonKey(name: 'proxy-groups')  int proxyGroups,  int rules,  List<String> present, @JsonKey(name: 'global-override')  bool globalOverride)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ProfileBase() when $default != null:
-return $default(_that.config,_that.digest,_that.matchRules,_that.proxies,_that.proxyGroups,_that.rules);case _:
+return $default(_that.config,_that.digest,_that.matchRules,_that.proxies,_that.proxyGroups,_that.rules,_that.present,_that.globalOverride);case _:
   return orElse();
 
 }
@@ -767,10 +770,10 @@ return $default(_that.config,_that.digest,_that.matchRules,_that.proxies,_that.p
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Map<String, dynamic> config,  String digest, @JsonKey(name: 'match-rules')  List<String> matchRules,  int proxies, @JsonKey(name: 'proxy-groups')  int proxyGroups,  int rules)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( Map<String, dynamic> config,  String digest, @JsonKey(name: 'match-rules')  List<String> matchRules,  int proxies, @JsonKey(name: 'proxy-groups')  int proxyGroups,  int rules,  List<String> present, @JsonKey(name: 'global-override')  bool globalOverride)  $default,) {final _that = this;
 switch (_that) {
 case _ProfileBase():
-return $default(_that.config,_that.digest,_that.matchRules,_that.proxies,_that.proxyGroups,_that.rules);case _:
+return $default(_that.config,_that.digest,_that.matchRules,_that.proxies,_that.proxyGroups,_that.rules,_that.present,_that.globalOverride);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -787,10 +790,10 @@ return $default(_that.config,_that.digest,_that.matchRules,_that.proxies,_that.p
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Map<String, dynamic> config,  String digest, @JsonKey(name: 'match-rules')  List<String> matchRules,  int proxies, @JsonKey(name: 'proxy-groups')  int proxyGroups,  int rules)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( Map<String, dynamic> config,  String digest, @JsonKey(name: 'match-rules')  List<String> matchRules,  int proxies, @JsonKey(name: 'proxy-groups')  int proxyGroups,  int rules,  List<String> present, @JsonKey(name: 'global-override')  bool globalOverride)?  $default,) {final _that = this;
 switch (_that) {
 case _ProfileBase() when $default != null:
-return $default(_that.config,_that.digest,_that.matchRules,_that.proxies,_that.proxyGroups,_that.rules);case _:
+return $default(_that.config,_that.digest,_that.matchRules,_that.proxies,_that.proxyGroups,_that.rules,_that.present,_that.globalOverride);case _:
   return null;
 
 }
@@ -802,7 +805,7 @@ return $default(_that.config,_that.digest,_that.matchRules,_that.proxies,_that.p
 @JsonSerializable()
 
 class _ProfileBase implements ProfileBase {
-  const _ProfileBase({required  Map<String, dynamic> config, required this.digest, @JsonKey(name: 'match-rules')  List<String> matchRules = const [], this.proxies = 0, @JsonKey(name: 'proxy-groups') this.proxyGroups = 0, this.rules = 0}): _config = config,_matchRules = matchRules;
+  const _ProfileBase({required  Map<String, dynamic> config, required this.digest, @JsonKey(name: 'match-rules')  List<String> matchRules = const [], this.proxies = 0, @JsonKey(name: 'proxy-groups') this.proxyGroups = 0, this.rules = 0,  List<String> present = const [], @JsonKey(name: 'global-override') this.globalOverride = false}): _config = config,_matchRules = matchRules,_present = present;
   factory _ProfileBase.fromJson(Map<String, dynamic> json) => _$ProfileBaseFromJson(json);
 
  final  Map<String, dynamic> _config;
@@ -823,6 +826,16 @@ class _ProfileBase implements ProfileBase {
 @override@JsonKey() final  int proxies;
 @override@JsonKey(name: 'proxy-groups') final  int proxyGroups;
 @override@JsonKey() final  int rules;
+/// The keys the file names itself, top level and `tun.*`.
+ final  List<String> _present;
+/// The keys the file names itself, top level and `tun.*`.
+@override@JsonKey() List<String> get present {
+  if (_present is EqualUnmodifiableListView) return _present;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_present);
+}
+
+@override@JsonKey(name: 'global-override') final  bool globalOverride;
 
 /// Create a copy of ProfileBase
 /// with the given fields replaced by the non-null parameter values.
@@ -837,18 +850,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileBase&&const DeepCollectionEquality().equals(other.config, _config)&&(identical(other.digest, digest) || other.digest == digest)&&const DeepCollectionEquality().equals(other.matchRules, _matchRules)&&(identical(other.proxies, proxies) || other.proxies == proxies)&&(identical(other.proxyGroups, proxyGroups) || other.proxyGroups == proxyGroups)&&(identical(other.rules, rules) || other.rules == rules));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileBase&&const DeepCollectionEquality().equals(other.config, _config)&&(identical(other.digest, digest) || other.digest == digest)&&const DeepCollectionEquality().equals(other.matchRules, _matchRules)&&(identical(other.proxies, proxies) || other.proxies == proxies)&&(identical(other.proxyGroups, proxyGroups) || other.proxyGroups == proxyGroups)&&(identical(other.rules, rules) || other.rules == rules)&&const DeepCollectionEquality().equals(other.present, _present)&&(identical(other.globalOverride, globalOverride) || other.globalOverride == globalOverride));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_config),digest,const DeepCollectionEquality().hash(_matchRules),proxies,proxyGroups,rules);
+    return Object.hash(runtimeType,const DeepCollectionEquality().hash(_config),digest,const DeepCollectionEquality().hash(_matchRules),proxies,proxyGroups,rules,const DeepCollectionEquality().hash(_present),globalOverride);
 }
 
 @override
 String toString() {
-    return 'ProfileBase(config: $config, digest: $digest, matchRules: $matchRules, proxies: $proxies, proxyGroups: $proxyGroups, rules: $rules)';
+    return 'ProfileBase(config: $config, digest: $digest, matchRules: $matchRules, proxies: $proxies, proxyGroups: $proxyGroups, rules: $rules, present: $present, globalOverride: $globalOverride)';
 }
 
 
@@ -859,7 +872,7 @@ abstract mixin class _$ProfileBaseCopyWith<$Res> implements $ProfileBaseCopyWith
   factory _$ProfileBaseCopyWith(_ProfileBase value, $Res Function(_ProfileBase) _then) = __$ProfileBaseCopyWithImpl;
 @override @useResult
 $Res call({
- Map<String, dynamic> config, String digest,@JsonKey(name: 'match-rules') List<String> matchRules, int proxies,@JsonKey(name: 'proxy-groups') int proxyGroups, int rules
+ Map<String, dynamic> config, String digest,@JsonKey(name: 'match-rules') List<String> matchRules, int proxies,@JsonKey(name: 'proxy-groups') int proxyGroups, int rules, List<String> present,@JsonKey(name: 'global-override') bool globalOverride
 });
 
 
@@ -876,7 +889,7 @@ class __$ProfileBaseCopyWithImpl<$Res>
 
 /// Create a copy of ProfileBase
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? config = null,Object? digest = null,Object? matchRules = null,Object? proxies = null,Object? proxyGroups = null,Object? rules = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? config = null,Object? digest = null,Object? matchRules = null,Object? proxies = null,Object? proxyGroups = null,Object? rules = null,Object? present = null,Object? globalOverride = null,}) {
   return _then(_ProfileBase(
 config: null == config ? _self._config : config // ignore: cast_nullable_to_non_nullable
 as Map<String, dynamic>,digest: null == digest ? _self.digest : digest // ignore: cast_nullable_to_non_nullable
@@ -884,7 +897,9 @@ as String,matchRules: null == matchRules ? _self._matchRules : matchRules // ign
 as List<String>,proxies: null == proxies ? _self.proxies : proxies // ignore: cast_nullable_to_non_nullable
 as int,proxyGroups: null == proxyGroups ? _self.proxyGroups : proxyGroups // ignore: cast_nullable_to_non_nullable
 as int,rules: null == rules ? _self.rules : rules // ignore: cast_nullable_to_non_nullable
-as int,
+as int,present: null == present ? _self._present : present // ignore: cast_nullable_to_non_nullable
+as List<String>,globalOverride: null == globalOverride ? _self.globalOverride : globalOverride // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -895,7 +910,7 @@ as int,
 /// @nodoc
 mixin _$UpdateParams {
 
-@JsonKey(toJson: _tunCoreJson) Tun get tun;@JsonKey(name: 'mixed-port') int get mixedPort;@JsonKey(name: 'allow-lan') bool get allowLan;@JsonKey(name: 'find-process-mode') FindProcessMode get findProcessMode; Mode get mode;@JsonKey(name: 'log-level') LogLevel get logLevel; bool? get ipv6;@JsonKey(name: 'tcp-concurrent') bool? get tcpConcurrent;@JsonKey(name: 'external-controller') ExternalControllerStatus get externalController; String get secret;@JsonKey(name: 'unified-delay') bool? get unifiedDelay; List<String> get authentication;@JsonKey(name: 'geo-auto-update') bool get geoAutoUpdate;@JsonKey(name: 'geo-update-interval') int get geoUpdateInterval;@JsonKey(name: 'geox-url') Map<String, String> get geoXUrl;@JsonKey(name: 'skip-cert-verify') bool get skipCertVerify;
+@JsonKey(toJson: _tunCoreJson) Tun get tun;@JsonKey(name: 'mixed-port') int get mixedPort;@JsonKey(name: 'allow-lan') bool get allowLan;@JsonKey(name: 'find-process-mode') FindProcessMode get findProcessMode; Mode get mode;@JsonKey(name: 'log-level') LogLevel get logLevel; bool get ipv6;@JsonKey(name: 'tcp-concurrent') bool get tcpConcurrent;@JsonKey(name: 'external-controller') String get externalController; String get secret;@JsonKey(name: 'unified-delay') bool get unifiedDelay; List<String> get authentication;@JsonKey(name: 'geo-auto-update') bool get geoAutoUpdate;@JsonKey(name: 'geo-update-interval') int get geoUpdateInterval;@JsonKey(name: 'geox-url') Map<String, String> get geoXUrl;@JsonKey(name: 'skip-cert-verify') bool get skipCertVerify;
 /// Create a copy of UpdateParams
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -933,7 +948,7 @@ abstract mixin class $UpdateParamsCopyWith<$Res>  {
   factory $UpdateParamsCopyWith(UpdateParams value, $Res Function(UpdateParams) _then) = _$UpdateParamsCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(toJson: _tunCoreJson) Tun tun,@JsonKey(name: 'mixed-port') int mixedPort,@JsonKey(name: 'allow-lan') bool allowLan,@JsonKey(name: 'find-process-mode') FindProcessMode findProcessMode, Mode mode,@JsonKey(name: 'log-level') LogLevel logLevel, bool? ipv6,@JsonKey(name: 'tcp-concurrent') bool? tcpConcurrent,@JsonKey(name: 'external-controller') ExternalControllerStatus externalController, String secret,@JsonKey(name: 'unified-delay') bool? unifiedDelay, List<String> authentication,@JsonKey(name: 'geo-auto-update') bool geoAutoUpdate,@JsonKey(name: 'geo-update-interval') int geoUpdateInterval,@JsonKey(name: 'geox-url') Map<String, String> geoXUrl,@JsonKey(name: 'skip-cert-verify') bool skipCertVerify
+@JsonKey(toJson: _tunCoreJson) Tun tun,@JsonKey(name: 'mixed-port') int mixedPort,@JsonKey(name: 'allow-lan') bool allowLan,@JsonKey(name: 'find-process-mode') FindProcessMode findProcessMode, Mode mode,@JsonKey(name: 'log-level') LogLevel logLevel, bool ipv6,@JsonKey(name: 'tcp-concurrent') bool tcpConcurrent,@JsonKey(name: 'external-controller') String externalController, String secret,@JsonKey(name: 'unified-delay') bool unifiedDelay, List<String> authentication,@JsonKey(name: 'geo-auto-update') bool geoAutoUpdate,@JsonKey(name: 'geo-update-interval') int geoUpdateInterval,@JsonKey(name: 'geox-url') Map<String, String> geoXUrl,@JsonKey(name: 'skip-cert-verify') bool skipCertVerify
 });
 
 
@@ -950,7 +965,7 @@ class _$UpdateParamsCopyWithImpl<$Res>
 
 /// Create a copy of UpdateParams
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? tun = null,Object? mixedPort = null,Object? allowLan = null,Object? findProcessMode = null,Object? mode = null,Object? logLevel = null,Object? ipv6 = freezed,Object? tcpConcurrent = freezed,Object? externalController = null,Object? secret = null,Object? unifiedDelay = freezed,Object? authentication = null,Object? geoAutoUpdate = null,Object? geoUpdateInterval = null,Object? geoXUrl = null,Object? skipCertVerify = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? tun = null,Object? mixedPort = null,Object? allowLan = null,Object? findProcessMode = null,Object? mode = null,Object? logLevel = null,Object? ipv6 = null,Object? tcpConcurrent = null,Object? externalController = null,Object? secret = null,Object? unifiedDelay = null,Object? authentication = null,Object? geoAutoUpdate = null,Object? geoUpdateInterval = null,Object? geoXUrl = null,Object? skipCertVerify = null,}) {
   return _then(UpdateParams(
 tun: null == tun ? _self.tun : tun // ignore: cast_nullable_to_non_nullable
 as Tun,mixedPort: null == mixedPort ? _self.mixedPort : mixedPort // ignore: cast_nullable_to_non_nullable
@@ -958,12 +973,12 @@ as int,allowLan: null == allowLan ? _self.allowLan : allowLan // ignore: cast_nu
 as bool,findProcessMode: null == findProcessMode ? _self.findProcessMode : findProcessMode // ignore: cast_nullable_to_non_nullable
 as FindProcessMode,mode: null == mode ? _self.mode : mode // ignore: cast_nullable_to_non_nullable
 as Mode,logLevel: null == logLevel ? _self.logLevel : logLevel // ignore: cast_nullable_to_non_nullable
-as LogLevel,ipv6: freezed == ipv6 ? _self.ipv6 : ipv6 // ignore: cast_nullable_to_non_nullable
-as bool?,tcpConcurrent: freezed == tcpConcurrent ? _self.tcpConcurrent : tcpConcurrent // ignore: cast_nullable_to_non_nullable
-as bool?,externalController: null == externalController ? _self.externalController : externalController // ignore: cast_nullable_to_non_nullable
-as ExternalControllerStatus,secret: null == secret ? _self.secret : secret // ignore: cast_nullable_to_non_nullable
-as String,unifiedDelay: freezed == unifiedDelay ? _self.unifiedDelay : unifiedDelay // ignore: cast_nullable_to_non_nullable
-as bool?,authentication: null == authentication ? _self.authentication : authentication // ignore: cast_nullable_to_non_nullable
+as LogLevel,ipv6: null == ipv6 ? _self.ipv6 : ipv6 // ignore: cast_nullable_to_non_nullable
+as bool,tcpConcurrent: null == tcpConcurrent ? _self.tcpConcurrent : tcpConcurrent // ignore: cast_nullable_to_non_nullable
+as bool,externalController: null == externalController ? _self.externalController : externalController // ignore: cast_nullable_to_non_nullable
+as String,secret: null == secret ? _self.secret : secret // ignore: cast_nullable_to_non_nullable
+as String,unifiedDelay: null == unifiedDelay ? _self.unifiedDelay : unifiedDelay // ignore: cast_nullable_to_non_nullable
+as bool,authentication: null == authentication ? _self.authentication : authentication // ignore: cast_nullable_to_non_nullable
 as List<String>,geoAutoUpdate: null == geoAutoUpdate ? _self.geoAutoUpdate : geoAutoUpdate // ignore: cast_nullable_to_non_nullable
 as bool,geoUpdateInterval: null == geoUpdateInterval ? _self.geoUpdateInterval : geoUpdateInterval // ignore: cast_nullable_to_non_nullable
 as int,geoXUrl: null == geoXUrl ? _self.geoXUrl : geoXUrl // ignore: cast_nullable_to_non_nullable
@@ -1062,7 +1077,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(toJson: _tunCoreJson)  Tun tun, @JsonKey(name: 'mixed-port')  int mixedPort, @JsonKey(name: 'allow-lan')  bool allowLan, @JsonKey(name: 'find-process-mode')  FindProcessMode findProcessMode,  Mode mode, @JsonKey(name: 'log-level')  LogLevel logLevel,  bool? ipv6, @JsonKey(name: 'tcp-concurrent')  bool? tcpConcurrent, @JsonKey(name: 'external-controller')  ExternalControllerStatus externalController,  String secret, @JsonKey(name: 'unified-delay')  bool? unifiedDelay,  List<String> authentication, @JsonKey(name: 'geo-auto-update')  bool geoAutoUpdate, @JsonKey(name: 'geo-update-interval')  int geoUpdateInterval, @JsonKey(name: 'geox-url')  Map<String, String> geoXUrl, @JsonKey(name: 'skip-cert-verify')  bool skipCertVerify)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(toJson: _tunCoreJson)  Tun tun, @JsonKey(name: 'mixed-port')  int mixedPort, @JsonKey(name: 'allow-lan')  bool allowLan, @JsonKey(name: 'find-process-mode')  FindProcessMode findProcessMode,  Mode mode, @JsonKey(name: 'log-level')  LogLevel logLevel,  bool ipv6, @JsonKey(name: 'tcp-concurrent')  bool tcpConcurrent, @JsonKey(name: 'external-controller')  String externalController,  String secret, @JsonKey(name: 'unified-delay')  bool unifiedDelay,  List<String> authentication, @JsonKey(name: 'geo-auto-update')  bool geoAutoUpdate, @JsonKey(name: 'geo-update-interval')  int geoUpdateInterval, @JsonKey(name: 'geox-url')  Map<String, String> geoXUrl, @JsonKey(name: 'skip-cert-verify')  bool skipCertVerify)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UpdateParams() when $default != null:
 return $default(_that.tun,_that.mixedPort,_that.allowLan,_that.findProcessMode,_that.mode,_that.logLevel,_that.ipv6,_that.tcpConcurrent,_that.externalController,_that.secret,_that.unifiedDelay,_that.authentication,_that.geoAutoUpdate,_that.geoUpdateInterval,_that.geoXUrl,_that.skipCertVerify);case _:
@@ -1083,7 +1098,7 @@ return $default(_that.tun,_that.mixedPort,_that.allowLan,_that.findProcessMode,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(toJson: _tunCoreJson)  Tun tun, @JsonKey(name: 'mixed-port')  int mixedPort, @JsonKey(name: 'allow-lan')  bool allowLan, @JsonKey(name: 'find-process-mode')  FindProcessMode findProcessMode,  Mode mode, @JsonKey(name: 'log-level')  LogLevel logLevel,  bool? ipv6, @JsonKey(name: 'tcp-concurrent')  bool? tcpConcurrent, @JsonKey(name: 'external-controller')  ExternalControllerStatus externalController,  String secret, @JsonKey(name: 'unified-delay')  bool? unifiedDelay,  List<String> authentication, @JsonKey(name: 'geo-auto-update')  bool geoAutoUpdate, @JsonKey(name: 'geo-update-interval')  int geoUpdateInterval, @JsonKey(name: 'geox-url')  Map<String, String> geoXUrl, @JsonKey(name: 'skip-cert-verify')  bool skipCertVerify)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(toJson: _tunCoreJson)  Tun tun, @JsonKey(name: 'mixed-port')  int mixedPort, @JsonKey(name: 'allow-lan')  bool allowLan, @JsonKey(name: 'find-process-mode')  FindProcessMode findProcessMode,  Mode mode, @JsonKey(name: 'log-level')  LogLevel logLevel,  bool ipv6, @JsonKey(name: 'tcp-concurrent')  bool tcpConcurrent, @JsonKey(name: 'external-controller')  String externalController,  String secret, @JsonKey(name: 'unified-delay')  bool unifiedDelay,  List<String> authentication, @JsonKey(name: 'geo-auto-update')  bool geoAutoUpdate, @JsonKey(name: 'geo-update-interval')  int geoUpdateInterval, @JsonKey(name: 'geox-url')  Map<String, String> geoXUrl, @JsonKey(name: 'skip-cert-verify')  bool skipCertVerify)  $default,) {final _that = this;
 switch (_that) {
 case _UpdateParams():
 return $default(_that.tun,_that.mixedPort,_that.allowLan,_that.findProcessMode,_that.mode,_that.logLevel,_that.ipv6,_that.tcpConcurrent,_that.externalController,_that.secret,_that.unifiedDelay,_that.authentication,_that.geoAutoUpdate,_that.geoUpdateInterval,_that.geoXUrl,_that.skipCertVerify);case _:
@@ -1103,7 +1118,7 @@ return $default(_that.tun,_that.mixedPort,_that.allowLan,_that.findProcessMode,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(toJson: _tunCoreJson)  Tun tun, @JsonKey(name: 'mixed-port')  int mixedPort, @JsonKey(name: 'allow-lan')  bool allowLan, @JsonKey(name: 'find-process-mode')  FindProcessMode findProcessMode,  Mode mode, @JsonKey(name: 'log-level')  LogLevel logLevel,  bool? ipv6, @JsonKey(name: 'tcp-concurrent')  bool? tcpConcurrent, @JsonKey(name: 'external-controller')  ExternalControllerStatus externalController,  String secret, @JsonKey(name: 'unified-delay')  bool? unifiedDelay,  List<String> authentication, @JsonKey(name: 'geo-auto-update')  bool geoAutoUpdate, @JsonKey(name: 'geo-update-interval')  int geoUpdateInterval, @JsonKey(name: 'geox-url')  Map<String, String> geoXUrl, @JsonKey(name: 'skip-cert-verify')  bool skipCertVerify)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(toJson: _tunCoreJson)  Tun tun, @JsonKey(name: 'mixed-port')  int mixedPort, @JsonKey(name: 'allow-lan')  bool allowLan, @JsonKey(name: 'find-process-mode')  FindProcessMode findProcessMode,  Mode mode, @JsonKey(name: 'log-level')  LogLevel logLevel,  bool ipv6, @JsonKey(name: 'tcp-concurrent')  bool tcpConcurrent, @JsonKey(name: 'external-controller')  String externalController,  String secret, @JsonKey(name: 'unified-delay')  bool unifiedDelay,  List<String> authentication, @JsonKey(name: 'geo-auto-update')  bool geoAutoUpdate, @JsonKey(name: 'geo-update-interval')  int geoUpdateInterval, @JsonKey(name: 'geox-url')  Map<String, String> geoXUrl, @JsonKey(name: 'skip-cert-verify')  bool skipCertVerify)?  $default,) {final _that = this;
 switch (_that) {
 case _UpdateParams() when $default != null:
 return $default(_that.tun,_that.mixedPort,_that.allowLan,_that.findProcessMode,_that.mode,_that.logLevel,_that.ipv6,_that.tcpConcurrent,_that.externalController,_that.secret,_that.unifiedDelay,_that.authentication,_that.geoAutoUpdate,_that.geoUpdateInterval,_that.geoXUrl,_that.skipCertVerify);case _:
@@ -1118,7 +1133,7 @@ return $default(_that.tun,_that.mixedPort,_that.allowLan,_that.findProcessMode,_
 @JsonSerializable()
 
 class _UpdateParams implements UpdateParams {
-  const _UpdateParams({@JsonKey(toJson: _tunCoreJson) required this.tun, @JsonKey(name: 'mixed-port') required this.mixedPort, @JsonKey(name: 'allow-lan') required this.allowLan, @JsonKey(name: 'find-process-mode') required this.findProcessMode, required this.mode, @JsonKey(name: 'log-level') required this.logLevel, this.ipv6, @JsonKey(name: 'tcp-concurrent') this.tcpConcurrent, @JsonKey(name: 'external-controller') required this.externalController, this.secret = '', @JsonKey(name: 'unified-delay') this.unifiedDelay,  List<String> authentication = const [], @JsonKey(name: 'geo-auto-update') this.geoAutoUpdate = false, @JsonKey(name: 'geo-update-interval') this.geoUpdateInterval = 24, @JsonKey(name: 'geox-url')  Map<String, String> geoXUrl = const {}, @JsonKey(name: 'skip-cert-verify') this.skipCertVerify = false}): _authentication = authentication,_geoXUrl = geoXUrl;
+  const _UpdateParams({@JsonKey(toJson: _tunCoreJson) required this.tun, @JsonKey(name: 'mixed-port') required this.mixedPort, @JsonKey(name: 'allow-lan') required this.allowLan, @JsonKey(name: 'find-process-mode') required this.findProcessMode, required this.mode, @JsonKey(name: 'log-level') required this.logLevel, required this.ipv6, @JsonKey(name: 'tcp-concurrent') required this.tcpConcurrent, @JsonKey(name: 'external-controller') required this.externalController, this.secret = '', @JsonKey(name: 'unified-delay') required this.unifiedDelay,  List<String> authentication = const [], @JsonKey(name: 'geo-auto-update') this.geoAutoUpdate = false, @JsonKey(name: 'geo-update-interval') this.geoUpdateInterval = 24, @JsonKey(name: 'geox-url')  Map<String, String> geoXUrl = const {}, @JsonKey(name: 'skip-cert-verify') this.skipCertVerify = false}): _authentication = authentication,_geoXUrl = geoXUrl;
   factory _UpdateParams.fromJson(Map<String, dynamic> json) => _$UpdateParamsFromJson(json);
 
 @override@JsonKey(toJson: _tunCoreJson) final  Tun tun;
@@ -1127,11 +1142,11 @@ class _UpdateParams implements UpdateParams {
 @override@JsonKey(name: 'find-process-mode') final  FindProcessMode findProcessMode;
 @override final  Mode mode;
 @override@JsonKey(name: 'log-level') final  LogLevel logLevel;
-@override final  bool? ipv6;
-@override@JsonKey(name: 'tcp-concurrent') final  bool? tcpConcurrent;
-@override@JsonKey(name: 'external-controller') final  ExternalControllerStatus externalController;
+@override final  bool ipv6;
+@override@JsonKey(name: 'tcp-concurrent') final  bool tcpConcurrent;
+@override@JsonKey(name: 'external-controller') final  String externalController;
 @override@JsonKey() final  String secret;
-@override@JsonKey(name: 'unified-delay') final  bool? unifiedDelay;
+@override@JsonKey(name: 'unified-delay') final  bool unifiedDelay;
  final  List<String> _authentication;
 @override@JsonKey() List<String> get authentication {
   if (_authentication is EqualUnmodifiableListView) return _authentication;
@@ -1185,7 +1200,7 @@ abstract mixin class _$UpdateParamsCopyWith<$Res> implements $UpdateParamsCopyWi
   factory _$UpdateParamsCopyWith(_UpdateParams value, $Res Function(_UpdateParams) _then) = __$UpdateParamsCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(toJson: _tunCoreJson) Tun tun,@JsonKey(name: 'mixed-port') int mixedPort,@JsonKey(name: 'allow-lan') bool allowLan,@JsonKey(name: 'find-process-mode') FindProcessMode findProcessMode, Mode mode,@JsonKey(name: 'log-level') LogLevel logLevel, bool? ipv6,@JsonKey(name: 'tcp-concurrent') bool? tcpConcurrent,@JsonKey(name: 'external-controller') ExternalControllerStatus externalController, String secret,@JsonKey(name: 'unified-delay') bool? unifiedDelay, List<String> authentication,@JsonKey(name: 'geo-auto-update') bool geoAutoUpdate,@JsonKey(name: 'geo-update-interval') int geoUpdateInterval,@JsonKey(name: 'geox-url') Map<String, String> geoXUrl,@JsonKey(name: 'skip-cert-verify') bool skipCertVerify
+@JsonKey(toJson: _tunCoreJson) Tun tun,@JsonKey(name: 'mixed-port') int mixedPort,@JsonKey(name: 'allow-lan') bool allowLan,@JsonKey(name: 'find-process-mode') FindProcessMode findProcessMode, Mode mode,@JsonKey(name: 'log-level') LogLevel logLevel, bool ipv6,@JsonKey(name: 'tcp-concurrent') bool tcpConcurrent,@JsonKey(name: 'external-controller') String externalController, String secret,@JsonKey(name: 'unified-delay') bool unifiedDelay, List<String> authentication,@JsonKey(name: 'geo-auto-update') bool geoAutoUpdate,@JsonKey(name: 'geo-update-interval') int geoUpdateInterval,@JsonKey(name: 'geox-url') Map<String, String> geoXUrl,@JsonKey(name: 'skip-cert-verify') bool skipCertVerify
 });
 
 
@@ -1202,7 +1217,7 @@ class __$UpdateParamsCopyWithImpl<$Res>
 
 /// Create a copy of UpdateParams
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? tun = null,Object? mixedPort = null,Object? allowLan = null,Object? findProcessMode = null,Object? mode = null,Object? logLevel = null,Object? ipv6 = freezed,Object? tcpConcurrent = freezed,Object? externalController = null,Object? secret = null,Object? unifiedDelay = freezed,Object? authentication = null,Object? geoAutoUpdate = null,Object? geoUpdateInterval = null,Object? geoXUrl = null,Object? skipCertVerify = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? tun = null,Object? mixedPort = null,Object? allowLan = null,Object? findProcessMode = null,Object? mode = null,Object? logLevel = null,Object? ipv6 = null,Object? tcpConcurrent = null,Object? externalController = null,Object? secret = null,Object? unifiedDelay = null,Object? authentication = null,Object? geoAutoUpdate = null,Object? geoUpdateInterval = null,Object? geoXUrl = null,Object? skipCertVerify = null,}) {
   return _then(_UpdateParams(
 tun: null == tun ? _self.tun : tun // ignore: cast_nullable_to_non_nullable
 as Tun,mixedPort: null == mixedPort ? _self.mixedPort : mixedPort // ignore: cast_nullable_to_non_nullable
@@ -1210,12 +1225,12 @@ as int,allowLan: null == allowLan ? _self.allowLan : allowLan // ignore: cast_nu
 as bool,findProcessMode: null == findProcessMode ? _self.findProcessMode : findProcessMode // ignore: cast_nullable_to_non_nullable
 as FindProcessMode,mode: null == mode ? _self.mode : mode // ignore: cast_nullable_to_non_nullable
 as Mode,logLevel: null == logLevel ? _self.logLevel : logLevel // ignore: cast_nullable_to_non_nullable
-as LogLevel,ipv6: freezed == ipv6 ? _self.ipv6 : ipv6 // ignore: cast_nullable_to_non_nullable
-as bool?,tcpConcurrent: freezed == tcpConcurrent ? _self.tcpConcurrent : tcpConcurrent // ignore: cast_nullable_to_non_nullable
-as bool?,externalController: null == externalController ? _self.externalController : externalController // ignore: cast_nullable_to_non_nullable
-as ExternalControllerStatus,secret: null == secret ? _self.secret : secret // ignore: cast_nullable_to_non_nullable
-as String,unifiedDelay: freezed == unifiedDelay ? _self.unifiedDelay : unifiedDelay // ignore: cast_nullable_to_non_nullable
-as bool?,authentication: null == authentication ? _self._authentication : authentication // ignore: cast_nullable_to_non_nullable
+as LogLevel,ipv6: null == ipv6 ? _self.ipv6 : ipv6 // ignore: cast_nullable_to_non_nullable
+as bool,tcpConcurrent: null == tcpConcurrent ? _self.tcpConcurrent : tcpConcurrent // ignore: cast_nullable_to_non_nullable
+as bool,externalController: null == externalController ? _self.externalController : externalController // ignore: cast_nullable_to_non_nullable
+as String,secret: null == secret ? _self.secret : secret // ignore: cast_nullable_to_non_nullable
+as String,unifiedDelay: null == unifiedDelay ? _self.unifiedDelay : unifiedDelay // ignore: cast_nullable_to_non_nullable
+as bool,authentication: null == authentication ? _self._authentication : authentication // ignore: cast_nullable_to_non_nullable
 as List<String>,geoAutoUpdate: null == geoAutoUpdate ? _self.geoAutoUpdate : geoAutoUpdate // ignore: cast_nullable_to_non_nullable
 as bool,geoUpdateInterval: null == geoUpdateInterval ? _self.geoUpdateInterval : geoUpdateInterval // ignore: cast_nullable_to_non_nullable
 as int,geoXUrl: null == geoXUrl ? _self._geoXUrl : geoXUrl // ignore: cast_nullable_to_non_nullable
@@ -4038,594 +4053,6 @@ name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
 as String,value: freezed == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
 as int?,
-  ));
-}
-
-
-}
-
-
-/// @nodoc
-mixin _$ProbeParams {
-
- String get url;@JsonKey(name: 'proxy-name') String get proxyName; Map<String, String> get headers; int get timeout;@JsonKey(name: 'max-body') int get maxBody;
-/// Create a copy of ProbeParams
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$ProbeParamsCopyWith<ProbeParams> get copyWith => _$ProbeParamsCopyWithImpl<ProbeParams>(this as ProbeParams, _$identity);
-
-  /// Serializes this ProbeParams to a JSON map.
-  Map<String, dynamic> toJson();
-
-
-@override
-bool operator ==(Object other) {
-  final _this = this as ProbeParams;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProbeParams&&(identical(other.url, _this.url) || other.url == _this.url)&&(identical(other.proxyName, _this.proxyName) || other.proxyName == _this.proxyName)&&const DeepCollectionEquality().equals(other.headers, _this.headers)&&(identical(other.timeout, _this.timeout) || other.timeout == _this.timeout)&&(identical(other.maxBody, _this.maxBody) || other.maxBody == _this.maxBody));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode {
-  final _this = this as ProbeParams;
-  return Object.hash(runtimeType,_this.url,_this.proxyName,const DeepCollectionEquality().hash(_this.headers),_this.timeout,_this.maxBody);
-}
-
-@override
-String toString() {
-  final _this = this as ProbeParams;
-  return 'ProbeParams(url: ${_this.url}, proxyName: ${_this.proxyName}, headers: ${_this.headers}, timeout: ${_this.timeout}, maxBody: ${_this.maxBody})';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $ProbeParamsCopyWith<$Res>  {
-  factory $ProbeParamsCopyWith(ProbeParams value, $Res Function(ProbeParams) _then) = _$ProbeParamsCopyWithImpl;
-@useResult
-$Res call({
- String url,@JsonKey(name: 'proxy-name') String proxyName, Map<String, String> headers, int timeout,@JsonKey(name: 'max-body') int maxBody
-});
-
-
-
-
-}
-/// @nodoc
-class _$ProbeParamsCopyWithImpl<$Res>
-    implements $ProbeParamsCopyWith<$Res> {
-  _$ProbeParamsCopyWithImpl(this._self, this._then);
-
-  final ProbeParams _self;
-  final $Res Function(ProbeParams) _then;
-
-/// Create a copy of ProbeParams
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? url = null,Object? proxyName = null,Object? headers = null,Object? timeout = null,Object? maxBody = null,}) {
-  return _then(ProbeParams(
-url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
-as String,proxyName: null == proxyName ? _self.proxyName : proxyName // ignore: cast_nullable_to_non_nullable
-as String,headers: null == headers ? _self.headers : headers // ignore: cast_nullable_to_non_nullable
-as Map<String, String>,timeout: null == timeout ? _self.timeout : timeout // ignore: cast_nullable_to_non_nullable
-as int,maxBody: null == maxBody ? _self.maxBody : maxBody // ignore: cast_nullable_to_non_nullable
-as int,
-  ));
-}
-
-}
-
-
-/// Adds pattern-matching-related methods to [ProbeParams].
-extension ProbeParamsPatterns on ProbeParams {
-/// A variant of `map` that fallback to returning `orElse`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ProbeParams value)?  $default,{required TResult orElse(),}){
-final _that = this;
-switch (_that) {
-case _ProbeParams() when $default != null:
-return $default(_that);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// Callbacks receives the raw object, upcasted.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case final Subclass2 value:
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ProbeParams value)  $default,){
-final _that = this;
-switch (_that) {
-case _ProbeParams():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `map` that fallback to returning `null`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ProbeParams value)?  $default,){
-final _that = this;
-switch (_that) {
-case _ProbeParams() when $default != null:
-return $default(_that);case _:
-  return null;
-
-}
-}
-/// A variant of `when` that fallback to an `orElse` callback.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String url, @JsonKey(name: 'proxy-name')  String proxyName,  Map<String, String> headers,  int timeout, @JsonKey(name: 'max-body')  int maxBody)?  $default,{required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case _ProbeParams() when $default != null:
-return $default(_that.url,_that.proxyName,_that.headers,_that.timeout,_that.maxBody);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// As opposed to `map`, this offers destructuring.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case Subclass2(:final field2):
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String url, @JsonKey(name: 'proxy-name')  String proxyName,  Map<String, String> headers,  int timeout, @JsonKey(name: 'max-body')  int maxBody)  $default,) {final _that = this;
-switch (_that) {
-case _ProbeParams():
-return $default(_that.url,_that.proxyName,_that.headers,_that.timeout,_that.maxBody);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String url, @JsonKey(name: 'proxy-name')  String proxyName,  Map<String, String> headers,  int timeout, @JsonKey(name: 'max-body')  int maxBody)?  $default,) {final _that = this;
-switch (_that) {
-case _ProbeParams() when $default != null:
-return $default(_that.url,_that.proxyName,_that.headers,_that.timeout,_that.maxBody);case _:
-  return null;
-
-}
-}
-
-}
-
-/// @nodoc
-@JsonSerializable()
-
-class _ProbeParams implements ProbeParams {
-  const _ProbeParams({required this.url, @JsonKey(name: 'proxy-name') this.proxyName = '',  Map<String, String> headers = const {}, required this.timeout, @JsonKey(name: 'max-body') this.maxBody = 0}): _headers = headers;
-  factory _ProbeParams.fromJson(Map<String, dynamic> json) => _$ProbeParamsFromJson(json);
-
-@override final  String url;
-@override@JsonKey(name: 'proxy-name') final  String proxyName;
- final  Map<String, String> _headers;
-@override@JsonKey() Map<String, String> get headers {
-  if (_headers is EqualUnmodifiableMapView) return _headers;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableMapView(_headers);
-}
-
-@override final  int timeout;
-@override@JsonKey(name: 'max-body') final  int maxBody;
-
-/// Create a copy of ProbeParams
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$ProbeParamsCopyWith<_ProbeParams> get copyWith => __$ProbeParamsCopyWithImpl<_ProbeParams>(this, _$identity);
-
-@override
-Map<String, dynamic> toJson() {
-  return _$ProbeParamsToJson(this, );
-}
-
-@override
-bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProbeParams&&(identical(other.url, url) || other.url == url)&&(identical(other.proxyName, proxyName) || other.proxyName == proxyName)&&const DeepCollectionEquality().equals(other.headers, _headers)&&(identical(other.timeout, timeout) || other.timeout == timeout)&&(identical(other.maxBody, maxBody) || other.maxBody == maxBody));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode {
-    return Object.hash(runtimeType,url,proxyName,const DeepCollectionEquality().hash(_headers),timeout,maxBody);
-}
-
-@override
-String toString() {
-    return 'ProbeParams(url: $url, proxyName: $proxyName, headers: $headers, timeout: $timeout, maxBody: $maxBody)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$ProbeParamsCopyWith<$Res> implements $ProbeParamsCopyWith<$Res> {
-  factory _$ProbeParamsCopyWith(_ProbeParams value, $Res Function(_ProbeParams) _then) = __$ProbeParamsCopyWithImpl;
-@override @useResult
-$Res call({
- String url,@JsonKey(name: 'proxy-name') String proxyName, Map<String, String> headers, int timeout,@JsonKey(name: 'max-body') int maxBody
-});
-
-
-
-
-}
-/// @nodoc
-class __$ProbeParamsCopyWithImpl<$Res>
-    implements _$ProbeParamsCopyWith<$Res> {
-  __$ProbeParamsCopyWithImpl(this._self, this._then);
-
-  final _ProbeParams _self;
-  final $Res Function(_ProbeParams) _then;
-
-/// Create a copy of ProbeParams
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? url = null,Object? proxyName = null,Object? headers = null,Object? timeout = null,Object? maxBody = null,}) {
-  return _then(_ProbeParams(
-url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
-as String,proxyName: null == proxyName ? _self.proxyName : proxyName // ignore: cast_nullable_to_non_nullable
-as String,headers: null == headers ? _self._headers : headers // ignore: cast_nullable_to_non_nullable
-as Map<String, String>,timeout: null == timeout ? _self.timeout : timeout // ignore: cast_nullable_to_non_nullable
-as int,maxBody: null == maxBody ? _self.maxBody : maxBody // ignore: cast_nullable_to_non_nullable
-as int,
-  ));
-}
-
-
-}
-
-
-/// @nodoc
-mixin _$ProbeResult {
-
-@JsonKey(name: 'status-code') int get statusCode; int get delay; String get body; String get url; List<String> get chains; String get rule;@JsonKey(name: 'rule-payload') String get rulePayload; String? get error; String? get message;
-/// Create a copy of ProbeResult
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$ProbeResultCopyWith<ProbeResult> get copyWith => _$ProbeResultCopyWithImpl<ProbeResult>(this as ProbeResult, _$identity);
-
-  /// Serializes this ProbeResult to a JSON map.
-  Map<String, dynamic> toJson();
-
-
-@override
-bool operator ==(Object other) {
-  final _this = this as ProbeResult;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProbeResult&&(identical(other.statusCode, _this.statusCode) || other.statusCode == _this.statusCode)&&(identical(other.delay, _this.delay) || other.delay == _this.delay)&&(identical(other.body, _this.body) || other.body == _this.body)&&(identical(other.url, _this.url) || other.url == _this.url)&&const DeepCollectionEquality().equals(other.chains, _this.chains)&&(identical(other.rule, _this.rule) || other.rule == _this.rule)&&(identical(other.rulePayload, _this.rulePayload) || other.rulePayload == _this.rulePayload)&&(identical(other.error, _this.error) || other.error == _this.error)&&(identical(other.message, _this.message) || other.message == _this.message));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode {
-  final _this = this as ProbeResult;
-  return Object.hash(runtimeType,_this.statusCode,_this.delay,_this.body,_this.url,const DeepCollectionEquality().hash(_this.chains),_this.rule,_this.rulePayload,_this.error,_this.message);
-}
-
-@override
-String toString() {
-  final _this = this as ProbeResult;
-  return 'ProbeResult(statusCode: ${_this.statusCode}, delay: ${_this.delay}, body: ${_this.body}, url: ${_this.url}, chains: ${_this.chains}, rule: ${_this.rule}, rulePayload: ${_this.rulePayload}, error: ${_this.error}, message: ${_this.message})';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class $ProbeResultCopyWith<$Res>  {
-  factory $ProbeResultCopyWith(ProbeResult value, $Res Function(ProbeResult) _then) = _$ProbeResultCopyWithImpl;
-@useResult
-$Res call({
-@JsonKey(name: 'status-code') int statusCode, int delay, String body, String url, List<String> chains, String rule,@JsonKey(name: 'rule-payload') String rulePayload, String? error, String? message
-});
-
-
-
-
-}
-/// @nodoc
-class _$ProbeResultCopyWithImpl<$Res>
-    implements $ProbeResultCopyWith<$Res> {
-  _$ProbeResultCopyWithImpl(this._self, this._then);
-
-  final ProbeResult _self;
-  final $Res Function(ProbeResult) _then;
-
-/// Create a copy of ProbeResult
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? statusCode = null,Object? delay = null,Object? body = null,Object? url = null,Object? chains = null,Object? rule = null,Object? rulePayload = null,Object? error = freezed,Object? message = freezed,}) {
-  return _then(ProbeResult(
-statusCode: null == statusCode ? _self.statusCode : statusCode // ignore: cast_nullable_to_non_nullable
-as int,delay: null == delay ? _self.delay : delay // ignore: cast_nullable_to_non_nullable
-as int,body: null == body ? _self.body : body // ignore: cast_nullable_to_non_nullable
-as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
-as String,chains: null == chains ? _self.chains : chains // ignore: cast_nullable_to_non_nullable
-as List<String>,rule: null == rule ? _self.rule : rule // ignore: cast_nullable_to_non_nullable
-as String,rulePayload: null == rulePayload ? _self.rulePayload : rulePayload // ignore: cast_nullable_to_non_nullable
-as String,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as String?,message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String?,
-  ));
-}
-
-}
-
-
-/// Adds pattern-matching-related methods to [ProbeResult].
-extension ProbeResultPatterns on ProbeResult {
-/// A variant of `map` that fallback to returning `orElse`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ProbeResult value)?  $default,{required TResult orElse(),}){
-final _that = this;
-switch (_that) {
-case _ProbeResult() when $default != null:
-return $default(_that);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// Callbacks receives the raw object, upcasted.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case final Subclass2 value:
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ProbeResult value)  $default,){
-final _that = this;
-switch (_that) {
-case _ProbeResult():
-return $default(_that);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `map` that fallback to returning `null`.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case final Subclass value:
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ProbeResult value)?  $default,){
-final _that = this;
-switch (_that) {
-case _ProbeResult() when $default != null:
-return $default(_that);case _:
-  return null;
-
-}
-}
-/// A variant of `when` that fallback to an `orElse` callback.
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return orElse();
-/// }
-/// ```
-
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'status-code')  int statusCode,  int delay,  String body,  String url,  List<String> chains,  String rule, @JsonKey(name: 'rule-payload')  String rulePayload,  String? error,  String? message)?  $default,{required TResult orElse(),}) {final _that = this;
-switch (_that) {
-case _ProbeResult() when $default != null:
-return $default(_that.statusCode,_that.delay,_that.body,_that.url,_that.chains,_that.rule,_that.rulePayload,_that.error,_that.message);case _:
-  return orElse();
-
-}
-}
-/// A `switch`-like method, using callbacks.
-///
-/// As opposed to `map`, this offers destructuring.
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case Subclass2(:final field2):
-///     return ...;
-/// }
-/// ```
-
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'status-code')  int statusCode,  int delay,  String body,  String url,  List<String> chains,  String rule, @JsonKey(name: 'rule-payload')  String rulePayload,  String? error,  String? message)  $default,) {final _that = this;
-switch (_that) {
-case _ProbeResult():
-return $default(_that.statusCode,_that.delay,_that.body,_that.url,_that.chains,_that.rule,_that.rulePayload,_that.error,_that.message);case _:
-  throw StateError('Unexpected subclass');
-
-}
-}
-/// A variant of `when` that fallback to returning `null`
-///
-/// It is equivalent to doing:
-/// ```dart
-/// switch (sealedClass) {
-///   case Subclass(:final field):
-///     return ...;
-///   case _:
-///     return null;
-/// }
-/// ```
-
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'status-code')  int statusCode,  int delay,  String body,  String url,  List<String> chains,  String rule, @JsonKey(name: 'rule-payload')  String rulePayload,  String? error,  String? message)?  $default,) {final _that = this;
-switch (_that) {
-case _ProbeResult() when $default != null:
-return $default(_that.statusCode,_that.delay,_that.body,_that.url,_that.chains,_that.rule,_that.rulePayload,_that.error,_that.message);case _:
-  return null;
-
-}
-}
-
-}
-
-/// @nodoc
-@JsonSerializable()
-
-class _ProbeResult implements ProbeResult {
-  const _ProbeResult({@JsonKey(name: 'status-code') this.statusCode = 0, this.delay = 0, this.body = '', this.url = '',  List<String> chains = const [], this.rule = '', @JsonKey(name: 'rule-payload') this.rulePayload = '', this.error, this.message}): _chains = chains;
-  factory _ProbeResult.fromJson(Map<String, dynamic> json) => _$ProbeResultFromJson(json);
-
-@override@JsonKey(name: 'status-code') final  int statusCode;
-@override@JsonKey() final  int delay;
-@override@JsonKey() final  String body;
-@override@JsonKey() final  String url;
- final  List<String> _chains;
-@override@JsonKey() List<String> get chains {
-  if (_chains is EqualUnmodifiableListView) return _chains;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_chains);
-}
-
-@override@JsonKey() final  String rule;
-@override@JsonKey(name: 'rule-payload') final  String rulePayload;
-@override final  String? error;
-@override final  String? message;
-
-/// Create a copy of ProbeResult
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$ProbeResultCopyWith<_ProbeResult> get copyWith => __$ProbeResultCopyWithImpl<_ProbeResult>(this, _$identity);
-
-@override
-Map<String, dynamic> toJson() {
-  return _$ProbeResultToJson(this, );
-}
-
-@override
-bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProbeResult&&(identical(other.statusCode, statusCode) || other.statusCode == statusCode)&&(identical(other.delay, delay) || other.delay == delay)&&(identical(other.body, body) || other.body == body)&&(identical(other.url, url) || other.url == url)&&const DeepCollectionEquality().equals(other.chains, _chains)&&(identical(other.rule, rule) || other.rule == rule)&&(identical(other.rulePayload, rulePayload) || other.rulePayload == rulePayload)&&(identical(other.error, error) || other.error == error)&&(identical(other.message, message) || other.message == message));
-}
-
-@JsonKey(includeFromJson: false, includeToJson: false)
-@override
-int get hashCode {
-    return Object.hash(runtimeType,statusCode,delay,body,url,const DeepCollectionEquality().hash(_chains),rule,rulePayload,error,message);
-}
-
-@override
-String toString() {
-    return 'ProbeResult(statusCode: $statusCode, delay: $delay, body: $body, url: $url, chains: $chains, rule: $rule, rulePayload: $rulePayload, error: $error, message: $message)';
-}
-
-
-}
-
-/// @nodoc
-abstract mixin class _$ProbeResultCopyWith<$Res> implements $ProbeResultCopyWith<$Res> {
-  factory _$ProbeResultCopyWith(_ProbeResult value, $Res Function(_ProbeResult) _then) = __$ProbeResultCopyWithImpl;
-@override @useResult
-$Res call({
-@JsonKey(name: 'status-code') int statusCode, int delay, String body, String url, List<String> chains, String rule,@JsonKey(name: 'rule-payload') String rulePayload, String? error, String? message
-});
-
-
-
-
-}
-/// @nodoc
-class __$ProbeResultCopyWithImpl<$Res>
-    implements _$ProbeResultCopyWith<$Res> {
-  __$ProbeResultCopyWithImpl(this._self, this._then);
-
-  final _ProbeResult _self;
-  final $Res Function(_ProbeResult) _then;
-
-/// Create a copy of ProbeResult
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? statusCode = null,Object? delay = null,Object? body = null,Object? url = null,Object? chains = null,Object? rule = null,Object? rulePayload = null,Object? error = freezed,Object? message = freezed,}) {
-  return _then(_ProbeResult(
-statusCode: null == statusCode ? _self.statusCode : statusCode // ignore: cast_nullable_to_non_nullable
-as int,delay: null == delay ? _self.delay : delay // ignore: cast_nullable_to_non_nullable
-as int,body: null == body ? _self.body : body // ignore: cast_nullable_to_non_nullable
-as String,url: null == url ? _self.url : url // ignore: cast_nullable_to_non_nullable
-as String,chains: null == chains ? _self._chains : chains // ignore: cast_nullable_to_non_nullable
-as List<String>,rule: null == rule ? _self.rule : rule // ignore: cast_nullable_to_non_nullable
-as String,rulePayload: null == rulePayload ? _self.rulePayload : rulePayload // ignore: cast_nullable_to_non_nullable
-as String,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as String?,message: freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
-as String?,
   ));
 }
 

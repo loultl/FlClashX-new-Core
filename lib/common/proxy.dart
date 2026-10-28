@@ -11,8 +11,7 @@ final systemProxyQueue = proxy == null ? null : SystemProxyQueue(proxy!);
 
 /// Exit's stop goes through the same queue as every other change, so a start
 /// still waiting behind a slow call cannot turn the proxy back on after it.
-/// A stop also clears settings someone else made, so it only undoes a start
-/// of this run.
+/// Only undoes a start of this run, so a stop leaves others' settings alone.
 class SystemProxyQueue {
   final Proxy _proxy;
   Future<void> _tail = Future.value();

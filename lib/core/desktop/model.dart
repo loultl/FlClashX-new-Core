@@ -122,10 +122,7 @@ final class DesktopCoreIdle extends DesktopCoreState {
 }
 
 final class DesktopCoreStarting extends DesktopCoreState {
-  final int revision;
-  final String sessionId;
-
-  const DesktopCoreStarting({required this.revision, required this.sessionId});
+  const DesktopCoreStarting();
 
   @override
   DesktopCorePhase get phase => DesktopCorePhase.starting;
@@ -141,28 +138,21 @@ final class DesktopCoreRunning extends DesktopCoreState {
 }
 
 final class DesktopCoreStopping extends DesktopCoreState {
-  final int revision;
-  final DesktopCoreSession session;
-
-  const DesktopCoreStopping({required this.revision, required this.session});
+  const DesktopCoreStopping();
 
   @override
   DesktopCorePhase get phase => DesktopCorePhase.stopping;
 }
 
 final class DesktopCoreFailed extends DesktopCoreState {
-  final DesktopCoreFailure failure;
-
-  const DesktopCoreFailed(this.failure);
+  const DesktopCoreFailed();
 
   @override
   DesktopCorePhase get phase => DesktopCorePhase.failed;
 }
 
 final class DesktopCoreClosed extends DesktopCoreState {
-  final int revision;
-
-  const DesktopCoreClosed(this.revision);
+  const DesktopCoreClosed();
 
   @override
   DesktopCorePhase get phase => DesktopCorePhase.closed;

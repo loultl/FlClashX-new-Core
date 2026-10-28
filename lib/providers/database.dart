@@ -9,19 +9,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'generated/database.g.dart';
 
-Future<void> withRollback<T>({
-  required T snapshot,
-  required FutureOr<void> Function() action,
-  required void Function(T snapshot) rollback,
-}) async {
-  try {
-    await action();
-  } catch (e, s) {
-    rollback(snapshot);
-    Error.throwWithStackTrace(e, s);
-  }
-}
-
 Future<void> _persistOptimistically<T>(
   T previous,
   T next,

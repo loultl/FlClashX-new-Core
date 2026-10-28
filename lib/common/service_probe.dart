@@ -22,7 +22,11 @@ enum ServiceTarget {
   spotify('spotify', 'Spotify', 'spotify'),
   tiktok('tiktok', 'TikTok', 'tiktok'),
   discord('discord', 'Discord', 'discord'),
-  bilibili('bilibili', 'Bilibili', 'bilibili');
+  gosuslugi('gosuslugi', 'Госуслуги', 'gosuslugi'),
+  sberbank('sberbank', 'Сбербанк', 'sberbank'),
+  vk('vk', 'VK', 'vk'),
+  yandex('yandex', 'Яндекс', 'yandex'),
+  kinopoisk('kinopoisk', 'Кинопоиск', 'kinopoisk');
 
   const ServiceTarget(this.id, this.label, this.icon);
 
@@ -164,8 +168,8 @@ IpInfo Function(String) _json(IpInfo Function(Map<String, dynamic>) parse) {
 final Map<String, IpInfo Function(String)> ipInfoSources = {
   'https://www.cloudflare.com/cdn-cgi/trace': IpInfo.fromCloudflareTrace,
   'https://api.ip.sb/geoip': _json(IpInfo.fromIpSbJson),
-  'https://ipinfo.io/json': _json(IpInfo.fromIpInfoIoJson),
   'https://ipwho.is': _json(IpInfo.fromIpWhoIsJson),
+  'http://ip-api.com/json': _json(IpInfo.fromIpAPIJson),
   'https://get.geojs.io/v1/ip/geo.json': _json(IpInfo.fromGeoJsJson),
   'https://api.country.is': _json(IpInfo.fromCountryIsJson),
   'https://api.ipquery.io/?format=json': _json(IpInfo.fromIpQueryJson),

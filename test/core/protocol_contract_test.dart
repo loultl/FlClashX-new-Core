@@ -43,15 +43,7 @@ class _RecordingCoreHandler extends CoreHandlerInterface {
         'url': 'https://example.com',
         'value': 42,
       },
-      CoreMethod.probe => {
-        'status-code': 204,
-        'delay': 17,
-        'body': '',
-        'url': 'https://example.com/',
-        'chains': ['DIRECT'],
-        'rule': 'Match',
-        'rule-payload': '',
-      },
+
       CoreMethod.getConnections => {
         'connections': [
           {
@@ -228,14 +220,6 @@ void main() {
       'DIRECT',
       const Duration(seconds: 8),
     );
-    await handler.probe(
-      const ProbeParams(
-        url: 'https://example.com',
-        proxyName: 'DIRECT',
-        timeout: 1000,
-        maxBody: 64,
-      ),
-    );
     await handler.clearEffect(42);
 
     for (final method in [
@@ -244,17 +228,9 @@ void main() {
       CoreMethod.changeProxy,
       CoreMethod.sideLoadExternalProvider,
       CoreMethod.asyncTestDelay,
-      CoreMethod.probe,
     ]) {
       expect(handler.calls[method], isA<Map>());
     }
-    expect(handler.calls[CoreMethod.probe], {
-      'url': 'https://example.com',
-      'proxy-name': 'DIRECT',
-      'headers': <String, String>{},
-      'timeout': 1000,
-      'max-body': 64,
-    });
     expect(handler.calls[CoreMethod.clearEffect], 42);
   });
 
@@ -406,18 +382,7 @@ void main() {
       ),
       const Delay(name: 'DIRECT', url: 'https://example.com', value: 42),
     );
-    expect(
-      await handler.probe(
-        const ProbeParams(url: 'https://example.com', timeout: 1000),
-      ),
-      const ProbeResult(
-        statusCode: 204,
-        delay: 17,
-        url: 'https://example.com/',
-        chains: ['DIRECT'],
-        rule: 'Match',
-      ),
-    );
+
     expect((await handler.getConnections()).single.id, 'connection-1');
     expect(await handler.getConnectionCount(), 3);
     expect((await handler.getExternalProviders()).single.name, 'provider-1');

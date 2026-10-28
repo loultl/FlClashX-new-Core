@@ -86,6 +86,11 @@ class TestSetupAction extends SetupAction {
   final Set<bool> unansweredCoreCalls = {};
   int authorizeCalls = 0;
   AuthorizeCode authorizeResult = AuthorizeCode.none;
+  bool needsAuthorization = true;
+
+  @override
+  bool get coreNeedsAuthorization => needsAuthorization;
+
   DateTime? serviceStart;
 
   @override
@@ -115,6 +120,24 @@ class TestSetupAction extends SetupAction {
     return !unansweredCoreCalls.contains(running);
   }
 
+  int restarts = 0;
+  bool restartAnswered = true;
+
+  @override
+  Future<bool> restartCoreRunning() async {
+    restarts++;
+    if (blockCoreCalls) {
+      final gate = Completer<void>();
+      pendingCoreCalls.add(gate);
+      await gate.future;
+    }
+    final error = coreRunningError;
+    if (error != null) {
+      throw error;
+    }
+    return restartAnswered;
+  }
+
   @override
   void resetCoreTraffic() => trafficResets++;
 
@@ -131,6 +154,9 @@ class TestSetupAction extends SetupAction {
   }
 }
 
+/// TUN is on by default, and authorizing it has no place in a test.
+const _tunOff = PatchClashConfig(tun: Tun(enable: false));
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUpAll(() {
@@ -146,7 +172,7 @@ void main() {
         logLevel: LogLevel.info,
         ipv6: false,
         tcpConcurrent: false,
-        externalController: ExternalControllerStatus.close,
+        externalController: '',
         unifiedDelay: false,
       ),
     );
@@ -557,7 +583,7 @@ void main() {
       expect(container.read(runningVpnOptionsProvider), isNull);
     });
 
-    test('a restart stops and starts with the current options', () async {
+    test('a restart is one command that takes the current options', () async {
       markInitialized();
       final setup = container.read(setupActionProvider.notifier);
       await setup.setRunning(true);
@@ -567,7 +593,9 @@ void main() {
 
       await setup.restartVpn();
 
-      expect(action.coreRunningCalls, [true, false, true]);
+      expect(action.coreRunningCalls, [true]);
+      expect(action.restarts, 1);
+      expect(action.trafficResets, 1);
       expect(container.read(isStartProvider), isTrue);
       expect(
         container.read(runningVpnOptionsProvider),
@@ -581,7 +609,28 @@ void main() {
       await container.read(setupActionProvider.notifier).restartVpn();
 
       expect(action.coreRunningCalls, isEmpty);
+      expect(action.restarts, 0);
       expect(container.read(isStartProvider), isFalse);
+    });
+
+    test('a restart the service does not take keeps the run', () async {
+      markInitialized();
+      final setup = container.read(setupActionProvider.notifier);
+      await setup.setRunning(true);
+      final started = container.read(runningVpnOptionsProvider);
+      container
+          .read(vpnSettingProvider.notifier)
+          .update((state) => state.copyWith(ipv6: !state.ipv6));
+      action.restartAnswered = false;
+
+      await expectLater(
+        setup.restartVpn(),
+        throwsA(isA<CoreMethodException>()),
+      );
+
+      expect(container.read(isStartProvider), isTrue);
+      expect(container.read(runningVpnOptionsProvider), started);
+      expect(action.trafficResets, 0);
     });
   });
 
@@ -634,6 +683,32 @@ void main() {
         expect(container.read(isStartProvider), isFalse);
       },
     );
+
+    test('a stop sent during a restart wins', () async {
+      markInitialized();
+      final notifier = container.read(setupActionProvider.notifier);
+      await notifier.setRunning(true);
+      action.blockCoreCalls = true;
+
+      final restarting = notifier.restartVpn();
+      await Future<void>.delayed(Duration.zero);
+      final stopping = notifier.setRunning(false);
+      await Future<void>.delayed(Duration.zero);
+
+      action.blockCoreCalls = false;
+      for (final gate in action.pendingCoreCalls) {
+        if (!gate.isCompleted) {
+          gate.complete();
+        }
+      }
+      await Future.wait([restarting, stopping]);
+
+      expect(action.restarts, 1);
+      expect(action.coreRunningCalls, [true, false]);
+      expect(action.trafficResets, 1);
+      expect(container.read(isStartProvider), isFalse);
+      expect(container.read(runningVpnOptionsProvider), isNull);
+    });
 
     test('the newest request wins the local running state', () async {
       markInitialized();
@@ -785,6 +860,41 @@ void main() {
   });
 
   group('updateConfig', () {
+    test('a VPN-service platform skips the request and keeps the setting, '
+        'with the core tun off', () async {
+      final core = _MockCoreHandlerInterface();
+      when(() => core.updateConfig(any())).thenAnswer((_) async => '');
+      final scopedAction = TestSetupAction()..needsAuthorization = false;
+      final scoped = ProviderContainer(
+        overrides: [
+          profilesProvider.overrideWith(TestProfiles.new),
+          setupActionProvider.overrideWith(() => scopedAction),
+          coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+          patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
+        ],
+      );
+      addTearDown(scoped.dispose);
+      scoped.read(setupActionProvider.notifier);
+      scoped
+          .read(patchClashConfigProvider.notifier)
+          .update(
+            (state) => state.copyWith(tun: state.tun.copyWith(enable: true)),
+          );
+
+      await scopedAction.updateConfig();
+
+      final params =
+          verify(() => core.updateConfig(captureAny())).captured.single
+              as UpdateParams;
+      expect(params.tun.enable, isFalse);
+      expect(scopedAction.authorizeCalls, 0);
+      expect(scoped.read(patchClashConfigProvider).tun.enable, isTrue);
+      expect(
+        scoped.read(authorizedTunEnableProvider),
+        TunAuthorizationState.none,
+      );
+    });
+
     test('safe mode pushes tun disabled even once authorized', () async {
       final core = _MockCoreHandlerInterface();
       when(() => core.updateConfig(any())).thenAnswer((_) async => '');
@@ -794,6 +904,7 @@ void main() {
           profilesProvider.overrideWith(TestProfiles.new),
           setupActionProvider.overrideWith(() => scopedAction),
           coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+          patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
           safeModeProvider.overrideWithValue(true),
         ],
       );
@@ -825,6 +936,7 @@ void main() {
           profilesProvider.overrideWith(TestProfiles.new),
           setupActionProvider.overrideWith(() => scopedAction),
           coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+          patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
           safeModeProvider.overrideWithValue(true),
         ],
       );
@@ -833,9 +945,8 @@ void main() {
       scoped
           .read(patchClashConfigProvider.notifier)
           .update(
-            (state) => state.copyWith(
-              externalController: ExternalControllerStatus.open,
-            ),
+            (state) =>
+                state.copyWith(externalController: defaultExternalController),
           );
 
       await scopedAction.updateConfig();
@@ -843,10 +954,10 @@ void main() {
       final params =
           verify(() => core.updateConfig(captureAny())).captured.single
               as UpdateParams;
-      expect(params.externalController, ExternalControllerStatus.close);
+      expect(params.externalController, '');
       expect(
         scoped.read(patchClashConfigProvider).externalController,
-        ExternalControllerStatus.open,
+        defaultExternalController,
       );
     });
 
@@ -859,6 +970,7 @@ void main() {
           profilesProvider.overrideWith(TestProfiles.new),
           setupActionProvider.overrideWith(() => scopedAction),
           coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+          patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
         ],
       );
       addTearDown(scoped.dispose);
@@ -874,23 +986,51 @@ void main() {
     test('hands the Core the controller secret with the address', () async {
       final params = await updateWith(
         const PatchClashConfig(
-          externalController: ExternalControllerStatus.open,
+          externalController: defaultExternalController,
           secret: 'abc',
         ),
       );
 
-      expect(params.externalController, ExternalControllerStatus.open);
+      expect(params.externalController, defaultExternalController);
       expect(params.secret, 'abc');
     });
 
-    test('never opens the controller without a secret', () async {
-      final params = await updateWith(
-        const PatchClashConfig(
-          externalController: ExternalControllerStatus.open,
-        ),
+    test('androidsecure takes every local port away', () async {
+      final core = _MockCoreHandlerInterface();
+      when(() => core.updateConfig(any())).thenAnswer((_) async => '');
+      final scopedAction = TestSetupAction();
+      final scoped = ProviderContainer(
+        overrides: [
+          profilesProvider.overrideWith(TestProfiles.new),
+          setupActionProvider.overrideWith(() => scopedAction),
+          coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+          patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
+          androidSecureProvider.overrideWithValue(true),
+        ],
+      );
+      addTearDown(scoped.dispose);
+      scoped.read(setupActionProvider.notifier);
+      scoped.read(patchClashConfigProvider.notifier).value = _tunOff.copyWith(
+        mixedPort: 7890,
+        socksPort: 7891,
       );
 
-      expect(params.externalController, ExternalControllerStatus.close);
+      await scopedAction.updateConfig();
+
+      final params =
+          verify(() => core.updateConfig(captureAny())).captured.single
+              as UpdateParams;
+      expect(params.mixedPort, 0);
+      expect(scoped.read(patchClashConfigProvider).mixedPort, 7890);
+    });
+
+    test('opens the controller without a secret when none is set', () async {
+      final params = await updateWith(
+        const PatchClashConfig(externalController: '127.0.0.1:9091'),
+      );
+
+      expect(params.externalController, '127.0.0.1:9091');
+      expect(params.secret, isEmpty);
     });
   });
 
@@ -1070,7 +1210,7 @@ void main() {
       originalLastConfigMd5 = globalState.lastConfigMd5;
       globalState.packageInfo = PackageInfo(
         appName: 'FlClash',
-        packageName: 'com.follow.clash',
+        packageName: 'com.follow.clashx',
         version: '0.0.0',
         buildNumber: '0',
       );
@@ -1113,6 +1253,7 @@ void main() {
             currentProfileIdProvider.overrideWithBuild((_, _) => profile.id),
             setupStateProvider.overrideWith((_, _) => nullProfileSetupState),
             coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+            patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
             setupActionProvider.overrideWith(SetupAction.new),
           ],
         );
@@ -1156,6 +1297,7 @@ void main() {
                   nullProfileSetupState.copyWith(profileId: profileId),
             ),
             coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+            patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
             setupActionProvider.overrideWith(SetupAction.new),
           ],
         );
@@ -1189,6 +1331,7 @@ void main() {
             currentProfileProvider.overrideWithValue(null),
             setupStateProvider.overrideWith((_, _) => nullProfileSetupState),
             coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+            patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
             setupActionProvider.overrideWith(SetupAction.new),
           ],
         );
@@ -1230,6 +1373,7 @@ void main() {
                   nullProfileSetupState.copyWith(profileId: profileId),
             ),
             coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+            patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
             setupActionProvider.overrideWith(SetupAction.new),
             safeModeProvider.overrideWithValue(true),
           ],
@@ -1238,9 +1382,8 @@ void main() {
         scoped
             .read(patchClashConfigProvider.notifier)
             .update(
-              (state) => state.copyWith(
-                externalController: ExternalControllerStatus.open,
-              ),
+              (state) =>
+                  state.copyWith(externalController: defaultExternalController),
             );
 
         final succeeded = await scoped
@@ -1268,6 +1411,7 @@ void main() {
           currentProfileIdProvider.overrideWithBuild((_, _) => profile.id),
           setupStateProvider.overrideWith((_, _) => setupState),
           coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+          patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
           setupActionProvider.overrideWith(SetupAction.new),
         ],
       );
@@ -1315,6 +1459,7 @@ void main() {
             (_, _) => nullProfileSetupState.copyWith(profileId: profile.id),
           ),
           coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+          patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
           setupActionProvider.overrideWith(_UnflooredDebounceSetupAction.new),
         ],
       );
@@ -1335,6 +1480,44 @@ void main() {
       await setupAction.applyProfile();
     });
 
+    test(
+      'an update waits for the apply in flight to give the Core a config',
+      () async {
+        final profile = Profile.normal(label: 'p');
+        final core = _MockCoreHandlerInterface();
+        when(
+          () => core.getProfileBase(any()),
+        ).thenAnswer((_) async => const ProfileBase(config: {}, digest: 'd'));
+        final push = Completer<String>();
+        when(() => core.setupConfig(any())).thenAnswer((_) => push.future);
+        when(() => core.updateConfig(any())).thenAnswer((_) async => '');
+        final scoped = ProviderContainer(
+          overrides: [
+            profilesProvider.overrideWith(() => TestProfiles([profile])),
+            currentProfileIdProvider.overrideWithBuild((_, _) => profile.id),
+            setupStateProvider.overrideWith(
+              (_, _) => nullProfileSetupState.copyWith(profileId: profile.id),
+            ),
+            coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+            patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
+          ],
+        );
+        addTearDown(scoped.dispose);
+        final setupAction = scoped.read(setupActionProvider.notifier);
+
+        final apply = setupAction.applyProfile(force: true);
+        await pumpEventQueue();
+        final update = setupAction.updateConfig();
+        await pumpEventQueue();
+        verifyNever(() => core.updateConfig(any()));
+
+        push.complete('');
+        await apply;
+        await update;
+        verify(() => core.updateConfig(any())).called(1);
+      },
+    );
+
     test('a slow push holds a debounced apply back no longer than the '
         'ceiling', () async {
       final profile = Profile.normal(label: 'p');
@@ -1354,6 +1537,7 @@ void main() {
             (_, _) => nullProfileSetupState.copyWith(profileId: profile.id),
           ),
           coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+          patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
           setupActionProvider.overrideWith(_CappedDebounceSetupAction.new),
         ],
       );
@@ -1385,6 +1569,7 @@ void main() {
             (_, _) => nullProfileSetupState.copyWith(profileId: profile.id),
           ),
           coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+          patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
           setupActionProvider.overrideWith(SetupAction.new),
         ],
       );
@@ -1462,6 +1647,7 @@ void main() {
                 nullProfileSetupState.copyWith(profileId: profileId),
           ),
           coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+          patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
           setupActionProvider.overrideWith(SetupAction.new),
         ],
       );
@@ -1526,6 +1712,7 @@ void main() {
             ),
           ),
           coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+          patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
           setupActionProvider.overrideWith(SetupAction.new),
         ],
       );
@@ -1578,6 +1765,7 @@ void main() {
                 nullProfileSetupState.copyWith(profileId: profileId),
           ),
           coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+          patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
           setupActionProvider.overrideWith(SetupAction.new),
         ],
       );
@@ -1611,6 +1799,7 @@ void main() {
           overrides: [
             profilesProvider.overrideWith(() => TestProfiles([profile])),
             coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+            patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
           ],
         );
         addTearDown(scoped.dispose);
@@ -1650,6 +1839,7 @@ void main() {
                   nullProfileSetupState.copyWith(profileId: profileId),
             ),
             coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+            patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
             commonActionProvider.overrideWith(TestCommonAction.new),
             setupActionProvider.overrideWith(_UnflooredDebounceSetupAction.new),
           ],
@@ -1665,8 +1855,8 @@ void main() {
         verifyNever(() => core.setupConfig(any()));
 
         await setupAction.setRunning(false);
-        scoped.read(patchClashConfigProvider.notifier).value = scoped
-            .read(patchClashConfigProvider)
+        scoped.read(appSettingProvider.notifier).value = scoped
+            .read(appSettingProvider)
             .copyWith(testUrl: 'https://example.com/204');
         await setupAction.setRunning(true);
         await Future<void>.delayed(const Duration(milliseconds: 800));
@@ -1741,6 +1931,7 @@ void main() {
       final scoped = ProviderContainer(
         overrides: [
           coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+          patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
           setupActionProvider.overrideWith(SetupAction.new),
         ],
       );
@@ -1811,6 +2002,7 @@ void main() {
       final scoped = ProviderContainer(
         overrides: [
           coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+          patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
           setupActionProvider.overrideWith(SetupAction.new),
         ],
       );
@@ -1868,6 +2060,7 @@ void main() {
       final scoped = ProviderContainer(
         overrides: [
           coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+          patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
           setupActionProvider.overrideWith(SetupAction.new),
         ],
       );
@@ -1907,6 +2100,7 @@ void main() {
       final scoped = ProviderContainer(
         overrides: [
           coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+          patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
           setupActionProvider.overrideWith(SetupAction.new),
         ],
       );
@@ -1942,6 +2136,7 @@ void main() {
             currentProfileProvider.overrideWithValue(null),
             setupStateProvider.overrideWith((_, _) => nullProfileSetupState),
             coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+            patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
             setupActionProvider.overrideWith(SetupAction.new),
           ],
         );
@@ -1966,6 +2161,7 @@ void main() {
             currentProfileProvider.overrideWithValue(null),
             setupStateProvider.overrideWith((_, _) => nullProfileSetupState),
             coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+            patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
             setupActionProvider.overrideWith(
               _ListenerHandoffFailureSetupAction.new,
             ),
@@ -1996,6 +2192,7 @@ void main() {
             currentProfileProvider.overrideWithValue(null),
             setupStateProvider.overrideWith((_, _) => nullProfileSetupState),
             coreHandlerProvider.overrideWithValue(CoreController.scoped(core)),
+            patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
             setupActionProvider.overrideWith(_MessageFailureSetupAction.new),
           ],
         );

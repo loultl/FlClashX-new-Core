@@ -21,6 +21,10 @@ class CoreAction extends _$CoreAction {
       await ref.read(proxiesActionProvider.notifier).updateGroups();
       await ref.read(providersProvider.notifier).syncProviders();
     }
+    _core.setHostActive(ref.read(appVisibleProvider));
+    try {
+      globalState.coreVersion = await _core.getCoreVersion();
+    } catch (_) {}
   }
 
   Future<void> startCore() async {
@@ -64,14 +68,6 @@ class CoreAction extends _$CoreAction {
     return true;
   }
 
-  Future<void> closeConnection(String id) async {
-    await _core.closeConnection(id);
-  }
-
-  Future<void> closeConnections() async {
-    await _core.closeConnections();
-  }
-
   Future<void> clearDnsCacheOnNetworkChange() async {
     if (ref.read(coreStatusProvider) != CoreStatus.connected) {
       return;
@@ -84,10 +80,6 @@ class CoreAction extends _$CoreAction {
         logLevel: coreFailureLogLevel(error),
       );
     }
-  }
-
-  Future<void> requestGc() async {
-    await _core.requestGc();
   }
 
   Future<void> crash() async {
@@ -106,9 +98,24 @@ class CoreAction extends _$CoreAction {
     return operation;
   }
 
+  /// An in-process core (Android) cannot be relaunched, so a restart stops
+  /// the tunnel, shuts mihomo down inside the process and initializes again.
+  @protected
+  bool get coreIsEmbedded => coreLib != null;
+
   Future<bool> _runRestartWorker() async {
+    final setupAction = ref.read(setupActionProvider.notifier);
+    final wasRunning = ref.read(isStartProvider);
     try {
       ref.read(coreStatusProvider.notifier).value = CoreStatus.connecting;
+      final stopping = coreIsEmbedded && wasRunning
+          ? setupAction.setRunning(false)
+          : null;
+      final runIntent = setupAction.runIntent;
+      if (coreIsEmbedded) {
+        await stopping;
+        await _core.shutdown();
+      }
       final result = await restartLifecycle();
       if (!await _applyLifecycleResult(result, statusFirst: true)) {
         return false;
@@ -118,15 +125,11 @@ class CoreAction extends _$CoreAction {
       var applied = true;
       while (appliedRevision < _requestedRestartRevision) {
         final revision = _requestedRestartRevision;
-        if (ref.read(isStartProvider)) {
-          applied = await ref
-              .read(setupActionProvider.notifier)
-              .setRunning(true, initialize: true);
-        } else {
-          applied = await ref
-              .read(setupActionProvider.notifier)
-              .applyProfile(force: true);
-        }
+        applied = await _restoreRunning(
+          setupAction,
+          wasRunning: wasRunning,
+          observedIntent: runIntent,
+        );
         appliedRevision = revision;
       }
       return applied;
@@ -136,5 +139,24 @@ class CoreAction extends _$CoreAction {
     } finally {
       _restartOperation = null;
     }
+  }
+
+  /// A request made mid-restart hit a dead process; the latest intent wins.
+  Future<bool> _restoreRunning(
+    SetupAction setupAction, {
+    required bool wasRunning,
+    required Object? observedIntent,
+  }) async {
+    final intentChanged = !identical(setupAction.runIntent, observedIntent);
+    final running = intentChanged
+        ? setupAction.requestedRunning == true
+        : wasRunning || ref.read(isStartProvider);
+    if (running) {
+      return setupAction.setRunning(true, initialize: true);
+    }
+    if (ref.read(isStartProvider)) {
+      await globalState.safeRun(() => setupAction.setRunning(false));
+    }
+    return setupAction.applyProfile(force: true);
   }
 }

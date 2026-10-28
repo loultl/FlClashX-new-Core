@@ -53,7 +53,7 @@ class Database extends _$Database {
   Database([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 21;
+  int get schemaVersion => 23;
 
   static LazyDatabase _openConnection() {
     return LazyDatabase(() async {
@@ -115,6 +115,12 @@ class Database extends _$Database {
           );
         }
         if (from < 21) {
+          await _addColumnIfMissing(m, profiles, profiles.providerHeaders);
+        }
+        if (from < 22) {
+          await _addColumnIfMissing(m, profiles, profiles.sendDeviceHeaders);
+        }
+        if (from < 23) {
           await _createTableIfMissing(m, ipQualities);
         }
       }),
@@ -601,15 +607,6 @@ extension SimpleSelectStatementExt<T extends HasResultSet, D>
     final countExp = countAll();
     final query = addColumns([countExp]);
     return query.map((row) => row.read(countExp)!);
-  }
-}
-
-extension JoinedSelectStatementExt<T extends HasResultSet, D>
-    on JoinedSelectStatement<T, D> {
-  Selectable<int> get count {
-    final countExp = countAll();
-    addColumns([countExp]);
-    return map((row) => row.read(countExp)!);
   }
 }
 

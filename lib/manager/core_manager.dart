@@ -54,14 +54,18 @@ class _CoreContainerState extends ConsumerState<CoreManager>
       if (prev != next) {
         ref
             .read(setupActionProvider.notifier)
-            .applyProfileDebounce(
-              silence: true,
-              // The test URL changes no YAML, so only a forced apply hands
-              // it over.
-              force:
-                  prev != null &&
-                  prev.patchConfig.testUrl != next.patchConfig.testUrl,
-            );
+            .applyProfileDebounce(silence: true);
+      }
+    });
+    // The test URL changes no YAML, so only a forced apply hands it over.
+    ref.listenManual(appSettingProvider.select((state) => state.testUrl), (
+      prev,
+      next,
+    ) {
+      if (prev != null && prev != next) {
+        ref
+            .read(setupActionProvider.notifier)
+            .applyProfileDebounce(silence: true, force: true);
       }
     });
     ref.listenManual(globalRulesProvider, (prev, next) {

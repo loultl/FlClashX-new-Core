@@ -44,6 +44,10 @@ class App {
     return methodChannel.invokeMethod<bool>('moveTaskToBack');
   }
 
+  Future<String?> getAndroidId() async {
+    return methodChannel.invokeMethod<String>('getAndroidId');
+  }
+
   Future<List<Package>> getPackages() async {
     final packagesString = await methodChannel.invokeMethod<String>(
       'getPackages',
@@ -74,15 +78,6 @@ class App {
           'requestLocalNetworkPermission',
         ) ??
         false;
-  }
-
-  Future<List<String>> getChinaPackageNames() async {
-    final packageNamesString = await methodChannel.invokeMethod<String>(
-      'getChinaPackageNames',
-    );
-    final List<dynamic> packageNamesRaw =
-        await packageNamesString?.decodeJson<List<dynamic>>() ?? [];
-    return packageNamesRaw.map((e) => e.toString()).toList();
   }
 
   final Map<String, ImageProvider?> _packageIcons = {};

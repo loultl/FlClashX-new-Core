@@ -72,7 +72,7 @@ Future<ProviderContainer> _pumpHome(
               builder: (_) => _page('profiles', primaryAction: _addAction()),
             ),
             NavigationItem(
-              glyph: AppGlyphs.tools,
+              glyph: AppGlyphs.settings,
               label: PageLabel.tools,
               builder: (_) => _page('tools'),
             ),
@@ -316,7 +316,7 @@ void main() {
           child: NavigationDock(
             destinations: const [
               NavigationDockDestination(glyph: AppGlyphs.dashboard, label: 'a'),
-              NavigationDockDestination(glyph: AppGlyphs.tools, label: 'b'),
+              NavigationDockDestination(glyph: AppGlyphs.settings, label: 'b'),
             ],
             selectedIndex: 0,
             onSelected: (_) {},
@@ -512,7 +512,7 @@ void main() {
                 destinations: [
                   for (var index = 0; index < count; index++)
                     NavigationDockDestination(
-                      glyph: AppGlyphs.tools,
+                      glyph: AppGlyphs.settings,
                       label: '$index',
                     ),
                 ],
@@ -551,7 +551,7 @@ void main() {
                 destinations: [
                   for (final text in ['Home', 'Apps', 'Logs', label])
                     NavigationDockDestination(
-                      glyph: AppGlyphs.tools,
+                      glyph: AppGlyphs.settings,
                       label: text,
                     ),
                 ],

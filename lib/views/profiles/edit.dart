@@ -33,6 +33,7 @@ class _EditProfileViewState extends ConsumerState<EditProfileView> {
   late final TextEditingController _ageSecretKeyController;
   late final TextEditingController _autoUpdateDurationController;
   late bool _autoUpdate;
+  late bool _sendDeviceHeaders;
   Uint8List? _editedData;
   bool _attempted = false;
   final _fileInfoNotifier = ValueNotifier<FileInfo?>(null);
@@ -48,6 +49,7 @@ class _EditProfileViewState extends ConsumerState<EditProfileView> {
       text: widget.profile.ageSecretKey,
     );
     _autoUpdate = widget.profile.autoUpdate;
+    _sendDeviceHeaders = widget.profile.sendDeviceHeaders;
     _autoUpdateDurationController = TextEditingController(
       text: widget.profile.autoUpdateDuration.inMinutes.toString(),
     );
@@ -132,6 +134,7 @@ class _EditProfileViewState extends ConsumerState<EditProfileView> {
       ageSecretKey: _ageSecretKeyController.text.trim(),
       label: _labelController.text,
       autoUpdate: _autoUpdate,
+      sendDeviceHeaders: _sendDeviceHeaders,
       autoUpdateDuration: interval != null && interval > 0
           ? Duration(minutes: interval)
           : current.autoUpdateDuration,
@@ -140,7 +143,8 @@ class _EditProfileViewState extends ConsumerState<EditProfileView> {
     final appLocalizations = context.appLocalizations;
     final hasUpdate =
         current.url != profile.url ||
-        current.ageSecretKey != profile.ageSecretKey;
+        current.ageSecretKey != profile.ageSecretKey ||
+        current.sendDeviceHeaders != profile.sendDeviceHeaders;
     if (_fileData != null) {
       if (profile.type == ProfileType.url && _autoUpdate) {
         final res = await dialogs.showMessage(
@@ -183,6 +187,13 @@ class _EditProfileViewState extends ConsumerState<EditProfileView> {
     if (_autoUpdate == value) return;
     setState(() {
       _autoUpdate = value;
+    });
+  }
+
+  void _setSendDeviceHeaders(bool value) {
+    if (_sendDeviceHeaders == value) return;
+    setState(() {
+      _sendDeviceHeaders = value;
     });
   }
 
@@ -335,6 +346,14 @@ class _EditProfileViewState extends ConsumerState<EditProfileView> {
                 invalid: issue?.field == _ProfileField.autoUpdateInterval,
                 onChanged: _handleChanged,
               ),
+            FormRow(
+              title: appLocalizations.sendDeviceHeaders,
+              onPressed: () => _setSendDeviceHeaders(!_sendDeviceHeaders),
+              trailing: Switch(
+                value: _sendDeviceHeaders,
+                onChanged: _setSendDeviceHeaders,
+              ),
+            ),
           ],
         ),
       generateSection(

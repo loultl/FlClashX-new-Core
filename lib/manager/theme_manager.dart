@@ -75,7 +75,7 @@ ThemeData watchAppTheme(WidgetRef ref, Brightness brightness) {
       if (brightness == Brightness.dark)
         ElevatedColorScheme(colorScheme.elevated),
     ],
-  ).withAppShapes.withAppSurfaces.withAppTypography;
+  ).withAppShapes.withAppSurfaces.withAppTypography.withPointerCursor;
   _appThemes[brightness] = (inputs: inputs, theme: theme);
   return theme;
 }
@@ -141,12 +141,29 @@ class ThemeManager extends ConsumerWidget {
                     .updateViewSize(
                       Size(constraints.maxWidth, constraints.maxHeight),
                     );
-                return _buildSystemUi(child);
+                return _PanelBackdrop(child: _buildSystemUi(child));
               },
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class _PanelBackdrop extends ConsumerWidget {
+  const _PanelBackdrop({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final background = ref.watch(panelBackgroundProvider);
+    final image = ref.watch(panelBackdropImageProvider).value;
+    return PageBackdropScope(
+      image: background == null ? null : image,
+      visibility: background?.visibility ?? defaultBackdropVisibility,
+      child: child,
     );
   }
 }
@@ -160,7 +177,6 @@ class AppViewScope extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isMobile = ref.watch(isMobileViewProvider);
     return ViewScope(
-      size: ref.watch(viewSizeProvider),
       isMobile: isMobile,
       windowControls: windowControlsOverPage(
         isMacOS: system.isMacOS,

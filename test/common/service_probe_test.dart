@@ -176,6 +176,13 @@ void main() {
   });
 
   group('lookupOutboundIp', () {
+    test('leaves ipinfo.io to the IP quality lookup', () {
+      expect(
+        ipInfoSources.keys.where((url) => url.contains('ipinfo.io')),
+        isEmpty,
+      );
+    });
+
     test('hands the Core every source and parses the one that won', () async {
       late OutboundIpParams sent;
       when(() => core.outboundIp(any())).thenAnswer((invocation) async {

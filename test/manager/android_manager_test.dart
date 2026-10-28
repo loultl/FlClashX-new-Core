@@ -96,8 +96,9 @@ void main() {
     await pumpAndroidManager(tester);
     expect(store.getString('sharedState'), isNull);
 
-    container.read(patchClashConfigProvider.notifier).value =
-        const PatchClashConfig(testUrl: 'http://shared.test');
+    container.read(appSettingProvider.notifier).value = const AppSettingProps(
+      testUrl: 'http://shared.test',
+    );
     await tester.pump();
     await tester.pump(const Duration(seconds: 2));
     await tester.pumpAndSettle();
@@ -107,7 +108,7 @@ void main() {
     final restored = SharedState.fromJson(
       json.decode(raw!) as Map<String, Object?>,
     );
-    expect(restored.onlyStatisticsProxy, isFalse);
+    expect(restored.setupParams?.testUrl, 'http://shared.test');
     expect(tester.takeException(), null);
 
     await tester.pumpWidget(const SizedBox.shrink());

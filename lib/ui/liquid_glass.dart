@@ -276,6 +276,29 @@ class LiquidGlassStyle {
   final double? hairlineSide;
 
   /// Eases in from bare air, as glass materializes by bending, not fading.
+  /// Lets 40% through, 55% in ultra, frosted wide for the smallest capture.
+  factory LiquidGlassStyle.frost(
+    Color surface,
+    LiquidGlassQuality quality, {
+    double? opacity,
+  }) {
+    final dark = surface.computeLuminance() < 0.5;
+    return LiquidGlassStyle(
+      tint: surface.withValues(
+        alpha: surface.a * (opacity ?? frostOpacity(quality)),
+      ),
+      contrast: dark ? -0.4 : 0.4,
+      blur: 24,
+      refraction: 0,
+      bevel: 0,
+      saturation: 1.6,
+      rim: 0,
+    );
+  }
+
+  static double frostOpacity(LiquidGlassQuality quality) =>
+      quality == LiquidGlassQuality.ultra ? 0.45 : 0.6;
+
   LiquidGlassStyle scale(double t) {
     final amount = t.clamp(0.0, 1.0);
     return LiquidGlassStyle(

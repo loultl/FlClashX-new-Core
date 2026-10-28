@@ -90,7 +90,11 @@ void main() {
 
     expect((await asked()).proxyName, 'HK-01');
     expect(
-      container.read(outboundIpProbeProvider).valueOf('HK-01')?.countryCode,
+      container
+          .read(outboundIpProbeProvider)
+          .entryOf('HK-01')
+          .value
+          ?.countryCode,
       'US',
     );
   });

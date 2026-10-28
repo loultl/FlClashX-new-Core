@@ -59,7 +59,9 @@ abstract class TrayState with _$TrayState {
     required bool showTrayTitle,
     @Default(true) bool monochromeTrayIcon,
     required bool safeMode,
+    @Default(false) bool menuBarMode,
     @Default({}) Map<HotAction, HotKeyAction> hotKeys,
+    @Default(true) bool globalModeAllowed,
   }) = _TrayState;
 }
 
@@ -188,7 +190,6 @@ abstract class SharedState with _$SharedState {
     required String localNetworkTip,
     required String currentProfileName,
     required String stopText,
-    required bool onlyStatisticsProxy,
     @Default(true) bool showStopAction,
   }) = _SharedState;
 

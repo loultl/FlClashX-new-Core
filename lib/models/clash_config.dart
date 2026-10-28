@@ -27,7 +27,10 @@ const baselineDnsOverrideKeys = {
 const baselineDns = Dns(
   enable: true,
   enhancedMode: DnsMode.fakeIp,
-  nameserver: ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query'],
+  nameserver: [
+    'https://dns.google/dns-query',
+    'https://cloudflare-dns.com/dns-query',
+  ],
 );
 const defaultGeoXUrl = {
   GeoResource.MMDB:
@@ -41,6 +44,7 @@ const defaultGeoXUrl = {
 };
 
 const defaultMixedPort = 7890;
+const defaultExternalController = '127.0.0.1:9090';
 const defaultKeepAliveInterval = 30;
 const defaultTunMtu = 9000;
 const minTunMtu = 1280;
@@ -227,6 +231,8 @@ abstract class Proxy with _$Proxy {
     required String name,
     required String type,
     String? now,
+
+    String? serverDescription,
     @JsonKey(name: 'provider-name') String? providerName,
   }) = _Proxy;
 
@@ -234,7 +240,9 @@ abstract class Proxy with _$Proxy {
 }
 
 extension ProxyExt on Proxy {
-  List<String> get searchFields => [name, type];
+  List<String> get searchFields => [name, type, ?serverDescription];
+
+  String get description => serverDescription ?? type;
 }
 
 /// The `type` values `adapter.ParseProxy` accepts, in its own order.
@@ -383,15 +391,6 @@ extension CustomProxyExt on CustomProxy {
     final Object port => int.tryParse(port.toString()),
     null => null,
   };
-
-  String? get address {
-    final server = this.server;
-    if (server == null || server.isEmpty) {
-      return null;
-    }
-    final port = this.port;
-    return port == null ? server : '$server:$port';
-  }
 
   List<String> get searchFields => [name, type, ?server];
 
@@ -1124,7 +1123,7 @@ Map<Object?, Object?> _rawSniff(Map<String, dynamic> raw) {
 @freezed
 abstract class Tun with _$Tun {
   const factory Tun({
-    @Default(false) bool enable,
+    @Default(true) bool enable,
     @Default(appName) String device,
     @Default(TunStack.mips) TunStack stack,
     @JsonKey(name: 'route-address') @Default([]) List<String> routeAddress,
@@ -1138,6 +1137,8 @@ abstract class Tun with _$Tun {
     @JsonKey(name: 'route-exclude-address')
     @Default([])
     List<String> routeExcludeAddress,
+    @JsonKey(name: 'include-package') @Default([]) List<String> includePackage,
+    @JsonKey(name: 'exclude-package') @Default([]) List<String> excludePackage,
   }) = _Tun;
 
   factory Tun.fromJson(Map<String, Object?> json) => _$TunFromJson(json);
@@ -1211,7 +1212,7 @@ abstract class Dns with _$Dns {
     @JsonKey(name: 'cache-algorithm')
     DnsCacheAlgorithm cacheAlgorithm,
     @Default(4096) @JsonKey(name: 'cache-max-size') int cacheMaxSize,
-    @Default(['114.114.114.114', '223.5.5.5', '8.8.8.8', '1.0.0.1'])
+    @Default(['8.8.8.8', '1.1.1.1'])
     @JsonKey(name: 'default-nameserver')
     List<String> defaultNameserver,
     @Default(DnsMode.redirHost)
@@ -1235,7 +1236,10 @@ abstract class Dns with _$Dns {
     @Default({})
     @JsonKey(name: 'nameserver-policy')
     Map<String, String> nameserverPolicy,
-    @Default(['https://doh.pub/dns-query', 'tls://223.5.5.5:853'])
+    @Default([
+      'https://dns.google/dns-query',
+      'https://cloudflare-dns.com/dns-query',
+    ])
     List<String> nameserver,
     @Default([]) List<String> fallback,
     @Default(false)
@@ -2080,36 +2084,6 @@ Map<String, String> _geoXUrlToJson(Map<GeoResource, String> value) {
   return value.raw;
 }
 
-const _generalOverrideKeysJsonKey = 'general-override-keys';
-
-Set<GeneralOverrideKey> _generalOverrideKeysFromJson(List<Object?> json) => {
-  for (final path in json)
-    ?GeneralOverrideKey.values.firstWhereOrNull((key) => key.path == path),
-};
-
-/// Forced over every profile until they became optional overrides.
-const _legacyForcedGeneralKeys = [
-  GeneralOverrideKey.unifiedDelay,
-  GeneralOverrideKey.tcpConcurrent,
-  GeneralOverrideKey.ipv6,
-  GeneralOverrideKey.geodataLoader,
-];
-
-Map<String, Object?> _withLegacyGeneralOverrideKeys(Map<String, Object?> json) {
-  if (json.containsKey(_generalOverrideKeysJsonKey)) {
-    return json;
-  }
-  final testUrl = json[GeneralOverrideKey.testUrl.path];
-  return {
-    ...json,
-    _generalOverrideKeysJsonKey: [
-      for (final key in _legacyForcedGeneralKeys) key.path,
-      if (testUrl != null && testUrl != defaultTestUrl)
-        GeneralOverrideKey.testUrl.path,
-    ],
-  };
-}
-
 @freezed
 abstract class PatchClashConfig with _$PatchClashConfig {
   const factory PatchClashConfig({
@@ -2121,8 +2095,8 @@ abstract class PatchClashConfig with _$PatchClashConfig {
     @Default(Mode.rule) Mode mode,
     @Default(false) @JsonKey(name: 'allow-lan') bool allowLan,
     @Default(LogLevel.error) @JsonKey(name: 'log-level') LogLevel logLevel,
-    @Default(false) bool ipv6,
-    @Default(FindProcessMode.off)
+    @Default(true) bool ipv6,
+    @Default(FindProcessMode.always)
     @JsonKey(name: 'find-process-mode', unknownEnumValue: FindProcessMode.off)
     FindProcessMode findProcessMode,
     @Default(InterfaceNameMode.clear)
@@ -2162,47 +2136,22 @@ abstract class PatchClashConfig with _$PatchClashConfig {
     @JsonKey(name: 'geodata-loader')
     GeodataLoader geodataLoader,
     @JsonKey(name: 'global-ua') String? globalUa,
-    @Default(ExternalControllerStatus.close)
+    @Default('')
     @JsonKey(name: 'external-controller')
-    ExternalControllerStatus externalController,
+    String externalController,
     @Default('') String secret,
     @Default({}) Map<String, String> hosts,
     @Default(false) @JsonKey(name: 'geo-auto-update') bool geoAutoUpdate,
     @Default(24) @JsonKey(name: 'geo-update-interval') int geoUpdateInterval,
-    @Default(defaultTestUrl) @JsonKey(name: 'test-url') String testUrl,
-    @Default({})
-    @JsonKey(
-      name: _generalOverrideKeysJsonKey,
-      fromJson: _generalOverrideKeysFromJson,
-    )
-    Set<GeneralOverrideKey> generalOverrideKeys,
   }) = _PatchClashConfig;
 
   factory PatchClashConfig.fromJson(Map<String, Object?> json) =>
       _$PatchClashConfigFromJson(
-        _withLegacyGeneralOverrideKeys(
-          _withLegacyTunOverride(_withLegacyDnsOverrideKeys(json)),
-        ),
+        _withLegacyTunOverride(_withLegacyDnsOverrideKeys(json)),
       );
-
-  factory PatchClashConfig.safeFormJson(Map<String, Object?>? json) {
-    if (json == null) {
-      return defaultClashConfig;
-    }
-    return decodeSalvaging('clash config', json, PatchClashConfig.fromJson);
-  }
 }
 
 extension PatchClashConfigExt on PatchClashConfig {
-  T? _picked<T>(GeneralOverrideKey key, T value) =>
-      generalOverrideKeys.contains(key) ? value : null;
-
-  Map<String, Object?> get generalOverrideJson => _overrideJson(
-    toJson(),
-    GeneralOverrideKey.values,
-    generalOverrideKeys.difference(const {GeneralOverrideKey.testUrl}),
-  );
-
   UpdateParams toUpdateParams({
     required List<String> authentication,
     required bool skipCertVerify,
@@ -2214,11 +2163,11 @@ extension PatchClashConfigExt on PatchClashConfig {
       findProcessMode: findProcessMode,
       mode: mode,
       logLevel: logLevel,
-      ipv6: _picked(GeneralOverrideKey.ipv6, ipv6),
-      tcpConcurrent: _picked(GeneralOverrideKey.tcpConcurrent, tcpConcurrent),
+      ipv6: ipv6,
+      tcpConcurrent: tcpConcurrent,
       externalController: externalController,
       secret: secret,
-      unifiedDelay: _picked(GeneralOverrideKey.unifiedDelay, unifiedDelay),
+      unifiedDelay: unifiedDelay,
       mixedPort: mixedPort,
       geoAutoUpdate: geoAutoUpdate,
       geoUpdateInterval: geoUpdateInterval,
@@ -2245,11 +2194,4 @@ extension PatchClashConfigExt on PatchClashConfig {
     geoUpdateInterval: defaultClashConfig.geoUpdateInterval,
     geoXUrl: defaultClashConfig.geoXUrl,
   );
-
-  PatchClashConfig ensureControllerSecret() {
-    if (externalController == ExternalControllerStatus.close) {
-      return secret.isEmpty ? this : copyWith(secret: '');
-    }
-    return secret.isEmpty ? copyWith(secret: generateRandomSecret(32)) : this;
-  }
 }

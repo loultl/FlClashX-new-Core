@@ -213,13 +213,6 @@ enum AccessSortType { none, name, time }
 
 enum ProfileType { file, url, custom }
 
-enum ResultType {
-  @JsonValue(0)
-  success,
-  @JsonValue(-1)
-  error,
-}
-
 enum CoreEventType {
   log,
   delay,
@@ -389,33 +382,6 @@ enum TunOverrideKey with OverrideKey {
   final String path;
 }
 
-/// Top-level profile keys, except `test-url`: the Core takes that one apart
-/// as the URL of every group and provider that names none.
-@JsonEnum(valueField: 'path')
-enum GeneralOverrideKey with OverrideKey {
-  testUrl('test-url'),
-  unifiedDelay('unified-delay'),
-  tcpConcurrent('tcp-concurrent'),
-  ipv6('ipv6'),
-  geodataLoader('geodata-loader');
-
-  const GeneralOverrideKey(this.path);
-
-  @override
-  final String path;
-}
-
-enum ExternalControllerStatus {
-  @JsonValue('')
-  close(''),
-  @JsonValue('127.0.0.1:9090')
-  open('127.0.0.1:9090');
-
-  final String value;
-
-  const ExternalControllerStatus(this.value);
-}
-
 enum KeyboardModifier {
   alt([PhysicalKeyboardKey.altLeft, PhysicalKeyboardKey.altRight]),
   capsLock([PhysicalKeyboardKey.capsLock]),
@@ -482,6 +448,7 @@ enum FunctionTag {
 
 enum DashboardWidget {
   currentOutbound,
+  announcement,
   networkSpeed,
   outboundMode,
   vpnButton(platforms: [SupportPlatform.Android]),
@@ -505,12 +472,7 @@ enum IpType { residential, mobile, business, hosting }
 enum IpQualityLevel { good, normal, risky }
 
 enum IpQualitySource {
-  identMe('ident.me'),
-  ipApiCom('ip-api.com'),
-  ipQuery('ipquery.io'),
-  ipLocate('iplocate.io'),
-  proxyCheck('proxycheck.io'),
-  ipApiIs('ipapi.is');
+  ipInfo('ipinfo.io');
 
   const IpQualitySource(this.label);
 
@@ -856,6 +818,10 @@ enum RestoreStrategy { compatible, override }
 enum TabAnimation { slide, fade }
 
 enum LiquidGlassMode { none, standard, ultra }
+
+/// The home page as upstream draws it, or the fork's hero page around the
+/// service's logo, plan and server.
+enum ThemeStyle { original, enhanced }
 
 enum Language { yaml, javaScript, json }
 

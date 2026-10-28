@@ -45,8 +45,6 @@ class CoreController {
 
   Future<CoreLifecycleResult> restart() => _interface.restart();
 
-  Future<CoreLifecycleResult> stop() => _interface.stop();
-
   Future<CoreLifecycleResult> close() => _interface.close();
 
   static Future<void> ensureHomeDir() async {
@@ -283,6 +281,10 @@ class CoreController {
     return _interface.stopListener();
   }
 
+  Future<bool> restartListener() async {
+    return _interface.restartListener();
+  }
+
   Future<Delay?> getDelay(
     String url,
     String proxyName,
@@ -290,8 +292,6 @@ class CoreController {
   ) async {
     return _interface.asyncTestDelay(url, proxyName, timeout);
   }
-
-  Future<ProbeResult?> probe(ProbeParams params) => _interface.probe(params);
 
   Future<OutboundIpResult?> outboundIp(OutboundIpParams params) =>
       _interface.outboundIp(params);
@@ -343,12 +343,22 @@ class CoreController {
     return _interface.getMemoryStats();
   }
 
+  Future<String> getCoreVersion() async {
+    return _interface.getCoreVersion();
+  }
+
+  Future<bool> shutdown() => _interface.shutdown();
+
   void resetTraffic() {
     _interface.resetTraffic();
   }
 
   void startLog() {
     _interface.startLog();
+  }
+
+  void setHostActive(bool active) {
+    _interface.setHostActive(active);
   }
 
   void stopLog() {

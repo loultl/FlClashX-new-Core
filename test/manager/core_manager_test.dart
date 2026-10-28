@@ -86,6 +86,9 @@ _MockCoreHandlerInterface _coreInterface() {
   return coreInterface;
 }
 
+/// TUN is on by default, and authorizing it has no place in a test.
+const _tunOff = PatchClashConfig(tun: Tun(enable: false));
+
 Future<ProviderContainer> _pumpCoreManager(
   WidgetTester tester,
   CoreHandlerInterface coreInterface, {
@@ -96,6 +99,7 @@ Future<ProviderContainer> _pumpCoreManager(
       coreHandlerProvider.overrideWithValue(
         CoreController.scoped(coreInterface),
       ),
+      patchClashConfigProvider.overrideWithBuild((_, _) => _tunOff),
       ...overrides,
     ],
   );
@@ -362,7 +366,7 @@ void main() {
         .update((state) => state.copyWith(hosts: const {'a.test': '1.1.1.1'}));
     await tester.pump();
     container
-        .read(patchClashConfigProvider.notifier)
+        .read(appSettingProvider.notifier)
         .update((state) => state.copyWith(testUrl: 'https://probe.test/204'));
     await tester.pump();
 

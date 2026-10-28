@@ -22,6 +22,9 @@ mixin CoreInterface {
 
   Future<bool> forceGc();
 
+  /// Tears mihomo down inside the process: listeners, executor, config.
+  Future<bool> shutdown();
+
   Future<String> validateConfig(String path);
 
   Future<String> decryptConfig(String path, String ageSecretKey);
@@ -52,8 +55,6 @@ mixin CoreInterface {
 
   Future<Delay?> asyncTestDelay(String url, String proxyName, Duration timeout);
 
-  Future<ProbeResult?> probe(ProbeParams params);
-
   Future<OutboundIpResult?> outboundIp(OutboundIpParams params);
 
   Future<List<ServiceCheckItem>> serviceCheck(ServiceCheckParams params);
@@ -74,6 +75,8 @@ mixin CoreInterface {
 
   Future<bool> stopListener();
 
+  Future<bool> restartListener();
+
   Future<List<ExternalProvider>> getExternalProviders();
 
   Future<ExternalProvider?> getExternalProvider(String externalProviderName);
@@ -93,11 +96,15 @@ mixin CoreInterface {
 
   FutureOr<CoreMemoryStats?> getMemoryStats();
 
+  FutureOr<String> getCoreVersion();
+
   FutureOr<void> resetTraffic();
 
   FutureOr<void> startLog();
 
   FutureOr<void> stopLog();
+
+  FutureOr<void> setHostActive(bool active);
 
   Future<bool> crash();
 
@@ -185,6 +192,11 @@ abstract class CoreHandlerInterface with CoreInterface {
   @override
   Future<bool> forceGc() async {
     return await _invokeMethod<bool>(method: CoreMethod.forceGc) ?? false;
+  }
+
+  @override
+  Future<bool> shutdown() async {
+    return await _invokeMethod<bool>(method: CoreMethod.shutdown) ?? false;
   }
 
   @override
@@ -561,11 +573,15 @@ abstract class CoreHandlerInterface with CoreInterface {
   @override
   FutureOr<void> stopLog() => _invokeUnobserved(CoreMethod.stopLog);
 
+  @override
+  FutureOr<void> setHostActive(bool active) =>
+      _invokeUnobserved(CoreMethod.setHostActive, arguments: active);
+
   /// For calls whose callers never wait on them, so a Core that is gone or
   /// restarting cannot surface as an unhandled asynchronous error.
-  Future<void> _invokeUnobserved(CoreMethod method) async {
+  Future<void> _invokeUnobserved(CoreMethod method, {Object? arguments}) async {
     try {
-      await _invokeMethod<Object?>(method: method);
+      await _invokeMethod<Object?>(method: method, arguments: arguments);
     } catch (error) {
       commonPrint.log(
         '${method.name} failed: $error',
@@ -585,6 +601,11 @@ abstract class CoreHandlerInterface with CoreInterface {
   }
 
   @override
+  Future<bool> restartListener() async {
+    return await stopListener() && await startListener();
+  }
+
+  @override
   Future<Delay?> asyncTestDelay(
     String url,
     String proxyName,
@@ -601,16 +622,6 @@ abstract class CoreHandlerInterface with CoreInterface {
       timeout: delayTestGuardDuration,
     );
     return data == null ? null : Delay.fromJson(data);
-  }
-
-  @override
-  Future<ProbeResult?> probe(ProbeParams params) async {
-    final data = await _invokeMethod<Map<String, dynamic>>(
-      method: CoreMethod.probe,
-      arguments: params.toJson(),
-      timeout: probeGuardDuration(params),
-    );
-    return data == null ? null : ProbeResult.fromJson(data);
   }
 
   @override
@@ -649,5 +660,10 @@ abstract class CoreHandlerInterface with CoreInterface {
       method: CoreMethod.getMemoryStats,
     );
     return data == null ? null : CoreMemoryStats.fromJson(data);
+  }
+
+  @override
+  Future<String> getCoreVersion() async {
+    return await _invokeMethod<String>(method: CoreMethod.getCoreVersion) ?? '';
   }
 }

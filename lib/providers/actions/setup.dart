@@ -68,7 +68,7 @@ class SetupAction extends _$SetupAction {
     final appSetting = ref.read(appSettingProvider);
     return SetupParams(
       selectedMap: selectedMap,
-      testUrl: ref.read(patchClashConfigProvider).testUrl,
+      testUrl: appSetting.testUrl,
       skipCertVerify: !appSetting.checkCertificate,
     );
   }
@@ -236,14 +236,18 @@ class SetupAction extends _$SetupAction {
     if (!_isCurrent(request)) {
       return true;
     }
-    resetCoreTraffic();
-    ref.read(trafficsProvider.notifier).clear();
-    ref.read(totalTrafficProvider.notifier).value = const Traffic();
+    _clearTraffic();
     // A silent Core is gone or hung; running again would proxy traffic to it.
     if (!answered) {
       throw _unanswered(CoreMethod.stopListener);
     }
     return true;
+  }
+
+  void _clearTraffic() {
+    resetCoreTraffic();
+    ref.read(trafficsProvider.notifier).clear();
+    ref.read(totalTrafficProvider.notifier).value = const Traffic();
   }
 
   Future<bool> _setCoreRunning(_RunRequest request) {
@@ -291,8 +295,49 @@ class SetupAction extends _$SetupAction {
     if (!ref.read(isStartProvider)) {
       return;
     }
-    await setRunning(false);
-    await setRunning(true);
+    final request = _RunRequest(
+      running: true,
+      initialize: false,
+      resume: false,
+      previousStartTime: _startTime,
+    );
+    _latestRunRequest = request;
+    _startTime = null;
+    _setLocalRunning(true);
+    final bool? answered;
+    try {
+      answered = await _listenerScheduler.run(() async {
+        if (!_isCurrent(request) ||
+            ref.read(suspendProvider) ||
+            ref.read(safeModeProvider)) {
+          return null;
+        }
+        final vpnOptions = await ref.read(vpnOptionsProvider.future);
+        final answered = await restartCoreRunning();
+        if (answered) {
+          ref.read(runningVpnOptionsProvider.notifier).value = vpnOptions;
+        }
+        return answered;
+      });
+    } catch (_) {
+      _keepRunning(request);
+      rethrow;
+    }
+    if (answered == null || !_isCurrent(request)) {
+      return;
+    }
+    if (!answered) {
+      _keepRunning(request);
+      throw _unanswered(CoreMethod.startListener);
+    }
+    _clearTraffic();
+  }
+
+  void _keepRunning(_RunRequest request) {
+    if (_isCurrent(request)) {
+      _startTime = request.previousStartTime;
+      _setLocalRunning(true);
+    }
   }
 
   void _rollbackRunning(_RunRequest request) {
@@ -305,6 +350,11 @@ class SetupAction extends _$SetupAction {
 
   bool _isCurrent(_RunRequest request) => identical(_latestRunRequest, request);
 
+  /// Identity of the latest run request, answered or rolled back alike.
+  Object? get runIntent => _latestRunRequest;
+
+  bool? get requestedRunning => _latestRunRequest?.running;
+
   Future<void> updateConfigDebounce() async {
     debouncer.call(FunctionTag.updateConfig, updateConfig);
   }
@@ -313,6 +363,9 @@ class SetupAction extends _$SetupAction {
   Future<bool> setCoreRunning(bool running) {
     return running ? _core.startListener() : _core.stopListener();
   }
+
+  @protected
+  Future<bool> restartCoreRunning() => _core.restartListener();
 
   @protected
   void resetCoreTraffic() {
@@ -328,13 +381,19 @@ class SetupAction extends _$SetupAction {
         await _restartCoreAfterAuthorization();
         return;
       }
-      final networkSetting = ref.read(networkSettingProvider);
-      final message = await _core.updateConfig(
-        _effectivePatchConfig(patchConfig).toUpdateParams(
-          authentication: networkSetting.authentication.credentials,
-          skipCertVerify: !ref.read(appSettingProvider).checkCertificate,
-        ),
-      );
+      // Behind the apply in flight: until its push lands the Core has no
+      // config to update and answers "config is not applied".
+      final message = await _setupScheduler.run(() {
+        final networkSetting = ref.read(networkSettingProvider);
+        return _core.updateConfig(
+          _effectivePatchConfig(
+            ref.read(patchClashConfigProvider),
+          ).toUpdateParams(
+            authentication: networkSetting.authentication.credentials,
+            skipCertVerify: !ref.read(appSettingProvider).checkCertificate,
+          ),
+        );
+      });
       if (message.isNotEmpty) throw MessageException(message);
     });
   }
@@ -366,7 +425,21 @@ class SetupAction extends _$SetupAction {
     );
   }
 
+  /// A mode the user picks in the app, asked first while the subscription
+  /// sets it; the tray and hotkeys have nowhere to ask and take it over.
+  Future<void> pickMode(Mode mode, {bool ask = true}) async {
+    if (!ref.read(availableModesProvider).contains(mode)) return;
+    final managed = ref.read(managedSettingsActionProvider.notifier);
+    if (!ask) {
+      managed.takeOverIfLocked('clash.mode');
+    } else if (!await managed.confirmTakeOver('clash.mode')) {
+      return;
+    }
+    changeMode(mode);
+  }
+
   void changeMode(Mode mode) {
+    if (!ref.read(availableModesProvider).contains(mode)) return;
     ref
         .read(patchClashConfigProvider.notifier)
         .update((state) => state.copyWith(mode: mode));
@@ -479,7 +552,7 @@ class SetupAction extends _$SetupAction {
     if (profileId == null) {
       return (yaml: '', md5: '', counts: configCountsOf(const {}), base: null);
     }
-    final defaultUA = globalState.packageInfo.ua;
+    final defaultUA = globalState.ua;
     final networkSetting = ref.read(
       networkSettingProvider.select(
         (state) => (
@@ -632,19 +705,22 @@ class SetupAction extends _$SetupAction {
     if (ref.read(safeModeProvider)) {
       return patchConfig.copyWith(
         tun: patchConfig.tun.copyWith(enable: false),
-        externalController: ExternalControllerStatus.close,
+        externalController: '',
       );
     }
     final authorized =
         ref.read(authorizedTunEnableProvider) ==
         TunAuthorizationState.authorized;
+    final secure = ref.read(androidSecureProvider);
     return patchConfig.copyWith(
       tun: patchConfig.tun.copyWith(
         enable: patchConfig.tun.enable && authorized,
       ),
-      externalController: patchConfig.secret.isEmpty
-          ? ExternalControllerStatus.close
-          : patchConfig.externalController,
+      mixedPort: secure ? 0 : patchConfig.mixedPort,
+      port: secure ? 0 : patchConfig.port,
+      socksPort: secure ? 0 : patchConfig.socksPort,
+      redirPort: secure ? 0 : patchConfig.redirPort,
+      tproxyPort: secure ? 0 : patchConfig.tproxyPort,
     );
   }
 
@@ -653,9 +729,14 @@ class SetupAction extends _$SetupAction {
     return system.authorizeCore();
   }
 
+  /// Android drives its TUN through the VPN service; the core is never
+  /// elevated there, so nothing is asked and the core's own tun stays off.
+  @protected
+  bool get coreNeedsAuthorization => !system.isAndroid;
+
   @visibleForTesting
   Future<bool> requestAdmin(bool enableTun) async {
-    if (!enableTun || ref.read(safeModeProvider)) {
+    if (!enableTun || !coreNeedsAuthorization || ref.read(safeModeProvider)) {
       return true;
     }
     final authorizationState = ref.read(authorizedTunEnableProvider);

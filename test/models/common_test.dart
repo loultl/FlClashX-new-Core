@@ -139,11 +139,10 @@ void main() {
   });
 
   group('TrafficExt', () {
-    test('formats tray title and total speed', () {
+    test('formats the tray title', () {
       const traffic = Traffic(up: 1024, down: 2048);
 
       expect(traffic.trayTitle, '1 KB/s\n2 KB/s');
-      expect(traffic.speed, 3072);
     });
   });
 
@@ -202,10 +201,6 @@ void main() {
   group('IpInfo parsers', () {
     test('parse supported response shapes', () {
       expect(
-        IpInfo.fromIpInfoIoJson({'ip': '1.1.1.1', 'country': 'US'}),
-        const IpInfo(ip: '1.1.1.1', countryCode: 'US'),
-      );
-      expect(
         IpInfo.fromIdentMeJson({'ip': '2.2.2.2', 'cc': 'JP'}),
         const IpInfo(ip: '2.2.2.2', countryCode: 'JP'),
       );
@@ -243,10 +238,6 @@ void main() {
 
     test('throw FormatException for unsupported response shapes', () {
       expect(
-        () => IpInfo.fromIpInfoIoJson({'ip': '1.1.1.1'}),
-        throwsFormatException,
-      );
-      expect(
         () => IpInfo.fromGeoJsJson({'ip': '1.1.1.1'}),
         throwsFormatException,
       );
@@ -261,18 +252,6 @@ void main() {
         () => IpInfo.fromCloudflareTrace('ip=1.1.1.1\ncolo=LHR\n'),
         throwsFormatException,
       );
-    });
-  });
-
-  group('ResultExt', () {
-    test('identifies success and error results', () {
-      final success = Result.success('ok');
-      final error = Result<Object>.error('failed');
-
-      expect(success.isSuccess, isTrue);
-      expect(success.isError, isFalse);
-      expect(error.isSuccess, isFalse);
-      expect(error.isError, isTrue);
     });
   });
 

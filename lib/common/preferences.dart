@@ -122,14 +122,6 @@ class Preferences {
     }
   }
 
-  Future<Config?> getConfig() async {
-    final configMap = await getConfigMap();
-    if (configMap == null) {
-      return null;
-    }
-    return Config.fromJson(configMap);
-  }
-
   Future<bool> saveConfig(Config config) async {
     final preferences = await _store.value;
     return preferences?.setString(configKey, json.encode(config)) ?? false;

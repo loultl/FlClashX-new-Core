@@ -3,15 +3,18 @@ package core
 import (
 	"encoding/json"
 	"errors"
+	"maps"
 	"os"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"strings"
 	"sync"
 
 	"github.com/metacubex/mihomo/adapter"
 	"github.com/metacubex/mihomo/adapter/inbound"
-	"github.com/metacubex/mihomo/adapter/provider"
+	"github.com/metacubex/mihomo/common/convert"
+	"github.com/metacubex/mihomo/common/yaml"
 	"github.com/metacubex/mihomo/component/age"
 	"github.com/metacubex/mihomo/component/auth"
 	"github.com/metacubex/mihomo/component/dialer"
@@ -19,7 +22,6 @@ import (
 	"github.com/metacubex/mihomo/config"
 	"github.com/metacubex/mihomo/constant"
 	"github.com/metacubex/mihomo/hub"
-	"github.com/metacubex/mihomo/hub/executor"
 	"github.com/metacubex/mihomo/hub/route"
 	authStore "github.com/metacubex/mihomo/listener/auth"
 	LC "github.com/metacubex/mihomo/listener/config"
@@ -79,12 +81,12 @@ func handleGetProxyDefinition(name string) (map[string]any, error) {
 	}
 	if proxy := lookupProxy(name); proxy != nil {
 		if pdName := proxy.ProxyInfo().ProviderName; pdName != "" {
-			pd, running := tunnel.ProvidersSnapshot()[pdName]
+			pd, running := tunnel.Providers()[pdName]
 			mapping, declared := raw.ProxyProvider[pdName]
 			if !running || !declared {
 				return nil, nil
 			}
-			return provider.ProxyMapping(pd, mapping, name)
+			return providerProxyMapping(pd.Proxies(), mapping, name)
 		}
 	}
 	for _, mapping := range raw.Proxy {
@@ -121,7 +123,12 @@ func loadConfig(path string) (*config.Config, error) {
 	if err != nil {
 		return nil, err
 	}
-	cfg, err := executor.ParseWithBytes(buf)
+	raw, err := config.UnmarshalRawConfig(buf)
+	if err != nil {
+		return nil, err
+	}
+	captureProfileExtras(raw)
+	cfg, err := config.ParseRawConfig(raw)
 	if err != nil {
 		return nil, err
 	}
@@ -134,6 +141,107 @@ func withPlatformLimits(cfg *config.Config) *config.Config {
 		cfg.NTP.WriteToSystem = false
 	}
 	return cfg
+}
+
+// Replays adapter/provider's override: its field writes, then the name's prefix
+// and suffix. A proxy-name rewrite or override-expr cannot be replayed, so such
+// a provider yields no definition; its filters hold through the built proxies.
+var overriddenProxyKeys = []string{
+	"tfo",
+	"mptcp",
+	"udp",
+	"udp-over-tcp",
+	"up",
+	"down",
+	"dialer-proxy",
+	"skip-cert-verify",
+	"name-cert-verify",
+	"interface-name",
+	"routing-mark",
+	"ip-version",
+}
+
+func providerProxyMapping(
+	built []constant.Proxy,
+	mapping map[string]any,
+	name string,
+) (map[string]any, error) {
+	if !slices.ContainsFunc(built, func(proxy constant.Proxy) bool {
+		return proxy.Name() == name
+	}) {
+		return nil, nil
+	}
+	override, _ := mapping["override"].(map[string]any)
+	if override["proxy-name"] != nil || override["override-expr"] != nil {
+		return nil, nil
+	}
+	sources, err := providerRawProxies(mapping)
+	if err != nil {
+		return nil, err
+	}
+	prefix, _ := override["additional-prefix"].(string)
+	suffix, _ := override["additional-suffix"].(string)
+	for _, item := range sources {
+		source, ok := item.(map[string]any)
+		if !ok {
+			continue
+		}
+		rawName, _ := source["name"].(string)
+		if prefix+rawName+suffix != name {
+			continue
+		}
+		definition := maps.Clone(source)
+		for _, key := range overriddenProxyKeys {
+			if value, set := override[key]; set {
+				definition[key] = value
+			}
+		}
+		definition["name"] = name
+		return definition, nil
+	}
+	return nil, nil
+}
+
+// A provider's proxies sit in its inline payload or the file mihomo keeps for
+// it, found as adapter/provider does: the declared path, else the URL's hash.
+func providerRawProxies(mapping map[string]any) ([]any, error) {
+	if mapping["type"] == "inline" {
+		payload, _ := mapping["payload"].([]any)
+		return payload, nil
+	}
+	var path string
+	if declared, _ := mapping["path"].(string); declared != "" {
+		path = constant.Path.Resolve(declared)
+	} else if url, _ := mapping["url"].(string); url != "" {
+		path = constant.Path.GetPathByHash("proxies", url)
+	}
+	if path == "" || !constant.Path.IsSafePath(path) {
+		return nil, nil
+	}
+	buf, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	if secretKey, _ := mapping["age-secret-key"].(string); secretKey != "" {
+		if buf, err = age.DecryptBytes(buf, secretKey); err != nil {
+			return nil, err
+		}
+	}
+	var file struct {
+		Proxies []any `yaml:"proxies"`
+	}
+	if err := yaml.Unmarshal(buf, &file); err == nil {
+		return file.Proxies, nil
+	}
+	converted, err := convert.ConvertsV2Ray(buf)
+	if err != nil {
+		return nil, err
+	}
+	proxies := make([]any, len(converted))
+	for index, proxy := range converted {
+		proxies[index] = proxy
+	}
+	return proxies, nil
 }
 
 func runningConfigPath() string {
@@ -154,7 +262,6 @@ func applyConfig(params *SetupParams) error {
 	defer configMu.Unlock()
 
 	setTestURL(params.TestURL)
-	skipCertVerify.Store(params.SkipCertVerify)
 	cfg, err := loadSetupConfig(params)
 	if err != nil {
 		// The fallback is what keeps the listeners serving while the host
@@ -174,13 +281,53 @@ func applyConfig(params *SetupParams) error {
 	}
 
 	currentConfig = cfg
-	hub.ApplyConfig(cfg)
+	hub.ApplyConfig(mihomoConfig(cfg))
+	afterApply(cfg)
 	patchSelectGroup(params.SelectedMap)
 	bumpRouteEpoch()
 	updateListeners(cfg)
 	reconcileGeoUpdater()
 	scheduleLoadMemoryRelease()
 	return err
+}
+
+// mihomo's apply opens the listeners and the TUN its config names, with
+// its own tunnel. Stopped, the core hands it a config that names none, so
+// nothing opens until the core starts them itself; running, the real one,
+// which re-creates only a listener whose address changed.
+func mihomoConfig(cfg *config.Config) *config.Config {
+	general := *cfg.General
+	if !isRunning.Load() {
+		general.Port, general.SocksPort, general.RedirPort = 0, 0, 0
+		general.TProxyPort, general.MixedPort = 0, 0
+		general.ShadowSocksConfig, general.VmessConfig = "", ""
+		general.TuicServer = LC.TuicServer{}
+	}
+	if !isRunning.Load() || isAndroid {
+		general.Tun = LC.Tun{}
+	}
+	shadow := *cfg
+	shadow.General = &general
+	if !isRunning.Load() {
+		shadow.Listeners = nil
+	}
+	return &shadow
+}
+
+// mihomo loads the providers inside its apply and installs fresh
+// resolvers; the host hears of the loads, and the resolvers are watched.
+func afterApply(cfg *config.Config) {
+	invalidateAllProxies()
+	watchResolvers()
+	for name := range cfg.Providers {
+		sendMessage(LoadedMessage, name)
+	}
+	for name := range cfg.RuleProviders {
+		sendMessage(LoadedMessage, name)
+	}
+	touchProviders()
+	startDelayWatch()
+	scheduleReclaimOwnership()
 }
 
 func updateConfig(params *UpdateParams) error {
@@ -237,10 +384,6 @@ func updateConfig(params *UpdateParams) error {
 	if params.Authentication != nil {
 		applyAuthentication(currentConfig, *params.Authentication)
 	}
-	if params.SkipCertVerify != nil {
-		skipCertVerify.Store(*params.SkipCertVerify)
-	}
-
 	updateListeners(currentConfig)
 	for geoType, link := range params.GeoXUrl {
 		setGeoResourceUrl(geoType, link)

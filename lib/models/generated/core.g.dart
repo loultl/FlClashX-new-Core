@@ -42,6 +42,10 @@ _ProfileBase _$ProfileBaseFromJson(Map<String, dynamic> json) => _ProfileBase(
   proxies: (json['proxies'] as num?)?.toInt() ?? 0,
   proxyGroups: (json['proxy-groups'] as num?)?.toInt() ?? 0,
   rules: (json['rules'] as num?)?.toInt() ?? 0,
+  present:
+      (json['present'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+      const [],
+  globalOverride: json['global-override'] as bool? ?? false,
 );
 
 Map<String, dynamic> _$ProfileBaseToJson(_ProfileBase instance) =>
@@ -52,6 +56,8 @@ Map<String, dynamic> _$ProfileBaseToJson(_ProfileBase instance) =>
       'proxies': instance.proxies,
       'proxy-groups': instance.proxyGroups,
       'rules': instance.rules,
+      'present': instance.present,
+      'global-override': instance.globalOverride,
     };
 
 _UpdateParams _$UpdateParamsFromJson(Map<String, dynamic> json) =>
@@ -65,14 +71,11 @@ _UpdateParams _$UpdateParamsFromJson(Map<String, dynamic> json) =>
       ),
       mode: $enumDecode(_$ModeEnumMap, json['mode']),
       logLevel: $enumDecode(_$LogLevelEnumMap, json['log-level']),
-      ipv6: json['ipv6'] as bool?,
-      tcpConcurrent: json['tcp-concurrent'] as bool?,
-      externalController: $enumDecode(
-        _$ExternalControllerStatusEnumMap,
-        json['external-controller'],
-      ),
+      ipv6: json['ipv6'] as bool,
+      tcpConcurrent: json['tcp-concurrent'] as bool,
+      externalController: json['external-controller'] as String,
       secret: json['secret'] as String? ?? '',
-      unifiedDelay: json['unified-delay'] as bool?,
+      unifiedDelay: json['unified-delay'] as bool,
       authentication:
           (json['authentication'] as List<dynamic>?)
               ?.map((e) => e as String)
@@ -98,8 +101,7 @@ Map<String, dynamic> _$UpdateParamsToJson(_UpdateParams instance) =>
       'log-level': _$LogLevelEnumMap[instance.logLevel]!,
       'ipv6': instance.ipv6,
       'tcp-concurrent': instance.tcpConcurrent,
-      'external-controller':
-          _$ExternalControllerStatusEnumMap[instance.externalController]!,
+      'external-controller': instance.externalController,
       'secret': instance.secret,
       'unified-delay': instance.unifiedDelay,
       'authentication': instance.authentication,
@@ -126,11 +128,6 @@ const _$LogLevelEnumMap = {
   LogLevel.warning: 'warning',
   LogLevel.error: 'error',
   LogLevel.silent: 'silent',
-};
-
-const _$ExternalControllerStatusEnumMap = {
-  ExternalControllerStatus.close: '',
-  ExternalControllerStatus.open: '127.0.0.1:9090',
 };
 
 _VpnOptions _$VpnOptionsFromJson(Map<String, dynamic> json) => _VpnOptions(
@@ -294,54 +291,6 @@ Map<String, dynamic> _$DelayToJson(_Delay instance) => <String, dynamic>{
   'url': instance.url,
   'value': instance.value,
 };
-
-_ProbeParams _$ProbeParamsFromJson(Map<String, dynamic> json) => _ProbeParams(
-  url: json['url'] as String,
-  proxyName: json['proxy-name'] as String? ?? '',
-  headers:
-      (json['headers'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as String),
-      ) ??
-      const {},
-  timeout: (json['timeout'] as num).toInt(),
-  maxBody: (json['max-body'] as num?)?.toInt() ?? 0,
-);
-
-Map<String, dynamic> _$ProbeParamsToJson(_ProbeParams instance) =>
-    <String, dynamic>{
-      'url': instance.url,
-      'proxy-name': instance.proxyName,
-      'headers': instance.headers,
-      'timeout': instance.timeout,
-      'max-body': instance.maxBody,
-    };
-
-_ProbeResult _$ProbeResultFromJson(Map<String, dynamic> json) => _ProbeResult(
-  statusCode: (json['status-code'] as num?)?.toInt() ?? 0,
-  delay: (json['delay'] as num?)?.toInt() ?? 0,
-  body: json['body'] as String? ?? '',
-  url: json['url'] as String? ?? '',
-  chains:
-      (json['chains'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-      const [],
-  rule: json['rule'] as String? ?? '',
-  rulePayload: json['rule-payload'] as String? ?? '',
-  error: json['error'] as String?,
-  message: json['message'] as String?,
-);
-
-Map<String, dynamic> _$ProbeResultToJson(_ProbeResult instance) =>
-    <String, dynamic>{
-      'status-code': instance.statusCode,
-      'delay': instance.delay,
-      'body': instance.body,
-      'url': instance.url,
-      'chains': instance.chains,
-      'rule': instance.rule,
-      'rule-payload': instance.rulePayload,
-      'error': instance.error,
-      'message': instance.message,
-    };
 
 _OutboundIpParams _$OutboundIpParamsFromJson(Map<String, dynamic> json) =>
     _OutboundIpParams(

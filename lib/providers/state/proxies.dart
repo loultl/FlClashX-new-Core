@@ -6,10 +6,15 @@ GroupsState currentGroupsState(Ref ref) {
     patchClashConfigProvider.select((state) => state.mode),
   );
   final groups = ref.watch(groupsProvider);
+  final globalOverride = ref.watch(globalOverrideProvider);
+  bool isGlobal(Group group) => group.name == GroupName.GLOBAL.name;
   final shown = switch (mode) {
     Mode.direct => const <Group>[],
+    Mode.global when globalOverride => groups.where(isGlobal),
     Mode.global => groups,
-    Mode.rule => groups.where((item) => item.hidden == false),
+    Mode.rule => groups.where(
+      (item) => item.hidden == false && !(globalOverride && isGlobal(item)),
+    ),
   };
   return GroupsState(value: shown.map(_withoutSelection).toList());
 }
@@ -179,9 +184,7 @@ bool currentGroupDelayTesting(Ref ref) {
 
 @riverpod
 String realTestUrl(Ref ref, [String? testUrl]) {
-  final currentTestUrl = ref.watch(
-    patchClashConfigProvider.select((state) => state.testUrl),
-  );
+  final currentTestUrl = ref.watch(appSettingProvider).testUrl;
   return testUrl.takeFirstValid([currentTestUrl]);
 }
 
