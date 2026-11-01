@@ -1004,6 +1004,7 @@ const _$LogLevelEnumMap = {
 
 const _$FindProcessModeEnumMap = {
   FindProcessMode.always: 'always',
+  FindProcessMode.strict: 'strict',
   FindProcessMode.off: 'off',
 };
 

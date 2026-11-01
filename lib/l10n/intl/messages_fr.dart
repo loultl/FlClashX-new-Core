@@ -643,7 +643,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ressources des profils personnalisés",
     ),
     "customProfileResourcesDesc": MessageLookupByLibrary.simpleMessage(
-      "Les ressources des profils personnalisés regroupent des proxys, des fournisseurs de règles, des filtres et des jeux d’icônes.",
+      "Les ressources des profils personnalisés sont les proxys, fournisseurs de règles, filtres et jeux d’icônes que vous ajoutez vous-même pour les profils personnalisés.",
     ),
     "cut": MessageLookupByLibrary.simpleMessage("Couper"),
     "dark": MessageLookupByLibrary.simpleMessage("Sombre"),
@@ -879,8 +879,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "filter": MessageLookupByLibrary.simpleMessage("Filtrer"),
     "filters": MessageLookupByLibrary.simpleMessage("Filtres"),
+    "findProcessAlways": MessageLookupByLibrary.simpleMessage("Toujours"),
     "findProcessMode": MessageLookupByLibrary.simpleMessage(
       "Recherche de processus",
+    ),
+    "findProcessStrict": MessageLookupByLibrary.simpleMessage(
+      "Quand les règles en ont besoin",
     ),
     "floating": MessageLookupByLibrary.simpleMessage("Flottante"),
     "foldAllGroups": MessageLookupByLibrary.simpleMessage(
@@ -1168,6 +1172,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Obtenir un profil depuis un lien d’abonnement ou un lien de partage de proxy",
     ),
     "liquidGlass": MessageLookupByLibrary.simpleMessage("Liquid Glass"),
+    "liquidGlassReduced": MessageLookupByLibrary.simpleMessage(
+      "Liquid Glass simplifié jusqu\'au redémarrage : l\'appareil ne suit pas.",
+    ),
     "list": MessageLookupByLibrary.simpleMessage("Liste"),
     "listen": MessageLookupByLibrary.simpleMessage("Écoute"),
     "listenRoutingMark": MessageLookupByLibrary.simpleMessage(
@@ -1222,8 +1229,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "managedByProviderTip": MessageLookupByLibrary.simpleMessage(
       "Cette valeur vient de votre abonnement. Si vous la changez vous-même, les mises à jour de l’abonnement ne la toucheront plus. Clic droit ou appui long sur la ligne pour la rendre au fournisseur.",
     ),
+    "managedByYou": MessageLookupByLibrary.simpleMessage("Géré par vous"),
     "managedSettingsHint": MessageLookupByLibrary.simpleMessage(
-      "Les réglages grisés sont définis par votre abonnement. Touchez-en un pour le modifier vous-même.",
+      "Les réglages grisés avec un cadenas fermé sont définis par votre abonnement. Touchez-en un pour le modifier vous-même.",
+    ),
+    "managedSettingsOwnedHint": MessageLookupByLibrary.simpleMessage(
+      "Un cadenas ouvert marque les réglages que vous avez repris ; faites un clic droit ou un appui long sur l’un d’eux pour le rendre au fournisseur.",
     ),
     "matchCase": MessageLookupByLibrary.simpleMessage("Respecter la casse"),
     "matchSourceIp": MessageLookupByLibrary.simpleMessage(
@@ -1857,7 +1868,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Pour recevoir un lien depuis le téléphone, FlClashX a besoin de l\'autorisation Appareils à proximité, qui lui donne accès au réseau local. Activez-la dans les paramètres de l\'application.",
     ),
     "sendFromPhoneTip": MessageLookupByLibrary.simpleMessage(
-      "Scannez le code avec l\'appareil photo du téléphone, puis collez le lien dans la page qui s\'ouvre. Les deux appareils doivent être sur le même réseau.",
+      "Scannez le code avec l\'appareil photo du téléphone, puis collez le lien dans la page qui s\'ouvre. Les deux appareils doivent être sur le même réseau. Si la page ne s\'ouvre pas sous Android 17 ou plus récent, accordez au navigateur du téléphone l\'autorisation Appareils à proximité.",
     ),
     "server": MessageLookupByLibrary.simpleMessage("Serveur"),
     "serviceAbnormalCount": m83,
@@ -1917,7 +1928,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Flou de la barre latérale",
     ),
     "sidebarBlurDesc": MessageLookupByLibrary.simpleMessage(
-      "Afficher le bureau flouté derrière la fenêtre à travers la barre latérale",
+      "Le flou d’arrière-plan laisse voir le bureau derrière la fenêtre à travers la barre latérale.",
     ),
     "silentLaunch": MessageLookupByLibrary.simpleMessage(
       "Lancement silencieux",

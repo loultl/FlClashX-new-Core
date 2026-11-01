@@ -646,7 +646,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Recursos de perfil personalizado",
     ),
     "customProfileResourcesDesc": MessageLookupByLibrary.simpleMessage(
-      "Los recursos de perfil personalizado incluyen proxies, proveedores de reglas, filtros y conjuntos de iconos.",
+      "Los recursos de perfil personalizado son los proxies, proveedores de reglas, filtros y conjuntos de iconos que añades tú para usarlos en perfiles personalizados.",
     ),
     "cut": MessageLookupByLibrary.simpleMessage("Cortar"),
     "dark": MessageLookupByLibrary.simpleMessage("Oscuro"),
@@ -888,7 +888,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "filter": MessageLookupByLibrary.simpleMessage("Filtro"),
     "filters": MessageLookupByLibrary.simpleMessage("Filtros"),
+    "findProcessAlways": MessageLookupByLibrary.simpleMessage("Siempre"),
     "findProcessMode": MessageLookupByLibrary.simpleMessage("Buscar proceso"),
+    "findProcessStrict": MessageLookupByLibrary.simpleMessage(
+      "Cuando las reglas lo necesiten",
+    ),
     "floating": MessageLookupByLibrary.simpleMessage("Flotante"),
     "foldAllGroups": MessageLookupByLibrary.simpleMessage(
       "Contraer todos los grupos",
@@ -1171,6 +1175,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Obtén un perfil desde un enlace de suscripción o un enlace para compartir proxies",
     ),
     "liquidGlass": MessageLookupByLibrary.simpleMessage("Liquid Glass"),
+    "liquidGlassReduced": MessageLookupByLibrary.simpleMessage(
+      "Liquid Glass simplificado hasta reiniciar: el dispositivo no da abasto.",
+    ),
     "list": MessageLookupByLibrary.simpleMessage("Lista"),
     "listen": MessageLookupByLibrary.simpleMessage("Escucha"),
     "listenRoutingMark": MessageLookupByLibrary.simpleMessage(
@@ -1223,8 +1230,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "managedByProviderTip": MessageLookupByLibrary.simpleMessage(
       "Este valor viene de tu suscripción. Si lo cambias tú, las actualizaciones de la suscripción dejarán de tocarlo. Clic derecho o pulsación larga en la fila para devolverlo al proveedor.",
     ),
+    "managedByYou": MessageLookupByLibrary.simpleMessage("Gestionado por ti"),
     "managedSettingsHint": MessageLookupByLibrary.simpleMessage(
-      "Los ajustes atenuados los define tu suscripción. Toca uno para cambiarlo tú.",
+      "Los ajustes atenuados con un candado cerrado los define tu suscripción. Toca uno para cambiarlo tú.",
+    ),
+    "managedSettingsOwnedHint": MessageLookupByLibrary.simpleMessage(
+      "Un candado abierto marca los ajustes que has tomado; haz clic derecho o mantén pulsado uno para devolverlo al proveedor.",
     ),
     "matchCase": MessageLookupByLibrary.simpleMessage(
       "Coincidir mayúsculas y minúsculas",
@@ -1862,7 +1873,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Para recibir un enlace desde el teléfono, FlClashX necesita el permiso Dispositivos cercanos, que le da acceso a la red local. Actívalo en los ajustes de la aplicación.",
     ),
     "sendFromPhoneTip": MessageLookupByLibrary.simpleMessage(
-      "Escanea el código con la cámara del teléfono y pega el enlace en la página que se abre. Ambos dispositivos deben estar en la misma red.",
+      "Escanea el código con la cámara del teléfono y pega el enlace en la página que se abre. Ambos dispositivos deben estar en la misma red. Si la página no se abre en Android 17 o posterior, concede al navegador del teléfono el permiso Dispositivos cercanos.",
     ),
     "server": MessageLookupByLibrary.simpleMessage("Servidor"),
     "serviceAbnormalCount": m83,
@@ -1922,7 +1933,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Desenfoque de la barra lateral",
     ),
     "sidebarBlurDesc": MessageLookupByLibrary.simpleMessage(
-      "Muestra el escritorio desenfocado detrás de la ventana a través de la barra lateral",
+      "El desenfoque de fondo deja ver el escritorio detrás de la ventana a través de la barra lateral.",
     ),
     "silentLaunch": MessageLookupByLibrary.simpleMessage("Inicio silencioso"),
     "silentLaunchDesc": MessageLookupByLibrary.simpleMessage(

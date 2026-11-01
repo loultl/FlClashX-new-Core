@@ -107,7 +107,7 @@ void main() {
     expect(synced.ipv6, isTrue);
     expect(synced.mode, Mode.direct);
     expect(synced.logLevel, LogLevel.warning);
-    expect(synced.findProcessMode, FindProcessMode.always);
+    expect(synced.findProcessMode, FindProcessMode.strict);
     expect(synced.interfaceNameMode, InterfaceNameMode.custom);
     expect(synced.interfaceName, 'eth0');
     expect(synced.routingMark, 255);
@@ -258,5 +258,31 @@ void main() {
 
     expect(invalid.tun.mtu, defaultTunMtu);
     expect(invalid.tun.congestionController, defaultCongestionController);
+  });
+
+  test('the first user:pass entry turns authentication on', () {
+    expect(
+      authenticationFrom(['alice:s3:cret', 'bob:pw']),
+      const AuthenticationProps(
+        enable: true,
+        username: 'alice',
+        password: 's3:cret',
+      ),
+    );
+    expect(
+      authenticationFrom([':nouser', 'bob:pw']),
+      const AuthenticationProps(enable: true, username: 'bob', password: 'pw'),
+    );
+    expect(
+      authenticationFrom([' alice : secret ']),
+      const AuthenticationProps(
+        enable: true,
+        username: ' alice ',
+        password: ' secret ',
+      ),
+    );
+    expect(authenticationFrom(<String>[]), const AuthenticationProps());
+    expect(authenticationFrom(null), const AuthenticationProps());
+    expect(authenticationFrom('alice:pw'), const AuthenticationProps());
   });
 }

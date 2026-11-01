@@ -512,7 +512,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "カスタムプロファイルのリソース",
     ),
     "customProfileResourcesDesc": MessageLookupByLibrary.simpleMessage(
-      "カスタムプロファイルのリソースには、プロキシ、ルールプロバイダー、フィルター、アイコンセットがあります。",
+      "カスタムプロファイルのリソースは、自分で追加してカスタムプロファイルから使うプロキシ、ルールプロバイダー、フィルター、アイコンセットです。",
     ),
     "cut": MessageLookupByLibrary.simpleMessage("切り取り"),
     "dark": MessageLookupByLibrary.simpleMessage("ダーク"),
@@ -698,7 +698,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "filter": MessageLookupByLibrary.simpleMessage("フィルター"),
     "filters": MessageLookupByLibrary.simpleMessage("フィルター"),
+    "findProcessAlways": MessageLookupByLibrary.simpleMessage("常に"),
     "findProcessMode": MessageLookupByLibrary.simpleMessage("プロセス検出"),
+    "findProcessStrict": MessageLookupByLibrary.simpleMessage("ルールで必要なとき"),
     "floating": MessageLookupByLibrary.simpleMessage("フローティング"),
     "foldAllGroups": MessageLookupByLibrary.simpleMessage("すべてのグループを折りたたむ"),
     "followProfile": MessageLookupByLibrary.simpleMessage("プロファイルに従う"),
@@ -936,6 +938,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "サブスクリプションリンクまたはプロキシの共有リンクからプロファイルを取得します",
     ),
     "liquidGlass": MessageLookupByLibrary.simpleMessage("リキッドグラス"),
+    "liquidGlassReduced": MessageLookupByLibrary.simpleMessage(
+      "描画が追いつかないため、再起動までリキッドグラスを簡略化しました。",
+    ),
     "list": MessageLookupByLibrary.simpleMessage("リスト"),
     "listen": MessageLookupByLibrary.simpleMessage("リッスン"),
     "listenRoutingMark": MessageLookupByLibrary.simpleMessage("リッスンのルーティングマーク"),
@@ -976,8 +981,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "managedByProviderTip": MessageLookupByLibrary.simpleMessage(
       "この値はサブスクリプションから来ています。自分で変更すると、以後の更新ではこの項目に触れません。右クリックまたは長押しでプロバイダーに戻せます。",
     ),
+    "managedByYou": MessageLookupByLibrary.simpleMessage("自分で管理"),
     "managedSettingsHint": MessageLookupByLibrary.simpleMessage(
-      "薄く表示されている設定はサブスクリプションが指定しています。タップすると自分で変更できます。",
+      "閉じた鍵が付いた薄い表示の設定はサブスクリプションが指定しています。タップすると自分で変更できます。",
+    ),
+    "managedSettingsOwnedHint": MessageLookupByLibrary.simpleMessage(
+      "開いた鍵が付いた設定は自分で管理しています。右クリックまたは長押しでプロバイダーに戻せます。",
     ),
     "matchCase": MessageLookupByLibrary.simpleMessage("大文字と小文字を区別"),
     "matchSourceIp": MessageLookupByLibrary.simpleMessage("送信元IPにマッチ"),
@@ -1475,7 +1484,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "スマートフォンからリンクを受け取るには、FlClashX がローカルネットワークにアクセスするための「付近のデバイス」権限が必要です。アプリの設定でオンにしてください。",
     ),
     "sendFromPhoneTip": MessageLookupByLibrary.simpleMessage(
-      "スマートフォンのカメラでコードをスキャンし、開いたページにリンクを貼り付けてください。両方のデバイスを同じネットワークに接続する必要があります。",
+      "スマートフォンのカメラでコードをスキャンし、開いたページにリンクを貼り付けてください。両方のデバイスを同じネットワークに接続する必要があります。Android 17 以降でページが開かない場合は、スマートフォンのブラウザに「付近のデバイス」権限を許可してください。",
     ),
     "server": MessageLookupByLibrary.simpleMessage("サーバー"),
     "serviceAbnormalCount": m83,
@@ -1519,7 +1528,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "showPassword": MessageLookupByLibrary.simpleMessage("パスワードを表示"),
     "sidebarBlur": MessageLookupByLibrary.simpleMessage("サイドバーのぼかし"),
     "sidebarBlurDesc": MessageLookupByLibrary.simpleMessage(
-      "ウィンドウ背後のデスクトップをぼかしてサイドバーに透過します",
+      "背景のぼかしでは、ウィンドウの背後のデスクトップがサイドバー越しに見えます。",
     ),
     "silentLaunch": MessageLookupByLibrary.simpleMessage("サイレント起動"),
     "silentLaunchDesc": MessageLookupByLibrary.simpleMessage(

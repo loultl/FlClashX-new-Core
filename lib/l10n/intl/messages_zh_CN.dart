@@ -471,7 +471,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "customProfileResources": MessageLookupByLibrary.simpleMessage("自定义配置资源"),
     "customProfileResourcesDesc": MessageLookupByLibrary.simpleMessage(
-      "自定义配置资源包含代理、规则集、筛选与图标集。",
+      "自定义配置资源是你自行添加的代理、规则集、筛选与图标集，供自定义配置引用。",
     ),
     "cut": MessageLookupByLibrary.simpleMessage("剪切"),
     "dark": MessageLookupByLibrary.simpleMessage("深色"),
@@ -643,7 +643,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "fileIsUpdate": MessageLookupByLibrary.simpleMessage("文件有修改，是否保存修改"),
     "filter": MessageLookupByLibrary.simpleMessage("筛选"),
     "filters": MessageLookupByLibrary.simpleMessage("筛选"),
+    "findProcessAlways": MessageLookupByLibrary.simpleMessage("始终"),
     "findProcessMode": MessageLookupByLibrary.simpleMessage("查找进程"),
+    "findProcessStrict": MessageLookupByLibrary.simpleMessage("规则需要时"),
     "floating": MessageLookupByLibrary.simpleMessage("悬浮"),
     "foldAllGroups": MessageLookupByLibrary.simpleMessage("收起所有分组"),
     "followProfile": MessageLookupByLibrary.simpleMessage("跟随配置"),
@@ -853,6 +855,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "link": MessageLookupByLibrary.simpleMessage("链接"),
     "linkDesc": MessageLookupByLibrary.simpleMessage("通过订阅链接或代理分享链接获取配置文件"),
     "liquidGlass": MessageLookupByLibrary.simpleMessage("液态玻璃"),
+    "liquidGlassReduced": MessageLookupByLibrary.simpleMessage(
+      "设备性能不足，液态玻璃已简化至重启。",
+    ),
     "list": MessageLookupByLibrary.simpleMessage("列表"),
     "listen": MessageLookupByLibrary.simpleMessage("监听"),
     "listenRoutingMark": MessageLookupByLibrary.simpleMessage("监听路由标记"),
@@ -891,8 +896,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "managedByProviderTip": MessageLookupByLibrary.simpleMessage(
       "该值来自订阅。若自行修改，订阅更新将不再改动它。右键或长按该行可交还给提供商。",
     ),
+    "managedByYou": MessageLookupByLibrary.simpleMessage("由你管理"),
     "managedSettingsHint": MessageLookupByLibrary.simpleMessage(
-      "灰显的设置由订阅指定。点按即可自行修改。",
+      "带关闭锁形图标的灰显设置由订阅指定。点按即可自行修改。",
+    ),
+    "managedSettingsOwnedHint": MessageLookupByLibrary.simpleMessage(
+      "带打开锁形图标的设置由你自行管理；右键点按或长按即可交还给提供商。",
     ),
     "matchCase": MessageLookupByLibrary.simpleMessage("区分大小写"),
     "matchSourceIp": MessageLookupByLibrary.simpleMessage("匹配来源IP"),
@@ -1344,7 +1353,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "从手机接收链接需要「附近的设备」权限，FlClashX 才能访问局域网。请在应用设置中开启。",
     ),
     "sendFromPhoneTip": MessageLookupByLibrary.simpleMessage(
-      "用手机相机扫描二维码，在打开的页面里粘贴链接。两台设备需要连在同一个网络。",
+      "用手机相机扫描二维码，在打开的页面里粘贴链接。两台设备需要连在同一个网络。如果在 Android 17 及以上版本无法打开页面，请给手机浏览器开启「附近的设备」权限。",
     ),
     "server": MessageLookupByLibrary.simpleMessage("服务器"),
     "serviceAbnormalCount": m83,
@@ -1381,7 +1390,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "showPassword": MessageLookupByLibrary.simpleMessage("显示密码"),
     "sidebarBlur": MessageLookupByLibrary.simpleMessage("侧边栏背景模糊"),
-    "sidebarBlurDesc": MessageLookupByLibrary.simpleMessage("侧边栏透出窗口后方模糊的桌面"),
+    "sidebarBlurDesc": MessageLookupByLibrary.simpleMessage(
+      "背景模糊会让侧边栏透出窗口后方的桌面。",
+    ),
     "silentLaunch": MessageLookupByLibrary.simpleMessage("静默启动"),
     "silentLaunchDesc": MessageLookupByLibrary.simpleMessage("静默启动时不显示窗口。"),
     "singleAdd": MessageLookupByLibrary.simpleMessage("单条添加"),

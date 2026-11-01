@@ -3,6 +3,24 @@ import 'package:fl_clash/common/cidr.dart';
 import 'package:fl_clash/enum/enum.dart';
 
 import 'clash_config.dart';
+import 'config.dart';
+
+/// mihomo takes a list of `user:pass` entries; the app keeps one account, the
+/// first, and an empty or unreadable list leaves authentication off.
+AuthenticationProps authenticationFrom(Object? value) {
+  final entries = value is List ? value.whereType<String>() : const <String>[];
+  for (final entry in entries) {
+    final colon = entry.indexOf(':');
+    if (colon > 0) {
+      return AuthenticationProps(
+        enable: true,
+        username: entry.substring(0, colon),
+        password: entry.substring(colon + 1),
+      );
+    }
+  }
+  return const AuthenticationProps();
+}
 
 /// [current] with the keys below taken from [config], the decoded profile,
 /// where [present] names them, and reset to the app default where it does
@@ -98,13 +116,9 @@ PatchClashConfig syncProfileSettings(
   if (mode != null && modes.contains(mode)) {
     next = next.copyWith(mode: mode);
   }
-  final findProcess = read<String>('find-process-mode')?.toLowerCase();
+  final findProcess = enumNamed('find-process-mode', FindProcessMode.values);
   if (findProcess != null) {
-    next = next.copyWith(
-      findProcessMode: findProcess == 'off'
-          ? FindProcessMode.off
-          : FindProcessMode.always,
-    );
+    next = next.copyWith(findProcessMode: findProcess);
   }
   final interfaceName = read<String>('interface-name');
   if (interfaceName != null) {

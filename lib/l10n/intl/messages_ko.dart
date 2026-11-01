@@ -499,7 +499,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "사용자 지정 프로필 리소스",
     ),
     "customProfileResourcesDesc": MessageLookupByLibrary.simpleMessage(
-      "사용자 지정 프로필 리소스에는 프록시, 규칙 공급자, 필터, 아이콘 세트가 포함됩니다.",
+      "사용자 지정 프로필 리소스는 직접 추가해 사용자 지정 프로필에서 쓰는 프록시, 규칙 공급자, 필터, 아이콘 세트입니다.",
     ),
     "cut": MessageLookupByLibrary.simpleMessage("잘라내기"),
     "dark": MessageLookupByLibrary.simpleMessage("다크"),
@@ -683,7 +683,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "filter": MessageLookupByLibrary.simpleMessage("필터"),
     "filters": MessageLookupByLibrary.simpleMessage("필터"),
+    "findProcessAlways": MessageLookupByLibrary.simpleMessage("항상"),
     "findProcessMode": MessageLookupByLibrary.simpleMessage("프로세스 찾기"),
+    "findProcessStrict": MessageLookupByLibrary.simpleMessage("규칙에 필요할 때"),
     "floating": MessageLookupByLibrary.simpleMessage("플로팅"),
     "foldAllGroups": MessageLookupByLibrary.simpleMessage("모든 그룹 접기"),
     "followProfile": MessageLookupByLibrary.simpleMessage("프로필 따르기"),
@@ -917,6 +919,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "구독 링크 또는 프록시 공유 링크로 프로필 가져오기",
     ),
     "liquidGlass": MessageLookupByLibrary.simpleMessage("Liquid Glass"),
+    "liquidGlassReduced": MessageLookupByLibrary.simpleMessage(
+      "기기가 따라가지 못해 다시 시작할 때까지 Liquid Glass를 단순화했습니다.",
+    ),
     "list": MessageLookupByLibrary.simpleMessage("목록"),
     "listen": MessageLookupByLibrary.simpleMessage("수신"),
     "listenRoutingMark": MessageLookupByLibrary.simpleMessage("수신 라우팅 마크"),
@@ -957,8 +962,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "managedByProviderTip": MessageLookupByLibrary.simpleMessage(
       "이 값은 구독에서 옵니다. 직접 변경하면 구독 업데이트가 더 이상 건드리지 않습니다. 행을 우클릭하거나 길게 눌러 제공자에게 돌려줄 수 있습니다.",
     ),
+    "managedByYou": MessageLookupByLibrary.simpleMessage("직접 관리"),
     "managedSettingsHint": MessageLookupByLibrary.simpleMessage(
-      "흐리게 표시된 설정은 구독이 지정합니다. 직접 바꾸려면 항목을 누르세요.",
+      "닫힌 자물쇠가 있는 흐린 설정은 구독이 지정합니다. 직접 바꾸려면 항목을 누르세요.",
+    ),
+    "managedSettingsOwnedHint": MessageLookupByLibrary.simpleMessage(
+      "열린 자물쇠가 있는 설정은 직접 관리하는 항목입니다. 오른쪽 클릭하거나 길게 눌러 제공자에게 돌려줄 수 있습니다.",
     ),
     "matchCase": MessageLookupByLibrary.simpleMessage("대/소문자 구분"),
     "matchSourceIp": MessageLookupByLibrary.simpleMessage("출발지 IP 일치"),
@@ -1442,7 +1451,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "휴대폰에서 링크를 받으려면 FlClashX가 로컬 네트워크에 접근할 수 있도록 \'근처 기기\' 권한이 필요합니다. 앱 설정에서 켜 주세요.",
     ),
     "sendFromPhoneTip": MessageLookupByLibrary.simpleMessage(
-      "휴대폰 카메라로 코드를 스캔한 뒤 열린 페이지에 링크를 붙여 넣으세요. 두 기기가 같은 네트워크에 연결되어 있어야 합니다.",
+      "휴대폰 카메라로 코드를 스캔한 뒤 열린 페이지에 링크를 붙여 넣으세요. 두 기기가 같은 네트워크에 연결되어 있어야 합니다. Android 17 이상에서 페이지가 열리지 않으면 휴대폰 브라우저에 \'근처 기기\' 권한을 허용하세요.",
     ),
     "server": MessageLookupByLibrary.simpleMessage("서버"),
     "serviceAbnormalCount": m83,
@@ -1486,7 +1495,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "showPassword": MessageLookupByLibrary.simpleMessage("비밀번호 표시"),
     "sidebarBlur": MessageLookupByLibrary.simpleMessage("사이드바 블러"),
     "sidebarBlurDesc": MessageLookupByLibrary.simpleMessage(
-      "사이드바를 통해 창 뒤의 흐릿한 바탕화면을 표시합니다",
+      "배경 흐림은 창 뒤의 바탕화면을 사이드바에 비쳐 보이게 합니다.",
     ),
     "silentLaunch": MessageLookupByLibrary.simpleMessage("백그라운드 실행"),
     "silentLaunchDesc": MessageLookupByLibrary.simpleMessage(

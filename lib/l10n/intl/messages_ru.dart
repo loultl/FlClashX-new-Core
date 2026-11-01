@@ -622,7 +622,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ресурсы пользовательских профилей",
     ),
     "customProfileResourcesDesc": MessageLookupByLibrary.simpleMessage(
-      "Ресурсы пользовательских профилей включают прокси, провайдеры правил, фильтры и наборы значков.",
+      "Ресурсы пользовательских профилей — это прокси, провайдеры правил, фильтры и наборы значков, которые вы сами добавляете для пользовательских профилей.",
     ),
     "cut": MessageLookupByLibrary.simpleMessage("Вырезать"),
     "dark": MessageLookupByLibrary.simpleMessage("Тёмная"),
@@ -860,7 +860,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "filter": MessageLookupByLibrary.simpleMessage("Фильтр"),
     "filters": MessageLookupByLibrary.simpleMessage("Фильтры"),
+    "findProcessAlways": MessageLookupByLibrary.simpleMessage("Всегда"),
     "findProcessMode": MessageLookupByLibrary.simpleMessage("Поиск процесса"),
+    "findProcessStrict": MessageLookupByLibrary.simpleMessage(
+      "Когда нужно правилам",
+    ),
     "floating": MessageLookupByLibrary.simpleMessage("Плавающая"),
     "foldAllGroups": MessageLookupByLibrary.simpleMessage(
       "Свернуть все группы",
@@ -1133,6 +1137,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Получить профиль по ссылке на подписку или на прокси",
     ),
     "liquidGlass": MessageLookupByLibrary.simpleMessage("Жидкое стекло"),
+    "liquidGlassReduced": MessageLookupByLibrary.simpleMessage(
+      "Стекло упрощено до перезапуска: устройство не успевает.",
+    ),
     "list": MessageLookupByLibrary.simpleMessage("Список"),
     "listen": MessageLookupByLibrary.simpleMessage("Адрес прослушивания"),
     "listenRoutingMark": MessageLookupByLibrary.simpleMessage(
@@ -1183,10 +1190,14 @@ class MessageLookup extends MessageLookupByLibrary {
       "Управляет провайдер",
     ),
     "managedByProviderTip": MessageLookupByLibrary.simpleMessage(
-      "Это значение приходит из подписки. Если изменить его самому, обновления подписки перестанут его трогать. Вернуть управление провайдеру можно правой кнопкой или долгим нажатием по строке.",
+      "Это значение приходит из подписки. Если изменить его самому, обновления подписки перестанут его трогать. Вернуть настройку провайдера можно правой кнопкой или долгим нажатием по строке.",
     ),
+    "managedByYou": MessageLookupByLibrary.simpleMessage("Управляете вы"),
     "managedSettingsHint": MessageLookupByLibrary.simpleMessage(
-      "Приглушённые параметры задаёт подписка. Нажмите на параметр, чтобы изменить его самому.",
+      "Приглушённые параметры с закрытым замком задаёт подписка. Нажмите на параметр, чтобы изменить его самому.",
+    ),
+    "managedSettingsOwnedHint": MessageLookupByLibrary.simpleMessage(
+      "Открытым замком отмечены параметры, которые вы забрали себе; вернуть настройку провайдера можно правой кнопкой или долгим нажатием.",
     ),
     "matchCase": MessageLookupByLibrary.simpleMessage("Учитывать регистр"),
     "matchSourceIp": MessageLookupByLibrary.simpleMessage(
@@ -1582,13 +1593,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "result": MessageLookupByLibrary.simpleMessage("Результат"),
     "retry": MessageLookupByLibrary.simpleMessage("Повторить"),
     "returnAllToProvider": MessageLookupByLibrary.simpleMessage(
-      "Вернуть настройки провайдеру",
+      "Вернуть настройки провайдера",
     ),
     "returnAllToProviderTip": MessageLookupByLibrary.simpleMessage(
       "Все параметры, которые вы меняли сами, снова будут браться из подписки.",
     ),
     "returnToProvider": MessageLookupByLibrary.simpleMessage(
-      "Вернуть провайдеру",
+      "Вернуть настройку провайдера",
     ),
     "routeAddress": MessageLookupByLibrary.simpleMessage("Адреса маршрутов"),
     "routeExcludeAddress": MessageLookupByLibrary.simpleMessage(
@@ -1808,7 +1819,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Чтобы получить ссылку с телефона, FlClashX нужно разрешение «Устройства поблизости» для доступа к локальной сети. Включите его в настройках приложения.",
     ),
     "sendFromPhoneTip": MessageLookupByLibrary.simpleMessage(
-      "Отсканируйте код камерой телефона и вставьте ссылку на открывшейся странице. Оба устройства должны быть в одной сети.",
+      "Отсканируйте код камерой телефона и вставьте ссылку на открывшейся странице. Оба устройства должны быть в одной сети. Если страница не открывается на Android 17 и новее, дайте браузеру на телефоне разрешение «Устройства поблизости».",
     ),
     "server": MessageLookupByLibrary.simpleMessage("Сервер"),
     "serviceAbnormalCount": m83,
@@ -1862,7 +1873,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Размытие боковой панели",
     ),
     "sidebarBlurDesc": MessageLookupByLibrary.simpleMessage(
-      "Показывать сквозь боковую панель размытый рабочий стол за окном",
+      "Размытие фона показывает рабочий стол за окном сквозь боковую панель.",
     ),
     "silentLaunch": MessageLookupByLibrary.simpleMessage("Тихий запуск"),
     "silentLaunchDesc": MessageLookupByLibrary.simpleMessage(

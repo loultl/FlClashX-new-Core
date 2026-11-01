@@ -155,6 +155,7 @@ class AuthenticationItem extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     return ConfigToggleItem(
       title: (l) => l.authentication,
+      managedKey: 'clash.authentication',
       selector: networkSettingProvider.select(
         (state) => state.authentication.enable,
       ),
@@ -181,6 +182,7 @@ class AuthenticationAccountItem extends ConsumerWidget {
     return ConfigTextItem(
       title: (l) => l.account,
       maxLength: TextInputLimits.userName,
+      managedKey: 'clash.authentication',
       selector: networkSettingProvider.select(
         (state) => state.authentication.username,
       ),
@@ -202,6 +204,7 @@ class AuthenticationPasswordItem extends ConsumerWidget {
     return ConfigTextItem(
       title: (l) => l.password,
       maxLength: TextInputLimits.password,
+      managedKey: 'clash.authentication',
       selector: networkSettingProvider.select(
         (state) => state.authentication.password,
       ),
@@ -440,13 +443,17 @@ class GeneralView extends ConsumerWidget {
         select: (state) => state.tcpConcurrent,
         update: (state, value) => state.copyWith(tcpConcurrent: value),
       ),
-      _clashToggle(
+      ConfigOptionsItem<FindProcessMode>(
         title: (l) => l.findProcessMode,
         managedKey: 'clash.find-process-mode',
-        select: (state) => state.findProcessMode == FindProcessMode.always,
-        update: (state, value) => state.copyWith(
-          findProcessMode: value ? FindProcessMode.always : FindProcessMode.off,
+        options: FindProcessMode.values,
+        textBuilder: (mode) => mode.label,
+        selector: patchClashConfigProvider.select(
+          (state) => state.findProcessMode,
         ),
+        onChanged: (ref, value) => ref
+            .read(patchClashConfigProvider.notifier)
+            .update((state) => state.copyWith(findProcessMode: value)),
       ),
       _appSettingToggle(
         title: (l) => l.autoCloseConnections,

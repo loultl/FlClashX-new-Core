@@ -136,6 +136,23 @@ void main() {
       expect(trackerInfo.title, 'example.com');
       expect(trackerInfo.progressText, 'Browser(501)');
     });
+
+    test('shows a punycode host in Unicode and finds it by either form', () {
+      final trackerInfo = TrackerInfo(
+        id: '1',
+        start: DateTime(2026),
+        metadata: const Metadata(host: 'xn--41a.xn--p1acf'),
+        chains: const [],
+        rule: 'MATCH',
+        rulePayload: '',
+      );
+
+      expect(trackerInfo.title, 'я.рус');
+      expect(
+        trackerInfo.searchFields,
+        containsAll(['xn--41a.xn--p1acf', 'я.рус']),
+      );
+    });
   });
 
   group('TrafficExt', () {
@@ -205,12 +222,20 @@ void main() {
         const IpInfo(ip: '2.2.2.2', countryCode: 'JP'),
       );
       expect(
-        IpInfo.fromGeoJsJson({'ip': '4.4.4.4', 'country_code': 'DE'}),
+        IpInfo.fromIpAPIJson({'query': '4.4.4.4', 'countryCode': 'DE'}),
         const IpInfo(ip: '4.4.4.4', countryCode: 'DE'),
       );
       expect(
-        IpInfo.fromCountryIsJson({'ip': '5.5.5.5', 'country': 'FR'}),
-        const IpInfo(ip: '5.5.5.5', countryCode: 'FR'),
+        IpInfo.fromIpInfoJson({'ip': '5.5.5.5', 'country': 'NL'}),
+        const IpInfo(ip: '5.5.5.5', countryCode: 'NL'),
+      );
+      expect(
+        IpInfo.fromSeeIpJson({
+          'ip': '6.6.6.6',
+          'country': 'France',
+          'country_code': 'FR',
+        }),
+        const IpInfo(ip: '6.6.6.6', countryCode: 'FR'),
       );
     });
 
@@ -226,19 +251,9 @@ void main() {
       );
     });
 
-    test('parse the Cloudflare trace key-value text', () {
-      expect(
-        IpInfo.fromCloudflareTrace(
-          'fl=0f0\nh=www.cloudflare.com\nip=203.0.113.9\nts=1757800000.1\n'
-          'visit_scheme=https\ncolo=LHR\nhttp=http/2\nloc=GB\ntls=TLSv1.3\n',
-        ),
-        const IpInfo(ip: '203.0.113.9', countryCode: 'GB'),
-      );
-    });
-
     test('throw FormatException for unsupported response shapes', () {
       expect(
-        () => IpInfo.fromGeoJsJson({'ip': '1.1.1.1'}),
+        () => IpInfo.fromIpAPIJson({'query': '1.1.1.1'}),
         throwsFormatException,
       );
       expect(
@@ -246,10 +261,6 @@ void main() {
           'ip': '1.1.1.1',
           'location': <String, dynamic>{},
         }),
-        throwsFormatException,
-      );
-      expect(
-        () => IpInfo.fromCloudflareTrace('ip=1.1.1.1\ncolo=LHR\n'),
         throwsFormatException,
       );
     });

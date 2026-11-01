@@ -15,6 +15,7 @@ import 'package:fl_clash/ui/metrics.dart';
 import 'package:fl_clash/ui/models.dart';
 import 'package:fl_clash/ui/shape.dart';
 import 'package:fl_clash/ui/switch.dart';
+import 'package:fl_clash/ui/title_badge.dart';
 import 'package:fl_clash/ui/typography.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
@@ -251,6 +252,7 @@ class ListItem<T> extends StatelessWidget {
     Widget? trailing,
     Widget? leading,
   }) {
+    final title = TitleBadge.wrap(context, this.title);
     if (position != null) {
       // OpenContainer reparents the closed tile out of the section's provider.
       return ItemPositionProvider(
@@ -309,14 +311,20 @@ class ListItem<T> extends StatelessWidget {
             },
           );
         }
+        final badge = TitleBadge.of(context);
         return OpenContainer<dynamic>(
           clipBehavior: Clip.none,
           closedBuilder: (context, action) {
-            return _buildListTile(
-              context,
-              position: position,
-              trailing: _pageTrailing,
-              onTap: action,
+            return TitleBadge(
+              badge: badge,
+              child: Builder(
+                builder: (context) => _buildListTile(
+                  context,
+                  position: position,
+                  trailing: _pageTrailing,
+                  onTap: action,
+                ),
+              ),
             );
           },
           onClosed: onChanged,
@@ -539,6 +547,16 @@ class ListFooter extends StatelessWidget {
           const EdgeInsets.only(left: 16, right: 16, top: 8) * 1.mAp(context),
       child: Text(text, style: context.listCaptionStyle),
     );
+  }
+}
+
+/// Parts two sections without a header between them.
+class ListSectionGap extends StatelessWidget {
+  const ListSectionGap({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(height: listHeaderPaddingOf(context).top);
   }
 }
 

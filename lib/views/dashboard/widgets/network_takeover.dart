@@ -118,6 +118,7 @@ class _TakeoverRow extends ConsumerWidget {
         : ManagedSetting(
             settingKey: 'clash.tun.enable',
             dimsWhenLocked: false,
+            showsLock: false,
             child: row,
           );
   }

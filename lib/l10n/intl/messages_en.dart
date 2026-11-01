@@ -599,7 +599,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Custom profile resources",
     ),
     "customProfileResourcesDesc": MessageLookupByLibrary.simpleMessage(
-      "Custom profile resources hold proxies, rule providers, filters, and icon sets.",
+      "Custom profile resources are the proxies, rule providers, filters, and icon sets you add yourself for custom profiles to use.",
     ),
     "cut": MessageLookupByLibrary.simpleMessage("Cut"),
     "dark": MessageLookupByLibrary.simpleMessage("Dark"),
@@ -823,7 +823,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "filter": MessageLookupByLibrary.simpleMessage("Filter"),
     "filters": MessageLookupByLibrary.simpleMessage("Filters"),
+    "findProcessAlways": MessageLookupByLibrary.simpleMessage("Always"),
     "findProcessMode": MessageLookupByLibrary.simpleMessage("Find process"),
+    "findProcessStrict": MessageLookupByLibrary.simpleMessage(
+      "When rules need it",
+    ),
     "floating": MessageLookupByLibrary.simpleMessage("Floating"),
     "foldAllGroups": MessageLookupByLibrary.simpleMessage(
       "Collapse all groups",
@@ -1090,6 +1094,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Obtain a profile from a subscription link or a proxy share link",
     ),
     "liquidGlass": MessageLookupByLibrary.simpleMessage("Liquid Glass"),
+    "liquidGlassReduced": MessageLookupByLibrary.simpleMessage(
+      "Liquid Glass simplified until restart: this device can\'t keep up.",
+    ),
     "list": MessageLookupByLibrary.simpleMessage("List"),
     "listen": MessageLookupByLibrary.simpleMessage("Listen"),
     "listenRoutingMark": MessageLookupByLibrary.simpleMessage(
@@ -1138,8 +1145,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "managedByProviderTip": MessageLookupByLibrary.simpleMessage(
       "This value comes from your subscription. If you change it yourself, subscription updates will leave it alone. Right-click or long-press the row to hand it back to the provider.",
     ),
+    "managedByYou": MessageLookupByLibrary.simpleMessage("Managed by you"),
     "managedSettingsHint": MessageLookupByLibrary.simpleMessage(
-      "Dimmed settings are set by your subscription. Tap one to change it yourself.",
+      "Dimmed settings with a closed lock are set by your subscription. Tap one to change it yourself.",
+    ),
+    "managedSettingsOwnedHint": MessageLookupByLibrary.simpleMessage(
+      "An open lock marks the settings you took over; right-click or long-press one to hand it back.",
     ),
     "matchCase": MessageLookupByLibrary.simpleMessage("Match case"),
     "matchSourceIp": MessageLookupByLibrary.simpleMessage("Match source IP"),
@@ -1719,7 +1730,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Receiving a link from your phone needs the Nearby devices permission, which lets FlClashX reach the local network. Turn it on in the app\'s settings.",
     ),
     "sendFromPhoneTip": MessageLookupByLibrary.simpleMessage(
-      "Scan the code with your phone\'s camera and paste the link on the page that opens. Both devices need to be on the same network.",
+      "Scan the code with your phone\'s camera and paste the link on the page that opens. Both devices need to be on the same network. If the page does not open on Android 17 or later, give the phone\'s browser the Nearby devices permission.",
     ),
     "server": MessageLookupByLibrary.simpleMessage("Server"),
     "serviceAbnormalCount": m83,
@@ -1771,7 +1782,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "showPassword": MessageLookupByLibrary.simpleMessage("Show password"),
     "sidebarBlur": MessageLookupByLibrary.simpleMessage("Sidebar blur"),
     "sidebarBlurDesc": MessageLookupByLibrary.simpleMessage(
-      "Show the blurred desktop behind the window through the sidebar",
+      "Background blur lets the desktop behind the window show through the sidebar.",
     ),
     "silentLaunch": MessageLookupByLibrary.simpleMessage("Silent launch"),
     "silentLaunchDesc": MessageLookupByLibrary.simpleMessage(
