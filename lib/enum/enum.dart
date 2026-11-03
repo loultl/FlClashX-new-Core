@@ -849,4 +849,8 @@ enum LoadingTag {
 
 enum CoreStatus { connecting, connected, disconnected }
 
+enum RequestFeed { recent, live }
+
+enum VpnRefusal { cancelled, otherAlwaysOn, restricted }
+
 enum UpdatingScope { core, local }

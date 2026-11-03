@@ -15,6 +15,7 @@ class App {
   late MethodChannel methodChannel;
   Function()? onExit;
   Function()? onPackagesChanged;
+  void Function(VpnRefusal refusal)? onVpnPermissionDenied;
   final floatingKeyboard = ValueNotifier(false);
 
   App._internal() {
@@ -29,6 +30,11 @@ class App {
           onPackagesChanged?.call();
         case 'floatingImeChanged':
           floatingKeyboard.value = call.arguments as bool;
+        case 'vpnPermissionDenied':
+          final refusal = VpnRefusal.values.asNameMap()[call.arguments];
+          if (refusal != null) {
+            onVpnPermissionDenied?.call(refusal);
+          }
         default:
           throw MissingPluginException();
       }
@@ -149,6 +155,10 @@ class App {
   Future<bool?> openAppSettings() async {
     if (!Platform.isAndroid) return false;
     return methodChannel.invokeMethod<bool>('openAppSettings');
+  }
+
+  Future<bool?> openVpnSettings() async {
+    return methodChannel.invokeMethod<bool>('openVpnSettings');
   }
 
   Future<AppExitInfo?> getLastExitInfo() async {

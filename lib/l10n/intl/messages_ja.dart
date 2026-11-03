@@ -221,9 +221,11 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m92(label) => "${label}はURLである必要があります";
 
-  static String m93(count) => "${count} 年前";
+  static String m93(appName) => "${appName} の VPN 接続が許可されませんでした";
 
   static String m94(count) => "${count} 年前";
+
+  static String m95(count) => "${count} 年前";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -1108,6 +1110,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "プロキシトラフィックのみ集計",
     ),
     "openLogsFolder": MessageLookupByLibrary.simpleMessage("ログフォルダーを開く"),
+    "openVpnSettings": MessageLookupByLibrary.simpleMessage("VPN 設定を開く"),
     "optional": MessageLookupByLibrary.simpleMessage("任意"),
     "options": MessageLookupByLibrary.simpleMessage("オプション"),
     "originalRepository": MessageLookupByLibrary.simpleMessage("オリジナルリポジトリ"),
@@ -1705,11 +1708,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "view": MessageLookupByLibrary.simpleMessage("表示"),
     "virtualIpv4": MessageLookupByLibrary.simpleMessage("仮想 IPv4"),
     "vividStyle": MessageLookupByLibrary.simpleMessage("ビビッド"),
+    "vpnBlockedByAnotherApp": MessageLookupByLibrary.simpleMessage(
+      "別のアプリが VPN をブロックしています",
+    ),
+    "vpnBlockedByAnotherAppTip": MessageLookupByLibrary.simpleMessage(
+      "別の VPN アプリで「常時接続 VPN」がオンになっています。VPN 設定でそのアプリの設定をオフにしてから、もう一度開始してください。",
+    ),
     "vpnConfigChangeDetected": MessageLookupByLibrary.simpleMessage(
       "VPN関連の設定変更を検出しました",
     ),
     "vpnEnableDesc": MessageLookupByLibrary.simpleMessage(
       "VPN は VpnService でシステムの全トラフィックを自動的にルーティングします。",
+    ),
+    "vpnPermissionNotGranted": m93,
+    "vpnRestrictedByAdministrator": MessageLookupByLibrary.simpleMessage(
+      "このデバイスでは管理者によって VPN が制限されています",
     ),
     "webDAVConfiguration": MessageLookupByLibrary.simpleMessage("WebDAV設定"),
     "website": MessageLookupByLibrary.simpleMessage("ウェブサイト"),
@@ -1718,8 +1731,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "writeToSystemDesc": MessageLookupByLibrary.simpleMessage(
       "システムに書き込むを有効にするとシステムクロックも設定します。Android では無視されます。",
     ),
-    "yearsAgo": m93,
-    "yearsAgoShort": m94,
+    "yearsAgo": m94,
+    "yearsAgoShort": m95,
     "yes": MessageLookupByLibrary.simpleMessage("はい"),
     "zhCN": MessageLookupByLibrary.simpleMessage("簡体字中国語"),
   };

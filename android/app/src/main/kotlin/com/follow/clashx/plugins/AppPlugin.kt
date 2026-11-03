@@ -12,6 +12,8 @@ import android.net.VpnService
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
+import android.os.UserManager
 import android.provider.Settings
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -24,10 +26,12 @@ import androidx.core.view.OnApplyWindowInsetsListener
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.follow.clashx.R
+import com.follow.clashx.VPN_PERMISSION_MESSAGE
 import com.follow.clashx.common.Components
 import com.follow.clashx.common.GlobalState
 import com.follow.clashx.common.PendingCallback
 import com.follow.clashx.common.QuickAction
+import com.follow.clashx.common.RequestCodes
 import com.follow.clashx.common.quickIntent
 import com.follow.clashx.common.registerReceiverCompat
 import com.follow.clashx.common.shortcutId
@@ -65,6 +69,12 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
     private lateinit var scope: CoroutineScope
 
     private val vpnPrepareCallback = PendingCallback<Boolean>()
+
+    private val vpnConsentCodes = RequestCodes(VPN_CONSENT_FIRST_CODE, VPN_CONSENT_CODE_COUNT)
+
+    private var vpnConsentAskedAt = 0L
+
+    private var vpnRefusal = REFUSAL_CANCELLED
 
     private val requestNotificationCallback = PendingCallback<Boolean>()
 
@@ -199,6 +209,10 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
                 result.success(openAppSettings())
             }
 
+            "openVpnSettings" -> {
+                result.success(openVpnSettings())
+            }
+
             "getLastExitInfo" -> reply(result) {
                 GlobalState.lastExitInfo()
             }
@@ -262,6 +276,31 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
             QuickAction.STOP -> R.drawable.ic_shortcut_stop
             QuickAction.TOGGLE -> R.drawable.ic_shortcut_toggle
         }
+
+    private fun openVpnSettings(): Boolean {
+        val activity = activity ?: return false
+        return try {
+            activity.startActivity(Intent(Settings.ACTION_VPN_SETTINGS))
+            true
+        } catch (_: Exception) {
+            false
+        }
+    }
+
+    private fun refusalOf(elapsedMillis: Long): String = when {
+        GlobalState.application.getSystemService(UserManager::class.java)
+            ?.hasUserRestriction(UserManager.DISALLOW_CONFIG_VPN) == true -> REFUSAL_RESTRICTED
+        elapsedMillis >= SILENT_REFUSAL_MILLIS -> REFUSAL_CANCELLED
+        else -> REFUSAL_OTHER_ALWAYS_ON
+    }
+
+    fun explainVpnRefusal(isCurrent: () -> Boolean) = onMainThread {
+        when {
+            !isCurrent() -> Unit
+            activity == null -> GlobalState.application.showToast(VPN_PERMISSION_MESSAGE)
+            else -> channel.invokeMethod("vpnPermissionDenied", vpnRefusal)
+        }
+    }
 
     private fun openAppSettings(): Boolean {
         val activity = activity ?: return false
@@ -385,6 +424,8 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
 
     fun prepareVpn(needPrepare: Boolean, callback: (Boolean) -> Unit) = onMainThread {
         vpnPrepareCallback.replace(callback, supersededValue = false)
+        vpnConsentCodes.forget()
+        vpnRefusal = REFUSAL_CANCELLED
         if (!needPrepare) {
             invokeVpnPrepareCallback(true)
             return@onMainThread
@@ -395,8 +436,14 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
             if (activity == null) {
                 invokeVpnPrepareCallback(false)
             } else {
-                @Suppress("DEPRECATION")
-                activity.startActivityForResult(intent, VPN_PERMISSION_REQUEST_CODE)
+                val code = vpnConsentCodes.issue()
+                if (code == null) {
+                    invokeVpnPrepareCallback(false)
+                } else {
+                    vpnConsentAskedAt = SystemClock.elapsedRealtime()
+                    @Suppress("DEPRECATION")
+                    activity.startActivityForResult(intent, code)
+                }
             }
             return@onMainThread
         }
@@ -494,6 +541,7 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
     override fun onDetachedFromActivity() {
         channel.invokeMethod("exit", null)
         detachFromActivity()
+        vpnConsentCodes.reset()
         invokeVpnPrepareCallback(false)
         invokeRequestNotificationCallback(false)
         invokeRequestLocalNetworkCallback(false)
@@ -501,10 +549,17 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
     }
 
     private fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
-        if (requestCode != VPN_PERMISSION_REQUEST_CODE) {
+        if (requestCode !in vpnConsentCodes) {
             return false
         }
-        invokeVpnPrepareCallback(resultCode == Activity.RESULT_OK)
+        if (!vpnConsentCodes.answers(requestCode)) {
+            return true
+        }
+        val granted = resultCode == Activity.RESULT_OK
+        if (!granted) {
+            vpnRefusal = refusalOf(SystemClock.elapsedRealtime() - vpnConsentAskedAt)
+        }
+        invokeVpnPrepareCallback(granted)
         return true
     }
 
@@ -541,9 +596,17 @@ class AppPlugin : FlutterPlugin, MethodChannel.MethodCallHandler, ActivityAware 
 
     private companion object {
         val SHORTCUT_ORDER = listOf(QuickAction.START, QuickAction.STOP, QuickAction.TOGGLE)
-        const val VPN_PERMISSION_REQUEST_CODE = 1001
         const val NOTIFICATION_PERMISSION_REQUEST_CODE = 1002
         const val INSTALLED_APPS_PERMISSION_REQUEST_CODE = 1003
         const val LOCAL_NETWORK_PERMISSION_REQUEST_CODE = 1004
+        const val VPN_CONSENT_FIRST_CODE = 1100
+        const val VPN_CONSENT_CODE_COUNT = 64
+
+        // The consent dialog finishes in onCreate while another app holds the always-on VPN or
+        // VPN settings are restricted, and nobody taps Cancel on a dialog this fast.
+        const val SILENT_REFUSAL_MILLIS = 500L
+        const val REFUSAL_CANCELLED = "cancelled"
+        const val REFUSAL_OTHER_ALWAYS_ON = "otherAlwaysOn"
+        const val REFUSAL_RESTRICTED = "restricted"
     }
 }

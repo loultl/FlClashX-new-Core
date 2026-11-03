@@ -251,10 +251,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m92(label) => "Значение «${label}» должно быть URL";
 
-  static String m93(count) =>
-      "${Intl.plural(count, one: '${count} год назад', few: '${count} года назад', many: '${count} лет назад', other: '${count} года назад')}";
+  static String m93(appName) =>
+      "Вы не дали ${appName} разрешение на подключение VPN";
 
   static String m94(count) =>
+      "${Intl.plural(count, one: '${count} год назад', few: '${count} года назад', many: '${count} лет назад', other: '${count} года назад')}";
+
+  static String m95(count) =>
       "${Intl.plural(count, one: '${count} г. назад', few: '${count} г. назад', many: '${count} лет назад', other: '${count} г. назад')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -1357,6 +1360,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "openLogsFolder": MessageLookupByLibrary.simpleMessage(
       "Открыть папку с логами",
     ),
+    "openVpnSettings": MessageLookupByLibrary.simpleMessage(
+      "Открыть настройки VPN",
+    ),
     "optional": MessageLookupByLibrary.simpleMessage("Необязательно"),
     "options": MessageLookupByLibrary.simpleMessage("Опции"),
     "originalRepository": MessageLookupByLibrary.simpleMessage(
@@ -2090,11 +2096,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "view": MessageLookupByLibrary.simpleMessage("Просмотр"),
     "virtualIpv4": MessageLookupByLibrary.simpleMessage("Виртуальный IPv4"),
     "vividStyle": MessageLookupByLibrary.simpleMessage("Яркий"),
+    "vpnBlockedByAnotherApp": MessageLookupByLibrary.simpleMessage(
+      "VPN блокирует другое приложение",
+    ),
+    "vpnBlockedByAnotherAppTip": MessageLookupByLibrary.simpleMessage(
+      "У другого VPN-приложения включена «Постоянная VPN». Отключите её для этого приложения в настройках VPN и запустите снова.",
+    ),
     "vpnConfigChangeDetected": MessageLookupByLibrary.simpleMessage(
       "Обнаружено изменение настроек VPN",
     ),
     "vpnEnableDesc": MessageLookupByLibrary.simpleMessage(
       "VPN автоматически направляет весь системный трафик через VpnService.",
+    ),
+    "vpnPermissionNotGranted": m93,
+    "vpnRestrictedByAdministrator": MessageLookupByLibrary.simpleMessage(
+      "VPN на этом устройстве ограничен администратором",
     ),
     "webDAVConfiguration": MessageLookupByLibrary.simpleMessage(
       "Настройка WebDAV",
@@ -2109,8 +2125,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "writeToSystemDesc": MessageLookupByLibrary.simpleMessage(
       "«Записывать в систему» также устанавливает системные часы; Android это игнорирует.",
     ),
-    "yearsAgo": m93,
-    "yearsAgoShort": m94,
+    "yearsAgo": m94,
+    "yearsAgoShort": m95,
     "yes": MessageLookupByLibrary.simpleMessage("Да"),
     "zhCN": MessageLookupByLibrary.simpleMessage("Упрощённый китайский"),
   };

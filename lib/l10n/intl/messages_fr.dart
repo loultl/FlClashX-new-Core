@@ -260,10 +260,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m92(label) => "${label} doit être une URL";
 
-  static String m93(count) =>
-      "${Intl.plural(count, one: 'il y a 1 an', other: 'il y a ${count} ans')}";
+  static String m93(appName) =>
+      "Vous n\'avez pas autorisé ${appName} à se connecter en VPN";
 
   static String m94(count) =>
+      "${Intl.plural(count, one: 'il y a 1 an', other: 'il y a ${count} ans')}";
+
+  static String m95(count) =>
       "${Intl.plural(count, other: 'il y a ${count} a')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -1390,6 +1393,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "openLogsFolder": MessageLookupByLibrary.simpleMessage(
       "Ouvrir le dossier des journaux",
     ),
+    "openVpnSettings": MessageLookupByLibrary.simpleMessage(
+      "Ouvrir les paramètres VPN",
+    ),
     "optional": MessageLookupByLibrary.simpleMessage("Facultatif"),
     "options": MessageLookupByLibrary.simpleMessage("Options"),
     "originalRepository": MessageLookupByLibrary.simpleMessage(
@@ -2145,11 +2151,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "view": MessageLookupByLibrary.simpleMessage("Afficher"),
     "virtualIpv4": MessageLookupByLibrary.simpleMessage("IPv4 virtuelle"),
     "vividStyle": MessageLookupByLibrary.simpleMessage("Vif"),
+    "vpnBlockedByAnotherApp": MessageLookupByLibrary.simpleMessage(
+      "VPN bloqué par une autre app",
+    ),
+    "vpnBlockedByAnotherAppTip": MessageLookupByLibrary.simpleMessage(
+      "Une autre app VPN a le « VPN permanent » activé. Désactivez-le pour cette app dans les paramètres VPN, puis relancez.",
+    ),
     "vpnConfigChangeDetected": MessageLookupByLibrary.simpleMessage(
       "Modification de la configuration liée au VPN détectée",
     ),
     "vpnEnableDesc": MessageLookupByLibrary.simpleMessage(
       "Le VPN fait passer automatiquement tout le trafic du système par VpnService.",
+    ),
+    "vpnPermissionNotGranted": m93,
+    "vpnRestrictedByAdministrator": MessageLookupByLibrary.simpleMessage(
+      "L\'administrateur de cet appareil restreint le VPN",
     ),
     "webDAVConfiguration": MessageLookupByLibrary.simpleMessage(
       "Configuration WebDAV",
@@ -2162,8 +2178,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "writeToSystemDesc": MessageLookupByLibrary.simpleMessage(
       "Écrire dans le système règle aussi l’horloge système ; Android l’ignore.",
     ),
-    "yearsAgo": m93,
-    "yearsAgoShort": m94,
+    "yearsAgo": m94,
+    "yearsAgoShort": m95,
     "yes": MessageLookupByLibrary.simpleMessage("Oui"),
     "zhCN": MessageLookupByLibrary.simpleMessage("Chinois simplifié"),
   };

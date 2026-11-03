@@ -8192,6 +8192,56 @@ class AppLocalizations {
     );
   }
 
+  /// `You did not allow {appName} to connect as a VPN`
+  String vpnPermissionNotGranted(Object appName) {
+    return Intl.message(
+      'You did not allow $appName to connect as a VPN',
+      name: 'vpnPermissionNotGranted',
+      desc: '',
+      args: [appName],
+    );
+  }
+
+  /// `VPN blocked by another app`
+  String get vpnBlockedByAnotherApp {
+    return Intl.message(
+      'VPN blocked by another app',
+      name: 'vpnBlockedByAnotherApp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Another VPN app has Always-on VPN turned on. Turn it off for that app in the VPN settings, then start again.`
+  String get vpnBlockedByAnotherAppTip {
+    return Intl.message(
+      'Another VPN app has Always-on VPN turned on. Turn it off for that app in the VPN settings, then start again.',
+      name: 'vpnBlockedByAnotherAppTip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open VPN settings`
+  String get openVpnSettings {
+    return Intl.message(
+      'Open VPN settings',
+      name: 'openVpnSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `VPN is restricted on this device by its administrator`
+  String get vpnRestrictedByAdministrator {
+    return Intl.message(
+      'VPN is restricted on this device by its administrator',
+      name: 'vpnRestrictedByAdministrator',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Check`
   String get serviceCheck {
     return Intl.message('Check', name: 'serviceCheck', desc: '', args: []);

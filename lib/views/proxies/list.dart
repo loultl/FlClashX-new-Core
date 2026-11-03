@@ -609,7 +609,12 @@ class ListHeader extends ConsumerWidget {
               child: Row(
                 children: [
                   _GroupIcon(src: group.icon, name: groupName),
-                  Flexible(child: _GroupSummary(groupName: groupName)),
+                  Flexible(
+                    child: _GroupSummary(
+                      groupName: groupName,
+                      description: group.serverDescription,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -618,7 +623,6 @@ class ListHeader extends ConsumerWidget {
               isExpand: isExpand,
               isDelayTesting: isDelayTesting,
               groupType: group.type.name,
-              description: group.serverDescription,
               onDelayTest: () {
                 ref
                     .read(proxiesActionProvider.notifier)
@@ -739,9 +743,10 @@ class _GroupIcon extends ConsumerWidget {
 }
 
 class _GroupSummary extends StatelessWidget {
-  const _GroupSummary({required this.groupName});
+  const _GroupSummary({required this.groupName, required this.description});
 
   final String groupName;
+  final String? description;
 
   @override
   Widget build(BuildContext context) {
@@ -756,27 +761,31 @@ class _GroupSummary extends StatelessWidget {
           style: AppTextStyle.callout.of(context, emphasized: true),
         ),
         const SizedBox(height: 2),
-        Flexible(flex: 1, child: _SelectedProxyName(groupName: groupName)),
+        Flexible(
+          flex: 1,
+          child: _GroupSubtitle(groupName: groupName, description: description),
+        ),
       ],
     );
   }
 }
 
-class _SelectedProxyName extends ConsumerWidget {
-  const _SelectedProxyName({required this.groupName});
+class _GroupSubtitle extends ConsumerWidget {
+  const _GroupSubtitle({required this.groupName, required this.description});
 
   final String groupName;
+  final String? description;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final proxyName = ref
-        .watch(selectedProxyNameProvider(groupName))
-        .takeFirstValid([]);
-    if (proxyName.isEmpty) {
+    final subtitle =
+        description ??
+        ref.watch(selectedProxyNameProvider(groupName)).takeFirstValid([]);
+    if (subtitle.isEmpty) {
       return const SizedBox.shrink();
     }
     return EmojiText(
-      proxyName,
+      subtitle,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: AppTextStyle.caption1.of(context, emphasized: true).toLight,
@@ -790,7 +799,6 @@ class _GroupActions extends StatelessWidget {
     required this.isExpand,
     required this.isDelayTesting,
     required this.groupType,
-    required this.description,
     required this.onDelayTest,
     required this.onToggle,
   });
@@ -799,7 +807,6 @@ class _GroupActions extends StatelessWidget {
   final bool isExpand;
   final bool isDelayTesting;
   final String groupType;
-  final String? description;
   final VoidCallback onDelayTest;
   final VoidCallback onToggle;
 
@@ -811,18 +818,6 @@ class _GroupActions extends StatelessWidget {
         children: [
           if (groupType == GroupType.Smart.name)
             SmartDetailsButton(groupName: groupName),
-          if (description case final description? when !isExpand)
-            ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 160),
-              child: Text(
-                description,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyle.caption1
-                    .of(context, emphasized: true)
-                    .toLight,
-              ),
-            ),
           IconButton(
             tooltip: context.appLocalizations.delayTest,
             onPressed: isDelayTesting ? null : onDelayTest,

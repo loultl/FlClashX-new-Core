@@ -251,8 +251,13 @@ internal class ServiceStateMachine(private val host: ServiceStateHost) {
         }
         val options = sharedState.vpnOptions ?: return false
         if (!prepareVpn(options)) {
-            if (host.app() == null && isCurrent(request)) {
-                host.showToast(VPN_PERMISSION_MESSAGE)
+            if (isCurrent(request)) {
+                val app = host.app()
+                if (app == null) {
+                    host.showToast(VPN_PERMISSION_MESSAGE)
+                } else {
+                    app.explainVpnRefusal { arbiter.isLatestRequest(request) }
+                }
             }
             return false
         }

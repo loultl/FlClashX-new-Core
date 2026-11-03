@@ -57,10 +57,13 @@ private class FakeApp(
     private val localNetworkGranted: Boolean = true,
     private val vpnGranted: Boolean = true,
     private val holdVpnPreparation: Boolean = false,
+    private val holdExplanation: Boolean = false,
 ) : AppGateway {
     var beforeVpnPrepared: (() -> Unit)? = null
     var cancelledPreparations = 0
     var localNetworkRequests = 0
+    var explainedRefusals = 0
+    private var heldExplanation: (() -> Boolean)? = null
 
     private var heldCallback: ((Boolean) -> Unit)? = null
 
@@ -86,6 +89,20 @@ private class FakeApp(
         if (heldCallback === callback) {
             heldCallback = null
         }
+    }
+
+    override fun explainVpnRefusal(isCurrent: () -> Boolean) {
+        heldExplanation = isCurrent
+        if (!holdExplanation) {
+            deliverExplanation()
+        }
+    }
+
+    fun deliverExplanation() {
+        if (heldExplanation?.invoke() == true) {
+            explainedRefusals++
+        }
+        heldExplanation = null
     }
 }
 
@@ -307,6 +324,37 @@ class ServiceStateMachineTest {
         assertEquals(1, host.stopCalls)
         assertEquals(RunState.STOPPED, machine.runState.value)
         assertFalse(machine.isRunRequested)
+    }
+
+    /** The explanation reaches the main thread only after the refused start was rolled back. */
+    @Test
+    fun `a denied vpn permission is explained by the app in front`() = runTest {
+        val host = FakeHost(backgroundScope)
+        val app = FakeApp(vpnGranted = false, holdExplanation = true)
+        host.app = app
+        val machine = ServiceStateMachine(host)
+        machine.syncSharedState(configuredState())
+
+        assertFalse(machine.requestStart().await())
+        app.deliverExplanation()
+        assertEquals(1, app.explainedRefusals)
+        assertFalse(host.toasts.contains(VPN_PERMISSION_MESSAGE))
+    }
+
+    @Test
+    fun `a denied vpn permission is not explained once a stop superseded the start`() = runTest {
+        val host = FakeHost(backgroundScope)
+        val app = FakeApp(vpnGranted = false, holdExplanation = true)
+        host.app = app
+        val machine = ServiceStateMachine(host)
+        machine.syncSharedState(configuredState())
+
+        assertFalse(machine.requestStart().await())
+        machine.requestStop().await()
+        app.deliverExplanation()
+
+        assertEquals(0, app.explainedRefusals)
+        assertFalse(host.toasts.contains(VPN_PERMISSION_MESSAGE))
     }
 
     @Test
