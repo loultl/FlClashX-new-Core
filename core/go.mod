@@ -4,7 +4,7 @@ go 1.27.0
 
 // The browser fingerprints mihomo names (Firefox 148, Safari 26.3 and up)
 // live on utls' `v1.9.0-mod-meta` branch, which has no tag.
-replace github.com/metacubex/utls => github.com/legiz-ru/prizrak-utls v0.0.0-20261101192859-2807fc753c53
+replace github.com/metacubex/utls => github.com/legiz-ru/prizrak-utls v0.0.0-20261110091936-36e99b0b9fb7
 
 replace github.com/metacubex/mihomo => github.com/legiz-ru/Prizrak-Core v1.19.33-r12
 
