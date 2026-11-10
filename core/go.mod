@@ -6,7 +6,7 @@ go 1.27.0
 // live on utls' `v1.9.0-mod-meta` branch, which has no tag.
 replace github.com/metacubex/utls => github.com/legiz-ru/prizrak-utls v0.0.0-20261101192859-2807fc753c53
 
-replace github.com/metacubex/mihomo => github.com/legiz-ru/Prizrak-Core v1.19.33-r11
+replace github.com/metacubex/mihomo => github.com/legiz-ru/Prizrak-Core v1.19.33-r12
 
 replace google.golang.org/protobuf => github.com/metacubex/protobuf-go v0.0.0-20260306035419-7ceee0674686
 
