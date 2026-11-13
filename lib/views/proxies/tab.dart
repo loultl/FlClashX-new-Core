@@ -40,6 +40,14 @@ class ProxiesTabViewState extends ConsumerState<ProxiesTabView>
         final currentGroupName = next.currentGroupName;
         final index = groupNames.indexWhere((item) => item == currentGroupName);
         _updateTabController(groupNames.length, index);
+        return;
+      }
+      // A profile switch or the dashboard's picker moves the current group
+      // while the group list stays the same.
+      final index = next.groupNames.indexOf(next.currentGroupName ?? '');
+      final controller = _tabController;
+      if (controller != null && index >= 0 && controller.index != index) {
+        controller.index = index;
       }
     }, fireImmediately: true);
   }
@@ -253,6 +261,18 @@ class ProxyGroupView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final proxies = group.all;
+    // A card keeps its focus and state across a reorder, such as a delay sort,
+    // instead of handing them to whichever proxy lands in its slot. mihomo
+    // lets a group list a proxy twice, so a key counts the name's repeats.
+    final seen = <String, int>{};
+    final keys = [
+      for (final proxy in proxies)
+        (
+          proxy.name,
+          seen.update(proxy.name, (count) => count + 1, ifAbsent: () => 0),
+        ),
+    ];
+    final indexOf = {for (final (index, key) in keys.indexed) key: index};
     return CommonScrollBar(
       controller: controller,
       thumbVisibility: true,
@@ -272,9 +292,12 @@ class ProxyGroupView extends ConsumerWidget {
         ),
         itemCount: proxies.length,
         addAutomaticKeepAlives: false,
+        findChildIndexCallback: (key) =>
+            key is ValueKey<(String, int)> ? indexOf[key.value] : null,
         itemBuilder: (_, index) {
           final proxy = proxies[index];
           return ProxyCard(
+            key: ValueKey(keys[index]),
             testUrl: group.testUrl,
             groupType: group.type,
             type: cardType,

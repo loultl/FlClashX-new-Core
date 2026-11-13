@@ -40,7 +40,7 @@ final class CommonActionProvider extends $NotifierProvider<CommonAction, void> {
   }
 }
 
-String _$commonActionHash() => r'05946f3026407a5fcf12644605937f6e88681536';
+String _$commonActionHash() => r'16358aa74b0fba0c21aa99bbe177ffcc9da42f89';
 
 abstract class _$CommonAction extends $Notifier<void> {
   void build();
@@ -93,7 +93,7 @@ final class ManagedSettingsActionProvider
 }
 
 String _$managedSettingsActionHash() =>
-    r'276a17ac316848bd3b1f6762c1bb8136f401eca0';
+    r'367a45084033c5e495f876b75d5f42cd4b316709';
 
 abstract class _$ManagedSettingsAction extends $Notifier<void> {
   void build();
@@ -150,7 +150,7 @@ final class ProfileHeadersActionProvider
 }
 
 String _$profileHeadersActionHash() =>
-    r'6de99f935c02a1a096e700353a496bedc4ad716f';
+    r'175ee9ee62e3c674705374d2039f4e8151a1b30c';
 
 /// Lands once per update of, or switch to, a profile; edits in between stay.
 
@@ -215,7 +215,7 @@ final class ProfileSettingsActionProvider
 }
 
 String _$profileSettingsActionHash() =>
-    r'4b184684e26874e785fadeb1b3408f3016a07b89';
+    r'40b94638cb68d399eb5c1cdc48b7d55e5b82fdaf';
 
 /// The current subscription's or file's config keys become the app's
 /// settings on every update and switch (see [syncProfileSettings]); a custom
@@ -270,7 +270,7 @@ final class SetupActionProvider extends $NotifierProvider<SetupAction, void> {
   }
 }
 
-String _$setupActionHash() => r'572ac3daf36bd909c58126b257efad8fca3ea6e8';
+String _$setupActionHash() => r'79b1a2be3ffd74e82ceca002cfabff0678c4501b';
 
 abstract class _$SetupAction extends $Notifier<void> {
   void build();
@@ -321,7 +321,7 @@ final class BackupActionProvider extends $NotifierProvider<BackupAction, void> {
   }
 }
 
-String _$backupActionHash() => r'c0c2cd46ec5b246076902a297c356fde2ece3577';
+String _$backupActionHash() => r'f2ea15d55bb2f46d36bc79a54854f8a91572b3c8';
 
 abstract class _$BackupAction extends $Notifier<void> {
   void build();
@@ -372,7 +372,7 @@ final class CoreActionProvider extends $NotifierProvider<CoreAction, void> {
   }
 }
 
-String _$coreActionHash() => r'8b11b297dabd4dc087d9466fa02381424170781c';
+String _$coreActionHash() => r'28cfd6dac2cd330d62b056a555502f47197af89a';
 
 abstract class _$CoreAction extends $Notifier<void> {
   void build();
@@ -423,7 +423,7 @@ final class SystemActionProvider extends $NotifierProvider<SystemAction, void> {
   }
 }
 
-String _$systemActionHash() => r'fa818fa8e84de54ed89609febe147feded618ca9';
+String _$systemActionHash() => r'25505bd4e32cbe790df1b70a6a64bbee68e5a002';
 
 abstract class _$SystemAction extends $Notifier<void> {
   void build();
@@ -577,7 +577,7 @@ final class ProxiesActionProvider
   }
 }
 
-String _$proxiesActionHash() => r'a3bbe3ff08fba96f24d8e1ba3df18a1ee8153b78';
+String _$proxiesActionHash() => r'bf67f404dbbde5124acf1b8d5cfafa1a3d2a96ac';
 
 abstract class _$ProxiesAction extends $Notifier<void> {
   void build();
@@ -629,7 +629,7 @@ final class ProfilesActionProvider
   }
 }
 
-String _$profilesActionHash() => r'6d03963624aca0d3ce3649231195507486136d3c';
+String _$profilesActionHash() => r'90e45332426f3c683928efec4b06dac184fab64f';
 
 abstract class _$ProfilesAction extends $Notifier<void> {
   void build();
@@ -681,7 +681,7 @@ final class ScriptsActionProvider
   }
 }
 
-String _$scriptsActionHash() => r'f4ec8e120ae8163e4b7bb78636c30d75264de87d';
+String _$scriptsActionHash() => r'a0be6f9a3292dc5d3dca11dc2e4215bd868fbf72';
 
 abstract class _$ScriptsAction extends $Notifier<void> {
   void build();
@@ -734,7 +734,7 @@ final class ClashProvidersActionProvider
 }
 
 String _$clashProvidersActionHash() =>
-    r'f0d06cb220c213d16a84f78d8eaab7c98794919b';
+    r'fcd385392e3d70cebcee8891e3d424ede50829d5';
 
 abstract class _$ClashProvidersAction extends $Notifier<void> {
   void build();
@@ -838,7 +838,7 @@ final class GeoResourceActionProvider
   }
 }
 
-String _$geoResourceActionHash() => r'0c51366685262ad99f7965bc998aee87690ee1b6';
+String _$geoResourceActionHash() => r'a825d76d7fd15844ee3fbd182c4be8356e8d594a';
 
 abstract class _$GeoResourceAction extends $Notifier<void> {
   void build();

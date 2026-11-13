@@ -50,18 +50,27 @@ class Debouncer {
     _operations.remove(tag)?.cancel();
     _pending.remove(tag);
   }
+
+  bool isPending(dynamic tag) => _pending.containsKey(tag);
 }
 
 class SerialTaskScheduler {
   Future<void> _serialTail = Future<void>.value();
+  int _queued = 0;
+
+  /// A task is running or waiting its turn.
+  bool get isBusy => _queued > 0;
 
   Future<T> run<T>(Future<T> Function() task) {
     final completer = Completer<T>();
+    _queued++;
     _serialTail = _serialTail.then((_) async {
       try {
         completer.complete(await task());
       } catch (error, stackTrace) {
         completer.completeError(error, stackTrace);
+      } finally {
+        _queued--;
       }
     });
     return completer.future;

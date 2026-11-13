@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/models/models.dart';
 import 'package:fl_clash/ui/color.dart';
+import 'package:material_ui/material_ui.dart' show ThemeMode;
 import 'package:test/test.dart';
 
 const _gib = 1024 * 1024 * 1024;
@@ -37,10 +38,33 @@ void main() {
     test('ignores what is not a link and a threshold that is not a number', () {
       expect(LinkOffer.parse(null), isNull);
       expect(LinkOffer.parse('pay now'), isNull);
+      for (final threshold in ['soon', 'NaN', 'Infinity', '-Infinity']) {
+        expect(
+          LinkOffer.parse('https://pay.example.com,$threshold'),
+          const LinkOffer(url: 'https://pay.example.com'),
+          reason: threshold,
+        );
+      }
+    });
+  });
+
+  group('update manifest header', () {
+    test('reads an https manifest url per channel, rejects other schemes', () {
+      const headers = ProviderHeaders({
+        'flclashx-update': 'https://mirror.example/manifest.json',
+        'flclashx-update-pre': 'https://mirror.example/pre.json',
+      });
+      expect(headers.updateManifestUrl, 'https://mirror.example/manifest.json');
+      expect(headers.preUpdateManifestUrl, 'https://mirror.example/pre.json');
+
       expect(
-        LinkOffer.parse('https://pay.example.com,soon'),
-        const LinkOffer(url: 'https://pay.example.com'),
+        const ProviderHeaders({
+          'flclashx-update': 'http://mirror.example/m.json',
+        }).updateManifestUrl,
+        isNull,
       );
+      expect(const ProviderHeaders({}).updateManifestUrl, isNull);
+      expect(const ProviderHeaders({}).preUpdateManifestUrl, isNull);
     });
   });
 
@@ -124,6 +148,14 @@ void main() {
       expect(of('soon').updateInterval, isNull);
       expect(const ProviderHeaders({}).updateInterval, isNull);
     });
+
+    test('ignores an interval no date could be counted on by', () {
+      ProviderHeaders of(String value) =>
+          ProviderHeaders({'profile-update-interval': value});
+      expect(of('8784').updateInterval, const Duration(hours: 8784));
+      expect(of('8785').updateInterval, isNull);
+      expect(of('2400000000').updateInterval, isNull);
+    });
   });
 
   group('ViewRequest.parse', () {
@@ -141,6 +173,10 @@ void main() {
       expect(
         ViewRequest.parse('icon:plain;proxies.card:compact'),
         const ViewRequest(card: ProxyCardType.compact),
+      );
+      expect(
+        ViewRequest.parse('proxies.card:oneline'),
+        const ViewRequest(card: ProxyCardType.oneline),
       );
     });
 
@@ -182,6 +218,17 @@ void main() {
         ViewRequest.parse('app.navbar:sticky;app.tabs:zoom;app.glass:max'),
         isNull,
       );
+    });
+
+    test('reads the theme mode', () {
+      expect(
+        ViewRequest.parse('app.theme:dark'),
+        const ViewRequest(themeMode: ThemeMode.dark),
+      );
+      expect(ViewRequest.parse('app.theme:Auto')?.themeMode, ThemeMode.system);
+      expect(ViewRequest.parse('app.theme:light')?.themeMode, ThemeMode.light);
+      expect(ViewRequest.parse('app.theme:system'), isNull);
+      expect(ViewRequest.parse('theme:dark'), isNull);
     });
 
     test('reads the colour, the style and pure black', () {
@@ -326,6 +373,22 @@ void main() {
     });
   });
 
+  group('noVibration', () {
+    test('is asked for only by the novibrate special', () {
+      expect(const ProviderHeaders({}).noVibration, isFalse);
+      expect(
+        const ProviderHeaders({'flclashx-special': 'hideip'}).noVibration,
+        isFalse,
+      );
+      expect(
+        const ProviderHeaders({
+          'flclashx-special': 'hideip, NoVibrate',
+        }).noVibration,
+        isTrue,
+      );
+    });
+  });
+
   group('fallbackUrlsOf', () {
     final url = Uri.parse('https://u:p@old.example.com/sub/abc?x=1');
     List<String> moved(String header) => ProviderHeaders({
@@ -415,6 +478,42 @@ void main() {
           now: now,
         ),
         isEmpty,
+      );
+    });
+
+    test('the renewal names the moment its threshold is crossed', () {
+      Profile ending(int days) => _profile(
+        headers: const {'flclashx-buyplan': 'https://pay.example.com/plan,3'},
+        info: SubscriptionInfo(expire: expireIn(days)),
+      );
+      final at = nextOfferChange(ending(10), now)!;
+
+      expect(visibleOffersOf(ending(10), now: at), isEmpty);
+      expect(
+        visibleOffersOf(ending(10), now: at.add(const Duration(seconds: 1))),
+        hasLength(1),
+      );
+      expect(nextOfferChange(ending(3), now), isNull);
+      final farThreshold = _profile(
+        headers: const {'flclashx-buyplan': 'https://p.example,101000000'},
+        info: SubscriptionInfo(expire: expireIn(10)),
+      );
+      expect(nextOfferChange(farThreshold, now), isNull);
+      expect(visibleOffersOf(farThreshold, now: now), hasLength(1));
+      for (final threshold in ['-101000000', '-1e300', '1e300']) {
+        final extreme = _profile(
+          headers: {'flclashx-buyplan': 'https://p.example,$threshold'},
+          info: SubscriptionInfo(expire: expireIn(10)),
+        );
+        expect(nextOfferChange(extreme, now), isNull);
+        visibleOffersOf(extreme, now: now);
+      }
+      expect(
+        nextOfferChange(
+          _profile(headers: const {'flclashx-buyplan': 'https://p.example'}),
+          now,
+        ),
+        isNull,
       );
     });
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/manager/app_manager.dart';
@@ -21,6 +23,7 @@ class HomePage extends ConsumerWidget {
       return const SizedBox.shrink();
     }
     return HomeBackScopeContainer(
+      isTV: system.isTV,
       child: AppSidebarContainer(
         child: _HomeShell(
           child: Consumer(
@@ -174,7 +177,7 @@ class _NavigationPadding extends StatelessWidget {
   }
 }
 
-class _NavigationPage extends StatelessWidget {
+class _NavigationPage extends StatefulWidget {
   const _NavigationPage({
     super.key,
     required this.item,
@@ -187,17 +190,41 @@ class _NavigationPage extends StatelessWidget {
   final Widget view;
 
   @override
+  State<_NavigationPage> createState() => _NavigationPageState();
+}
+
+class _NavigationPageState extends State<_NavigationPage> {
+  late final _routes = _OpenRoutes(onClosed: _dropNavigator);
+  late bool _nested = !widget.isMobile;
+
+  @override
+  void didUpdateWidget(covariant _NavigationPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // The mobile layout has no navigator here; dropping one with a route open
+    // would drop an editor and what it has not saved, so it waits for that.
+    _nested = !widget.isMobile || _nested && _routes.open > 0;
+  }
+
+  void _dropNavigator() {
+    if (mounted && widget.isMobile && _nested && _routes.open == 0) {
+      setState(() => _nested = false);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final scopedView = PageFocusScope(child: view);
+    final item = widget.item;
+    final scopedView = PageFocusScope(child: widget.view);
     final keptView = KeepScope(
       key: ValueKey(item.label),
-      child: isMobile
-          ? scopedView
-          : Navigator(
+      child: _nested
+          ? Navigator(
               key: ValueKey('${item.label.name}_navigator'),
+              observers: [_routes],
               pages: [MaterialPage(child: scopedView)],
               onDidRemovePage: (_) {},
-            ),
+            )
+          : scopedView,
     );
     return Consumer(
       builder: (_, ref, child) {
@@ -219,6 +246,39 @@ class _NavigationPage extends StatelessWidget {
       },
       child: keptView,
     );
+  }
+}
+
+/// Counts the routes open above a page's own, and reports the last one gone
+/// once its exit transition has played.
+class _OpenRoutes extends NavigatorObserver {
+  _OpenRoutes({required this.onClosed});
+
+  final VoidCallback onClosed;
+  int open = 0;
+
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    open = previousRoute == null ? 0 : open + 1;
+  }
+
+  @override
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) =>
+      _closed(route);
+
+  @override
+  void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) =>
+      _closed(route);
+
+  void _closed(Route<dynamic> route) {
+    if (open == 0 || --open > 0) {
+      return;
+    }
+    if (route is TransitionRoute) {
+      unawaited(route.completed.then((_) => onClosed()));
+    } else {
+      WidgetsBinding.instance.addPostFrameCallback((_) => onClosed());
+    }
   }
 }
 
@@ -416,8 +476,13 @@ class _FadeTabPage extends StatelessWidget {
 
 class HomeBackScopeContainer extends ConsumerWidget {
   final Widget child;
+  final bool isTV;
 
-  const HomeBackScopeContainer({super.key, required this.child});
+  const HomeBackScopeContainer({
+    super.key,
+    required this.child,
+    required this.isTV,
+  });
 
   @override
   Widget build(BuildContext context, ref) {
@@ -428,13 +493,15 @@ class HomeBackScopeContainer extends ConsumerWidget {
             GlobalObjectKey(pageLabel).currentContext ?? context;
         final canPop = Navigator.canPop(realContext);
         if (canPop) {
-          Navigator.of(realContext).pop();
-        } else if (system.isTV && pageLabel != PageLabel.dashboard) {
+          // The route's own pop scope may hold an unsaved edit.
+          await Navigator.of(realContext).maybePop();
+        } else if (isTV && pageLabel != PageLabel.dashboard) {
           ref
               .read(currentPageLabelProvider.notifier)
               .toPage(PageLabel.dashboard);
         } else {
-          await ref.read(systemActionProvider.notifier).handleClose();
+          // Back on a TV leaves the VPN running; explicit Exit still shuts it down.
+          await ref.read(systemActionProvider.notifier).handleClose(!isTV);
         }
         return false;
       },

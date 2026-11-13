@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/enum/enum.dart';
+import 'package:fl_clash/features/proxy_chains/transform.dart';
 import 'package:fl_clash/models/models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +16,10 @@ Future<T> decodeJSONTask<T>(String data) async {
 
 Future<T> _decodeJSON<T>(String content) async {
   return json.decode(content);
+}
+
+Future<String> encodeJSONTask(Object? data) async {
+  return compute<Object?, String>(json.encode, data);
 }
 
 Future<String> encodeYamlTask<T>(T data) async {
@@ -65,7 +70,7 @@ Future<List<Group>> buildGroups(ComputeGroupsState state) async {
     groups.add(Group.fromJson(group));
   }
   return computeSort(
-    groups: groups,
+    groups: indexGroupMembers(groups),
     sortType: sortType,
     delayMap: delayMap,
     selectedMap: selectedMap,
@@ -390,6 +395,7 @@ Future<RealProfile> _makeRealProfileTask(MakeRealProfileState data) async {
         .map((item) => item.definition)
         .toList();
   }
+  applyProxyChains(rawConfig, data.proxyChains);
   rawConfig['rules'] = rules;
   final yaml = await _encodeYaml(Map<String, dynamic>.from(rawConfig));
   return (yaml: yaml, md5: yaml.toMd5(), counts: configCountsOf(rawConfig));
@@ -518,7 +524,10 @@ Future<MigrationData> _oldToNowTask(
 }
 
 /// FlClashX 0.4 `overrideData`: only an enabled list reaches the profile.
-Map<String, Object?>? _overwriteOfOverrideData(Object? overrideData) {
+Map<String, Object?>? _overwriteOfOverrideData(
+  Object? overrideData, {
+  required String matchId,
+}) {
   if (overrideData is! Map || overrideData['enable'] != true) {
     return null;
   }
@@ -526,14 +535,39 @@ Map<String, Object?>? _overwriteOfOverrideData(Object? overrideData) {
   if (rule is! Map) {
     return null;
   }
-  final rules = rule['type'] == 'override'
-      ? rule['overrideRules']
-      : rule['addedRules'];
+  final isReplacement = rule['type'] == 'override';
+  final rules = isReplacement ? rule['overrideRules'] : rule['addedRules'];
+  final list = [if (rules is List) ...rules];
+  // A replacing list ran without the profile's rules, and mihomo sends what no
+  // rule matched DIRECT; ending the list so leaves those rules unreached.
+  if (isReplacement && !list.any(_isMatchRule)) {
+    list.add({'id': matchId, 'value': 'MATCH,DIRECT'});
+  }
   return {
     'type': ExtendType.standard.name,
-    'standardOverwrite': {'addedRules': rules is List ? rules : const []},
+    'standardOverwrite': {'addedRules': list},
   };
 }
+
+bool _isMatchRule(Object? rule) =>
+    rule is Map &&
+    rule['value'] is String &&
+    Rule.parse(rule['value'] as String).ruleAction == RuleAction.MATCH;
+
+/// What FlClashX 0.4's network switch kept from the profile.
+const _legacyNetworkSettings = {
+  'clash.ipv6',
+  'clash.allow-lan',
+  'clash.mixed-port',
+  'clash.find-process-mode',
+  'clash.tun.stack',
+};
+
+bool _isPlainFileName(String name) =>
+    name.isNotEmpty &&
+    name != '.' &&
+    name != '..' &&
+    !name.contains(RegExp(r'[/\\]'));
 
 Future<MigrationData> migrateLegacyConfig({
   required Map<String, Object?> configMap,
@@ -554,11 +588,19 @@ Future<MigrationData> migrateLegacyConfig({
     vpnPropsRaw['accessControlProps'] = vpnPropsRaw['accessControl'];
   }
   configMap['davProps'] = configMap['dav'];
-  final appSettingProps =
-      configMap['appSetting'] as Map<String, dynamic>? ?? {};
+  final appSettingProps = Map<String, dynamic>.from(
+    configMap['appSetting'] as Map? ?? const {},
+  );
   if (appSettingProps['recoveryStrategy'] != null) {
     appSettingProps['restoreStrategy'] = appSettingProps['recoveryStrategy'];
   }
+  appSettingProps['ownedSettings'] = {
+    ...?(appSettingProps['ownedSettings'] as List?)?.cast<String>(),
+    if (appSettingProps['overrideNetworkSettings'] == true)
+      ..._legacyNetworkSettings,
+    if (appSettingProps['overrideProviderSettings'] == true)
+      ...appSwitchSettings.values,
+  }.toList();
   configMap['appSettingProps'] = appSettingProps;
   // FlClashX 0.4 kept its hero page as a flag; here it is the theme style,
   // and one without the flag keeps the standard page over the new default.
@@ -594,6 +636,11 @@ Future<MigrationData> migrateLegacyConfig({
       Script(id: newId, label: label, lastUpdateTime: DateTime.now()),
     );
   }
+  final scriptProps = configMap['scriptProps'];
+  // FlClashX 0.4 ran its selected script on every profile, over any rules.
+  final globalScriptId = scriptProps is Map
+      ? idMap[scriptProps['currentId']]
+      : null;
   final List rawRules = configMap['rules'] as List<dynamic>? ?? [];
   final List<Rule> rules = [];
   final List<DisabledRule> disabledRules = [];
@@ -607,15 +654,18 @@ Future<MigrationData> migrateLegacyConfig({
   final List<Profile> profiles = [];
   for (final rawProfile in rawProfiles) {
     final rawId = rawProfile['id'] as String?;
-    if (rawId == null) {
+    // The id names the profile's file in the backup.
+    if (rawId == null || !_isPlainFileName(rawId)) {
       continue;
     }
     final profileId = idMap.updateCacheValue(rawId, () => snowflake.id);
     rawProfile['id'] = profileId;
+    final isLegacyProfile = rawProfile['overwrite'] == null;
     final legacyOverwrite = _overwriteOfOverrideData(
       rawProfile['overrideData'],
+      matchId: '$rawId#match',
     );
-    if (legacyOverwrite != null && rawProfile['overwrite'] == null) {
+    if (legacyOverwrite != null && isLegacyProfile) {
       rawProfile['overwrite'] = legacyOverwrite;
     }
     final overwrite = rawProfile['overwrite'] as Map?;
@@ -649,6 +699,10 @@ Future<MigrationData> migrateLegacyConfig({
           ? ExtendType.script.name
           : ExtendType.standard.name;
     }
+    if (isLegacyProfile && globalScriptId != null) {
+      rawProfile['extendType'] = ExtendType.script.name;
+      rawProfile['scriptId'] = globalScriptId;
+    }
     final rawUrl = rawProfile['url'];
     rawProfile['type'] = rawUrl is String && rawUrl.isNotEmpty ? 'url' : 'file';
 
@@ -659,7 +713,9 @@ Future<MigrationData> migrateLegacyConfig({
       targetPath,
       BackupEntries.profile(profileId),
     );
-    await sourceFile.safeCopy(targetFilePath);
+    if (await sourceFile.exists()) {
+      await sourceFile.safeCopy(targetFilePath);
+    }
     profiles.add(Profile.fromJson(rawProfile));
   }
   final currentProfileId = configMap['currentProfileId'];

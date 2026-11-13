@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Base64
 import java.util.Properties
 
 plugins {
@@ -22,6 +23,16 @@ val hasReleaseSigning = releaseStoreFile.exists() &&
     releaseKeyAlias != null &&
     releaseKeyPassword != null
 
+// setup.dart's `--env` reaches Gradle only through Flutter's base64 dart-defines,
+// where a later define wins and an absent APP_ENV means pre, as in Dart.
+val dartDefines = (findProperty("dart-defines") as String?)
+    .orEmpty()
+    .split(",")
+    .filter { it.isNotEmpty() }
+    .map { String(Base64.getDecoder().decode(it)) }
+    .associate { it.substringBefore("=") to it.substringAfter("=", "") }
+val isPreChannel = (dartDefines["APP_ENV"] ?: "pre") == "pre"
+
 android {
     namespace = "com.follow.clashx"
     compileSdk = libs.versions.compileSdk.get().toInt()
@@ -37,7 +48,9 @@ android {
         applicationId = "com.follow.clashx"
         minSdk = flutter.minSdkVersion
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = flutter.versionCode
+        // Releases up to 0.5.0-pre.8 gave split APKs Flutter's ABI offset of up to +4000, so the
+        // code every variant now shares sits above it and any earlier APK upgrades to any variant.
+        versionCode = flutter.versionCode + 5000
         versionName = flutter.versionName
     }
 
@@ -50,6 +63,10 @@ android {
                 keyPassword = releaseKeyPassword
             }
         }
+    }
+
+    buildFeatures {
+        resValues = true
     }
 
     packaging {
@@ -69,6 +86,10 @@ android {
             isShrinkResources = true
             if (hasReleaseSigning) {
                 signingConfig = signingConfigs.getByName("release")
+                if (isPreChannel) {
+                    applicationIdSuffix = ".pre"
+                    resValue("string", "app_name", "FlClashX Pre")
+                }
             } else {
                 signingConfig = signingConfigs.getByName("debug")
                 applicationIdSuffix = ".dev"

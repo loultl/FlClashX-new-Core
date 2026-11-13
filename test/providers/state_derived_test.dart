@@ -1,5 +1,6 @@
 import 'package:fl_clash/common/app_ports.dart';
 import 'package:fl_clash/common/cidr.dart';
+import 'package:fl_clash/common/compute.dart';
 import 'package:fl_clash/common/constant.dart';
 import 'package:fl_clash/common/system.dart';
 import 'package:fl_clash/enum/enum.dart';
@@ -30,6 +31,67 @@ void main() {
 
   tearDown(() {
     container.dispose();
+  });
+
+  test('group flags walk groups, not memberships, and are kept while the '
+      'groups stay', () {
+    const flags = ['🇳🇱', '🇩🇪', '🇫🇷', '🇬🇧', '🇺🇸'];
+    final proxies = [
+      for (var index = 0; index < 10000; index++)
+        Proxy(name: '${flags[index % flags.length]} node $index', type: 'ss'),
+    ];
+    final groups = indexGroupMembers([
+      Group(
+        name: 'Auto',
+        type: GroupType.Selector,
+        all: [
+          for (var index = 0; index < 100; index++)
+            Proxy(name: 'G$index', type: 'Selector'),
+        ],
+      ),
+      for (var index = 0; index < 100; index++)
+        Group(name: 'G$index', type: GroupType.Selector, all: proxies),
+    ]);
+    container.read(groupsProvider.notifier).update((_) => groups);
+
+    final subscription = container.listen(
+      groupFlagsProvider('Auto'),
+      (_, _) {},
+    );
+    addTearDown(subscription.close);
+    final first = subscription.read();
+
+    expect(first, unorderedEquals(['NL', 'DE', 'FR', 'GB', 'US']));
+    expect(container.read(groupFlagsProvider('Auto')), same(first));
+  });
+
+  test('a group with a flag of its own counts as that flag, not its nodes', () {
+    final groups = indexGroupMembers([
+      const Group(
+        name: 'Auto',
+        type: GroupType.Selector,
+        all: [
+          Proxy(name: '🇳🇱 Europe', type: 'Selector'),
+          Proxy(name: 'Asia', type: 'Selector'),
+        ],
+      ),
+      const Group(
+        name: '🇳🇱 Europe',
+        type: GroupType.Selector,
+        all: [Proxy(name: '🇩🇪 Berlin', type: 'ss')],
+      ),
+      const Group(
+        name: 'Asia',
+        type: GroupType.Selector,
+        all: [Proxy(name: '🇯🇵 Tokyo', type: 'ss')],
+      ),
+    ]);
+    container.read(groupsProvider.notifier).update((_) => groups);
+
+    expect(
+      container.read(groupFlagsProvider('Auto')),
+      unorderedEquals(['NL', 'JP']),
+    );
   });
 
   test('group derivation sanitizes runtime state and respects clash mode', () {
@@ -905,6 +967,42 @@ void main() {
       subtractCidrs(const [], privateRouteAddress, wholeWhenEmpty: true),
     );
   });
+
+  test(
+    'exclusions that leave no route route nothing, not everything',
+    () async {
+      await AppLocalizations.load(const Locale('en'));
+      container.listen(sharedStateProvider, (_, _) {});
+      container
+          .read(networkSettingProvider.notifier)
+          .update((state) => state.copyWith(bypassPrivateRoute: false));
+      container
+          .read(patchClashConfigProvider.notifier)
+          .update(
+            (state) => state.copyWith(
+              tun: state.tun.copyWith(
+                routeExcludeAddress: const ['0.0.0.0/0', '::/0'],
+              ),
+            ),
+          );
+      await container.read(vpnOptionsProvider.future);
+      var vpnOptions = container.read(sharedStateProvider).vpnOptions!;
+      expect(vpnOptions.routeAddress, isEmpty);
+      expect(vpnOptions.excludesAllRoutes, isTrue);
+
+      container
+          .read(patchClashConfigProvider.notifier)
+          .update(
+            (state) => state.copyWith(
+              tun: state.tun.copyWith(routeExcludeAddress: []),
+            ),
+          );
+      await container.read(vpnOptionsProvider.future);
+      vpnOptions = container.read(sharedStateProvider).vpnOptions!;
+      expect(vpnOptions.routeAddress, isEmpty);
+      expect(vpnOptions.excludesAllRoutes, isFalse);
+    },
+  );
 
   test('only the route lists recompute the VPN routes', () async {
     final computed = <List<String>?>[];

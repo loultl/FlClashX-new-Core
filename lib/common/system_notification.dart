@@ -6,11 +6,13 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'app_ports.dart';
 import 'constant.dart';
+import 'desktop_channel.dart';
 import 'print.dart';
 import 'system.dart';
 
 const _channelId = 'subscription';
 const _windowsGuid = 'd1075ef0-c7d2-42bc-8f5c-c79bdf4d2c24';
+const _windowsPreGuid = '6f1c3a52-8e47-4d0b-9b6e-2a5d7c9e41f8';
 
 /// Notifications in the system tray or shade, with a link opened on tap.
 class SystemNotifications implements NotificationPort {
@@ -29,14 +31,16 @@ class SystemNotifications implements NotificationPort {
     }
     try {
       final initialized = await _plugin.initialize(
-        settings: const InitializationSettings(
-          android: AndroidInitializationSettings('ic_service'),
-          macOS: DarwinInitializationSettings(requestBadgePermission: false),
-          linux: LinuxInitializationSettings(defaultActionName: 'Open'),
+        settings: InitializationSettings(
+          android: const AndroidInitializationSettings('ic_service'),
+          macOS: const DarwinInitializationSettings(
+            requestBadgePermission: false,
+          ),
+          linux: const LinuxInitializationSettings(defaultActionName: 'Open'),
           windows: WindowsInitializationSettings(
-            appName: appName,
-            appUserModelId: 'com.follow.clashx',
-            guid: _windowsGuid,
+            appName: appSystemName,
+            appUserModelId: isPreDesktopApp ? '$packageName.pre' : packageName,
+            guid: isPreDesktopApp ? _windowsPreGuid : _windowsGuid,
           ),
         ),
         onDidReceiveNotificationResponse: _onTap,
@@ -87,6 +91,9 @@ class SystemNotifications implements NotificationPort {
           android: AndroidNotificationDetails(
             _channelId,
             channelName,
+            // Ids count from 0, and the VPN service holds 1 untagged; Android
+            // tells notifications apart by tag and id, not by channel.
+            tag: _channelId,
             importance: Importance.high,
             priority: Priority.high,
           ),

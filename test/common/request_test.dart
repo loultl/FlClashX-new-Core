@@ -2,12 +2,17 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'dart:ui' show Locale;
 
 import 'package:dio/dio.dart';
+import 'package:fl_clash/common/app_localizations.dart';
 import 'package:fl_clash/common/constant.dart';
 import 'package:fl_clash/common/exception.dart';
 import 'package:fl_clash/common/request.dart';
+import 'package:fl_clash/l10n/l10n.dart';
+import 'package:fl_clash/state.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class _StalledHttpClient extends Fake implements HttpClient {
   @override
@@ -19,6 +24,28 @@ class _StalledHttpClient extends Fake implements HttpClient {
   @override
   Future<HttpClientRequest> openUrl(String method, Uri url) =>
       Completer<HttpClientRequest>().future;
+}
+
+/// flutter_test answers every request with a 400 unless a zone asks for a
+/// real client.
+class _RealHttpOverrides extends HttpOverrides {}
+
+class _UrlAdapter implements HttpClientAdapter {
+  _UrlAdapter(this.byUrl);
+
+  final Map<String, ResponseBody Function()> byUrl;
+
+  @override
+  Future<ResponseBody> fetch(
+    RequestOptions options,
+    Stream<Uint8List>? requestStream,
+    Future<void>? cancelFuture,
+  ) async {
+    return byUrl[options.uri.toString()]!();
+  }
+
+  @override
+  void close({bool force = false}) {}
 }
 
 class _HostAdapter implements HttpClientAdapter {
@@ -68,6 +95,133 @@ void main() {
         ),
       ),
     );
+  });
+
+  group('update channel', () {
+    test('picks the highest pre-release and passes stable and drafts by', () {
+      final newest = newestPrerelease([
+        {'tag_name': 'v0.5.1', 'prerelease': false},
+        {'tag_name': 'v0.5.1-pre.10', 'prerelease': true},
+        {'tag_name': 'v0.5.1-pre.9', 'prerelease': true},
+        {'tag_name': 'v0.5.1-pre.11', 'prerelease': true, 'draft': true},
+        {'tag_name': 'core-v1.19.30', 'prerelease': true},
+        'not a release',
+      ]);
+
+      expect(newest?['tag_name'], 'v0.5.1-pre.10');
+    });
+
+    test('reads the pre-releases a releases feed names', () {
+      const feed =
+          '<link href="https://github.com/o/r/releases/tag/v0.5.1-pre.2"/>'
+          '<link href="https://github.com/o/r/releases/tag/core-v1.19.30"/>'
+          '<link href="https://github.com/o/r/releases/tag/v0.5.0"/>'
+          '<link href="https://github.com/o/r/releases/tag/v0.5.1-pre.10"/>';
+
+      expect(newestPrereleaseInFeed(feed), {'tag_name': 'v0.5.1-pre.10'});
+      expect(newestPrereleaseInFeed(''), isNull);
+    });
+
+    test('follows the next page a Link header names', () {
+      expect(
+        nextPageOf(
+          '<https://api.github.com/x?page=1>; rel="prev", '
+          '<https://api.github.com/x?page=3>; rel="next"',
+        ),
+        'https://api.github.com/x?page=3',
+      );
+      expect(
+        nextPageOf('<https://api.github.com/x?page=1>; rel="prev"'),
+        isNull,
+      );
+      expect(nextPageOf(null), isNull);
+    });
+
+    ResponseBody json(Object body, {String? link}) => ResponseBody.fromString(
+      jsonEncode(body),
+      200,
+      headers: {
+        Headers.contentTypeHeader: [Headers.jsonContentType],
+        if (link != null) 'link': [link],
+      },
+    );
+
+    void installed(String env, String version) {
+      globalState.appEnv = env;
+      globalState.packageInfo = PackageInfo(
+        appName: 'FlClashX',
+        packageName: 'com.follow.clashx',
+        version: version,
+        buildNumber: '1',
+      );
+    }
+
+    test('a pre-release build is offered only a newer pre-release', () async {
+      installed('pre', '0.5.1-pre.9');
+      final request = Request()
+        ..dio.httpClientAdapter = _HostAdapter({
+          'api.github.com': () => json([
+            {'tag_name': 'v0.5.1', 'prerelease': false},
+            {'tag_name': 'v0.5.1-pre.10', 'prerelease': true},
+          ]),
+        });
+
+      expect((await request.checkForUpdate())?['tag_name'], 'v0.5.1-pre.10');
+    });
+
+    test('a pre-release found on a later page is still offered', () async {
+      installed('pre', '0.5.1-pre.9');
+      final request = Request()
+        ..dio.httpClientAdapter = _UrlAdapter({
+          'https://api.github.com/repos/$repository/releases?per_page=100':
+              () => json(
+                [
+                  {'tag_name': 'v0.6.0', 'prerelease': false},
+                ],
+                link:
+                    '<https://api.github.com/repos/$repository/releases?per_page=100&page=2>; rel="next"',
+              ),
+          'https://api.github.com/repos/$repository/releases?per_page=100&page=2':
+              () => json([
+                {'tag_name': 'v0.5.1-pre.10', 'prerelease': true},
+              ]),
+        });
+
+      expect((await request.checkForUpdate())?['tag_name'], 'v0.5.1-pre.10');
+    });
+
+    test('a pre-release build falls back to the feed past the quota', () async {
+      installed('pre', '0.5.1-pre.9');
+      final request = Request()
+        ..dio.httpClientAdapter = _HostAdapter({
+          'api.github.com': () => ResponseBody.fromString('limit', 403),
+          'github.com': () => ResponseBody.fromString(
+            '<link href="https://github.com/$repository/releases/tag/v0.5.1-pre.10"/>',
+            200,
+          ),
+        });
+
+      expect((await request.checkForUpdate())?['tag_name'], 'v0.5.1-pre.10');
+    });
+
+    test('a stable build keeps to the latest release', () async {
+      installed('stable', '0.5.0');
+      final request = Request()
+        ..dio.httpClientAdapter = _HostAdapter({
+          'api.github.com': () => json({'tag_name': 'v0.5.1'}),
+        });
+
+      expect((await request.checkForUpdate())?['tag_name'], 'v0.5.1');
+    });
+
+    test('finds none among stable releases only', () {
+      expect(
+        newestPrerelease([
+          {'tag_name': 'v0.5.0', 'prerelease': false},
+        ]),
+        isNull,
+      );
+    });
   });
 
   group('latestRelease', () {
@@ -242,6 +396,97 @@ void main() {
       final body = Uint8List.fromList([0x1f, 0x8b, 1, 2, 3]);
 
       expect(decompressUnlabeled(body), same(body));
+    });
+
+    test('gives up once the output passes the limit', () {
+      final body = Uint8List.fromList(gzip.encode(Uint8List(4096)));
+
+      expect(decompressUnlabeled(body, limit: 4096), hasLength(4096));
+      expect(decompressUnlabeled(body, limit: 4095), isNull);
+    });
+  });
+
+  group('decompressDownload', () {
+    test('inflates a compressed body and passes a plain one through', () async {
+      final yaml = Uint8List.fromList(utf8.encode('proxies: []\n'));
+
+      expect(await decompressDownload(yaml), same(yaml));
+      expect(
+        await decompressDownload(Uint8List.fromList(gzip.encode(yaml))),
+        yaml,
+      );
+    });
+  });
+
+  group('a download', () {
+    late HttpServer server;
+
+    setUpAll(() async {
+      await AppLocalizations.load(const Locale('en'));
+      globalState.packageInfo = PackageInfo(
+        appName: 'FlClash',
+        packageName: 'com.follow.clashx',
+        version: '0.5.0',
+        buildNumber: '1',
+      );
+    });
+
+    setUp(() async {
+      server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+    });
+
+    tearDown(() => server.close(force: true));
+
+    Future<Response<Uint8List>> fetch() {
+      late Future<Response<Uint8List>> pending;
+      HttpOverrides.runWithHttpOverrides(() {
+        pending = Request().getFileResponseForUrl(
+          'http://127.0.0.1:${server.port}/sub',
+        );
+      }, _RealHttpOverrides());
+      return pending;
+    }
+
+    test('that answers with part of the file is refused', () async {
+      server.listen((request) {
+        request.response
+          ..statusCode = HttpStatus.partialContent
+          ..headers.set(HttpHeaders.contentRangeHeader, 'bytes 0-11/2000')
+          ..write('proxies: []\n');
+        unawaited(request.response.close());
+      });
+
+      await expectLater(
+        fetch(),
+        throwsA(
+          isA<DioException>().having(
+            (e) => e.response?.statusCode,
+            'status',
+            HttpStatus.partialContent,
+          ),
+        ),
+      );
+    });
+
+    test('larger than the cap is refused before it is read', () async {
+      server.listen((request) {
+        request.response
+          ..contentLength = maxDownloadBytes + 1
+          ..add(Uint8List(256 << 10));
+        // Held open: the client is to hang up on the declared length alone.
+        unawaited(request.response.flush().catchError((_) {}));
+      });
+
+      await expectLater(
+        fetch(),
+        throwsA(
+          isA<MessageException>().having(
+            (e) => e.message,
+            'message',
+            currentAppLocalizations.downloadTooLarge,
+          ),
+        ),
+      );
     });
   });
 

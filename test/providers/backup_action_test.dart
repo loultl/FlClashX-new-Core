@@ -5,6 +5,7 @@ import 'package:drift/native.dart';
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/database/database.dart';
 import 'package:fl_clash/enum/enum.dart';
+import 'package:fl_clash/features/proxy_chains/proxy_chains.dart';
 import 'package:fl_clash/models/models.dart';
 import 'package:fl_clash/providers/action.dart';
 import 'package:fl_clash/providers/config.dart';
@@ -13,9 +14,11 @@ import 'package:flutter/widgets.dart' show Locale;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart';
 import 'package:riverpod/riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/app_paths.dart';
 import '../helpers/preferences.dart';
+import '../helpers/setup_actions.dart';
 
 Profile _profile(int id, String label) => Profile(
   id: id,
@@ -50,8 +53,13 @@ void main() {
     await testDatabase.close();
   });
 
+  late ApplyRecordingSetupAction setupAction;
+
   ProviderContainer buildContainer() {
-    final container = ProviderContainer();
+    setupAction = ApplyRecordingSetupAction();
+    final container = ProviderContainer(
+      overrides: [setupActionProvider.overrideWith(() => setupAction)],
+    );
     addTearDown(container.dispose);
     return container;
   }
@@ -111,6 +119,86 @@ void main() {
       expect(profileFile.readAsStringSync(), 'proxies: []');
       expect(target.read(excludeSSIDsProvider), ['home-wifi']);
       expect(workDirs(), isEmpty);
+    });
+
+    test('carries the proxy chains of the profiles it backs up', () async {
+      await testDatabase.profilesDao.putAll([
+        _profile(1, 'Backed up').toCompanion(0),
+      ]);
+      final chains = jsonEncode([
+        const ProxyChain(
+          id: 'a',
+          name: 'Telegram',
+          hops: ['DE', 'NL'],
+        ).toJson(),
+      ]);
+      final shared = await SharedPreferences.getInstance();
+      await shared.setString('proxy_chains_1', chains);
+      final archivePath = await backupToKept(actionOf(buildContainer()));
+
+      await shared.setString('proxy_chains_1', '[]');
+      final target = buildContainer();
+      await actionOf(
+        target,
+      ).restore(RestoreOption.onlyProfiles, (_) async => archivePath);
+
+      expect(shared.getString('proxy_chains_1'), chains);
+      final restored = await target.read(proxyChainsProvider(1).future);
+      expect(restored.single.name, 'Telegram');
+    });
+
+    test('pushes a restore that keeps the selected profile', () async {
+      await testDatabase.profilesDao.putAll([
+        _profile(1, 'Running').toCompanion(0),
+      ]);
+      final source = buildContainer()..listen(configProvider, (_, _) {});
+      source.read(currentProfileIdProvider.notifier).value = 1;
+      final archivePath = await backupToKept(actionOf(source));
+
+      final target = buildContainer()..listen(configProvider, (_, _) {});
+      target.read(currentProfileIdProvider.notifier).value = 1;
+      await actionOf(
+        target,
+      ).restore(RestoreOption.onlyProfiles, (_) async => archivePath);
+
+      expect(setupAction.applyCount, 1);
+    });
+
+    test('leaves a restore that switches the profile to its setup', () async {
+      await testDatabase.profilesDao.putAll([
+        _profile(1, 'Backed up').toCompanion(0),
+        _profile(2, 'Other').toCompanion(1),
+      ]);
+      final source = buildContainer()..listen(configProvider, (_, _) {});
+      source.read(currentProfileIdProvider.notifier).value = 1;
+      final archivePath = await backupToKept(actionOf(source));
+
+      final target = buildContainer()..listen(configProvider, (_, _) {});
+      target.read(currentProfileIdProvider.notifier).value = 2;
+      await actionOf(
+        target,
+      ).restore(RestoreOption.all, (_) async => archivePath);
+
+      expect(target.read(currentProfileIdProvider), 1);
+      expect(setupAction.applyCount, 0);
+    });
+
+    test('restores an icon gallery imported from a file', () async {
+      const gallery = IconSet(
+        id: 7,
+        name: 'Local',
+        icons: [IconSetIcon(name: 'cat', url: 'https://icons.example/cat.png')],
+      );
+      await testDatabase.iconSetsDao.putAll([gallery.toCompanion()]);
+      final archivePath = await backupToKept(actionOf(buildContainer()));
+
+      await testDatabase.delete(testDatabase.iconSets).go();
+      final restored = await actionOf(
+        buildContainer(),
+      ).restore(RestoreOption.all, (_) async => archivePath);
+
+      expect(restored, isTrue);
+      expect(await testDatabase.iconSetsDao.query().get(), [gallery]);
     });
 
     test('removes the work directory when delivery fails', () async {
@@ -186,6 +274,18 @@ void main() {
       expect(stored.map((item) => item.label), ['From backup']);
     });
 
+    test('a backup without chains leaves the chains a profile has', () async {
+      final shared = await SharedPreferences.getInstance();
+      await shared.setString('proxy_chains_1', '["kept"]');
+
+      await actionOf(buildContainer()).applyRestore(
+        MigrationData(profiles: [_profile(1, 'From backup')]),
+        RestoreOption.onlyProfiles,
+      );
+
+      expect(shared.getString('proxy_chains_1'), '["kept"]');
+    });
+
     test('an override restore drops profiles the backup omits', () async {
       final container = buildContainer();
       await testDatabase.profilesDao.putAll([
@@ -206,6 +306,39 @@ void main() {
       final stored = await testDatabase.profilesDao.query().get();
       expect(stored.map((item) => item.label), ['From backup']);
     });
+
+    for (final (name, data, kept) in [
+      (
+        'an override restore of an empty backup leaves no profile',
+        const MigrationData(),
+        <String>[],
+      ),
+      (
+        'an override restore of settings alone keeps the profiles',
+        const MigrationData(includesTables: false),
+        ['Pre-existing'],
+      ),
+    ]) {
+      test(name, () async {
+        final container = buildContainer();
+        await testDatabase.profilesDao.putAll([
+          _profile(9, 'Pre-existing').toCompanion(0),
+        ]);
+        container
+            .read(appSettingProvider.notifier)
+            .update(
+              (state) =>
+                  state.copyWith(restoreStrategy: RestoreStrategy.override),
+            );
+
+        await actionOf(
+          container,
+        ).applyRestore(data, RestoreOption.onlyProfiles);
+
+        final stored = await testDatabase.profilesDao.query().get();
+        expect(stored.map((item) => item.label), kept);
+      });
+    }
 
     test('a compatible restore keeps profiles the backup omits', () async {
       final container = buildContainer();

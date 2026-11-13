@@ -90,7 +90,6 @@ class _ToolViewState extends ConsumerState<ToolsView> {
             return Container();
           }
           return generateSection(
-            title: context.appLocalizations.more,
             items: [
               for (final item in state.navigationItems) ...[
                 _buildNavigationMenuItem(item),

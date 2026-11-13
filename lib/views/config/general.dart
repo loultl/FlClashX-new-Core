@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/features/form/form.dart';
 import 'package:fl_clash/l10n/l10n.dart';
 import 'package:fl_clash/models/models.dart';
+import 'package:fl_clash/plugins/app.dart';
 import 'package:fl_clash/providers/providers.dart';
+import 'package:fl_clash/state.dart';
 import 'package:fl_clash/ui/icons/icons.dart';
 import 'package:fl_clash/views/config/on_demand.dart';
 import 'package:fl_clash/widgets/widgets.dart';
@@ -67,6 +71,23 @@ class TestUrlItem extends ConsumerWidget {
   }
 }
 
+class DelayTestTimeoutItem extends ConsumerWidget {
+  const DelayTestTimeoutItem({super.key});
+
+  @override
+  Widget build(BuildContext context, ref) {
+    return ConfigOptionsItem<int>(
+      title: (l) => l.delayTestTimeout,
+      options: delayTestTimeoutOptions,
+      textBuilder: (value) => '$value ms',
+      selector: appSettingProvider.select((state) => state.delayTestTimeout),
+      onChanged: (ref, value) => ref
+          .read(appSettingProvider.notifier)
+          .update((state) => state.copyWith(delayTestTimeout: value)),
+    );
+  }
+}
+
 class UaItem extends ConsumerWidget {
   const UaItem({super.key});
 
@@ -102,15 +123,12 @@ class PortItem extends ConsumerWidget {
     final mixedPort = ref.watch(
       patchClashConfigProvider.select((state) => state.mixedPort),
     );
-    return ManagedSetting(
-      settingKey: 'clash.mixed-port',
-      child: ListItem(
-        title: Text(appLocalizations.port),
-        subtitle: Text('$mixedPort'),
-        onTap: () {
-          handleShowPortForm(context);
-        },
-      ),
+    return ListItem(
+      title: Text(appLocalizations.port),
+      subtitle: Text('$mixedPort'),
+      onTap: () {
+        handleShowPortForm(context);
+      },
     );
   }
 }
@@ -140,6 +158,9 @@ class HostsItem extends ConsumerWidget {
         subtitleBuilder: (item) => Text(item.value),
       ),
       onChanged: (value) {
+        if (value is! Map<String, String>) {
+          return;
+        }
         ref
             .read(patchClashConfigProvider.notifier)
             .update((state) => state.copyWith(hosts: value));
@@ -248,6 +269,51 @@ class OpenLogsFolderItem extends StatelessWidget {
       leading: const GlyphIcon(AppGlyphs.openExternal),
       title: Text(context.appLocalizations.openLogsFolder),
       onTap: _open,
+    );
+  }
+}
+
+class ShareLogsItem extends StatefulWidget {
+  const ShareLogsItem({super.key});
+
+  @override
+  State<ShareLogsItem> createState() => _ShareLogsItemState();
+}
+
+class _ShareLogsItemState extends State<ShareLogsItem> {
+  var _sharing = false;
+
+  Future<void> _share() async {
+    if (_sharing) {
+      return;
+    }
+    _sharing = true;
+    final appLocalizations = context.appLocalizations;
+    try {
+      final shared = await globalState.safeRun(() async {
+        final directory = Directory(await appPath.shareDirPath);
+        await directory.create(recursive: true);
+        final archive = await fileLogger.archiveToday(directory.path);
+        if (archive == null) {
+          return false;
+        }
+        await app?.shareFile(archive, mimeType: 'application/zip');
+        return true;
+      }, title: appLocalizations.shareLogs);
+      if (shared == false) {
+        dialogs.showNotifier(appLocalizations.noLogsToday);
+      }
+    } finally {
+      _sharing = false;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListItem(
+      leading: const GlyphIcon(AppGlyphs.export),
+      title: Text(context.appLocalizations.shareLogs),
+      onTap: _share,
     );
   }
 }
@@ -431,6 +497,7 @@ class GeneralView extends ConsumerWidget {
   List<Widget> _connectionItems() {
     return [
       const TestUrlItem(),
+      const DelayTestTimeoutItem(),
       _clashToggle(
         title: (l) => l.unifiedDelay,
         managedKey: 'clash.unified-delay',
@@ -472,11 +539,6 @@ class GeneralView extends ConsumerWidget {
   List<Widget> _requestItems() {
     return [
       const UaItem(),
-      _appSettingToggle(
-        title: (l) => l.checkCertificate,
-        select: (state) => state.checkCertificate,
-        update: (state, value) => state.copyWith(checkCertificate: value),
-      ),
       _appSettingToggle(
         title: (l) => l.autoCheckUpdate,
         managedKey: 'app.autoCheckUpdate',
@@ -527,6 +589,7 @@ class GeneralView extends ConsumerWidget {
         update: (state, value) => state.copyWith(openLogs: value),
       ),
       if (system.isDesktop) const OpenLogsFolderItem(),
+      if (system.isAndroid) const ShareLogsItem(),
       const ReturnToProviderItem(),
       const ResetAppItem(),
     ];
@@ -546,9 +609,10 @@ class GeneralView extends ConsumerWidget {
     return BaseScaffold(
       title: appLocalizations.general,
       body: ListView(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-        ).copyWith(top: context.appBarInset, bottom: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(
+          top: context.sectionsTopPadding,
+          bottom: 16 + context.bottomInset,
+        ),
         children: [
           const ManagedSettingsHint(keys: generalPageKeys),
           generateSection(
@@ -564,7 +628,6 @@ class GeneralView extends ConsumerWidget {
           generateSection(
             title: appLocalizations.requestsAndUpdates,
             items: _requestItems(),
-            footer: appLocalizations.checkCertificateDesc,
           ),
           generateSection(
             title: appLocalizations.inbound,

@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/common/service_probe.dart' show routedOutbound;
 import 'package:fl_clash/enum/enum.dart';
+import 'package:fl_clash/features/features.dart';
 import 'package:fl_clash/models/models.dart';
 import 'package:fl_clash/providers/ip_quality.dart';
 import 'package:fl_clash/providers/outbound_ip.dart';
@@ -117,7 +119,7 @@ void main() {
     container.read(currentProfileIdProvider.notifier).value =
         profiles.firstOrNull?.id;
     container.listen(groupsProvider, (_, _) {});
-    container.read(groupsProvider.notifier).value = groups;
+    container.read(groupsProvider.notifier).value = indexGroupMembers(groups);
     if (running) {
       container.read(runTimeProvider.notifier).value = 1;
     }
@@ -280,6 +282,38 @@ void main() {
     );
   });
 
+  testWidgets('counts flags through layers of groups that share members', (
+    tester,
+  ) async {
+    const width = 30;
+    List<String> layer(int depth) => [
+      for (var index = 0; index < width; index++) 'L$depth-$index',
+    ];
+    final leaves = [
+      for (var index = 0; index < 100; index++)
+        index.isEven ? '🇳🇱 Amsterdam $index' : '🇩🇪 Berlin $index',
+    ];
+    setUp_(
+      profiles: [_profile()],
+      groups: [
+        _group('Auto', layer(1), now: 'L1-0'),
+        for (var depth = 1; depth <= 4; depth++)
+          for (final name in layer(depth))
+            _group(
+              name,
+              depth == 4 ? leaves : layer(depth + 1),
+              now: depth == 4 ? leaves.first : layer(depth + 1).first,
+            ),
+      ],
+    );
+    final watch = Stopwatch()..start();
+    await pump(tester);
+    watch.stop();
+
+    expect(find.text('+1'), findsOneWidget);
+    expect(watch.elapsed, lessThan(const Duration(seconds: 5)));
+  });
+
   testWidgets('the app name stands in and the support button stays away', (
     tester,
   ) async {
@@ -352,7 +386,9 @@ void main() {
     expect(find.text(currentAppLocalizations.outboundIp), findsOneWidget);
   });
 
-  testWidgets('a hidden IP is masked on the server card too', (tester) async {
+  testWidgets('a hidden IP leaves the server card to a title that swaps', (
+    tester,
+  ) async {
     setUp_(
       profiles: [
         _profile(headers: const {'flclashx-serverinfo': 'Auto'}),
@@ -369,10 +405,15 @@ void main() {
     await pump(tester);
 
     expect(find.text(_ip), findsNothing);
-    expect(find.text(ipMask), findsOneWidget);
+    expect(find.text('*****'), findsNothing);
+    expect(find.byGlyph(AppGlyphs.swap), findsNothing);
+    await tester.tap(find.text('Amsterdam'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(ProxiesView), findsOneWidget);
   });
 
-  testWidgets('the hideip special masks the IP and locks its switch', (
+  testWidgets('the hideip special hides the IP and locks its switch', (
     tester,
   ) async {
     setUp_(
@@ -394,7 +435,9 @@ void main() {
     await pump(tester);
 
     expect(find.text(_ip), findsNothing);
-    await tester.tap(find.text(ipMask));
+    unawaited(
+      showIpQualitySheet(tester.element(find.text('Amsterdam')), ip: _ip),
+    );
     await tester.pumpAndSettle();
     await tester.scrollUntilVisible(
       find.text('Hide IP'),

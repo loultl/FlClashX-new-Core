@@ -22,6 +22,7 @@ class ProfilesAction extends _$ProfilesAction {
   Future<void> deleteProfile(int id) async {
     await ref.read(profilesProvider.notifier).del(id);
     await clearEffect(id);
+    await forgetProxyChains(ref, id);
     final currentProfileId = ref.read(currentProfileIdProvider);
     if (currentProfileId == id) {
       final profiles = ref.read(profilesProvider);
@@ -55,10 +56,7 @@ class ProfilesAction extends _$ProfilesAction {
     ]) {
       final profile = ref.read(profilesProvider).getProfile(id);
       if (profile == null || !profile.autoUpdate) continue;
-      final isNotNeedUpdate = profile.lastUpdateDate
-          ?.add(profile.autoUpdateDuration)
-          .isBeforeNow;
-      if (isNotNeedUpdate == false || profile.type != ProfileType.url) {
+      if (profile.isAutoUpdateDue == false || profile.type != ProfileType.url) {
         continue;
       }
       if (await _updateWithRetry(id)) {
@@ -81,10 +79,7 @@ class ProfilesAction extends _$ProfilesAction {
         refreshed.contains(profile.id)) {
       return;
     }
-    final due = profile.lastUpdateDate
-        ?.add(profile.autoUpdateDuration)
-        .isBeforeNow;
-    if (due != false) {
+    if (profile.isAutoUpdateDue != false) {
       return;
     }
     await _updateWithRetry(profile.id);
@@ -203,6 +198,9 @@ class ProfilesAction extends _$ProfilesAction {
   }
 
   void putProfile(Profile profile) {
+    if (ref.read(profilesProvider).getProfile(profile.id) == null) {
+      ref.read(proxiesActionProvider.notifier).unfoldFirstGroupOnce(profile.id);
+    }
     ref.read(profilesProvider.notifier).put(profile);
     if (ref.read(currentProfileIdProvider) != null) return;
     ref.read(currentProfileIdProvider.notifier).value = profile.id;
@@ -291,9 +289,21 @@ class ProfilesAction extends _$ProfilesAction {
         latest.fileRevision == started.fileRevision;
   }
 
-  Future<void> updateProfile(
+  Future<void> updateProfile(Profile profile, {bool showLoading = false}) =>
+      _updateProfile(profile, showLoading: showLoading, apply: true);
+
+  /// Setup, already under way, goes on with the profile this stores.
+  Future<void> fetchMissingFile(int id) async {
+    final latest = ref.read(profilesProvider).getProfile(id);
+    if (latest != null) {
+      await _updateProfile(latest, showLoading: false, apply: false);
+    }
+  }
+
+  Future<void> _updateProfile(
     Profile profile, {
-    bool showLoading = false,
+    required bool showLoading,
+    required bool apply,
   }) async {
     final operation = showLoading
         ? ref.read(updatingKeysProvider.notifier).start(profile.updatingKey)
@@ -301,7 +311,9 @@ class ProfilesAction extends _$ProfilesAction {
     final request = Object();
     _updates[profile.id] = request;
     try {
-      ref.read(profilesProvider.notifier).put(profile);
+      if (ref.read(profilesProvider).getProfile(profile.id) != profile) {
+        ref.read(profilesProvider.notifier).put(profile);
+      }
       final Profile updated;
       try {
         updated = await download(
@@ -337,6 +349,9 @@ class ProfilesAction extends _$ProfilesAction {
       ref.read(profilesProvider.notifier).put(newProfile);
       noticeDeviceHeaders(newProfile, before: latest, manual: showLoading);
       unawaited(noticeSubscriptionExpiry(newProfile));
+      if (!apply) {
+        return;
+      }
       if (profile.id == ref.read(currentProfileIdProvider)) {
         ref
             .read(setupActionProvider.notifier)
@@ -370,8 +385,7 @@ class ProfilesAction extends _$ProfilesAction {
     final platformFile = await globalState.safeRun(picker.pickerFile);
     if (platformFile == null) return;
     final bytes = await platformFile.readBytes();
-    globalState.navigatorKey.currentState?.popUntil((route) => route.isFirst);
-    ref.read(currentPageLabelProvider.notifier).toProfiles();
+    _showProfiles();
     final profile = await globalState.loadingRun(
       tag: LoadingTag.profiles,
       () => _withAgeSecretKey(
@@ -523,11 +537,14 @@ class ProfilesAction extends _$ProfilesAction {
     );
   }
 
+  /// Stops at a route that vetoes its pop, so an import that arrives from
+  /// outside never closes an editor with unsaved changes.
   void _showProfiles() {
-    if (globalState.navigatorKey.currentState?.canPop() ?? false) {
-      globalState.navigatorKey.currentState?.popUntil((route) => route.isFirst);
-    }
-    ref.read(currentPageLabelProvider.notifier).value = PageLabel.profiles;
+    globalState.navigatorKey.currentState?.popUntil(
+      (route) =>
+          route.isFirst || route.popDisposition == RoutePopDisposition.doNotPop,
+    );
+    ref.read(currentPageLabelProvider.notifier).toProfiles();
   }
 
   Future<Profile?> addProfileFromLink(

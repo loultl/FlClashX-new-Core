@@ -1,31 +1,192 @@
 package core
 
 import (
+	"bytes"
 	"context"
+	"errors"
 	"fmt"
+	"math"
 	"os"
+	"path/filepath"
+	"runtime"
 	"strings"
 	"sync"
 	"time"
 
+	"github.com/metacubex/chi"
+	"github.com/metacubex/chi/render"
+	"github.com/metacubex/http"
 	"github.com/metacubex/mihomo/component/geodata"
+	"github.com/metacubex/mihomo/component/mmdb"
 	"github.com/metacubex/mihomo/component/updater"
 	"github.com/metacubex/mihomo/constant"
+	"github.com/metacubex/mihomo/hub/route"
 	"github.com/metacubex/mihomo/log"
+	"github.com/oschwald/maxminddb-golang"
 )
 
 type geoResource struct {
-	update func() error
-	url    func() string
-	setUrl func(string)
-	path   func() string
+	update  func() error
+	install func(data []byte) error
+	url     func() string
+	setUrl  func(string)
+	path    func() string
 }
 
 var geoResources = map[string]geoResource{
-	"MMDB":    {update: updater.UpdateMMDB, url: geodata.MmdbUrl, setUrl: geodata.SetMmdbUrl, path: constant.Path.MMDB},
-	"ASN":     {update: updater.UpdateASN, url: geodata.ASNUrl, setUrl: geodata.SetASNUrl, path: constant.Path.ASN},
-	"GEOIP":   {update: updater.UpdateGeoIp, url: geodata.GeoIpUrl, setUrl: geodata.SetGeoIpUrl, path: constant.Path.GeoIP},
-	"GEOSITE": {update: updater.UpdateGeoSite, url: geodata.GeoSiteUrl, setUrl: geodata.SetGeoSiteUrl, path: constant.Path.GeoSite},
+	"MMDB":    {update: updater.UpdateMMDB, install: installMMDB, url: geodata.MmdbUrl, setUrl: geodata.SetMmdbUrl, path: constant.Path.MMDB},
+	"ASN":     {update: updater.UpdateASN, install: installASN, url: geodata.ASNUrl, setUrl: geodata.SetASNUrl, path: constant.Path.ASN},
+	"GEOIP":   {update: updater.UpdateGeoIp, install: installGeoIP, url: geodata.GeoIpUrl, setUrl: geodata.SetGeoIpUrl, path: constant.Path.GeoIP},
+	"GEOSITE": {update: updater.UpdateGeoSite, install: installGeoSite, url: geodata.GeoSiteUrl, setUrl: geodata.SetGeoSiteUrl, path: constant.Path.GeoSite},
+}
+
+const geoDownloadTimeout = 90 * time.Second
+
+// mihomo's updaters read a download whole, however large, under mihomo's own
+// certificate policy; the core downloads the file within its size limit and
+// under the app's policy, and installs it as they would.
+func (resource geoResource) run() error {
+	if resource.install == nil {
+		return resource.update()
+	}
+	name := filepath.Base(resource.path())
+	data, err := downloadBytes(resource.url(), geoDownloadTimeout, skipCertVerify.Load())
+	if err == nil && len(data) == 0 {
+		err = fmt.Errorf("no data")
+	}
+	if err != nil {
+		return fmt.Errorf("can't download %s: %w", name, err)
+	}
+	if current, err := os.ReadFile(geoFileInUse(resource.path())); err == nil && bytes.Equal(current, data) {
+		return nil
+	}
+	if err := resource.install(data); err != nil {
+		return fmt.Errorf("can't install %s: %w", name, err)
+	}
+	return nil
+}
+
+func installMMDB(data []byte) error {
+	return installMaxMind(data, constant.Path.MMDB(), mmdb.ReloadIP)
+}
+
+func installASN(data []byte) error {
+	return installMaxMind(data, constant.Path.ASN(), mmdb.ReloadASN)
+}
+
+func installMaxMind(data []byte, path string, reload func()) error {
+	validate := func(staged string) error {
+		instance, err := maxminddb.Open(staged)
+		if err == nil {
+			err = instance.Close()
+		}
+		return err
+	}
+	if stagesMappedFile {
+		return replaceGeoFile(pendingGeoPath(path), data, validate, func() {}, func() {})
+	}
+	return replaceGeoFile(path, data, validate, func() {}, reload)
+}
+
+// Windows renames over no mapped file, and closing the reader under a lookup takes the Core down.
+var stagesMappedFile = runtime.GOOS == "windows"
+
+func pendingGeoPath(path string) string {
+	return path + ".pending"
+}
+
+func geoFileInUse(path string) string {
+	if pending := pendingGeoPath(path); fileExists(pending) {
+		return pending
+	}
+	return path
+}
+
+func installPendingGeoFiles() {
+	for _, path := range []string{constant.Path.MMDB(), constant.Path.ASN()} {
+		pending := pendingGeoPath(path)
+		if !fileExists(pending) {
+			continue
+		}
+		if err := os.Rename(pending, path); err != nil {
+			log.Warnln("[GEO] can't install %s: %v", filepath.Base(path), err)
+		}
+	}
+}
+
+func fileExists(path string) bool {
+	_, err := os.Stat(path)
+	return err == nil
+}
+
+func installGeoIP(data []byte) error {
+	return installGeodata(data, constant.Path.GeoIP(), func(loader geodata.Loader, staged []byte) error {
+		_, err := loader.LoadIPByBytes(staged, "cn")
+		return err
+	}, geodata.ClearGeoIPCache)
+}
+
+func installGeoSite(data []byte) error {
+	return installGeodata(data, constant.Path.GeoSite(), func(loader geodata.Loader, staged []byte) error {
+		_, err := loader.LoadSiteByBytes(staged, "cn")
+		return err
+	}, geodata.ClearGeoSiteCache)
+}
+
+func installGeodata(data []byte, path string, check func(geodata.Loader, []byte) error, clearCache func()) error {
+	validate := func(staged string) error {
+		loader, err := geodata.GetGeoDataLoader("standard")
+		if err != nil {
+			return err
+		}
+		buf, err := os.ReadFile(staged)
+		if err != nil {
+			return err
+		}
+		return check(loader, buf)
+	}
+	return replaceGeoFile(path, data, validate, func() {}, clearCache)
+}
+
+// The new file is whole on disk before the file-mapped database is released;
+// a failed rename leaves the old file for the reload to reopen.
+func replaceGeoFile(path string, data []byte, validate func(staged string) error, release func(), reload func()) error {
+	staged, err := writeSyncedTemp(path, data)
+	if err != nil {
+		return err
+	}
+	defer os.Remove(staged)
+	if err := validate(staged); err != nil {
+		return err
+	}
+	release()
+	defer reload()
+	return os.Rename(staged, path)
+}
+
+func writeSyncedTemp(path string, data []byte) (string, error) {
+	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+		return "", err
+	}
+	file, err := os.CreateTemp(filepath.Dir(path), filepath.Base(path)+".*.tmp")
+	if err != nil {
+		return "", err
+	}
+	_, err = file.Write(data)
+	if err == nil {
+		err = file.Chmod(0o644)
+	}
+	if err == nil {
+		err = file.Sync()
+	}
+	if closeErr := file.Close(); err == nil {
+		err = closeErr
+	}
+	if err != nil {
+		_ = os.Remove(file.Name())
+		return "", err
+	}
+	return file.Name(), nil
 }
 
 // mihomo's updaters read these links without a lock, so an unchanged one is never rewritten.
@@ -66,14 +227,15 @@ func handleUpdateGeoData(geoType string) error {
 
 // mihomo's updater returns nil for a download that matched the file it had,
 // so whether the file changed is what tells an update from a skip.
-func runGeoUpdate(geoType string, resource geoResource) {
+func runGeoUpdate(geoType string, resource geoResource) error {
 	sendMessage(GeoUpdateMessage, GeoUpdateStatus{Type: geoType, Updating: true})
 	before := resource.stamp()
-	err := resource.update()
+	err := resource.run()
 	if err != nil {
 		logError("updateGeoData(%s) error: %v", geoType, err)
 	}
 	onGeoUpdate(geoType, false, err == nil && resource.stamp() == before, err)
+	return err
 }
 
 type fileStampValue struct {
@@ -85,7 +247,7 @@ func (resource geoResource) stamp() fileStampValue {
 	if resource.path == nil {
 		return fileStampValue{}
 	}
-	info, err := os.Stat(resource.path())
+	info, err := os.Stat(geoFileInUse(resource.path()))
 	if err != nil {
 		return fileStampValue{}
 	}
@@ -122,9 +284,12 @@ var geoUpdaterRun struct {
 	cancel context.CancelFunc
 }
 
+// More hours overflow a Duration into a negative one, which fires back to back.
+const maxGeoUpdateIntervalHours = math.MaxInt64 / int64(time.Hour)
+
 func startGeoUpdater() {
 	interval := updater.GeoUpdateInterval()
-	if interval <= 0 {
+	if interval <= 0 || int64(interval) > maxGeoUpdateIntervalHours {
 		log.Warnln("[GEO] invalid update interval: %d", interval)
 		return
 	}
@@ -167,7 +332,7 @@ func lastGeoUpdateTime() time.Time {
 	for _, path := range []string{
 		constant.Path.GeoIP(), constant.Path.MMDB(), constant.Path.ASN(), constant.Path.GeoSite(),
 	} {
-		if info, err := os.Stat(path); err == nil {
+		if info, err := os.Stat(geoFileInUse(path)); err == nil {
 			return info.ModTime()
 		}
 	}
@@ -193,13 +358,34 @@ func enabledGeoResources() []string {
 }
 
 // A resource a manual update holds is left to it.
-func updateGeoResources() {
+func updateGeoResources() error {
+	var errs []error
 	for _, name := range enabledGeoResources() {
 		if !claimUpdateAs(geoUpdateScope+name, true) {
 			continue
 		}
-		runGeoUpdate(name, geoResources[name])
+		errs = append(errs, runGeoUpdate(name, geoResources[name]))
 	}
+	return errors.Join(errs...)
+}
+
+// The controller's geo endpoints would run mihomo's updater on the core's files.
+func init() {
+	route.Register(func(r chi.Router) {
+		r.Post("/configs/geo", serveGeoUpdate)
+		r.Post("/upgrade/geo", serveGeoUpdate)
+	})
+}
+
+var controllerGeoUpdate = updateGeoResources
+
+func serveGeoUpdate(w http.ResponseWriter, r *http.Request) {
+	if err := controllerGeoUpdate(); err != nil {
+		render.Status(r, http.StatusInternalServerError)
+		render.JSON(w, r, render.M{"message": err.Error()})
+		return
+	}
+	render.NoContent(w, r)
 }
 
 func syncGeoUpdater(autoUpdate *bool, interval *int) {

@@ -22,6 +22,7 @@ import 'package:fl_clash/providers/state.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:path/path.dart' show dirname;
 import 'package:riverpod/riverpod.dart';
 
 import '../helpers/app_paths.dart';
@@ -398,6 +399,163 @@ void main() {
         expect(setupAction.applyCount, 0);
       },
     );
+
+    Future<
+      ({
+        ProviderContainer container,
+        ScriptsAction action,
+        List<Completer<String>> bodies,
+        Script remote,
+      })
+    >
+    heldScriptUpdate() async {
+      final root = await Directory.systemTemp.createTemp('scripts_action_');
+      addTearDown(() => root.delete(recursive: true));
+      await useAppPaths(root);
+      final container = scriptsContainer(
+        Profile.normal(),
+        ApplyRecordingSetupAction(),
+      );
+      final action = container.read(scriptsActionProvider.notifier);
+      final bodies = <Completer<String>>[];
+      action.download = (_) {
+        final body = Completer<String>();
+        bodies.add(body);
+        return body.future;
+      };
+      final remote = script(1, url: 'https://example.com/s.js');
+      await action.saveScript(remote, 'v1');
+      return (
+        container: container,
+        action: action,
+        bodies: bodies,
+        remote: remote,
+      );
+    }
+
+    Future<List<String>> leftovers(Script script) async {
+      final dir = Directory(dirname(await script.path));
+      return [
+        for (final entity in dir.listSync())
+          if (entity.path.endsWith('.download')) entity.path,
+      ];
+    }
+
+    test(
+      'a finished download writes the body and keeps the saved label',
+      () async {
+        final held = await heldScriptUpdate();
+        final update = held.action.updateScript(held.remote);
+        await pumpEventQueue();
+        held.bodies.single.complete('v2');
+        await update;
+
+        expect(await held.remote.content, 'v2');
+        expect(
+          held.container.read(scriptsProvider).value?.single.label,
+          'Script 1',
+        );
+        expect(await leftovers(held.remote), isEmpty);
+      },
+    );
+
+    test('a save made during the download outlives it', () async {
+      final held = await heldScriptUpdate();
+      final update = held.action.updateScript(held.remote);
+      await pumpEventQueue();
+      final save = held.action.saveScript(
+        held.remote.copyWith(label: 'Edited'),
+        'edited',
+      );
+      held.bodies.single.complete('downloaded');
+      await Future.wait([update, save]);
+
+      expect(await held.remote.content, 'edited');
+      expect(
+        held.container.read(scriptsProvider).value?.single.label,
+        'Edited',
+      );
+      expect(
+        held.container.read(isUpdatingProvider(held.remote.updatingKey)),
+        isFalse,
+      );
+      expect(await leftovers(held.remote), isEmpty);
+    });
+
+    test('a download started during a save waits for it and yields', () async {
+      final held = await heldScriptUpdate();
+      final writing = Completer<void>();
+      held.action.write = (script, content) async {
+        await writing.future;
+        return script.save(content);
+      };
+      final save = held.action.saveScript(
+        held.remote.copyWith(label: 'Edited'),
+        'edited',
+      );
+      final update = held.action.updateScript(held.remote);
+      await pumpEventQueue();
+      held.bodies.single.complete('downloaded');
+      await pumpEventQueue();
+      expect(await held.remote.content, 'v1');
+
+      writing.complete();
+      await Future.wait([save, update]);
+
+      expect(await held.remote.content, 'edited');
+      expect(
+        held.container.read(scriptsProvider).value?.single.label,
+        'Edited',
+      );
+      expect(await leftovers(held.remote), isEmpty);
+    });
+
+    test('only the latest of overlapping downloads is published', () async {
+      final held = await heldScriptUpdate();
+      final first = held.action.updateScript(held.remote);
+      await pumpEventQueue();
+      final second = held.action.updateScript(held.remote);
+      await pumpEventQueue();
+
+      held.bodies[0].complete('first');
+      await first;
+      expect(await held.remote.content, 'v1');
+
+      held.bodies[1].complete('second');
+      await second;
+      expect(await held.remote.content, 'second');
+      expect(await leftovers(held.remote), isEmpty);
+    });
+
+    test(
+      'an older download finishing last does not replace a newer one',
+      () async {
+        final held = await heldScriptUpdate();
+        final first = held.action.updateScript(held.remote);
+        await pumpEventQueue();
+        final second = held.action.updateScript(held.remote);
+        await pumpEventQueue();
+
+        held.bodies[1].complete('second');
+        await second;
+        held.bodies[0].complete('first');
+        await first;
+
+        expect(await held.remote.content, 'second');
+        expect(await leftovers(held.remote), isEmpty);
+      },
+    );
+
+    test('a script deleted during the download stays deleted', () async {
+      final held = await heldScriptUpdate();
+      final update = held.action.updateScript(held.remote);
+      await pumpEventQueue();
+      held.container.read(scriptsProvider.notifier).del(held.remote.id);
+      held.bodies.single.complete('downloaded');
+      await update;
+
+      expect(held.container.read(scriptsProvider).value, isEmpty);
+    });
   });
 
   group('GeoResourceAction', () {
@@ -921,6 +1079,23 @@ void main() {
         return coreAction.restartAfterCrash(reason);
       }
 
+      test('answers a crash during the first init and keeps the status the '
+          'restart set', () async {
+        final init = Completer<void>();
+        coreAction.initCompleter = init;
+        final start = coreAction.startCore();
+        await pumpEventQueue();
+        expect(container.read(coreStatusProvider), CoreStatus.connected);
+
+        coreAction.initCompleter = null;
+        await crashAfter(Duration.zero, 'boom');
+        init.completeError(StateError('the Core is gone'));
+        await start;
+
+        expect(coreAction.lifecycleRestartCount, 1);
+        expect(container.read(coreStatusProvider), CoreStatus.connected);
+      });
+
       test('restarts the Core with the run it had', () async {
         await crashAfter(Duration.zero, 'boom');
 
@@ -1337,6 +1512,48 @@ void main() {
     );
 
     test(
+      'a TUN the Core could not open relaunches it on the next enable, once',
+      () async {
+        TestWidgetsFlutterBinding.ensureInitialized();
+        await AppLocalizations.load(const Locale('en'));
+        late _AuthorizationSetupAction setupAction;
+        late _RestartRecordingCoreAction coreAction;
+        final container = ProviderContainer(
+          overrides: [
+            setupActionProvider.overrideWith(() {
+              setupAction = _AuthorizationSetupAction([
+                AuthorizeCode.none,
+                AuthorizeCode.none,
+              ]);
+              return setupAction;
+            }),
+            coreActionProvider.overrideWith(() {
+              coreAction = _RestartRecordingCoreAction();
+              return coreAction;
+            }),
+          ],
+        );
+        addTearDown(container.dispose);
+        final patch = container.read(patchClashConfigProvider.notifier);
+        patch.update((state) => state.copyWith.tun(enable: true));
+        container.read(setupActionProvider);
+        container.read(coreActionProvider);
+
+        setupAction.tunStillFailed = true;
+        await setupAction.tunFailed();
+        setupAction.tunStillFailed = false;
+        patch.update((state) => state.copyWith.tun(enable: true));
+        await setupAction.updateConfig();
+
+        expect(coreAction.restartCount, 1);
+        container.read(authorizedTunEnableProvider.notifier).value =
+            TunAuthorizationState.none;
+        expect(await setupAction.requestAdmin(true), isTrue);
+        expect(setupAction.authorizationRequestCount, 2);
+      },
+    );
+
+    test(
       'a config Core rejects on the handoff path reports failure, not success',
       () async {
         late _AuthorizationSetupAction setupAction;
@@ -1365,6 +1582,87 @@ void main() {
 
         expect(coreAction.restartCount, 1);
         expect(succeeded, isFalse);
+      },
+    );
+
+    test(
+      'a restart whose restore is newly authorized launches the Core again',
+      () async {
+        final container = ProviderContainer(
+          overrides: [
+            currentProfileProvider.overrideWithValue(null),
+            coreActionProvider.overrideWith(_TestCoreAction.new),
+            setupActionProvider.overrideWith(
+              () => _HandoffSetupAction([AuthorizeCode.success]),
+            ),
+          ],
+        );
+        addTearDown(container.dispose);
+        container
+            .read(patchClashConfigProvider.notifier)
+            .update((state) => state.copyWith.tun(enable: true));
+        final coreAction =
+            container.read(coreActionProvider.notifier) as _TestCoreAction;
+        final setupAction =
+            container.read(setupActionProvider.notifier) as _HandoffSetupAction;
+        final statuses = <CoreStatus>[];
+        container.listen(
+          coreStatusProvider,
+          (_, next) => statuses.add(next),
+          fireImmediately: true,
+        );
+
+        final restarted = await coreAction.restartCore().timeout(
+          const Duration(seconds: 5),
+        );
+
+        expect(restarted, isTrue);
+        expect(setupAction.authorizationRequestCount, 1);
+        expect(coreAction.lifecycleRestartCount, 2);
+        expect(setupAction.applyCount, 2);
+        expect(statuses.skipWhile((status) => status != CoreStatus.connected), [
+          CoreStatus.connected,
+          CoreStatus.connecting,
+          CoreStatus.connected,
+        ]);
+      },
+    );
+
+    test(
+      'a relaunch that fails after a new authorization reopens it',
+      () async {
+        final container = ProviderContainer(
+          overrides: [
+            currentProfileProvider.overrideWithValue(null),
+            coreActionProvider.overrideWith(_TestCoreAction.new),
+            setupActionProvider.overrideWith(
+              () => _HandoffSetupAction([AuthorizeCode.success]),
+            ),
+          ],
+        );
+        addTearDown(container.dispose);
+        container
+            .read(patchClashConfigProvider.notifier)
+            .update((state) => state.copyWith.tun(enable: true));
+        final coreAction =
+            container.read(coreActionProvider.notifier) as _TestCoreAction;
+        container.read(setupActionProvider.notifier);
+        coreAction.onInit = () {
+          coreAction.restartError = _restartFailure;
+        };
+
+        await expectLater(
+          coreAction.restartCore().timeout(const Duration(seconds: 5)),
+          throwsA(same(_restartFailure)),
+        );
+        await pumpEventQueue();
+
+        expect(coreAction.lifecycleRestartCount, 2);
+        expect(
+          container.read(authorizedTunEnableProvider),
+          TunAuthorizationState.none,
+        );
+        expect(container.read(coreStatusProvider), CoreStatus.disconnected);
       },
     );
 
@@ -1507,6 +1805,11 @@ class _MemoryScripts extends Scripts {
   void put(Script script) {
     state = AsyncData([...value.where((item) => item.id != script.id), script]);
   }
+
+  @override
+  void del(int id) {
+    state = AsyncData([...value.where((item) => item.id != id)]);
+  }
 }
 
 class _TestSetupAction extends SetupAction {
@@ -1573,6 +1876,11 @@ class _AuthorizationSetupAction extends SetupAction {
 
   _AuthorizationSetupAction(this.authorizationResults, {this.pending});
 
+  bool tunStillFailed = false;
+
+  @override
+  Future<bool> confirmTunFailed() async => tunStillFailed;
+
   @override
   Future<AuthorizeCode> authorizeCore() async {
     final index = authorizationRequestCount++;
@@ -1581,6 +1889,30 @@ class _AuthorizationSetupAction extends SetupAction {
       return pending.future;
     }
     return authorizationResults[index];
+  }
+}
+
+/// Only its first apply runs for real: the one that meets the authorization.
+class _HandoffSetupAction extends _AuthorizationSetupAction {
+  _HandoffSetupAction(super.authorizationResults);
+
+  int applyCount = 0;
+
+  @override
+  Future<bool> applyProfile({
+    bool silence = false,
+    bool force = false,
+    Future<void> Function()? preloadInvoke,
+  }) {
+    applyCount++;
+    if (applyCount > 1) {
+      return Future.value(true);
+    }
+    return super.applyProfile(
+      silence: silence,
+      force: force,
+      preloadInvoke: preloadInvoke,
+    );
   }
 }
 

@@ -250,7 +250,6 @@ class _ServerPanel extends ConsumerWidget {
     final hideIp = ref.watch(
       appSettingProvider.select((state) => state.hideIp),
     );
-    final allGroups = ref.watch(groupsProvider);
     final server = picked?.all.firstWhereOrNull(
       (proxy) => proxy.name == serverName,
     );
@@ -261,10 +260,10 @@ class _ServerPanel extends ConsumerWidget {
     final code = nameCode ?? (isStart ? ipInfo?.countryCode : null);
     final others = picked == null
         ? const <String>[]
-        : _groupFlagsOf(
-            allGroups,
-            picked,
-          ).where((other) => other != nameCode).toList();
+        : ref
+              .watch(groupFlagsProvider(picked.name))
+              .where((other) => other != nameCode)
+              .toList();
     final otherCount = others.isNotEmpty
         ? others.length
         : picked == null
@@ -274,7 +273,7 @@ class _ServerPanel extends ConsumerWidget {
         ? appLocalizations.changeServer
         : serverName.withoutLeadingFlag;
     final ipStyle = DashboardText.label(context);
-    final Widget? ip = !isStart || serverName.isEmpty
+    final Widget? ip = !isStart || serverName.isEmpty || hideIp
         ? null
         : ipInfo != null
         ? Tooltip(
@@ -284,7 +283,7 @@ class _ServerPanel extends ConsumerWidget {
               onTap: () => showIpQualitySheet(context, ip: ipInfo.ip),
               customBorder: AppShape.xs,
               child: Text(
-                hideIp ? ipMask : ipInfo.ip,
+                ipInfo.ip,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: ipStyle,
@@ -300,7 +299,7 @@ class _ServerPanel extends ConsumerWidget {
           ])
         : null;
     void changeServer() => showProxiesSheet(context, groupName: groupName);
-    final swap = groups.isEmpty
+    final swap = groups.isEmpty || hideIp
         ? null
         : SizedBox(
             height: AppTextStyle.headline.leading,
@@ -331,15 +330,50 @@ class _ServerPanel extends ConsumerWidget {
                 Row(
                   children: [
                     Flexible(
-                      child: EmojiText(
-                        title,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyle.headline.of(
-                          context,
-                          emphasized: true,
-                        ),
-                      ),
+                      child: hideIp
+                          ? Tooltip(
+                              message: appLocalizations.changeServer,
+                              child: FocusRing(
+                                shape: AppShape.xs,
+                                standsOff: true,
+                                child: InkWell(
+                                  mouseCursor: clickableCursor,
+                                  onTap: groups.isEmpty ? null : changeServer,
+                                  customBorder: AppShape.xs,
+                                  hoverColor: Colors.transparent,
+                                  splashColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  child: ConstrainedBox(
+                                    constraints: const BoxConstraints(
+                                      minHeight: kMinInteractiveDimension,
+                                    ),
+                                    child: Align(
+                                      alignment:
+                                          AlignmentDirectional.centerStart,
+                                      widthFactor: 1,
+                                      child: EmojiText(
+                                        title,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppTextStyle.title3.of(
+                                          context,
+                                          emphasized: true,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : EmojiText(
+                              title,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyle.headline.of(
+                                context,
+                                emphasized: true,
+                              ),
+                            ),
                     ),
                     ?swap,
                   ],
@@ -396,27 +430,6 @@ Group? _pickedGroupOf(List<Group> groups, String? name) {
     }
   }
   return groups.firstOrNull;
-}
-
-/// The distinct flags in [group]'s proxy names, nested groups four deep.
-List<String> _groupFlagsOf(List<Group> groups, Group group) {
-  final codes = <String>{};
-  void walk(Group group, int depth) {
-    if (depth > 4) {
-      return;
-    }
-    for (final proxy in group.all) {
-      final code = proxy.name.flagCountryCode;
-      if (code != null) {
-        codes.add(code);
-      } else if (groups.getGroup(proxy.name) case final nested?) {
-        walk(nested, depth + 1);
-      }
-    }
-  }
-
-  walk(group, 0);
-  return codes.toList();
 }
 
 /// The server's flag in a circle and a count of the group's other
@@ -550,61 +563,65 @@ class _ConnectButton extends ConsumerWidget {
       child: Semantics(
         button: true,
         label: label,
-        child: SizedBox(
-          width: double.infinity,
-          height: _connectHeight,
-          child: TweenAnimationBuilder<double>(
-            tween: Tween(end: isStart ? 1 : 0),
-            duration: duration,
-            curve: Curves.easeInOut,
-            builder: (context, progress, _) {
-              final ink = Color.lerp(
-                colorScheme.onPrimary,
-                colorScheme.primary,
-                progress,
-              )!;
-              final content = suspended
-                  ? const GlyphIcon(AppGlyphs.wifiOff, size: 26, fill: 1)
-                  : isStart
-                  ? Row(
-                      mainAxisSize: MainAxisSize.min,
-                      spacing: 10,
-                      children: [
-                        const GlyphIcon(AppGlyphs.stop, size: 22, fill: 1),
-                        Text(
-                          getTimeText(runTime),
-                          style: DashboardText.figure(
-                            context,
-                            AppTextStyle.headline,
-                            color: ink,
+        child: RisingHold(
+          enabled: system.isAndroid,
+          onHeld: toggle,
+          child: SizedBox(
+            width: double.infinity,
+            height: _connectHeight,
+            child: TweenAnimationBuilder<double>(
+              tween: Tween(end: isStart ? 1 : 0),
+              duration: duration,
+              curve: Curves.easeInOut,
+              builder: (context, progress, _) {
+                final ink = Color.lerp(
+                  colorScheme.onPrimary,
+                  colorScheme.primary,
+                  progress,
+                )!;
+                final content = suspended
+                    ? const GlyphIcon(AppGlyphs.wifiOff, size: 26, fill: 1)
+                    : isStart
+                    ? Row(
+                        mainAxisSize: MainAxisSize.min,
+                        spacing: 10,
+                        children: [
+                          const GlyphIcon(AppGlyphs.stop, size: 22, fill: 1),
+                          Text(
+                            getTimeText(runTime),
+                            style: DashboardText.figure(
+                              context,
+                              AppTextStyle.headline,
+                              color: ink,
+                            ),
                           ),
-                        ),
-                      ],
-                    )
-                  : GlyphIcon(AppGlyphs.playPause(0), size: 28, fill: 1);
-              return FilledButton(
-                style: FilledButton.styleFrom(
-                  backgroundColor: colorScheme.primary.withValues(
-                    alpha: 1 - progress,
+                        ],
+                      )
+                    : GlyphIcon(AppGlyphs.playPause(0), size: 28, fill: 1);
+                return FilledButton(
+                  style: FilledButton.styleFrom(
+                    backgroundColor: colorScheme.primary.withValues(
+                      alpha: 1 - progress,
+                    ),
+                    foregroundColor: ink,
+                    side: BorderSide(
+                      color: colorScheme.primary.withValues(alpha: progress),
+                      width: 1.5,
+                    ),
                   ),
-                  foregroundColor: ink,
-                  side: BorderSide(
-                    color: colorScheme.primary.withValues(alpha: progress),
-                    width: 1.5,
+                  onPressed: toggle,
+                  child: AnimatedSwitcher(
+                    duration: duration,
+                    switchInCurve: Curves.easeInOut,
+                    switchOutCurve: Curves.easeInOut,
+                    child: KeyedSubtree(
+                      key: ValueKey((isStart, suspended)),
+                      child: content,
+                    ),
                   ),
-                ),
-                onPressed: toggle,
-                child: AnimatedSwitcher(
-                  duration: duration,
-                  switchInCurve: Curves.easeInOut,
-                  switchOutCurve: Curves.easeInOut,
-                  child: KeyedSubtree(
-                    key: ValueKey((isStart, suspended)),
-                    child: content,
-                  ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
       ),

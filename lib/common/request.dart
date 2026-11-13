@@ -10,12 +10,11 @@ import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/models/models.dart';
 import 'package:fl_clash/providers/config.dart';
 import 'package:fl_clash/state.dart';
-import 'package:flutter/foundation.dart' show visibleForTesting;
+import 'package:flutter/foundation.dart' show compute, visibleForTesting;
 
 class Request {
   late final Dio dio;
   late final Dio _clashDio;
-  String? userAgent;
 
   ProviderReader? _read;
 
@@ -26,21 +25,28 @@ class Request {
   Request() {
     dio = Dio(BaseOptions(headers: {'User-Agent': browserUa}));
     _clashDio = Dio();
-    _clashDio.httpClientAdapter = IOHttpClientAdapter(
-      createHttpClient: () {
-        final client = HttpClient();
-        client.findProxy = (Uri uri) {
-          client.userAgent = globalState.ua;
-          final read = _read;
-          if (read == null) {
-            return 'DIRECT';
-          }
-          return FlClashHttpOverrides.findProxyForReader(read, uri);
-        };
-        return client;
-      },
-    );
+    _clashDio.httpClientAdapter = _proxiedAdapter();
   }
+
+  IOHttpClientAdapter _proxiedAdapter() => IOHttpClientAdapter(
+    createHttpClient: () {
+      final client = HttpClient();
+      client.findProxy = (Uri uri) {
+        client.userAgent = globalState.ua;
+        final read = _read;
+        if (read == null) {
+          return 'DIRECT';
+        }
+        return FlClashHttpOverrides.findProxyForReader(read, uri);
+      };
+      return client;
+    },
+  );
+
+  /// The adapter keeps the first HttpClient it makes, under whatever
+  /// HttpOverrides held then; a test that changes them starts a new one.
+  @visibleForTesting
+  void resetClient() => _clashDio.httpClientAdapter = _proxiedAdapter();
 
   Future<Response<T>> _download<T>(
     String url,
@@ -53,6 +59,7 @@ class Request {
         ?.call<PatchClashConfig>(patchClashConfigProvider)
         .globalUa;
     final cancelToken = CancelToken();
+    var oversized = false;
     return _clashDio
         .getUri<T>(
           target.uri,
@@ -65,8 +72,25 @@ class Request {
               ...headers,
               ...target.headers,
             },
+            // Nothing asks for a range, so a 206 is a cut-off copy.
+            validateStatus: (status) =>
+                status != null &&
+                status >= 200 &&
+                status < 300 &&
+                status != HttpStatus.partialContent,
           ),
           cancelToken: cancelToken,
+          onReceiveProgress: (received, total) {
+            if (received > maxDownloadBytes || total > maxDownloadBytes) {
+              oversized = true;
+              cancelToken.cancel();
+            }
+          },
+        )
+        .catchError(
+          (Object _) =>
+              throw MessageException(currentAppLocalizations.downloadTooLarge),
+          test: (_) => oversized,
         )
         .timeout(
           timeout,
@@ -155,12 +179,47 @@ class Request {
 
   /// Null when this build is current; throws when GitHub cannot be asked.
   Future<Map<String, dynamic>?> checkForUpdate() async {
-    final release = await latestRelease();
+    final release = globalState.isPre
+        ? await latestPrerelease()
+        : await latestRelease();
+    if (release == null) {
+      return null;
+    }
     final remoteVersion = release['tag_name'] as String;
-    final version = globalState.packageInfo.version;
+    final version = globalState.packageInfo.displayVersion;
     final hasUpdate =
         compareVersions(remoteVersion.replaceAll('v', ''), version) > 0;
     return hasUpdate ? release : null;
+  }
+
+  /// A pre-release installs as its own app, which a stable release would not
+  /// upgrade, so it only hears of newer pre-releases.
+  @visibleForTesting
+  Future<Map<String, dynamic>?> latestPrerelease() async {
+    try {
+      final releases = <dynamic>[];
+      String? next =
+          'https://api.github.com/repos/$repository/releases?per_page=100';
+      for (var page = 0; next != null && page < _releasePages; page++) {
+        final response = await dio.get<List<dynamic>>(
+          next,
+          options: Options(responseType: ResponseType.json),
+        );
+        releases.addAll(response.data ?? const []);
+        next = nextPageOf(response.headers.value('link'));
+      }
+      return newestPrerelease(releases);
+    } on DioException catch (error) {
+      commonPrint.log(
+        'releases API failed: ${compactError(error)}',
+        logLevel: LogLevel.warning,
+      );
+    }
+    final feed = await dio.get<String>(
+      'https://github.com/$repository/releases.atom',
+      options: Options(responseType: ResponseType.plain),
+    );
+    return newestPrereleaseInFeed(feed.data ?? '');
   }
 
   /// The release page redirect still answers once the hourly API quota is spent.
@@ -197,6 +256,63 @@ class Request {
 
 final request = Request();
 
+const _releasePages = 5;
+
+/// The app's own pre-release tags; Core builds and other releases share the
+/// list under tags compareVersions cannot read.
+final _prereleaseTag = RegExp(r'^v\d+\.\d+\.\d+-pre\.\d+$');
+
+Map<String, dynamic>? newestPrerelease(List<dynamic> releases) {
+  Map<String, dynamic>? newest;
+  for (final release in releases) {
+    if (release is! Map<String, dynamic> ||
+        release['prerelease'] != true ||
+        release['draft'] == true) {
+      continue;
+    }
+    final tag = release['tag_name'];
+    if (tag is! String || !_prereleaseTag.hasMatch(tag)) {
+      continue;
+    }
+    if (newest == null || _newer(tag, newest['tag_name'] as String)) {
+      newest = release;
+    }
+  }
+  return newest;
+}
+
+/// The releases feed, which is not rate limited, names tags but not which
+/// are pre-releases; the app's pre-release tags say so themselves.
+Map<String, dynamic>? newestPrereleaseInFeed(String feed) {
+  String? newest;
+  for (final match in RegExp(r'/releases/tag/([^"<\s]+)').allMatches(feed)) {
+    final tag = Uri.decodeComponent(match.group(1)!);
+    if (_prereleaseTag.hasMatch(tag) &&
+        (newest == null || _newer(tag, newest))) {
+      newest = tag;
+    }
+  }
+  return newest == null ? null : {'tag_name': newest};
+}
+
+String? nextPageOf(String? link) {
+  if (link == null) {
+    return null;
+  }
+  for (final part in link.split(',')) {
+    final match = RegExp(r'<([^>]+)>;\s*rel="next"').firstMatch(part);
+    if (match != null) {
+      return match.group(1);
+    }
+  }
+  return null;
+}
+
+bool _newer(String tag, String than) =>
+    compareVersions(_versionOfTag(tag), _versionOfTag(than)) > 0;
+
+String _versionOfTag(String tag) => tag.replaceFirst(RegExp('^v'), '');
+
 /// How a host let a download down: [soft] when it may be back in a moment,
 /// [hard] when the host itself is gone or no longer serves the resource.
 enum HostFailure { soft, hard }
@@ -226,20 +342,66 @@ HostFailure hostFailureOf(Object error) {
 
 /// Some subscription servers send a gzip or zlib body without saying so in
 /// Content-Encoding, which is the only signal dart:io decompresses on.
-Uint8List decompressUnlabeled(Uint8List bytes) {
-  final codec = switch (bytes) {
-    [0x1f, 0x8b, ...] => gzip,
-    [0x78, final flags, ...] when (0x78 << 8 | flags) % 31 == 0 => zlib,
-    _ => null,
-  };
+Future<Uint8List> decompressDownload(Uint8List bytes) async {
+  if (_unlabeledCodecOf(bytes) == null) {
+    return bytes;
+  }
+  final inflated = await compute(decompressUnlabeled, bytes);
+  if (inflated == null) {
+    throw MessageException(currentAppLocalizations.downloadTooLarge);
+  }
+  return inflated;
+}
+
+@visibleForTesting
+Uint8List? decompressUnlabeled(
+  Uint8List bytes, {
+  int limit = maxDownloadBytes,
+}) {
+  final codec = _unlabeledCodecOf(bytes);
   if (codec == null) {
     return bytes;
   }
+  final output = _CappedSink(limit);
   try {
-    return Uint8List.fromList(codec.decode(bytes));
+    codec.decoder.startChunkedConversion(output)
+      ..add(bytes)
+      ..close();
+  } on _OutputTooLarge {
+    return null;
   } on FormatException {
     return bytes;
   }
+  return output.bytes.takeBytes();
+}
+
+Codec<List<int>, List<int>>? _unlabeledCodecOf(Uint8List bytes) =>
+    switch (bytes) {
+      [0x1f, 0x8b, ...] => gzip,
+      [0x78, final flags, ...] when (0x78 << 8 | flags) % 31 == 0 => zlib,
+      _ => null,
+    };
+
+final class _OutputTooLarge implements Exception {
+  const _OutputTooLarge();
+}
+
+final class _CappedSink implements Sink<List<int>> {
+  _CappedSink(this.limit);
+
+  final int limit;
+  final bytes = BytesBuilder(copy: false);
+
+  @override
+  void add(List<int> chunk) {
+    if (bytes.length + chunk.length > limit) {
+      throw const _OutputTooLarge();
+    }
+    bytes.add(chunk);
+  }
+
+  @override
+  void close() {}
 }
 
 /// dart:io turns [Uri.userInfo] into Basic credentials still percent-encoded.

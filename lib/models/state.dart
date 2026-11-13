@@ -234,6 +234,7 @@ abstract class MakeRealProfileState with _$MakeRealProfileState {
     @Default({}) Map<String, dynamic> injectedRuleProviders,
     String? matchTarget,
     @Default(false) bool safeMode,
+    @Default([]) List<Map<String, Object?>> proxyChains,
   }) = _MakeRealProfileState;
 }
 
@@ -249,6 +250,10 @@ abstract class MigrationData with _$MigrationData {
     @Default([]) List<ClashProvider> clashProviders,
     @Default([]) List<CustomProxy> customProxies,
     @Default([]) List<ProxyDialer> proxyDialers,
+    @Default([]) List<IconSet> iconSets,
+    // False for an archive that carries settings alone: an empty list then
+    // says nothing about the rows, so an override restore must keep them.
+    @Default(true) bool includesTables,
   }) = _MigrationData;
 }
 
@@ -269,5 +274,6 @@ abstract class SetupState with _$SetupState {
     @Default([]) List<CustomProxy> appProxies,
     @Default({}) Map<int, String> proxyDialers,
     String? matchTarget,
+    @Default([]) List<Map<String, Object?>> proxyChains,
   }) = _SetupState;
 }

@@ -31,6 +31,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Release history is counted from upstream's frozenBoundaryTag, which the
+      # fork does not carry; pushing it there would start a build of its own.
+      - name: Fetch the changelog boundary tag
+        run: |
+          tag=$(sed -n "s/^const frozenBoundaryTag = '\(.*\)';$/\1/p" tool/src/changelog/builder.dart)
+          git fetch --no-tags https://github.com/chen08209/FlClash.git "refs/tags/${tag}:refs/tags/${tag}"
+
       - name: Test git hooks
         run: bash tool/hooks/test.sh
 
@@ -121,7 +128,7 @@ jobs:
           - platform: windows
             os: windows-2022
           - platform: macos
-            os: macos-15
+            os: macos-26
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -202,7 +209,7 @@ jobs:
             gofmt -l ./*.go ./cmd ./mobile ./platform ./tun >&2
             exit 1
           }
-          go test -count=1 .
+          go test -count=1 . ./platform
           go vet . ./cmd/...
           GOOS=linux go vet ./platform
 
@@ -342,8 +349,8 @@ jobs:
               {'platform': 'android', 'os': 'ubuntu-latest'},
               {'platform': 'windows', 'os': 'windows-2022', 'arch': 'amd64'},
               {'platform': 'linux', 'os': 'ubuntu-22.04', 'arch': 'amd64'},
-              {'platform': 'macos', 'os': 'macos-15-intel', 'arch': 'amd64'},
-              {'platform': 'macos', 'os': 'macos-latest', 'arch': 'arm64'},
+              {'platform': 'macos', 'os': 'macos-26-intel', 'arch': 'amd64'},
+              {'platform': 'macos', 'os': 'macos-26', 'arch': 'arm64'},
               {'platform': 'windows', 'os': 'windows-11-arm', 'arch': 'arm64', 'flutter-channel': 'master'},
               {'platform': 'linux', 'os': 'ubuntu-24.04-arm', 'arch': 'arm64', 'flutter-channel': 'master'},
           ]
@@ -355,7 +362,6 @@ jobs:
           with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
               output.write('matrix=' + json.dumps({'include': selected}) + '\n')
           PYTHON
-
 
   build:
     # Releases publish where the release links point: the public repository.
@@ -374,10 +380,10 @@ jobs:
             os: ubuntu-22.04
             arch: amd64
           - platform: macos
-            os: macos-15-intel
+            os: macos-26-intel
             arch: amd64
           - platform: macos
-            os: macos-15
+            os: macos-26
             arch: arm64
           - platform: windows
             os: windows-11-arm
@@ -472,20 +478,23 @@ jobs:
       - name: Fetch CA certificates
         shell: bash
         env:
-          CA_BUNDLE: cacert-2026-09-25.pem
-          CA_BUNDLE_SHA256: a41b5d356aea97a529fe27e0f7316d2f9d946d75927476cf9cf1b90637d00505
+          CA_BUNDLE: cacert-2026-10-20.pem
+          CA_BUNDLE_SHA256: 796f1389bfea13c0ed78f663b765baaff54a508e5483786bd6ece73c5e3e3cbe
         run: |
           bundle=assets/ca/ca-certificates.crt
           curl -fsSL --retry 3 -o "$bundle" "https://curl.se/ca/$CA_BUNDLE"
           echo "$CA_BUNDLE_SHA256  $bundle" | sha256sum -c -
 
+      # A prerelease ships macOS unsigned; only a stable release is signed and notarized.
+      # The certificate chains to Apple's first Developer ID intermediate, which
+      # the runner image does not carry; it expires 2027-02-01, as the certificate does.
       - name: Setup
         env:
           ANDROID_NDK_HOME: ${{ steps.build-ndk.outputs.ndk-path }}
         run: dart setup.dart ${{ matrix.platform }} ${{ env.IS_STABLE == 'true' && '--env stable' || '' }} -v
 
       - name: Upload
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: artifact-${{ matrix.platform }}${{ matrix.arch && format('-{0}', matrix.arch) }}
           path: ./dist
@@ -495,7 +504,12 @@ jobs:
     permissions:
       contents: write
     needs: [ build, dart, plugins, go, android, rust, windows-helper-test ]
-    if: always() && needs.build.result == 'success'
+    # The checks are skipped where the repository is private, so a skipped one
+    # passes; one that failed or was cancelled holds the release back.
+    if: >-
+      always() && needs.build.result == 'success' &&
+      !contains(needs.*.result, 'failure') &&
+      !contains(needs.*.result, 'cancelled')
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
@@ -503,8 +517,15 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Release history is counted from upstream's frozenBoundaryTag, which the
+      # fork does not carry; pushing it there would start a build of its own.
+      - name: Fetch the changelog boundary tag
+        run: |
+          tag=$(sed -n "s/^const frozenBoundaryTag = '\(.*\)';$/\1/p" tool/src/changelog/builder.dart)
+          git fetch --no-tags https://github.com/chen08209/FlClash.git "refs/tags/${tag}:refs/tags/${tag}"
+
       - name: Download
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           path: ./dist/
           pattern: artifact-*
@@ -548,25 +569,29 @@ jobs:
           fi
 
       - name: Generate sha256
-        if: ${{ env.IS_STABLE == 'true' }}
         run: |
           cd ./dist
           for file in $(find . -type f -not -name "*.sha256"); do
             sha256sum "$file" > "${file}.sha256"
           done
 
+      - name: Sign the update manifest
+        shell: bash
+        env:
+          FLCLASHX_UPDATE_SIGNING_KEY: ${{ secrets.UPDATE_SIGNING_KEY }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          if [[ -z "$FLCLASHX_UPDATE_SIGNING_KEY" ]]; then
+            echo "::notice::UPDATE_SIGNING_KEY is not set, so the release carries no manifest.json"
+            exit 0
+          fi
+          dart run tool/sign_update_manifest.dart --version "$TAG" \
+            --base-url "https://github.com/loultl/FlClashX-new-Core/releases/download/$TAG" \
+            --out ./dist/manifest.json ./dist
+
       - name: Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: ./dist/*
           body_path: './release.md'
           prerelease: ${{ env.IS_STABLE != 'true' }}
-
-      - name: Upload release notes for notification
-        uses: actions/upload-artifact@v5
-        with:
-          name: release-notes
-          path: release.md
-          retention-days: 1
-
-

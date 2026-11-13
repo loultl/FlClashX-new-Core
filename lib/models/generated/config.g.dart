@@ -21,6 +21,9 @@ _AppSettingProps _$AppSettingPropsFromJson(
   dashboardWidgets: json['dashboardWidgets'] == null
       ? defaultDashboardWidgets
       : dashboardWidgetsFromJson(json['dashboardWidgets'] as List?),
+  dashboardWidgetsChosen:
+      _readDashboardWidgetsChosen(json, 'dashboardWidgetsChosen') as bool? ??
+      false,
   onlyStatisticsProxy: json['onlyStatisticsProxy'] as bool? ?? false,
   showNotificationStopAction:
       json['showNotificationStopAction'] as bool? ?? true,
@@ -56,13 +59,13 @@ _AppSettingProps _$AppSettingPropsFromJson(
       RestoreStrategy.compatible,
   showTrayTitle: json['showTrayTitle'] as bool? ?? true,
   monochromeTrayIcon: json['monochromeTrayIcon'] as bool? ?? true,
-  checkCertificate: json['checkCertificate'] as bool? ?? true,
   filters:
       (json['filters'] as List<dynamic>?)
           ?.map((e) => Filter.fromJson(e as Map<String, dynamic>))
           .toList() ??
       defaultFilters,
   hideIp: json['hideIp'] as bool? ?? false,
+  vibration: json['vibration'] as bool? ?? true,
   editorLineWrap: json['editorLineWrap'] as bool? ?? false,
   editorFontSize:
       $enumDecodeNullable(_$EditorFontSizeEnumMap, json['editorFontSize']) ??
@@ -97,6 +100,11 @@ _AppSettingProps _$AppSettingPropsFromJson(
           ?.map((e) => e as String)
           .toSet() ??
       const {},
+  panelSetSettings:
+      (json['panelSetSettings'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toSet() ??
+      const {},
   appliedHeadersUpdate: json['appliedHeadersUpdate'] as String?,
 );
 
@@ -106,6 +114,7 @@ Map<String, dynamic> _$AppSettingPropsToJson(_AppSettingProps instance) =>
       'dashboardWidgets': instance.dashboardWidgets
           .map((e) => _$DashboardWidgetEnumMap[e]!)
           .toList(),
+      'dashboardWidgetsChosen': instance.dashboardWidgetsChosen,
       'onlyStatisticsProxy': instance.onlyStatisticsProxy,
       'showNotificationStopAction': instance.showNotificationStopAction,
       'autoLaunch': instance.autoLaunch,
@@ -128,9 +137,9 @@ Map<String, dynamic> _$AppSettingPropsToJson(_AppSettingProps instance) =>
       'restoreStrategy': _$RestoreStrategyEnumMap[instance.restoreStrategy]!,
       'showTrayTitle': instance.showTrayTitle,
       'monochromeTrayIcon': instance.monochromeTrayIcon,
-      'checkCertificate': instance.checkCertificate,
       'filters': instance.filters,
       'hideIp': instance.hideIp,
+      'vibration': instance.vibration,
       'editorLineWrap': instance.editorLineWrap,
       'editorFontSize': _$EditorFontSizeEnumMap[instance.editorFontSize]!,
       'serviceOrder': instance.serviceOrder,
@@ -138,6 +147,7 @@ Map<String, dynamic> _$AppSettingPropsToJson(_AppSettingProps instance) =>
       'tableColumnWidths': instance.tableColumnWidths,
       'subscriptionNotices': instance.subscriptionNotices,
       'ownedSettings': instance.ownedSettings.toList(),
+      'panelSetSettings': instance.panelSetSettings.toList(),
       'appliedHeadersUpdate': instance.appliedHeadersUpdate,
     };
 
@@ -358,6 +368,7 @@ const _$ProxyCardTypeEnumMap = {
   ProxyCardType.loose: 'loose',
   ProxyCardType.standard: 'standard',
   ProxyCardType.compact: 'compact',
+  ProxyCardType.oneline: 'oneline',
 };
 
 _TextScale _$TextScaleFromJson(Map<String, dynamic> json) => _TextScale(

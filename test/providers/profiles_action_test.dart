@@ -194,6 +194,41 @@ void main() {
       expect(container.read(profilesProvider), isEmpty);
       verifyNever(() => core.validateConfig(any()));
     });
+
+    testWidgets('leaves an editor that vetoes its pop open', (tester) async {
+      const link = 'vless://id@hk.example.com:443#HK';
+      decodesTo(link, [
+        {'name': 'HK', 'type': 'vless', 'server': 'hk.example.com'},
+      ]);
+      await pumpHost(tester);
+      final navigator = globalState.navigatorKey.currentState!;
+      unawaited(
+        navigator.push(
+          MaterialPageRoute<void>(
+            builder: (_) =>
+                const PopScope(canPop: false, child: Text('unsaved editor')),
+          ),
+        ),
+      );
+      unawaited(
+        navigator.push(
+          MaterialPageRoute<void>(builder: (_) => const Text('plain page')),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.runAsync(
+        () => container
+            .read(profilesActionProvider.notifier)
+            .addProfileFromLink(link),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('plain page'), findsNothing);
+      expect(find.text('unsaved editor'), findsOne);
+      expect(container.read(profilesProvider), hasLength(1));
+      expect(container.read(currentPageLabelProvider), PageLabel.profiles);
+    });
   });
 
   group('addProfilesFromLinks with share links', () {
@@ -399,6 +434,19 @@ void main() {
       final (action, _) = host(subscription(age: const Duration(hours: 1)), [
         'ok',
       ]);
+
+      final refreshed = await action.autoUpdateProfiles();
+      await action.refreshCurrentProfileAfterStart(refreshed: refreshed);
+
+      expect(refreshed, isEmpty);
+      expect(action.downloads, 1);
+    });
+
+    test('an interval past what a date holds is never due', () async {
+      final profile = subscription().copyWith(
+        autoUpdateDuration: const Duration(hours: 2400000000),
+      );
+      final (action, _) = host(profile, ['ok', 'ok']);
 
       final refreshed = await action.autoUpdateProfiles();
       await action.refreshCurrentProfileAfterStart(refreshed: refreshed);

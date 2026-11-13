@@ -231,6 +231,7 @@ enum CoreEventType {
   geoUpdate,
   routeChanged,
   dialerLoop,
+  tunFailed,
 }
 
 enum FindProcessMode { always, strict, off }
@@ -243,7 +244,7 @@ enum ProxiesType { tab, list }
 
 enum ProxiesLayout { loose, standard, tight }
 
-enum ProxyCardType { loose, standard, compact }
+enum ProxyCardType { loose, standard, compact, oneline }
 
 enum DnsMode {
   normal,
@@ -772,6 +773,8 @@ enum ProxyField {
 }
 
 enum RulePayloadError { network, numberRange, dscpRange }
+
+enum RuleSaveIssue { subRule, payload, emptyContent, emptyTarget }
 
 extension RulePayloadErrorExt on RulePayloadError {
   String getMessage(BuildContext context) {

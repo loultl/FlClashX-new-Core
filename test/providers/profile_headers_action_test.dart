@@ -4,6 +4,7 @@ import 'package:fl_clash/providers/providers.dart';
 import 'package:fl_clash/state.dart';
 import 'package:fl_clash/ui/color.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_ui/material_ui.dart' show ThemeMode;
 import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/test_profiles.dart';
@@ -107,6 +108,23 @@ void main() {
     expect(container.read(proxiesStyleSettingProvider).type, ProxiesType.tab);
   });
 
+  test(
+    'the theme key sets the appearance unless the user took it over',
+    () async {
+      await select(_profile(1, view: 'app.theme:dark'));
+      expect(container.read(themeSettingProvider).themeMode, ThemeMode.dark);
+
+      container
+          .read(appSettingProvider.notifier)
+          .update((state) => state.copyWith(ownedSettings: {'view.app.theme'}));
+      container
+          .read(themeSettingProvider.notifier)
+          .update((state) => state.copyWith(themeMode: ThemeMode.system));
+      await select(_profile(2, view: 'app.theme:light'));
+      expect(container.read(themeSettingProvider).themeMode, ThemeMode.system);
+    },
+  );
+
   test('a switch the user took over is left to the user', () async {
     container
         .read(appSettingProvider.notifier)
@@ -150,6 +168,119 @@ void main() {
     expect(
       container.read(managedSettingsProvider),
       isNot(contains(hideIpSetting)),
+    );
+  });
+
+  test('the novibrate special turns vibration off and locks it', () async {
+    await select(_profile(1, special: 'novibrate'));
+
+    expect(container.read(appSettingProvider).vibration, isFalse);
+    expect(container.read(settingLockedProvider(vibrationSetting)), isTrue);
+  });
+
+  test('vibration the user took over is left to the user', () async {
+    container
+        .read(appSettingProvider.notifier)
+        .update((state) => state.copyWith(ownedSettings: {vibrationSetting}));
+
+    await select(_profile(1, special: 'novibrate'));
+
+    expect(container.read(appSettingProvider).vibration, isTrue);
+    expect(container.read(settingReleasableProvider(vibrationSetting)), isTrue);
+  });
+
+  test('a panel that drops hideip and novibrate puts both back', () async {
+    await select(_profile(1, special: 'hideip,novibrate'));
+    expect(container.read(appSettingProvider).hideIp, isTrue);
+    expect(container.read(appSettingProvider).vibration, isFalse);
+
+    await put(_profile(1, special: 'noglobal'));
+
+    final setting = container.read(appSettingProvider);
+    expect(setting.hideIp, isFalse);
+    expect(setting.vibration, isTrue);
+    expect(setting.panelSetSettings, isEmpty);
+  });
+
+  test('a hidden IP the user chose survives a panel without hideip', () async {
+    await select(_profile(1, special: 'noglobal'));
+    container
+        .read(appSettingProvider.notifier)
+        .update((state) => state.copyWith(hideIp: true));
+
+    await put(_profile(1));
+
+    expect(container.read(appSettingProvider).hideIp, isTrue);
+  });
+
+  test(
+    'a special the user took over keeps the user\'s value once dropped',
+    () async {
+      await select(_profile(1, special: 'hideip'));
+      container
+          .read(appSettingProvider.notifier)
+          .update((state) => state.copyWith(ownedSettings: {hideIpSetting}));
+
+      await put(_profile(1));
+
+      final setting = container.read(appSettingProvider);
+      expect(setting.hideIp, isTrue);
+      expect(setting.panelSetSettings, isEmpty);
+    },
+  );
+
+  test(
+    'settings from before the tracking still let a dropped hideip go',
+    () async {
+      final profile = _profile(1, special: 'hideip');
+      container
+          .read(appSettingProvider.notifier)
+          .update(
+            (state) => state.copyWith(
+              hideIp: true,
+              appliedHeadersUpdate: profileHeadersUpdateOf(profile),
+            ),
+          );
+      await select(profile);
+      expect(
+        container.read(appSettingProvider).panelSetSettings,
+        contains(hideIpSetting),
+      );
+
+      await put(_profile(1));
+
+      expect(container.read(appSettingProvider).hideIp, isFalse);
+    },
+  );
+
+  test('cards a panel picked before the flag count as picked', () async {
+    final profile = _profile(1, widgets: 'currentOutbound,profiles');
+    container
+        .read(appSettingProvider.notifier)
+        .update(
+          (state) => state.copyWith(
+            dashboardWidgets: const [
+              DashboardWidget.currentOutbound,
+              DashboardWidget.profiles,
+            ],
+            appliedHeadersUpdate: profileHeadersUpdateOf(profile),
+            floatingNavigationBar: false,
+          ),
+        );
+    await select(profile);
+
+    final setting = container.read(appSettingProvider);
+    expect(setting.dashboardWidgetsChosen, isTrue);
+    expect(setting.floatingNavigationBar, isFalse);
+  });
+
+  test('without the novibrate special vibration stays the user\'s', () async {
+    await select(_profile(1, special: 'hideip'));
+
+    expect(container.read(appSettingProvider).vibration, isTrue);
+    expect(
+      container.read(managedSettingsProvider),
+      isNot(contains(vibrationSetting)),
     );
   });
 
@@ -222,7 +353,7 @@ void main() {
         .update(
           (state) => state.copyWith(
             appliedHeadersUpdate: profileHeadersUpdateOf(
-              _profile(1, updatedAt: updatedAt),
+              _profile(1, view: 'app.board:extended', updatedAt: updatedAt),
             ),
           ),
         );
@@ -236,6 +367,22 @@ void main() {
     );
 
     expect(style(), ThemeStyle.original);
+  });
+
+  test('a second update within the same second applies its headers', () async {
+    final updatedAt = DateTime(2026, 10, 19, 10);
+    await select(_profile(1, view: 'app.theme:dark', updatedAt: updatedAt));
+    expect(container.read(themeSettingProvider).themeMode, ThemeMode.dark);
+
+    await put(
+      _profile(
+        1,
+        view: 'app.theme:light',
+        updatedAt: updatedAt.add(const Duration(milliseconds: 400)),
+      ),
+    );
+
+    expect(container.read(themeSettingProvider).themeMode, ThemeMode.light);
   });
 
   test('a profile restored after the last was deleted applies again', () async {

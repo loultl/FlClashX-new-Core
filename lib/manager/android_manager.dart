@@ -60,6 +60,11 @@ class _AndroidContainerState extends ConsumerState<AndroidManager>
     ) {
       app?.updateExcludeFromRecents(next);
     }, fireImmediately: true);
+    ref.listenManual(
+      appSettingProvider.select((state) => state.vibration),
+      (_, next) => app?.setVibration(next),
+      fireImmediately: true,
+    );
     ref.listenManual(loadedLocaleProvider, (prev, next) {
       if (prev != null && prev != next && !safeModeBuild) {
         app?.initShortcuts();
@@ -116,6 +121,15 @@ class _AndroidContainerState extends ConsumerState<AndroidManager>
   void onServiceStopped() {
     unawaited(ref.read(setupActionProvider.notifier).setRunning(false));
     super.onServiceStopped();
+  }
+
+  /// An excluded SSID keeps the run while the service is down.
+  @override
+  void onServiceStopRequested() {
+    if (ref.read(isStartProvider)) {
+      unawaited(ref.read(setupActionProvider.notifier).setRunning(false));
+    }
+    super.onServiceStopRequested();
   }
 
   @override

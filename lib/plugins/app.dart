@@ -16,6 +16,7 @@ class App {
   Function()? onExit;
   Function()? onPackagesChanged;
   void Function(VpnRefusal refusal)? onVpnPermissionDenied;
+  void Function(String status, String? message)? onPackageInstallStatus;
   final floatingKeyboard = ValueNotifier(false);
 
   App._internal() {
@@ -35,6 +36,12 @@ class App {
           if (refusal != null) {
             onVpnPermissionDenied?.call(refusal);
           }
+        case 'packageInstallStatus':
+          final status = Map<Object?, Object?>.from(call.arguments as Map);
+          onPackageInstallStatus?.call(
+            '${status['status']}',
+            status['message'] as String?,
+          );
         default:
           throw MissingPluginException();
       }
@@ -138,6 +145,23 @@ class App {
     return methodChannel.invokeMethod<bool>('tip', {'message': '$message'});
   }
 
+  /// A vibration that grows from barely felt to full strength over [duration].
+  Future<void> riseVibration(Duration duration) async {
+    await methodChannel.invokeMethod<bool>('riseVibration', {
+      'durationMs': duration.inMilliseconds,
+    });
+  }
+
+  Future<void> stopVibration() async {
+    await methodChannel.invokeMethod<bool>('stopVibration');
+  }
+
+  Future<void> setVibration(bool enabled) async {
+    await methodChannel.invokeMethod<bool>('setVibration', {
+      'enabled': enabled,
+    });
+  }
+
   Future<bool?> initShortcuts() async {
     return methodChannel.invokeMethod<bool>('initShortcuts', {
       'start': currentAppLocalizations.start,
@@ -159,6 +183,33 @@ class App {
 
   Future<bool?> openVpnSettings() async {
     return methodChannel.invokeMethod<bool>('openVpnSettings');
+  }
+
+  Future<void> shareFile(String path, {required String mimeType}) async {
+    await methodChannel.invokeMethod<bool>('shareFile', {
+      'path': path,
+      'mimeType': mimeType,
+    });
+  }
+
+  Future<List<String>> getSupportedAbis() async {
+    return await methodChannel.invokeListMethod<String>('getSupportedAbis') ??
+        const [];
+  }
+
+  Future<Map<Object?, Object?>?> inspectPackage(String path) {
+    return methodChannel.invokeMapMethod<Object?, Object?>('inspectPackage', {
+      'path': path,
+    });
+  }
+
+  Future<Map<Object?, Object?>?> inspectSelf() {
+    return methodChannel.invokeMapMethod<Object?, Object?>('inspectSelf');
+  }
+
+  /// One of `committed`, `permission` or `busy`.
+  Future<String?> installPackage(String path) {
+    return methodChannel.invokeMethod<String>('installPackage', {'path': path});
   }
 
   Future<AppExitInfo?> getLastExitInfo() async {

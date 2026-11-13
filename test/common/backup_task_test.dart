@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:archive/archive_io.dart';
 import 'package:drift/native.dart';
@@ -262,6 +263,33 @@ void main() {
       );
     });
 
+    test('a profile id that is a path reaches no file outside', () async {
+      final outside = makeDir('legacy_outside');
+      writeFile(join(outside.path, 'secret.yaml'), 'secret: 1');
+      final escape = posix.relative(
+        join(outside.path, 'secret'),
+        from: join(source.path, 'profiles'),
+      );
+
+      final data = await migrateLegacyConfig(
+        configMap: legacyConfig(
+          profiles: [
+            {'id': escape, 'label': 'Escape', 'autoUpdateDuration': 0},
+            {'id': 'missing', 'label': 'Missing', 'autoUpdateDuration': 0},
+          ],
+        ),
+        sourcePath: source.path,
+        targetPath: target.path,
+      );
+
+      expect(data.profiles.map((profile) => profile.label), ['Missing']);
+      expect(Directory(join(target.path, 'profiles')).existsSync(), isFalse);
+      expect(
+        File(join(source.path, 'profiles', 'missing.yaml')).existsSync(),
+        isFalse,
+      );
+    });
+
     test('carries a FlClashX 0.4 profile with its headers and rules', () async {
       writeFile(
         join(source.path, 'profiles', '1720000000000.yaml'),
@@ -368,6 +396,59 @@ void main() {
       final config = Config.realFromJson(data.configMap);
       expect(config.themeProps.style, ThemeStyle.original);
     });
+
+    test(
+      'turns the FlClashX 0.4 override switches into owned settings',
+      () async {
+        final data = await migrateLegacyConfig(
+          configMap: legacyConfig(
+            extra: {
+              'appSetting': {
+                'overrideNetworkSettings': true,
+                'overrideProviderSettings': true,
+              },
+            },
+          ),
+          sourcePath: source.path,
+          targetPath: target.path,
+        );
+
+        final owned = Config.realFromJson(
+          data.configMap,
+        ).appSettingProps.ownedSettings;
+        expect(
+          owned,
+          containsAll([
+            'clash.mixed-port',
+            'clash.allow-lan',
+            'clash.ipv6',
+            'clash.find-process-mode',
+            'clash.tun.stack',
+            ...appSwitchSettings.values,
+          ]),
+        );
+        expect(owned, hasLength(5 + appSwitchSettings.length));
+
+        final untouched = await migrateLegacyConfig(
+          configMap: legacyConfig(
+            extra: {
+              'appSetting': {
+                'overrideNetworkSettings': false,
+                'overrideProviderSettings': false,
+              },
+            },
+          ),
+          sourcePath: source.path,
+          targetPath: target.path,
+        );
+        expect(
+          Config.realFromJson(
+            untouched.configMap,
+          ).appSettingProps.ownedSettings,
+          isEmpty,
+        );
+      },
+    );
 
     test('links added rules to the profile that declared them', () async {
       writeFile(join(source.path, 'profiles', 'p1.yaml'), '');
@@ -483,6 +564,103 @@ void main() {
       expect(data.profiles.single.scriptId, data.scripts.single.id);
       expect(data.profiles.single.extendType, ExtendType.script);
     });
+
+    test('binds the script FlClashX 0.4 ran on every profile', () async {
+      writeFile(join(source.path, 'profiles', 'p1.yaml'), '');
+
+      final data = await migrateLegacyConfig(
+        configMap: legacyConfig(
+          profiles: [
+            {
+              'id': 'p1',
+              'autoUpdateDuration': 0,
+              'overrideData': {
+                'enable': true,
+                'rule': {
+                  'type': 'added',
+                  'addedRules': [
+                    {'id': 'a1', 'value': 'DOMAIN,example.com,DIRECT'},
+                  ],
+                },
+              },
+            },
+          ],
+          extra: {
+            'scriptProps': {
+              'currentId': 's1',
+              'scripts': [
+                {'id': 's1', 'label': 'S', 'content': 'body'},
+              ],
+            },
+          },
+        ),
+        sourcePath: source.path,
+        targetPath: target.path,
+      );
+
+      final profile = data.profiles.single;
+      expect(profile.extendType, ExtendType.script);
+      expect(profile.scriptId, data.scripts.single.id);
+      expect(data.rules.single.profileId, profile.id);
+    });
+
+    test(
+      'keeps a FlClashX 0.4 override list replacing the profile rules',
+      () async {
+        writeFile(join(source.path, 'profiles', 'p1.yaml'), '');
+        writeFile(join(source.path, 'profiles', 'p2.yaml'), '');
+
+        final data = await migrateLegacyConfig(
+          configMap: legacyConfig(
+            profiles: [
+              {
+                'id': 'p1',
+                'label': 'Work',
+                'autoUpdateDuration': 0,
+                'overrideData': {
+                  'enable': true,
+                  'rule': {
+                    'type': 'override',
+                    'overrideRules': [
+                      {'id': 'o1', 'value': 'DOMAIN,example.com,DIRECT'},
+                      {'id': 'o2', 'value': 'MATCH,Proxy'},
+                    ],
+                    'addedRules': [
+                      {'id': 'a1', 'value': 'DOMAIN,unused.com,DIRECT'},
+                    ],
+                  },
+                },
+              },
+              {
+                'id': 'p2',
+                'autoUpdateDuration': 0,
+                'overrideData': {
+                  'enable': true,
+                  'rule': {'type': 'override', 'overrideRules': []},
+                },
+              },
+            ],
+          ),
+          sourcePath: source.path,
+          targetPath: target.path,
+        );
+
+        expect(data.scripts, isEmpty);
+        List<String?> rulesOf(Profile profile) {
+          expect(profile.extendType, ExtendType.standard);
+          return [
+            for (final rule in data.rules)
+              if (rule.profileId == profile.id) rule.rawValue,
+          ];
+        }
+
+        expect(rulesOf(data.profiles.first), [
+          'DOMAIN,example.com,DIRECT',
+          'MATCH,Proxy',
+        ]);
+        expect(rulesOf(data.profiles.last), ['MATCH,DIRECT']);
+      },
+    );
 
     test('falls a custom overwrite back to a standard one', () async {
       writeFile(join(source.path, 'profiles', 'p1.yaml'), '');
@@ -758,6 +936,128 @@ void main() {
       },
     );
 
+    test(
+      'an entry whose bytes do not match its checksum is rejected',
+      () async {
+        final archivePath = join(root.path, 'archive', '$uniqueId.zip');
+        final encoder = ZipFileEncoder()..create(archivePath);
+        encoder.addArchiveFile(
+          ArchiveFile.string(configJsonName, json.encode({'version': 1})),
+        );
+        final profile = utf8.encode('proxies: GOOD-PROFILE-CONTENT');
+        encoder.addArchiveFile(
+          ArchiveFile.noCompress('profiles/1.yaml', profile.length, profile),
+        );
+        await encoder.close();
+        final bytes = File(archivePath).readAsBytesSync();
+        final at = latin1.decode(bytes).indexOf('GOOD');
+        bytes.setRange(at, at + 4, utf8.encode('BAD!'));
+        File(archivePath).writeAsBytesSync(bytes);
+
+        await expectLater(
+          restore(archivePath),
+          failsWith(BackupFailure.invalid),
+        );
+      },
+    );
+
+    test('an archive that inflates past the size limits is rejected', () async {
+      final previousEntry = maxBackupEntryBytes;
+      final previousTotal = maxBackupBytes;
+      addTearDown(() {
+        maxBackupEntryBytes = previousEntry;
+        maxBackupBytes = previousTotal;
+      });
+      final config = utf8.encode(json.encode({'version': 1}));
+      maxBackupBytes = 1 << 20;
+
+      maxBackupEntryBytes = 64;
+      await expectLater(
+        restore(
+          await zipOf({configJsonName: config, 'big': List.filled(65, 0)}),
+        ),
+        failsWith(BackupFailure.invalid),
+      );
+
+      maxBackupEntryBytes = 1 << 20;
+      maxBackupBytes = config.length + 64;
+      await expectLater(
+        restore(
+          await zipOf({
+            configJsonName: config,
+            'a': List.filled(40, 0),
+            'b': List.filled(40, 0),
+          }),
+        ),
+        failsWith(BackupFailure.invalid),
+      );
+    });
+
+    test(
+      'a deflated entry inflating past its declared size is rejected',
+      () async {
+        final previous = maxBackupEntryBytes;
+        addTearDown(() => maxBackupEntryBytes = previous);
+        maxBackupEntryBytes = 64 << 10;
+        final archivePath = await zipOf({
+          configJsonName: utf8.encode(json.encode({'version': 1})),
+          'bomb': List.filled(1 << 20, 0),
+        });
+        // The size fields of both headers claim 16 bytes for the 1 MiB entry.
+        final bytes = File(archivePath).readAsBytesSync();
+        final data = ByteData.sublistView(bytes);
+        for (var at = 0; at + 46 <= bytes.length; at++) {
+          final signature = data.getUint32(at, Endian.little);
+          final sizeAt = switch (signature) {
+            0x04034b50 => at + 22,
+            0x02014b50 => at + 24,
+            _ => null,
+          };
+          if (sizeAt != null &&
+              data.getUint32(sizeAt, Endian.little) == 1 << 20) {
+            data.setUint32(sizeAt, 16, Endian.little);
+          }
+        }
+        File(archivePath).writeAsBytesSync(bytes);
+
+        await expectLater(
+          restore(archivePath),
+          failsWith(BackupFailure.invalid),
+        );
+        expect(
+          File(join(staging.path, 'bomb')).lengthSync(),
+          lessThanOrEqualTo(maxBackupEntryBytes),
+        );
+      },
+    );
+
+    test('a link in the archive is passed over, not unpacked', () async {
+      final archivePath = await zipOf({
+        configJsonName: utf8.encode(json.encode({'version': 1})),
+        'link': utf8.encode('/etc/passwd'),
+      });
+      // archive writes no links, so the entry is marked one by hand: made on
+      // Unix, with the file type of a symbolic link in its attributes.
+      final bytes = File(archivePath).readAsBytesSync();
+      final data = ByteData.sublistView(bytes);
+      for (var at = 0; at + 50 <= bytes.length; at++) {
+        if (data.getUint32(at, Endian.little) == 0x02014b50 &&
+            utf8.decode(bytes.sublist(at + 46, at + 50)) == 'link') {
+          data.setUint16(at + 4, 3 << 8 | 20, Endian.little);
+          data.setUint32(at + 38, 0xA1FF << 16, Endian.little);
+        }
+      }
+      File(archivePath).writeAsBytesSync(bytes);
+
+      await restore(archivePath);
+
+      expect(File(join(staging.path, configJsonName)).existsSync(), isTrue);
+      expect(
+        FileSystemEntity.typeSync(join(staging.path, 'link')),
+        FileSystemEntityType.notFound,
+      );
+    });
+
     test('an archive without a config document is rejected', () async {
       final archivePath = await zipOf({'unrelated.txt': utf8.encode('x')});
 
@@ -811,6 +1111,7 @@ void main() {
       expect(data.configMap?['version'], 1);
       expect(data.profiles, isEmpty);
       expect(data.scripts, isEmpty);
+      expect(data.includesTables, isFalse);
     });
   });
 }

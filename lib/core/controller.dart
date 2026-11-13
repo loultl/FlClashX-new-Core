@@ -209,6 +209,16 @@ class CoreController {
     return _interface.changeProxy(changeProxyParams);
   }
 
+  /// What [groupName] was last set to, read from the Core without building
+  /// groups: the pin of a group that picks by testing, empty when it has
+  /// none, and the node any other group runs.
+  Future<String?> groupPick(String groupName) async {
+    final group = (await _interface.getProxies()).proxies[groupName];
+    if (group is! Map) return null;
+    return (group.containsKey('fixed') ? group['fixed'] : group['now'])
+        as String?;
+  }
+
   Future<RouteSnapshot?> watchRoute(bool watch) {
     return _interface.watchRoute(watch);
   }
@@ -257,10 +267,14 @@ class CoreController {
 
   Future<String> sideLoadExternalProvider({
     required String providerName,
+    required String path,
+    required String type,
     required String data,
   }) {
     return _interface.sideLoadExternalProvider(
       providerName: providerName,
+      path: path,
+      type: type,
       data: data,
     );
   }
@@ -269,8 +283,16 @@ class CoreController {
     return _interface.dumpRuleSet(path);
   }
 
-  Future<RuleSetInfo> compileRuleSet(String name, {String url = ''}) {
-    return _interface.compileRuleSet(name, url: url);
+  Future<RuleSetInfo> compileRuleSet(
+    String name, {
+    String url = '',
+    bool skipCertVerify = false,
+  }) {
+    return _interface.compileRuleSet(
+      name,
+      url: url,
+      skipCertVerify: skipCertVerify,
+    );
   }
 
   Future<String> updateExternalProvider({required String providerName}) async {
@@ -288,6 +310,8 @@ class CoreController {
   Future<bool> restartListener() async {
     return _interface.restartListener();
   }
+
+  Future<bool> getTunFailed() => _interface.getTunFailed();
 
   Future<Delay?> getDelay(
     String url,

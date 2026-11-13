@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:fl_clash/common/cidr.dart';
+import 'package:fl_clash/common/input_limits.dart';
 import 'package:fl_clash/enum/enum.dart';
 
 import 'clash_config.dart';
@@ -24,8 +25,7 @@ AuthenticationProps authenticationFrom(Object? value) {
 
 /// [current] with the keys below taken from [config], the decoded profile,
 /// where [present] names them, and reset to the app default where it does
-/// not. The selected [globalUa] is an app preference and is never owned by a
-/// profile; `mode` and `tun.enable` are only ever set, never reset.
+/// not; `mode` and `tun.enable` are only ever set, never reset.
 /// The tun's app and route lists feed Android's VPN, not the core.
 PatchClashConfig syncProfileSettings(
   PatchClashConfig current,
@@ -59,10 +59,12 @@ PatchClashConfig syncProfileSettings(
     geoAutoUpdate: defaults.geoAutoUpdate,
     geoUpdateInterval: defaults.geoUpdateInterval,
     geoXUrl: defaults.geoXUrl,
-    globalUa: current.globalUa,
+    globalUa: defaults.globalUa,
     tun: current.tun.copyWith(
       device: defaults.tun.device,
       stack: defaults.tun.stack,
+      mtu: defaults.tun.mtu,
+      congestionController: defaults.tun.congestionController,
       includePackage: defaults.tun.includePackage,
       excludePackage: defaults.tun.excludePackage,
       routeAddress: defaults.tun.routeAddress,
@@ -83,6 +85,15 @@ PatchClashConfig syncProfileSettings(
   int? port(String key) {
     final value = read<num>(key)?.toInt();
     return value != null && value >= 0 && value <= 65535 ? value : null;
+  }
+
+  int? geoUpdateInterval() {
+    final value = read<num>('geo-update-interval');
+    return value != null &&
+            value >= 1 &&
+            value <= TextInputLimits.maxGeoUpdateInterval
+        ? value.toInt()
+        : null;
   }
 
   T? enumNamed<T extends Enum>(String key, List<T> values) {
@@ -107,8 +118,7 @@ PatchClashConfig syncProfileSettings(
     keepAliveIdle: read<num>('keep-alive-idle')?.toInt() ?? next.keepAliveIdle,
     disableKeepAlive: read<bool>('disable-keep-alive') ?? next.disableKeepAlive,
     geoAutoUpdate: read<bool>('geo-auto-update') ?? next.geoAutoUpdate,
-    geoUpdateInterval:
-        read<num>('geo-update-interval')?.toInt() ?? next.geoUpdateInterval,
+    geoUpdateInterval: geoUpdateInterval() ?? next.geoUpdateInterval,
     geodataLoader:
         enumNamed('geodata-loader', GeodataLoader.values) ?? next.geodataLoader,
   );
@@ -137,6 +147,10 @@ PatchClashConfig syncProfileSettings(
   if (secret != null) {
     next = next.copyWith(secret: secret);
   }
+  final globalUa = read<String>('global-ua');
+  if (globalUa != null) {
+    next = next.copyWith(globalUa: globalUa.isEmpty ? null : globalUa);
+  }
   final geoXUrl = read<Map>('geox-url');
   if (geoXUrl != null) {
     next = next.copyWith(
@@ -154,6 +168,8 @@ PatchClashConfig syncProfileSettings(
   )?.whereType<String>().map((item) => item.trim()).where(valid).toList();
 
   final tunDevice = read<String>('tun.device');
+  final mtu = read<num>('tun.mtu')?.toInt();
+  final congestion = read<String>('tun.congestion-controller')?.toLowerCase();
   next = next.copyWith(
     tun: next.tun.copyWith(
       enable: read<bool>('tun.enable') ?? next.tun.enable,
@@ -161,6 +177,13 @@ PatchClashConfig syncProfileSettings(
           ? next.tun.device
           : tunDevice,
       stack: enumNamed('tun.stack', TunStack.values) ?? next.tun.stack,
+      mtu: mtu != null && mtu >= minTunMtu && mtu <= maxTunMtu
+          ? mtu
+          : next.tun.mtu,
+      congestionController:
+          congestion != null && congestionControllers.contains(congestion)
+          ? congestion
+          : next.tun.congestionController,
       includePackage:
           strings('tun.include-package', (name) => name.isNotEmpty) ??
           next.tun.includePackage,

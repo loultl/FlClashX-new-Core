@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/ui/color.dart';
+import 'package:material_ui/material_ui.dart' show ThemeMode;
 
 import 'config.dart';
 import 'profile.dart';
@@ -41,8 +42,12 @@ class ProviderHeaders {
   /// Hours between automatic updates, when the panel names them.
   Duration? get updateInterval {
     final hours = int.tryParse(text('profile-update-interval') ?? '');
-    return hours != null && hours > 0 ? Duration(hours: hours) : null;
+    return hours != null && hours > 0 && hours <= maxUpdateIntervalHours
+        ? Duration(hours: hours)
+        : null;
   }
+
+  static const maxUpdateIntervalHours = 24 * 366;
 
   ViewRequest? get view => ViewRequest.parse(text('flclashx-view'));
 
@@ -91,6 +96,18 @@ class ProviderHeaders {
   bool get globalModeAllowed => !(specials?.contains('noglobal') ?? false);
 
   bool get hideIp => specials?.contains('hideip') ?? false;
+
+  bool get noVibration => specials?.contains('novibrate') ?? false;
+
+  /// A provider's own update manifest, replacing GitHub as the update source.
+  String? get updateManifestUrl => _httpsUrl(text('flclashx-update'));
+
+  String? get preUpdateManifestUrl => _httpsUrl(text('flclashx-update-pre'));
+
+  String? _httpsUrl(String? value) =>
+      value != null && Uri.tryParse(value)?.isScheme('https') == true
+      ? value
+      : null;
 
   String? get serviceName => _plainOrBase64(text('flclashx-servicename'));
 
@@ -222,7 +239,7 @@ String _decodeAnnouncement(String raw) {
 /// loose|standard|compact. `app.*` keys shape the app: `board`
 /// extended|standard, `navbar` floating|docked, `tabs` slide|fade, `glass`
 /// none|standard|ultra, `color` RRGGBB|AARRGGBB, `style`
-/// vivid|tinted|soft|monochrome, `black` true|false.
+/// vivid|tinted|soft|monochrome, `black` true|false, `theme` auto|light|dark.
 class ViewRequest {
   const ViewRequest({
     this.type,
@@ -231,6 +248,7 @@ class ViewRequest {
     this.icon,
     this.card,
     this.board,
+    this.themeMode,
     this.floatingNavigationBar,
     this.tabAnimation,
     this.liquidGlass,
@@ -245,6 +263,7 @@ class ViewRequest {
   final ProxiesIconStyle? icon;
   final ProxyCardType? card;
   final ThemeStyle? board;
+  final ThemeMode? themeMode;
   final bool? floatingNavigationBar;
   final TabAnimation? tabAnimation;
   final LiquidGlassMode? liquidGlass;
@@ -258,6 +277,12 @@ class ViewRequest {
   static const boardNames = {
     'extended': ThemeStyle.enhanced,
     'standard': ThemeStyle.original,
+  };
+
+  static const themeModeNames = {
+    'auto': ThemeMode.system,
+    'light': ThemeMode.light,
+    'dark': ThemeMode.dark,
   };
 
   static final _hex = RegExp(r'^[0-9A-F]{6}([0-9A-F]{2})?$');
@@ -286,6 +311,7 @@ class ViewRequest {
     ProxiesIconStyle? icon;
     ProxyCardType? card;
     ThemeStyle? board;
+    ThemeMode? themeMode;
     bool? floatingNavigationBar;
     TabAnimation? tabAnimation;
     LiquidGlassMode? liquidGlass;
@@ -319,6 +345,8 @@ class ViewRequest {
           card = named(ProxyCardType.values, value) ?? card;
         case (true, 'board'):
           board = boardNames[value] ?? board;
+        case (true, 'theme'):
+          themeMode = themeModeNames[value] ?? themeMode;
         case (true, 'navbar'):
           floatingNavigationBar = switch (value) {
             'floating' => true,
@@ -344,6 +372,7 @@ class ViewRequest {
       icon: icon,
       card: card,
       board: board,
+      themeMode: themeMode,
       floatingNavigationBar: floatingNavigationBar,
       tabAnimation: tabAnimation,
       liquidGlass: liquidGlass,
@@ -361,6 +390,7 @@ class ViewRequest {
     icon,
     card,
     board,
+    themeMode,
     floatingNavigationBar,
     tabAnimation,
     liquidGlass,
@@ -373,6 +403,7 @@ class ViewRequest {
 
   bool get touchesTheme =>
       board != null ||
+      themeMode != null ||
       liquidGlass != null ||
       color != null ||
       colorStyle != null ||
@@ -441,7 +472,11 @@ class LinkOffer {
     final threshold = comma == -1
         ? null
         : double.tryParse(raw.substring(comma + 1).trim());
-    return LinkOffer(url: url, threshold: threshold);
+    // NaN and Infinity parse too, and no day count can be compared with them.
+    return LinkOffer(
+      url: url,
+      threshold: threshold != null && threshold.isFinite ? threshold : null,
+    );
   }
 
   @override
@@ -469,6 +504,26 @@ class ProfileOffer {
 }
 
 /// The offers [profile]'s plan has reached, renewal first.
+/// When the renewal [visibleOffersOf] hides at [now] crosses its threshold;
+/// nothing in the profile changes then.
+DateTime? nextOfferChange(Profile? profile, DateTime now) {
+  final threshold = profile?.headers.buyPlan?.threshold;
+  final expire = profile?.subscriptionInfo?.expire ?? 0;
+  if (threshold == null || expire <= 0) {
+    return null;
+  }
+  final days =
+      threshold.clamp(-_dateTimeRangeDays, _dateTimeRangeDays).floor() + 1;
+  final shows = expire * 1000 - days * Duration.millisecondsPerDay;
+  if (shows.abs() > _dateTimeRangeDays * Duration.millisecondsPerDay) {
+    return null;
+  }
+  final at = DateTime.fromMillisecondsSinceEpoch(shows);
+  return at.isAfter(now) ? at : null;
+}
+
+const _dateTimeRangeDays = 100000000;
+
 List<ProfileOffer> visibleOffersOf(Profile? profile, {DateTime? now}) {
   if (profile == null) {
     return const [];
