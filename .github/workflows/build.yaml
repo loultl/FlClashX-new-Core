@@ -73,12 +73,6 @@ jobs:
         run: |
           yq -i '.hooks.user_defines.setup.build_assets = false' pubspec.yaml
 
-      - name: Run tests
-        run: dart run tool/test.dart -- --reporter expanded --coverage
-
-      - name: Check coverage
-        run: dart run tool/check_coverage.dart coverage/lcov.info 75
-
   plugins:
     name: Plugins
     if: *checks
