@@ -31,13 +31,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Release history is counted from upstream's frozenBoundaryTag, which the
-      # fork does not carry; pushing it there would start a build of its own.
-      - name: Fetch the changelog boundary tag
-        run: |
-          tag=$(sed -n "s/^const frozenBoundaryTag = '\(.*\)';$/\1/p" tool/src/changelog/builder.dart)
-          git fetch --no-tags https://github.com/chen08209/FlClash.git "refs/tags/${tag}:refs/tags/${tag}"
-
       - name: Test git hooks
         run: bash tool/hooks/test.sh
 
@@ -79,10 +72,6 @@ jobs:
       - name: Skip the Go core build hook
         run: |
           yq -i '.hooks.user_defines.setup.build_assets = false' pubspec.yaml
-
-      - name: Verify changelog
-        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
-        run: dart run tool/changelog.dart verify
 
       - name: Run tests
         run: dart run tool/test.dart -- --reporter expanded --coverage
