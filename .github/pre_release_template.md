@@ -51,7 +51,6 @@
                 <a href="https://github.com/loultl/FlClashX-new-Core/releases/download/vVERSION/FlClashX-linux-arm64.AppImage"><img src="https://img.shields.io/badge/AppImage-ARM64-f84e29.svg?logo=linux"></a><br>
                 <a href="https://github.com/loultl/FlClashX-new-Core/releases/download/vVERSION/FlClashX-linux-arm64.deb"><img src="https://img.shields.io/badge/DebPackage-ARM64-FF9966.svg?logo=debian"></a><br>
                 <a href="https://github.com/loultl/FlClashX-new-Core/releases/download/vVERSION/FlClashX-linux-arm64.rpm"><img src="https://img.shields.io/badge/RpmPackage-ARM64-F1B42F.svg?logo=redhat"></a><br>
-                <a href="https://aur.archlinux.org/packages/flclashx-git"><img src="https://img.shields.io/aur/version/flclashx-git"></a>
             </td>
         </tr>
     </tbody>
