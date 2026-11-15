@@ -266,18 +266,15 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m97(transport) => "Заголовки ${transport}";
 
-  static String m98(received, total, percent) =>
-      "${received} из ${total} · ${percent}%";
+  static String m98(label) => "Значение «${label}» должно быть URL";
 
-  static String m99(label) => "Значение «${label}» должно быть URL";
-
-  static String m100(appName) =>
+  static String m99(appName) =>
       "Вы не дали ${appName} разрешение на подключение VPN";
 
-  static String m101(count) =>
+  static String m100(count) =>
       "${Intl.plural(count, one: '${count} год назад', few: '${count} года назад', many: '${count} лет назад', other: '${count} года назад')}";
 
-  static String m102(count) =>
+  static String m101(count) =>
       "${Intl.plural(count, one: '${count} г. назад', few: '${count} г. назад', many: '${count} лет назад', other: '${count} г. назад')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -321,14 +318,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "add": MessageLookupByLibrary.simpleMessage("Добавить"),
     "addCustomProxy": MessageLookupByLibrary.simpleMessage("Добавить прокси"),
     "addFilters": MessageLookupByLibrary.simpleMessage("Добавить фильтры"),
+    "addFromClipboard": MessageLookupByLibrary.simpleMessage(
+      "Добавить из буфера",
+    ),
     "addNodes": MessageLookupByLibrary.simpleMessage("Добавить узлы"),
     "addOverrideEntry": MessageLookupByLibrary.simpleMessage(
       "Добавить параметр",
     ),
     "addProfile": MessageLookupByLibrary.simpleMessage("Добавить профиль"),
-    "addProfileFromClipboard": MessageLookupByLibrary.simpleMessage(
-      "Добавить профиль из буфера",
-    ),
     "addProxyChain": MessageLookupByLibrary.simpleMessage("Добавить цепочку"),
     "addProxyChainHop": MessageLookupByLibrary.simpleMessage("Добавить звено"),
     "addProxyGroup": MessageLookupByLibrary.simpleMessage(
@@ -432,7 +429,6 @@ class MessageLookup extends MessageLookupByLibrary {
       "Интервал автообновления",
     ),
     "back": MessageLookupByLibrary.simpleMessage("Назад"),
-    "backgroundBlur": MessageLookupByLibrary.simpleMessage("Размытие фона"),
     "backup": MessageLookupByLibrary.simpleMessage("Резервное копирование"),
     "backupAndRestore": MessageLookupByLibrary.simpleMessage(
       "Резервное копирование и восстановление",
@@ -447,9 +443,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "basicStrategy": MessageLookupByLibrary.simpleMessage("Базовые политики"),
     "batchAdd": MessageLookupByLibrary.simpleMessage("Массовое добавление"),
     "batchImport": MessageLookupByLibrary.simpleMessage("Массовый импорт"),
-    "batchLinkInputTip": MessageLookupByLibrary.simpleMessage(
-      "По одной ссылке на строку",
-    ),
     "batchListInputTip": MessageLookupByLibrary.simpleMessage(
       "По одному значению на строку или через запятую",
     ),
@@ -601,6 +594,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "coreBlockedByPolicyTip": m5,
     "coreBlockedBySmartAppControlTip": MessageLookupByLibrary.simpleMessage(
       "Smart App Control в Windows заблокировал неподписанный FlClashCore.exe. Откройте Безопасность Windows → Управление приложениями и браузером → Параметры Smart App Control, выберите «Выкл.» и снова запустите FlClashX. Повторно включить Smart App Control без переустановки Windows нельзя.",
+    ),
+    "coreRestartByCommandFailed": MessageLookupByLibrary.simpleMessage(
+      "Команде не удалось перезапустить ядро",
+    ),
+    "coreRestartedByCommand": MessageLookupByLibrary.simpleMessage(
+      "Ядро перезапущено командой",
     ),
     "coreStatus": MessageLookupByLibrary.simpleMessage("Статус ядра"),
     "coreStopped": MessageLookupByLibrary.simpleMessage("Ядро остановлено"),
@@ -996,7 +995,6 @@ class MessageLookup extends MessageLookupByLibrary {
       "Импорт заменит текущие группы прокси, правила и настройки этого профиля",
     ),
     "importFile": MessageLookupByLibrary.simpleMessage("Импорт из файла"),
-    "importFromLink": MessageLookupByLibrary.simpleMessage("Импорт по ссылке"),
     "importUrl": MessageLookupByLibrary.simpleMessage("Импорт по URL"),
     "inbound": MessageLookupByLibrary.simpleMessage("Входящие"),
     "includeInterface": MessageLookupByLibrary.simpleMessage(
@@ -1025,9 +1023,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "inputRuleContent": MessageLookupByLibrary.simpleMessage(
       "Введите содержимое правила",
     ),
-    "installedAppsPermissionDeniedMessage": MessageLookupByLibrary.simpleMessage(
-      "Разрешение на список приложений отклонено, поэтому установленные приложения недоступны. Предоставьте его вручную в системных настройках.",
-    ),
+    "installedAppsPermissionDeniedMessage":
+        MessageLookupByLibrary.simpleMessage(
+          "Разрешение на список приложений отклонено, поэтому установленные приложения недоступны. Предоставьте его вручную в системных настройках.",
+        ),
     "installedAppsPermissionDesc": MessageLookupByLibrary.simpleMessage(
       "Эта система не выдаёт список установленных приложений без разрешения. Предоставьте его, чтобы настроить прокси для отдельных приложений.",
     ),
@@ -1330,9 +1329,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "noData": MessageLookupByLibrary.simpleMessage("Нет данных"),
     "noInfo": MessageLookupByLibrary.simpleMessage("Нет информации"),
     "noLogsToday": MessageLookupByLibrary.simpleMessage("За сегодня логов нет"),
-    "noLongerRemind": MessageLookupByLibrary.simpleMessage(
-      "Больше не напоминать",
-    ),
     "noMatchingNodes": MessageLookupByLibrary.simpleMessage("Совпадений нет"),
     "noNetwork": MessageLookupByLibrary.simpleMessage("Нет сети"),
     "noNetworkApp": MessageLookupByLibrary.simpleMessage("Приложения без сети"),
@@ -1398,6 +1394,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "outbound": MessageLookupByLibrary.simpleMessage("Исходящие"),
     "outboundExit": MessageLookupByLibrary.simpleMessage("Выход"),
     "outboundIp": MessageLookupByLibrary.simpleMessage("Исходящий IP"),
+    "outboundLocation": MessageLookupByLibrary.simpleMessage(
+      "Исходящая локация",
+    ),
     "outboundMode": MessageLookupByLibrary.simpleMessage(
       "Режим исходящего трафика",
     ),
@@ -1478,6 +1477,7 @@ class MessageLookup extends MessageLookupByLibrary {
         MessageLookupByLibrary.simpleMessage("Введите интервал автообновления"),
     "profileDaysFigure": m64,
     "profileDaysLeft": m65,
+    "profileDetails": MessageLookupByLibrary.simpleMessage("Подробнее"),
     "profileExpired": MessageLookupByLibrary.simpleMessage("Истекла"),
     "profileExpiresIn": m66,
     "profileHasUpdate": MessageLookupByLibrary.simpleMessage(
@@ -1567,6 +1567,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "proxyType": MessageLookupByLibrary.simpleMessage("Тип прокси"),
     "pruneCache": MessageLookupByLibrary.simpleMessage("Очистить кэш"),
     "publicKey": MessageLookupByLibrary.simpleMessage("Открытый ключ"),
+    "pullToTestDelay": MessageLookupByLibrary.simpleMessage(
+      "Потяните, чтобы проверить задержку",
+    ),
+    "pullToUpdateSubscription": MessageLookupByLibrary.simpleMessage(
+      "Потяните, чтобы обновить подписку",
+    ),
     "pureBlack": MessageLookupByLibrary.simpleMessage("Чисто чёрный"),
     "pureBlackMode": MessageLookupByLibrary.simpleMessage("Чисто чёрный режим"),
     "qrcode": MessageLookupByLibrary.simpleMessage("QR-код"),
@@ -1588,6 +1594,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "releaseMemory": MessageLookupByLibrary.simpleMessage("Освободить память"),
     "releaseMemoryFailed": MessageLookupByLibrary.simpleMessage(
       "Не удалось освободить память",
+    ),
+    "releaseToTestDelay": MessageLookupByLibrary.simpleMessage(
+      "Отпустите, чтобы проверить задержку",
+    ),
+    "releaseToUpdateSubscription": MessageLookupByLibrary.simpleMessage(
+      "Отпустите, чтобы обновить подписку",
     ),
     "remote": MessageLookupByLibrary.simpleMessage("Удалённо"),
     "remoteDestination": MessageLookupByLibrary.simpleMessage(
@@ -1933,9 +1945,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "sidebarBlur": MessageLookupByLibrary.simpleMessage(
       "Размытие боковой панели",
     ),
-    "sidebarBlurDesc": MessageLookupByLibrary.simpleMessage(
-      "Размытие фона показывает рабочий стол за окном сквозь боковую панель.",
-    ),
     "silentLaunch": MessageLookupByLibrary.simpleMessage("Тихий запуск"),
     "silentLaunchDesc": MessageLookupByLibrary.simpleMessage(
       "При тихом запуске окно не показывается.",
@@ -2045,6 +2054,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "subscriptionInfo": MessageLookupByLibrary.simpleMessage(
       "Информация о подписке",
     ),
+    "subscriptionUpdated": MessageLookupByLibrary.simpleMessage(
+      "Подписка обновлена",
+    ),
     "sudoPasswordTitle": MessageLookupByLibrary.simpleMessage(
       "Введите пароль для sudo",
     ),
@@ -2083,12 +2095,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "theme": MessageLookupByLibrary.simpleMessage("Тема"),
     "themeColor": MessageLookupByLibrary.simpleMessage("Цвет темы"),
     "themeMode": MessageLookupByLibrary.simpleMessage("Оформление"),
-    "themeStyle": MessageLookupByLibrary.simpleMessage("Режим темы"),
-    "themeStyleDesc": MessageLookupByLibrary.simpleMessage(
-      "Улучшенный показывает на главной логотип сервиса, тариф, сервер и кнопку подключения вместо сетки виджетов.",
-    ),
-    "themeStyleEnhanced": MessageLookupByLibrary.simpleMessage("Улучшенный"),
-    "themeStyleOriginal": MessageLookupByLibrary.simpleMessage("Оригинальный"),
     "tight": MessageLookupByLibrary.simpleMessage("Плотный"),
     "time": MessageLookupByLibrary.simpleMessage("Время"),
     "timeout": MessageLookupByLibrary.simpleMessage("Тайм-аут"),
@@ -2145,7 +2151,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "unnamed": MessageLookupByLibrary.simpleMessage("Без названия"),
     "unpinWindow": MessageLookupByLibrary.simpleMessage("Открепить окно"),
     "update": MessageLookupByLibrary.simpleMessage("Обновить"),
-    "updateDownloadProgress": m98,
     "updateErrorBusy": MessageLookupByLibrary.simpleMessage(
       "Дождитесь, пока подключение запустится или остановится.",
     ),
@@ -2191,6 +2196,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "updateHandedOff": MessageLookupByLibrary.simpleMessage(
       "Завершите обновление в открывшемся установщике.",
     ),
+    "updateHide": MessageLookupByLibrary.simpleMessage("Скрыть"),
     "updateInstall": MessageLookupByLibrary.simpleMessage("Установить"),
     "updateInstalling": MessageLookupByLibrary.simpleMessage(
       "Запускаем установщик…",
@@ -2213,10 +2219,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "updateViewOnGitHub": MessageLookupByLibrary.simpleMessage(
       "Открыть на GitHub",
     ),
+    "updatingSubscription": MessageLookupByLibrary.simpleMessage(
+      "Обновляю подписку…",
+    ),
     "upload": MessageLookupByLibrary.simpleMessage("Отдача"),
     "uploadBandwidth": MessageLookupByLibrary.simpleMessage("Скорость отдачи"),
     "url": MessageLookupByLibrary.simpleMessage("URL"),
-    "urlTip": m99,
+    "urlTip": m98,
     "usageLabel": MessageLookupByLibrary.simpleMessage("Использование"),
     "useHosts": MessageLookupByLibrary.simpleMessage("Использовать hosts"),
     "useSystemHosts": MessageLookupByLibrary.simpleMessage(
@@ -2248,7 +2257,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "vpnEnableDesc": MessageLookupByLibrary.simpleMessage(
       "VPN автоматически направляет весь системный трафик через VpnService.",
     ),
-    "vpnPermissionNotGranted": m100,
+    "vpnPermissionNotGranted": m99,
     "vpnRestrictedByAdministrator": MessageLookupByLibrary.simpleMessage(
       "VPN на этом устройстве ограничен администратором",
     ),
@@ -2265,8 +2274,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "writeToSystemDesc": MessageLookupByLibrary.simpleMessage(
       "«Записывать в систему» также устанавливает системные часы; Android это игнорирует.",
     ),
-    "yearsAgo": m101,
-    "yearsAgoShort": m102,
+    "yearsAgo": m100,
+    "yearsAgoShort": m101,
     "yes": MessageLookupByLibrary.simpleMessage("Да"),
     "zhCN": MessageLookupByLibrary.simpleMessage("Упрощённый китайский"),
   };

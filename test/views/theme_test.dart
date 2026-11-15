@@ -52,26 +52,6 @@ void main() {
 
   ThemeProps readTheme() => container.read(themeSettingProvider);
 
-  group('theme style', () {
-    testWidgets('starts on the original page and switches to the hero', (
-      tester,
-    ) async {
-      await pumpThemeView(tester);
-
-      expect(readTheme().style, ThemeStyle.original);
-      expect(find.text('Theme mode'), findsOneWidget);
-      expect(find.text('Appearance'), findsOneWidget);
-
-      await tester.tap(find.text('Enhanced'));
-      await tester.pumpAndSettle();
-      expect(readTheme().style, ThemeStyle.enhanced);
-
-      await tester.tap(find.text('Original'));
-      await tester.pumpAndSettle();
-      expect(readTheme().style, ThemeStyle.original);
-    });
-  });
-
   group('theme mode', () {
     testWidgets('defaults to following the system', (tester) async {
       await pumpThemeView(tester);
@@ -264,26 +244,6 @@ void main() {
       );
       expect(pad.left, 30);
       expect(pad.right, size.width - 30);
-    });
-  });
-
-  group('sidebar blur', () {
-    testWidgets('starts off, with a working toggle on supported platforms', (
-      tester,
-    ) async {
-      await pumpThemeView(tester);
-      final toggle = find.text('Background blur');
-
-      expect(readTheme().sidebarBlur, isFalse);
-      if (!Platform.isMacOS && !Platform.isWindows) {
-        expect(toggle, findsNothing);
-        return;
-      }
-
-      expect(toggle, findsOneWidget);
-      await tester.tap(toggle);
-      await tester.pumpAndSettle();
-      expect(readTheme().sidebarBlur, isTrue);
     });
   });
 

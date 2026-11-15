@@ -121,7 +121,8 @@ class Migration {
     1: _resetThemeColors,
     2: _keepGlassLook,
     3: _followSystemColors,
-    4: _turnOffSidebarBlur,
+    // Its setting is gone, but a stored upgradeVersion still counts it.
+    4: _unchanged,
   };
 
   Future<Config> run() async {
@@ -252,7 +253,7 @@ class Migration {
     }
 
     config = data.configMap == null
-        ? _freshInstall(Config.realFromJson(null))
+        ? Config.realFromJson(null)
         : Config.realFromJson(data.configMap);
     await _store.restore(data);
     if (!await _store.saveConfig(config)) {
@@ -270,12 +271,6 @@ class Migration {
     return config;
   }
 }
-
-/// A new install opens on the enhanced dashboard; the model keeps the
-/// standard one, which any stored config without a style was made on.
-Config _freshInstall(Config config) => config.copyWith(
-  themeProps: config.themeProps.copyWith(style: ThemeStyle.enhanced),
-);
 
 Config _resetThemeColors(Config config) => config.copyWith(
   themeProps: config.themeProps.copyWith(
@@ -318,9 +313,7 @@ Config _followSystemColors(Config config) {
   );
 }
 
-// Releases stored sidebar blur on while its switch stayed hidden.
-Config _turnOffSidebarBlur(Config config) =>
-    config.copyWith(themeProps: config.themeProps.copyWith(sidebarBlur: false));
+Config _unchanged(Config config) => config;
 
 bool _isV0(Map<String, Object?>? configMap) =>
     configMap?['proxiesStyle'] != null;

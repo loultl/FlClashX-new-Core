@@ -2,6 +2,228 @@
   "schemaVersion": 2,
   "versions": [
     {
+      "version": "0.5.6",
+      "tag": "v0.5.6",
+      "date": "2026-11-15",
+      "prerelease": false,
+      "groups": [
+        {
+          "type": "feat",
+          "entries": [
+            {
+              "id": "1e30319",
+              "scope": "dashboard",
+              "text": "The Core heartbeat is dark green while the Core runs, whatever the theme colour"
+            },
+            {
+              "id": "e007013",
+              "scope": "update",
+              "text": "Provider update manifests take a minVersion that makes the update required for older apps"
+            },
+            {
+              "id": "d608a21",
+              "scope": "headers",
+              "text": "flclashx-view takes proxies.hidetimeout to hide or show proxies that timed out"
+            },
+            {
+              "id": "4049f88",
+              "scope": "dashboard",
+              "text": "The service status card shows the outbound location, a flag and the node's name, instead of the IP"
+            },
+            {
+              "id": "641f761",
+              "scope": "android",
+              "text": "On Android, pulling the dashboard down updates the subscription and pulling the proxies page down tests the delays"
+            },
+            {
+              "id": "02bed3b",
+              "scope": "dashboard",
+              "text": "The extended dashboard is replaced by flclashx-special: providermode, which adds the provider's logo, name and a start button to the standard dashboard; app.board is no longer read"
+            }
+          ]
+        },
+        {
+          "type": "fix",
+          "entries": [
+            {
+              "id": "1a434eb",
+              "scope": "windows",
+              "text": "Self-update on Windows recognises installs upgraded from 0.4 instead of treating them as portable"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.5",
+      "tag": "v0.5.5",
+      "date": "2026-11-14",
+      "prerelease": false,
+      "groups": [
+        {
+          "type": "feat",
+          "entries": [
+            {
+              "id": "3b06ac9",
+              "scope": "dashboard",
+              "text": "The Core status button shows a heartbeat that morphs between running, connecting and down instead of a green or red fill"
+            },
+            {
+              "id": "d499d7f",
+              "scope": "desktop",
+              "text": "FlClashX --restart-core restarts the Core of the running app from a script or terminal on Windows, macOS and Linux, with an exit code for the result (#155)"
+            }
+          ]
+        },
+        {
+          "type": "fix",
+          "entries": [
+            {
+              "id": "ae53900",
+              "scope": "android",
+              "text": "Themed launcher icons show the X alone instead of a dark square around it"
+            },
+            {
+              "id": "f57fc26",
+              "scope": "android",
+              "text": "Tapping the Quick Settings tile no longer closes the notification shade"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.4",
+      "tag": "v0.5.4",
+      "date": "2026-11-14",
+      "prerelease": false,
+      "groups": [
+        {
+          "type": "feat",
+          "entries": [
+            {
+              "id": "287aaec",
+              "scope": "proxies",
+              "text": "The proxies page's top buttons are glass, as on every other page"
+            },
+            {
+              "id": "2883815",
+              "scope": "headers",
+              "text": "flclashx-special takes onegroup (the proxies page shows only the server group's proxies), nologo (no service logo on the hero page) and noservice (no logo or name there)"
+            },
+            {
+              "id": "63402f7",
+              "scope": "dashboard",
+              "text": "Flags on the dashboard and in service status come from the server's name, not the outbound IP's country, and the hero card keeps its swap arrows with the IP hidden"
+            },
+            {
+              "id": "a0c08d6",
+              "scope": "profiles",
+              "text": "Adding a profile by link asks only for the link, with a one-tap Add from clipboard and the HWID always sent; the dashboard adds by link right away and stays open"
+            },
+            {
+              "id": "4b1018c",
+              "scope": "theme",
+              "text": "The Background blur switch is gone from Theme settings; it changed nothing visible"
+            },
+            {
+              "id": "c5671a0",
+              "scope": "dashboard",
+              "text": "With the IP hidden, the status card shows the current server, and tapping it changes the server"
+            }
+          ]
+        },
+        {
+          "type": "fix",
+          "entries": [
+            {
+              "id": "65276c5",
+              "scope": "profiles",
+              "text": "A subscription's remaining, used and total data show two decimals, so 14.65 TB no longer reads as 14.7 TB"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "version": "0.5.3",
+      "tag": "v0.5.3",
+      "date": "2026-11-14",
+      "prerelease": false,
+      "groups": [
+        {
+          "type": "feat",
+          "entries": [
+            {
+              "id": "376b12c",
+              "scope": "profiles",
+              "text": "The current profile's menu on the Profiles page opens its details: counts, subscription and external resources"
+            },
+            {
+              "id": "6cd2a43",
+              "scope": "l10n",
+              "text": "The Windows installer offers Chinese, and the README has a Chinese translation (#153)"
+            }
+          ]
+        },
+        {
+          "type": "fix",
+          "entries": [
+            {
+              "id": "1d18f35",
+              "scope": "headers",
+              "text": "Dashboard cards you arranged stay put when the subscription updates, unless the panel denies editing them"
+            },
+            {
+              "id": "7c98452",
+              "scope": "linux",
+              "text": "TUN on Linux reports a Core the Helper refuses instead of failing silently, and AUR packages no longer break the Core's checksum (#156)"
+            },
+            {
+              "id": "eb61bd8",
+              "scope": "profiles",
+              "text": "Rules added to a profile can target its proxy groups again (#154)"
+            },
+            {
+              "id": "9bd0c0d",
+              "scope": "update",
+              "text": "The update reminder's Hide skips only that release, and the download shows its progress in the Download button"
+            },
+            {
+              "id": "ef4eada",
+              "scope": "settings",
+              "text": "Picking a language no longer fails when the settings page is rebuilt during the menu's close"
+            },
+            {
+              "id": "a4d80c6",
+              "scope": "linux",
+              "text": "An autostarted Linux session waits for the Helper instead of asking to install it again"
+            },
+            {
+              "id": "a4359ea",
+              "scope": "windows",
+              "text": "Windows PCs whose install date is out of range start again and send their HWID"
+            }
+          ]
+        },
+        {
+          "type": "perf",
+          "entries": [
+            {
+              "id": "f235adc",
+              "scope": "ui",
+              "text": "Glass cards scroll smoother on weak phones"
+            },
+            {
+              "id": "2c34c9e",
+              "scope": "android",
+              "text": "Android starts smoother on first run"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "version": "0.5.2",
       "tag": "v0.5.2",
       "date": "2026-11-13",

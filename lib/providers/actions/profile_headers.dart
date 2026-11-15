@@ -3,6 +3,7 @@ part of '../action.dart';
 typedef ProfileHeaderSettings = ({
   ViewRequest? view,
   List<DashboardWidget>? widgets,
+  bool widgetsDenied,
   Set<String>? switches,
   bool globalModeAllowed,
   bool hideIp,
@@ -14,6 +15,7 @@ ProfileHeaderSettings profileHeaderSettingsOf(Profile? profile) {
   return (
     view: headers?.view,
     widgets: headers?.dashboardWidgets,
+    widgetsDenied: headers?.widgetEditingDenied ?? false,
     switches: headers?.appSwitches,
     globalModeAllowed: headers?.globalModeAllowed ?? true,
     hideIp: headers?.hideIp ?? false,
@@ -81,6 +83,9 @@ class ProfileHeadersAction extends _$ProfileHeadersAction {
               iconStyle:
                   asked('view.proxies.icon', view.icon) ?? state.iconStyle,
               cardType: asked('view.proxies.card', view.card) ?? state.cardType,
+              hideTimeoutProxies:
+                  asked('view.proxies.hidetimeout', view.hideTimeout) ??
+                  state.hideTimeoutProxies,
             ),
           );
       if (view.touchesTheme) {
@@ -89,7 +94,6 @@ class ProfileHeadersAction extends _$ProfileHeadersAction {
             .read(themeSettingProvider.notifier)
             .update(
               (state) => state.copyWith(
-                style: asked('view.app.board', view.board) ?? state.style,
                 themeMode:
                     asked('view.app.theme', view.themeMode) ?? state.themeMode,
                 liquidGlass:
@@ -123,7 +127,9 @@ class ProfileHeadersAction extends _$ProfileHeadersAction {
             );
       }
     }
-    if (settings.widgets case final widgets?) {
+    if (settings.widgets case final widgets?
+        when settings.widgetsDenied ||
+            !owned.contains(dashboardWidgetsSetting)) {
       ref
           .read(appSettingProvider.notifier)
           .update(

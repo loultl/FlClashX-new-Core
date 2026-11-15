@@ -231,16 +231,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m97(transport) => "${transport} リクエストヘッダー";
 
-  static String m98(received, total, percent) =>
-      "${received} / ${total} · ${percent}%";
+  static String m98(label) => "${label}はURLである必要があります";
 
-  static String m99(label) => "${label}はURLである必要があります";
+  static String m99(appName) => "${appName} の VPN 接続が許可されませんでした";
 
-  static String m100(appName) => "${appName} の VPN 接続が許可されませんでした";
+  static String m100(count) => "${count} 年前";
 
   static String m101(count) => "${count} 年前";
-
-  static String m102(count) => "${count} 年前";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -275,12 +272,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "add": MessageLookupByLibrary.simpleMessage("追加"),
     "addCustomProxy": MessageLookupByLibrary.simpleMessage("プロキシを追加"),
     "addFilters": MessageLookupByLibrary.simpleMessage("フィルターを追加"),
+    "addFromClipboard": MessageLookupByLibrary.simpleMessage("クリップボードから追加"),
     "addNodes": MessageLookupByLibrary.simpleMessage("ノードを追加"),
     "addOverrideEntry": MessageLookupByLibrary.simpleMessage("上書き項目を追加"),
     "addProfile": MessageLookupByLibrary.simpleMessage("プロファイルを追加"),
-    "addProfileFromClipboard": MessageLookupByLibrary.simpleMessage(
-      "クリップボードからプロファイルを追加",
-    ),
     "addProxyChain": MessageLookupByLibrary.simpleMessage("チェーンを追加"),
     "addProxyChainHop": MessageLookupByLibrary.simpleMessage("中継を追加"),
     "addProxyGroup": MessageLookupByLibrary.simpleMessage("プロキシグループを追加"),
@@ -352,7 +347,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "autoUpdate": MessageLookupByLibrary.simpleMessage("自動更新"),
     "autoUpdateInterval": MessageLookupByLibrary.simpleMessage("自動更新間隔"),
     "back": MessageLookupByLibrary.simpleMessage("戻る"),
-    "backgroundBlur": MessageLookupByLibrary.simpleMessage("背景のぼかし"),
     "backup": MessageLookupByLibrary.simpleMessage("バックアップ"),
     "backupAndRestore": MessageLookupByLibrary.simpleMessage("バックアップと復元"),
     "backupFromNewerVersion": MessageLookupByLibrary.simpleMessage(
@@ -363,9 +357,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "basicStrategy": MessageLookupByLibrary.simpleMessage("基本ポリシー"),
     "batchAdd": MessageLookupByLibrary.simpleMessage("一括追加"),
     "batchImport": MessageLookupByLibrary.simpleMessage("一括インポート"),
-    "batchLinkInputTip": MessageLookupByLibrary.simpleMessage(
-      "1行に1つのリンクを入力してください",
-    ),
     "batchListInputTip": MessageLookupByLibrary.simpleMessage(
       "1行に1項目、またはカンマ区切りで入力してください",
     ),
@@ -489,6 +480,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "coreBlockedByPolicyTip": m5,
     "coreBlockedBySmartAppControlTip": MessageLookupByLibrary.simpleMessage(
       "Windows のスマート アプリ コントロールが、署名されていない FlClashCore.exe をブロックしました。Windows セキュリティ → アプリとブラウザーの制御 → スマート アプリ コントロールの設定で「オフ」を選び、FlClashX を再起動してください。一度オフにすると、Windows を再インストールしない限り再度オンにはできません。",
+    ),
+    "coreRestartByCommandFailed": MessageLookupByLibrary.simpleMessage(
+      "コマンドでコアを再起動できませんでした",
+    ),
+    "coreRestartedByCommand": MessageLookupByLibrary.simpleMessage(
+      "コマンドでコアを再起動しました",
     ),
     "coreStatus": MessageLookupByLibrary.simpleMessage("コアの状態"),
     "coreStopped": MessageLookupByLibrary.simpleMessage("コアは停止中です"),
@@ -814,7 +811,6 @@ class MessageLookup extends MessageLookupByLibrary {
       "インポートすると、このプロファイルの現在のプロキシグループ、ルール、設定が置き換えられます",
     ),
     "importFile": MessageLookupByLibrary.simpleMessage("ファイルからインポート"),
-    "importFromLink": MessageLookupByLibrary.simpleMessage("リンクからインポート"),
     "importUrl": MessageLookupByLibrary.simpleMessage("URLからインポート"),
     "inbound": MessageLookupByLibrary.simpleMessage("インバウンド"),
     "includeInterface": MessageLookupByLibrary.simpleMessage("対象インターフェース"),
@@ -1091,7 +1087,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "noData": MessageLookupByLibrary.simpleMessage("データがありません"),
     "noInfo": MessageLookupByLibrary.simpleMessage("情報がありません"),
     "noLogsToday": MessageLookupByLibrary.simpleMessage("今日のログはありません"),
-    "noLongerRemind": MessageLookupByLibrary.simpleMessage("今後表示しない"),
     "noMatchingNodes": MessageLookupByLibrary.simpleMessage("一致する項目はありません"),
     "noNetwork": MessageLookupByLibrary.simpleMessage("ネットワークがありません"),
     "noNetworkApp": MessageLookupByLibrary.simpleMessage("ネットワーク不使用アプリ"),
@@ -1141,6 +1136,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "outbound": MessageLookupByLibrary.simpleMessage("アウトバウンド"),
     "outboundExit": MessageLookupByLibrary.simpleMessage("出口"),
     "outboundIp": MessageLookupByLibrary.simpleMessage("アウトバウンド IP"),
+    "outboundLocation": MessageLookupByLibrary.simpleMessage("送信元の場所"),
     "outboundMode": MessageLookupByLibrary.simpleMessage("アウトバウンドモード"),
     "overrideDestination": MessageLookupByLibrary.simpleMessage("宛先を上書き"),
     "overrideDestinationDesc": MessageLookupByLibrary.simpleMessage(
@@ -1197,6 +1193,7 @@ class MessageLookup extends MessageLookupByLibrary {
         MessageLookupByLibrary.simpleMessage("自動更新間隔を入力してください"),
     "profileDaysFigure": m64,
     "profileDaysLeft": m65,
+    "profileDetails": MessageLookupByLibrary.simpleMessage("詳細"),
     "profileExpired": MessageLookupByLibrary.simpleMessage("期限切れ"),
     "profileExpiresIn": m66,
     "profileHasUpdate": MessageLookupByLibrary.simpleMessage(
@@ -1284,6 +1281,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "proxyType": MessageLookupByLibrary.simpleMessage("プロキシタイプ"),
     "pruneCache": MessageLookupByLibrary.simpleMessage("キャッシュを整理"),
     "publicKey": MessageLookupByLibrary.simpleMessage("公開鍵"),
+    "pullToTestDelay": MessageLookupByLibrary.simpleMessage("下に引いて遅延をテスト"),
+    "pullToUpdateSubscription": MessageLookupByLibrary.simpleMessage(
+      "下に引いてサブスクリプションを更新",
+    ),
     "pureBlack": MessageLookupByLibrary.simpleMessage("ピュアブラック"),
     "pureBlackMode": MessageLookupByLibrary.simpleMessage("ピュアブラックモード"),
     "qrcode": MessageLookupByLibrary.simpleMessage("QRコード"),
@@ -1305,6 +1306,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "releaseMemory": MessageLookupByLibrary.simpleMessage("メモリを解放"),
     "releaseMemoryFailed": MessageLookupByLibrary.simpleMessage(
       "メモリの解放に失敗しました",
+    ),
+    "releaseToTestDelay": MessageLookupByLibrary.simpleMessage("指を離すと遅延をテスト"),
+    "releaseToUpdateSubscription": MessageLookupByLibrary.simpleMessage(
+      "指を離すとサブスクリプションを更新",
     ),
     "remote": MessageLookupByLibrary.simpleMessage("リモート"),
     "remoteDestination": MessageLookupByLibrary.simpleMessage("リモート宛先"),
@@ -1584,9 +1589,6 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "showPassword": MessageLookupByLibrary.simpleMessage("パスワードを表示"),
     "sidebarBlur": MessageLookupByLibrary.simpleMessage("サイドバーのぼかし"),
-    "sidebarBlurDesc": MessageLookupByLibrary.simpleMessage(
-      "背景のぼかしでは、ウィンドウの背後のデスクトップがサイドバー越しに見えます。",
-    ),
     "silentLaunch": MessageLookupByLibrary.simpleMessage("サイレント起動"),
     "silentLaunchDesc": MessageLookupByLibrary.simpleMessage(
       "サイレント起動ではウィンドウを表示しません。",
@@ -1678,6 +1680,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "サブスクリプションは今日で終了します",
     ),
     "subscriptionInfo": MessageLookupByLibrary.simpleMessage("サブスクリプション情報"),
+    "subscriptionUpdated": MessageLookupByLibrary.simpleMessage(
+      "サブスクリプションを更新しました",
+    ),
     "sudoPasswordTitle": MessageLookupByLibrary.simpleMessage("sudo のパスワードを入力"),
     "support": MessageLookupByLibrary.simpleMessage("サポート"),
     "suspended": MessageLookupByLibrary.simpleMessage("一時停止中…"),
@@ -1704,12 +1709,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "theme": MessageLookupByLibrary.simpleMessage("テーマ"),
     "themeColor": MessageLookupByLibrary.simpleMessage("テーマカラー"),
     "themeMode": MessageLookupByLibrary.simpleMessage("外観"),
-    "themeStyle": MessageLookupByLibrary.simpleMessage("テーマモード"),
-    "themeStyleDesc": MessageLookupByLibrary.simpleMessage(
-      "強化版では、ウィジェットグリッドの代わりにサービスのロゴ、プラン、サーバー、接続ボタンをホームに表示します。",
-    ),
-    "themeStyleEnhanced": MessageLookupByLibrary.simpleMessage("強化版"),
-    "themeStyleOriginal": MessageLookupByLibrary.simpleMessage("オリジナル"),
     "tight": MessageLookupByLibrary.simpleMessage("コンパクト"),
     "time": MessageLookupByLibrary.simpleMessage("時刻"),
     "timeout": MessageLookupByLibrary.simpleMessage("タイムアウト"),
@@ -1758,7 +1757,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "unnamed": MessageLookupByLibrary.simpleMessage("名称未設定"),
     "unpinWindow": MessageLookupByLibrary.simpleMessage("固定を解除"),
     "update": MessageLookupByLibrary.simpleMessage("更新"),
-    "updateDownloadProgress": m98,
     "updateErrorBusy": MessageLookupByLibrary.simpleMessage(
       "接続の開始または停止が終わるまでお待ちください。",
     ),
@@ -1804,6 +1802,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "updateHandedOff": MessageLookupByLibrary.simpleMessage(
       "開いたインストーラでアップデートを完了してください。",
     ),
+    "updateHide": MessageLookupByLibrary.simpleMessage("非表示"),
     "updateInstall": MessageLookupByLibrary.simpleMessage("インストール"),
     "updateInstalling": MessageLookupByLibrary.simpleMessage("インストーラを起動しています…"),
     "updateOpenedImage": MessageLookupByLibrary.simpleMessage(
@@ -1818,10 +1817,13 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "updateVerifying": MessageLookupByLibrary.simpleMessage("ダウンロードを確認しています…"),
     "updateViewOnGitHub": MessageLookupByLibrary.simpleMessage("GitHub で表示"),
+    "updatingSubscription": MessageLookupByLibrary.simpleMessage(
+      "サブスクリプションを更新中…",
+    ),
     "upload": MessageLookupByLibrary.simpleMessage("アップロード"),
     "uploadBandwidth": MessageLookupByLibrary.simpleMessage("アップロード帯域幅"),
     "url": MessageLookupByLibrary.simpleMessage("URL"),
-    "urlTip": m99,
+    "urlTip": m98,
     "usageLabel": MessageLookupByLibrary.simpleMessage("使用状況"),
     "useHosts": MessageLookupByLibrary.simpleMessage("Hostsを使用"),
     "useSystemHosts": MessageLookupByLibrary.simpleMessage("システムのHostsを使用"),
@@ -1849,7 +1851,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "vpnEnableDesc": MessageLookupByLibrary.simpleMessage(
       "VPN は VpnService でシステムの全トラフィックを自動的にルーティングします。",
     ),
-    "vpnPermissionNotGranted": m100,
+    "vpnPermissionNotGranted": m99,
     "vpnRestrictedByAdministrator": MessageLookupByLibrary.simpleMessage(
       "このデバイスでは管理者によって VPN が制限されています",
     ),
@@ -1860,8 +1862,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "writeToSystemDesc": MessageLookupByLibrary.simpleMessage(
       "システムに書き込むを有効にするとシステムクロックも設定します。Android では無視されます。",
     ),
-    "yearsAgo": m101,
-    "yearsAgoShort": m102,
+    "yearsAgo": m100,
+    "yearsAgoShort": m101,
     "yes": MessageLookupByLibrary.simpleMessage("はい"),
     "zhCN": MessageLookupByLibrary.simpleMessage("簡体字中国語"),
   };

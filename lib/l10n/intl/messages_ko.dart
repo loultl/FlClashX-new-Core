@@ -235,16 +235,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m97(transport) => "${transport} 요청 헤더";
 
-  static String m98(received, total, percent) =>
-      "${received} / ${total} · ${percent}%";
+  static String m98(label) => "${label}은(는) URL이어야 합니다";
 
-  static String m99(label) => "${label}은(는) URL이어야 합니다";
+  static String m99(appName) => "${appName}의 VPN 연결을 허용하지 않았습니다";
 
-  static String m100(appName) => "${appName}의 VPN 연결을 허용하지 않았습니다";
+  static String m100(count) => "${Intl.plural(count, other: '${count}년 전')}";
 
   static String m101(count) => "${Intl.plural(count, other: '${count}년 전')}";
-
-  static String m102(count) => "${Intl.plural(count, other: '${count}년 전')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -279,12 +276,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "add": MessageLookupByLibrary.simpleMessage("추가"),
     "addCustomProxy": MessageLookupByLibrary.simpleMessage("프록시 추가"),
     "addFilters": MessageLookupByLibrary.simpleMessage("필터 추가"),
+    "addFromClipboard": MessageLookupByLibrary.simpleMessage("클립보드에서 추가"),
     "addNodes": MessageLookupByLibrary.simpleMessage("노드 추가"),
     "addOverrideEntry": MessageLookupByLibrary.simpleMessage("덮어쓰기 항목 추가"),
     "addProfile": MessageLookupByLibrary.simpleMessage("프로필 추가"),
-    "addProfileFromClipboard": MessageLookupByLibrary.simpleMessage(
-      "클립보드에서 프로필 추가",
-    ),
     "addProxyChain": MessageLookupByLibrary.simpleMessage("체인 추가"),
     "addProxyChainHop": MessageLookupByLibrary.simpleMessage("중간 홉 추가"),
     "addProxyGroup": MessageLookupByLibrary.simpleMessage("프록시 그룹 추가"),
@@ -352,7 +347,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "autoUpdate": MessageLookupByLibrary.simpleMessage("자동 업데이트"),
     "autoUpdateInterval": MessageLookupByLibrary.simpleMessage("자동 업데이트 간격"),
     "back": MessageLookupByLibrary.simpleMessage("뒤로"),
-    "backgroundBlur": MessageLookupByLibrary.simpleMessage("배경 흐림"),
     "backup": MessageLookupByLibrary.simpleMessage("백업"),
     "backupAndRestore": MessageLookupByLibrary.simpleMessage("백업 및 복원"),
     "backupFromNewerVersion": MessageLookupByLibrary.simpleMessage(
@@ -363,7 +357,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "basicStrategy": MessageLookupByLibrary.simpleMessage("기본 전략"),
     "batchAdd": MessageLookupByLibrary.simpleMessage("일괄 추가"),
     "batchImport": MessageLookupByLibrary.simpleMessage("일괄 가져오기"),
-    "batchLinkInputTip": MessageLookupByLibrary.simpleMessage("한 줄에 링크 하나씩"),
     "batchListInputTip": MessageLookupByLibrary.simpleMessage(
       "한 줄에 하나씩 또는 쉼표로 구분하여 입력하세요",
     ),
@@ -479,6 +472,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "coreBlockedByPolicyTip": m5,
     "coreBlockedBySmartAppControlTip": MessageLookupByLibrary.simpleMessage(
       "서명되지 않아 Windows Smart App Control이 FlClashCore.exe를 차단했습니다. Windows 보안 → 앱 및 브라우저 컨트롤 → Smart App Control 설정에서 끔을 선택한 후 FlClashX를 다시 시작하세요. Smart App Control은 Windows를 다시 설치하지 않으면 다시 켤 수 없습니다.",
+    ),
+    "coreRestartByCommandFailed": MessageLookupByLibrary.simpleMessage(
+      "명령으로 코어를 다시 시작하지 못했습니다",
+    ),
+    "coreRestartedByCommand": MessageLookupByLibrary.simpleMessage(
+      "명령으로 코어를 다시 시작했습니다",
     ),
     "coreStatus": MessageLookupByLibrary.simpleMessage("코어 상태"),
     "coreStopped": MessageLookupByLibrary.simpleMessage("코어가 중지되었습니다"),
@@ -802,7 +801,6 @@ class MessageLookup extends MessageLookupByLibrary {
       "가져오면 이 프로필의 현재 프록시 그룹, 규칙, 설정이 대체됩니다",
     ),
     "importFile": MessageLookupByLibrary.simpleMessage("파일에서 가져오기"),
-    "importFromLink": MessageLookupByLibrary.simpleMessage("링크에서 가져오기"),
     "importUrl": MessageLookupByLibrary.simpleMessage("URL에서 가져오기"),
     "inbound": MessageLookupByLibrary.simpleMessage("인바운드"),
     "includeInterface": MessageLookupByLibrary.simpleMessage("포함할 인터페이스"),
@@ -1075,7 +1073,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "noData": MessageLookupByLibrary.simpleMessage("데이터 없음"),
     "noInfo": MessageLookupByLibrary.simpleMessage("정보 없음"),
     "noLogsToday": MessageLookupByLibrary.simpleMessage("오늘 로그가 없습니다"),
-    "noLongerRemind": MessageLookupByLibrary.simpleMessage("다시 알리지 않음"),
     "noMatchingNodes": MessageLookupByLibrary.simpleMessage("일치하는 항목이 없습니다"),
     "noNetwork": MessageLookupByLibrary.simpleMessage("네트워크 없음"),
     "noNetworkApp": MessageLookupByLibrary.simpleMessage("네트워크 미사용 앱"),
@@ -1121,6 +1118,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "outbound": MessageLookupByLibrary.simpleMessage("아웃바운드"),
     "outboundExit": MessageLookupByLibrary.simpleMessage("출구"),
     "outboundIp": MessageLookupByLibrary.simpleMessage("아웃바운드 IP"),
+    "outboundLocation": MessageLookupByLibrary.simpleMessage("발신 위치"),
     "outboundMode": MessageLookupByLibrary.simpleMessage("아웃바운드 모드"),
     "overrideDestination": MessageLookupByLibrary.simpleMessage("대상 덮어쓰기"),
     "overrideDestinationDesc": MessageLookupByLibrary.simpleMessage(
@@ -1177,6 +1175,7 @@ class MessageLookup extends MessageLookupByLibrary {
         MessageLookupByLibrary.simpleMessage("자동 업데이트 간격을 입력하세요"),
     "profileDaysFigure": m64,
     "profileDaysLeft": m65,
+    "profileDetails": MessageLookupByLibrary.simpleMessage("자세히"),
     "profileExpired": MessageLookupByLibrary.simpleMessage("만료됨"),
     "profileExpiresIn": m66,
     "profileHasUpdate": MessageLookupByLibrary.simpleMessage(
@@ -1262,6 +1261,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "proxyType": MessageLookupByLibrary.simpleMessage("프록시 유형"),
     "pruneCache": MessageLookupByLibrary.simpleMessage("캐시 정리"),
     "publicKey": MessageLookupByLibrary.simpleMessage("공개 키"),
+    "pullToTestDelay": MessageLookupByLibrary.simpleMessage("아래로 당겨 지연 테스트"),
+    "pullToUpdateSubscription": MessageLookupByLibrary.simpleMessage(
+      "아래로 당겨 구독 업데이트",
+    ),
     "pureBlack": MessageLookupByLibrary.simpleMessage("퓨어 블랙"),
     "pureBlackMode": MessageLookupByLibrary.simpleMessage("퓨어 블랙 모드"),
     "qrcode": MessageLookupByLibrary.simpleMessage("QR 코드"),
@@ -1281,6 +1284,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "releaseMemory": MessageLookupByLibrary.simpleMessage("메모리 해제"),
     "releaseMemoryFailed": MessageLookupByLibrary.simpleMessage(
       "메모리를 해제하지 못했습니다",
+    ),
+    "releaseToTestDelay": MessageLookupByLibrary.simpleMessage(
+      "놓으면 지연을 테스트합니다",
+    ),
+    "releaseToUpdateSubscription": MessageLookupByLibrary.simpleMessage(
+      "놓으면 구독을 업데이트합니다",
     ),
     "remote": MessageLookupByLibrary.simpleMessage("원격"),
     "remoteDestination": MessageLookupByLibrary.simpleMessage("원격 목적지"),
@@ -1554,9 +1563,6 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "showPassword": MessageLookupByLibrary.simpleMessage("비밀번호 표시"),
     "sidebarBlur": MessageLookupByLibrary.simpleMessage("사이드바 블러"),
-    "sidebarBlurDesc": MessageLookupByLibrary.simpleMessage(
-      "배경 흐림은 창 뒤의 바탕화면을 사이드바에 비쳐 보이게 합니다.",
-    ),
     "silentLaunch": MessageLookupByLibrary.simpleMessage("백그라운드 실행"),
     "silentLaunchDesc": MessageLookupByLibrary.simpleMessage(
       "백그라운드 실행은 창을 표시하지 않고 시작합니다.",
@@ -1646,6 +1652,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "구독이 오늘 만료됩니다",
     ),
     "subscriptionInfo": MessageLookupByLibrary.simpleMessage("구독 정보"),
+    "subscriptionUpdated": MessageLookupByLibrary.simpleMessage("구독을 업데이트했습니다"),
     "sudoPasswordTitle": MessageLookupByLibrary.simpleMessage(
       "sudo 비밀번호를 입력하세요",
     ),
@@ -1674,12 +1681,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "theme": MessageLookupByLibrary.simpleMessage("테마"),
     "themeColor": MessageLookupByLibrary.simpleMessage("테마 색상"),
     "themeMode": MessageLookupByLibrary.simpleMessage("외관"),
-    "themeStyle": MessageLookupByLibrary.simpleMessage("테마 모드"),
-    "themeStyleDesc": MessageLookupByLibrary.simpleMessage(
-      "향상됨은 홈 화면에 위젯 그리드 대신 서비스 로고, 요금제, 서버, 연결 버튼을 표시합니다.",
-    ),
-    "themeStyleEnhanced": MessageLookupByLibrary.simpleMessage("향상됨"),
-    "themeStyleOriginal": MessageLookupByLibrary.simpleMessage("오리지널"),
     "tight": MessageLookupByLibrary.simpleMessage("좁게"),
     "time": MessageLookupByLibrary.simpleMessage("시간"),
     "timeout": MessageLookupByLibrary.simpleMessage("시간 초과"),
@@ -1730,7 +1731,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "unnamed": MessageLookupByLibrary.simpleMessage("이름 없음"),
     "unpinWindow": MessageLookupByLibrary.simpleMessage("창 고정 해제"),
     "update": MessageLookupByLibrary.simpleMessage("업데이트"),
-    "updateDownloadProgress": m98,
     "updateErrorBusy": MessageLookupByLibrary.simpleMessage(
       "연결이 시작되거나 중지될 때까지 기다리세요.",
     ),
@@ -1776,6 +1776,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "updateHandedOff": MessageLookupByLibrary.simpleMessage(
       "열린 설치 프로그램에서 업데이트를 완료하세요.",
     ),
+    "updateHide": MessageLookupByLibrary.simpleMessage("숨기기"),
     "updateInstall": MessageLookupByLibrary.simpleMessage("설치"),
     "updateInstalling": MessageLookupByLibrary.simpleMessage(
       "설치 프로그램을 시작하는 중…",
@@ -1792,10 +1793,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "updateVerifying": MessageLookupByLibrary.simpleMessage("다운로드를 확인하는 중…"),
     "updateViewOnGitHub": MessageLookupByLibrary.simpleMessage("GitHub에서 보기"),
+    "updatingSubscription": MessageLookupByLibrary.simpleMessage("구독 업데이트 중…"),
     "upload": MessageLookupByLibrary.simpleMessage("업로드"),
     "uploadBandwidth": MessageLookupByLibrary.simpleMessage("업로드 대역폭"),
     "url": MessageLookupByLibrary.simpleMessage("URL"),
-    "urlTip": m99,
+    "urlTip": m98,
     "usageLabel": MessageLookupByLibrary.simpleMessage("사용량"),
     "useHosts": MessageLookupByLibrary.simpleMessage("hosts 사용"),
     "useSystemHosts": MessageLookupByLibrary.simpleMessage("시스템 hosts 사용"),
@@ -1823,7 +1825,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "vpnEnableDesc": MessageLookupByLibrary.simpleMessage(
       "VPN은 VpnService를 통해 모든 시스템 트래픽을 자동으로 라우팅합니다.",
     ),
-    "vpnPermissionNotGranted": m100,
+    "vpnPermissionNotGranted": m99,
     "vpnRestrictedByAdministrator": MessageLookupByLibrary.simpleMessage(
       "이 기기에서는 관리자가 VPN을 제한했습니다",
     ),
@@ -1834,8 +1836,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "writeToSystemDesc": MessageLookupByLibrary.simpleMessage(
       "시스템에 기록하면 시스템 시계도 설정합니다. Android에서는 무시됩니다.",
     ),
-    "yearsAgo": m101,
-    "yearsAgoShort": m102,
+    "yearsAgo": m100,
+    "yearsAgoShort": m101,
     "yes": MessageLookupByLibrary.simpleMessage("예"),
     "zhCN": MessageLookupByLibrary.simpleMessage("중국어 간체"),
   };

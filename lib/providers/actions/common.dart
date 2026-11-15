@@ -125,15 +125,18 @@ class CommonAction extends _$CommonAction {
       );
       return false;
     }
+    if (res == null ||
+        res['_required'] != true &&
+            res['tag_name'] == ref.read(appSettingProvider).hiddenUpdate) {
+      return false;
+    }
     await checkUpdateResultHandle(data: res);
-    return res != null;
+    return true;
   }
 
-  TextSpan _releaseSpan(BuildContext context, String tagName, String? body) {
+  TextSpan _releaseSpan(BuildContext context, String? body) {
     final version = parseReleaseChangelog(body);
     return TextSpan(
-      text: '$tagName \n',
-      style: AppTextStyle.title2.of(context),
       children: version == null
           ? [
               TextSpan(text: '\n', style: AppTextStyle.subheadline.of(context)),
@@ -203,26 +206,30 @@ class CommonAction extends _$CommonAction {
   }) async {
     if (data != null) {
       final context = globalState.navigatorKey.currentContext!;
-      final notes = _releaseSpan(
-        context,
-        data['tag_name'] as String,
-        data['body'] as String?,
-      );
+      final notes = _releaseSpan(context, data['body'] as String?);
       final platform = await _updatePlatform();
+      final required = data['_required'] == true;
       final downloader = UpdateDownloader(
         root: () async =>
             Directory(join((await appPath.cacheDir.future).path, 'update')),
       );
       await dialogs.showCommonDialog<void>(
+        // A required update is not put off by a tap beside it.
+        dismissible: !required,
         child: UpdateDialog(
+          version: data['tag_name'] as String,
           notes: notes,
           onOpenReleasePage: () =>
               unawaited(launchUrl(releasePageOf(data, repository: repository))),
-          onStopReminding: isUser
+          onHide: isUser || required
               ? null
               : () => ref
                     .read(appSettingProvider.notifier)
-                    .update((state) => state.copyWith(autoCheckUpdate: false)),
+                    .update(
+                      (state) => state.copyWith(
+                        hiddenUpdate: data['tag_name'] as String,
+                      ),
+                    ),
           createController: () {
             final controller = UpdateController(
               release: data,

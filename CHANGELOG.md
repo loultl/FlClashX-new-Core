@@ -1,5 +1,69 @@
 # Changelog
 
+## v0.5.6 (2026-11-15)
+
+**Features**
+
+- **dashboard** The Core heartbeat is dark green while the Core runs, whatever the theme colour (1e30319)
+- **update** Provider update manifests take a minVersion that makes the update required for older apps (e007013)
+- **headers** flclashx-view takes proxies.hidetimeout to hide or show proxies that timed out (d608a21)
+- **dashboard** The service status card shows the outbound location, a flag and the node's name, instead of the IP (4049f88)
+- **android** On Android, pulling the dashboard down updates the subscription and pulling the proxies page down tests the delays (641f761)
+- **dashboard** The extended dashboard is replaced by flclashx-special: providermode, which adds the provider's logo, name and a start button to the standard dashboard; app.board is no longer read (02bed3b)
+
+**Bug Fixes**
+
+- **windows** Self-update on Windows recognises installs upgraded from 0.4 instead of treating them as portable (1a434eb)
+
+## v0.5.5 (2026-11-14)
+
+**Features**
+
+- **dashboard** The Core status button shows a heartbeat that morphs between running, connecting and down instead of a green or red fill (3b06ac9)
+- **desktop** FlClashX --restart-core restarts the Core of the running app from a script or terminal on Windows, macOS and Linux, with an exit code for the result (#155) (d499d7f)
+
+**Bug Fixes**
+
+- **android** Themed launcher icons show the X alone instead of a dark square around it (ae53900)
+- **android** Tapping the Quick Settings tile no longer closes the notification shade (f57fc26)
+
+## v0.5.4 (2026-11-14)
+
+**Features**
+
+- **proxies** The proxies page's top buttons are glass, as on every other page (287aaec)
+- **headers** flclashx-special takes onegroup (the proxies page shows only the server group's proxies), nologo (no service logo on the hero page) and noservice (no logo or name there) (2883815)
+- **dashboard** Flags on the dashboard and in service status come from the server's name, not the outbound IP's country, and the hero card keeps its swap arrows with the IP hidden (63402f7)
+- **profiles** Adding a profile by link asks only for the link, with a one-tap Add from clipboard and the HWID always sent; the dashboard adds by link right away and stays open (a0c08d6)
+- **theme** The Background blur switch is gone from Theme settings; it changed nothing visible (4b1018c)
+- **dashboard** With the IP hidden, the status card shows the current server, and tapping it changes the server (c5671a0)
+
+**Bug Fixes**
+
+- **profiles** A subscription's remaining, used and total data show two decimals, so 14.65 TB no longer reads as 14.7 TB (65276c5)
+
+## v0.5.3 (2026-11-14)
+
+**Features**
+
+- **profiles** The current profile's menu on the Profiles page opens its details: counts, subscription and external resources (376b12c)
+- **l10n** The Windows installer offers Chinese, and the README has a Chinese translation (#153) (6cd2a43)
+
+**Bug Fixes**
+
+- **headers** Dashboard cards you arranged stay put when the subscription updates, unless the panel denies editing them (1d18f35)
+- **linux** TUN on Linux reports a Core the Helper refuses instead of failing silently, and AUR packages no longer break the Core's checksum (#156) (7c98452)
+- **profiles** Rules added to a profile can target its proxy groups again (#154) (eb61bd8)
+- **update** The update reminder's Hide skips only that release, and the download shows its progress in the Download button (9bd0c0d)
+- **settings** Picking a language no longer fails when the settings page is rebuilt during the menu's close (ef4eada)
+- **linux** An autostarted Linux session waits for the Helper instead of asking to install it again (a4d80c6)
+- **windows** Windows PCs whose install date is out of range start again and send their HWID (a4359ea)
+
+**Performance**
+
+- **ui** Glass cards scroll smoother on weak phones (f235adc)
+- **android** Android starts smoother on first run (2c34c9e)
+
 ## v0.5.2 (2026-11-13)
 
 **Bug Fixes**

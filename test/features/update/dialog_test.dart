@@ -49,7 +49,7 @@ class _Scripted extends UpdateController {
 void main() {
   late _Scripted controller;
   late int releasePageOpens;
-  late int reminderStops;
+  late int hides;
 
   Future<AppLocalizations> pump(
     WidgetTester tester, {
@@ -58,7 +58,7 @@ void main() {
   }) async {
     controller = _Scripted(kind);
     releasePageOpens = 0;
-    reminderStops = 0;
+    hides = 0;
     await tester.pumpWidget(
       TestApp(
         overrides: [
@@ -72,9 +72,10 @@ void main() {
                   context: context,
                   child: UpdateDialog(
                     createController: () => controller,
+                    version: 'v0.5.2',
                     notes: const TextSpan(text: 'Release notes'),
                     onOpenReleasePage: () => releasePageOpens++,
-                    onStopReminding: reminder ? () => reminderStops++ : null,
+                    onHide: reminder ? () => hides++ : null,
                   ),
                 ),
                 child: const Text('open'),
@@ -97,6 +98,11 @@ void main() {
   testWidgets('offers download, the release page and closing', (tester) async {
     final l10n = await pump(tester);
     expect(find.text('Release notes'), findsOneWidget);
+    expect(find.text('v0.5.2'), findsOneWidget);
+    expect(
+      tester.getCenter(find.text(l10n.goDownload)).dy,
+      lessThan(tester.getCenter(find.text(l10n.close)).dy),
+    );
     await tester.tap(find.text(l10n.goDownload));
     expect(controller.calls, ['download']);
     await tester.tap(find.text(l10n.updateViewOnGitHub));
@@ -106,12 +112,12 @@ void main() {
     expect(find.byType(UpdateDialog), findsNothing);
   });
 
-  testWidgets('a reminder can be turned off from the dialog', (tester) async {
+  testWidgets('a reminder hides its release from the dialog', (tester) async {
     final l10n = await pump(tester, reminder: true);
     expect(find.text(l10n.close), findsNothing);
-    await tester.tap(find.text(l10n.noLongerRemind));
+    await tester.tap(find.text(l10n.updateHide));
     await tester.pumpAndSettle();
-    expect(reminderStops, 1);
+    expect(hides, 1);
     expect(find.byType(UpdateDialog), findsNothing);
   });
 
@@ -122,28 +128,30 @@ void main() {
     expect(find.text(l10n.updateViewOnGitHub), findsOneWidget);
   });
 
-  testWidgets('shows progress and cancels', (tester) async {
+  testWidgets('shows progress in the download button and cancels', (
+    tester,
+  ) async {
     final l10n = await pump(tester);
     await show(
       tester,
       const UpdateState(UpdatePhase.downloading, received: 1024, total: 4096),
     );
-    final bar = tester.widget<LinearProgressIndicator>(
-      find.byType(LinearProgressIndicator),
+    expect(find.byType(LinearProgressIndicator), findsNothing);
+    expect(find.text('25%'), findsOneWidget);
+    expect(
+      tester
+          .widget<AnimatedFractionallySizedBox>(
+            find.byType(AnimatedFractionallySizedBox),
+          )
+          .widthFactor,
+      0.25,
     );
-    expect(bar.value, 0.25);
-    expect(find.textContaining('25%'), findsOneWidget);
     await tester.tap(find.text(l10n.cancel));
     expect(controller.calls, ['cancel']);
 
     await show(tester, const UpdateState(UpdatePhase.verifying));
     expect(find.text(l10n.updateVerifying), findsOneWidget);
-    expect(
-      tester
-          .widget<LinearProgressIndicator>(find.byType(LinearProgressIndicator))
-          .value,
-      isNull,
-    );
+    expect(find.byType(LinearProgressIndicator), findsNothing);
   });
 
   testWidgets('a failure explains itself and retries', (tester) async {

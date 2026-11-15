@@ -132,6 +132,24 @@ bool widgetEditingDenied(Ref ref) {
   );
 }
 
+@riverpod
+bool oneGroup(Ref ref) {
+  return ref.watch(
+    currentProfileProvider.select(
+      (profile) => profile?.headers.oneGroup ?? false,
+    ),
+  );
+}
+
+@riverpod
+bool providerMode(Ref ref) {
+  return ref.watch(
+    currentProfileProvider.select(
+      (profile) => profile?.headers.providerMode ?? false,
+    ),
+  );
+}
+
 /// The outbound modes the current panel leaves on offer.
 @riverpod
 List<Mode> availableModes(Ref ref) {
