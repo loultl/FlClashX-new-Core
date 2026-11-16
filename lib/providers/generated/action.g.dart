@@ -40,7 +40,7 @@ final class CommonActionProvider extends $NotifierProvider<CommonAction, void> {
   }
 }
 
-String _$commonActionHash() => r'ac604ee78837182b2d152ec09cb748805c9df112';
+String _$commonActionHash() => r'abf89fb8dadac289c73e3e885ce52b6c5fe81585';
 
 abstract class _$CommonAction extends $Notifier<void> {
   void build();
@@ -93,7 +93,7 @@ final class ManagedSettingsActionProvider
 }
 
 String _$managedSettingsActionHash() =>
-    r'367a45084033c5e495f876b75d5f42cd4b316709';
+    r'b56fae821bf4a5bd59a14940f1ce7c37c4c562f6';
 
 abstract class _$ManagedSettingsAction extends $Notifier<void> {
   void build();
@@ -150,7 +150,7 @@ final class ProfileHeadersActionProvider
 }
 
 String _$profileHeadersActionHash() =>
-    r'0c6b40a20ae7c4fae6bd1bf258f0b1c0875bd5af';
+    r'3d30df96d205a1c582e978e8f574bfec1466a579';
 
 /// Lands once per update of, or switch to, a profile; edits in between stay.
 

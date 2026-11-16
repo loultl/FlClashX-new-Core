@@ -1,16 +1,18 @@
 module core
 
-go 1.27.0
+go 1.26.0
 
 // The browser fingerprints mihomo names (Firefox 148, Safari 26.3 and up)
 // live on utls' `v1.9.0-mod-meta` branch, which has no tag.
-replace github.com/metacubex/utls => github.com/legiz-ru/prizrak-utls v0.0.0-20261111074409-d32f4d9296cf
+replace github.com/metacubex/utls => github.com/legiz-ru/prizrak-utls v0.0.0-20261115193325-827c5267ec58
 
-replace github.com/metacubex/mihomo => github.com/legiz-ru/Prizrak-Core v1.19.34-r1
+replace github.com/metacubex/mihomo => github.com/legiz-ru/Prizrak-Core v1.19.34-r2
 
 replace google.golang.org/protobuf => github.com/metacubex/protobuf-go v0.0.0-20260306035419-7ceee0674686
 
 replace github.com/metacubex/http => github.com/legiz-ru/prizrak-http v0.0.0-20260930180911-da5b4c1e0882
+
+replace github.com/metacubex/quic-go => github.com/legiz-ru/prizrak-quic-go v0.61.1-0.20261115185305-1bee6927e56b
 
 // v0.4.29 plus the darwin dscacheutil reap, see third_party/README.md.
 replace github.com/metacubex/sing-tun => ./third_party/sing-tun
