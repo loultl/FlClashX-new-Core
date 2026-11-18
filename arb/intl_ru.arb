@@ -1039,6 +1039,7 @@
   "subscriptionUpdated": "Подписка обновлена",
   "pullToTestDelay": "Потяните, чтобы проверить задержку",
   "releaseToTestDelay": "Отпустите, чтобы проверить задержку",
+  "fullSettingsUnlocked": "Полные настройки открыты до перезапуска приложения",
   "userAgent": "User-Agent",
   "smartDetails": "Подробности Smart",
   "smartLabel": "Smart",

@@ -45,6 +45,7 @@ class GlobalState {
 
   String get ua => packageInfo.uaWith(
     coreVersion.isNotEmpty ? coreVersion : coreVersionDefine,
+    tv: system.isTV,
   );
 
   String get prizrakUa => packageInfo.uaWith(

@@ -11,11 +11,16 @@ extension PackageInfoExtension on PackageInfo {
   String get ua => uaWith(coreVersionDefine);
 
   /// `FlClashX/v<app> core/<mihomo> Platform/<os>` by default; the core token
-  /// is omitted until a version is known.
-  String uaWith(String coreVersion, {String applicationName = appName}) => [
+  /// is omitted until a version is known. A TV says `androidtv`, which still
+  /// contains `android` for panel rules matching a substring.
+  String uaWith(
+    String coreVersion, {
+    String applicationName = appName,
+    bool tv = false,
+  }) => [
     '$applicationName/v$displayVersion',
     if (coreVersion.isNotEmpty) 'core/$coreVersion',
-    'Platform/${Platform.operatingSystem}',
+    'Platform/${tv ? 'androidtv' : Platform.operatingSystem}',
   ].join(' ');
 }
 

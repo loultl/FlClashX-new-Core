@@ -1039,6 +1039,7 @@
   "subscriptionUpdated": "Subscription updated",
   "pullToTestDelay": "Pull down to test the delay",
   "releaseToTestDelay": "Release to test the delay",
+  "fullSettingsUnlocked": "Full settings are open until the app restarts",
   "userAgent": "User-Agent",
   "smartDetails": "Smart details",
   "smartLabel": "Smart",

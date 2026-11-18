@@ -8767,6 +8767,16 @@ class AppLocalizations {
     );
   }
 
+  /// `Full settings are open until the app restarts`
+  String get fullSettingsUnlocked {
+    return Intl.message(
+      'Full settings are open until the app restarts',
+      name: 'fullSettingsUnlocked',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `User-Agent`
   String get userAgent {
     return Intl.message('User-Agent', name: 'userAgent', desc: '', args: []);

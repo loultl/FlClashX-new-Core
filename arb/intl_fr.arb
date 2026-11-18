@@ -1039,6 +1039,7 @@
   "subscriptionUpdated": "Abonnement mis à jour",
   "pullToTestDelay": "Tirez pour tester la latence",
   "releaseToTestDelay": "Relâchez pour tester la latence",
+  "fullSettingsUnlocked": "Tous les réglages sont ouverts jusqu'au redémarrage de l'application",
   "userAgent": "Agent utilisateur",
   "smartDetails": "Détails Smart",
   "smartLabel": "Smart",
